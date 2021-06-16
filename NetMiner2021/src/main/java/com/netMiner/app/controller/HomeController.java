@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.netMiner.app.model.service.MemberService;
+import com.netMiner.app.model.vo.MemberVo;
 
 /**
  * Handles requests for the application home page.
@@ -39,11 +42,32 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		String dbDate = memberService.getTestDate();
+		//String dbDate = memberService.getTestDate();
 		
-		logger.info(dbDate);
+		//logger.info(dbDate);
 		
-		return "home";
+		return "login";
+	}
+	
+	@RequestMapping(value="/join", method = RequestMethod.POST) 
+	public String join(HttpServletRequest request ) {
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		String nation = request.getParameter("nation");
+		String company = request.getParameter("company");
+		String useCode = request.getParameter("useCode");
+		
+		
+		MemberVo vo = new MemberVo();
+		vo.setUserId(userId);
+		vo.setUserPwd(userPwd);
+		vo.setNation(nation);
+		vo.setCompany(company);
+		vo.setUseCode(useCode);
+		
+		String result = memberService.checkJoin(vo);
+		
+		return "";
 	}
 	
 }

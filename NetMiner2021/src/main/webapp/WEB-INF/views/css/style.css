@@ -1,0 +1,523 @@
+﻿@charset "utf-8";
+
+/*common*/
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+/*
+100 Thin
+300 Light
+400 Regular
+500 Medium
+700 Bold
+900 Black
+*/
+
+body{background-color:#f4f4f4; height: 100%; font-size: 20px; font-weight: 400; color:#000000; font-family: 'Noto Sans KR', sans-serif; letter-spacing:-1px; text-align: left; word-break: break-all; }
+html {height: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, form, fieldset, p, button, input { margin: 0;padding: 0}
+ul, ol, dl {list-style: none}
+ul {list-style: none; padding: 0; margin: 0}
+img, fieldset, iframe {border: 0}
+img {vertical-align:top}
+input, select, button {font-family: 'Noto Sans KR', sans-serif; vertical-align: middle;}
+input {-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; border-radius: 0;}
+textarea:focus, input:focus{outline: none;}
+textarea{font-family: 'Noto Sans KR', sans-serif; -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+button, input{position: relative; border:none;}
+button{cursor:pointer; outline: none; border:none;}
+em, address {font-style: normal}
+a {text-decoration: none; color: inherit; display: block; position: relative;}
+.clear {clear: both;}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none; margin: 0; }
+*{-webkit-tap-highlight-color:transparent}
+img.map, map area{outline: none;}
+
+img, canvas {
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+img::-moz-selection { background-color: transparent; color: #000;}
+img::selection {background-color: transparent; color: #000;}
+
+/*mobile*/
+/*img {width:100%; height:auto;}
+.wid10{width:10%; height:auto;}.wid20{width:20%; height:auto;}.wid30{width:30%; height:auto;}.wid40{width:40%; height:auto;}.wid50{width:50%; height:auto;}
+.wid60{width:60%; height:auto;}.wid70{width:70%; height:auto;}.wid80{width:80%; height:auto;}.wid90{width:90%; height:auto;}.wid100{width:100%; height:auto;}*/
+.relative{position: relative;}
+.blind {font:0/0 a; height: 0; overflow: hidden; position: absolute; width: 0;}
+.btn{position: absolute; z-index: 2; cursor:pointer;}
+.pc{display: block;}
+.mobile{display: none }
+.obj{position: absolute; z-index: 100;}
+.trs{-webkit-transition: all .4s ease-out; -moz-transition: all .4s ease-out; -ms-transition: all .4s ease-out; -o-transition: all .4s ease-out; transition: all .4s ease-out;}
+.tCenter{text-align: center;}
+.tLeft{text-align: left;}
+.tRight{text-align: right;}
+select { border:0;  -webkit-appearance:none;-moz-appearance:none; appearance:none;}
+select::-ms-expand{display:none;/*for IE10,11*/}
+
+#wrap{min-width:1200px; position:relative; }
+#wrap .wrap{min-width: 1200px; margin: 0px auto; position: relative;}
+#wrap .section{margin: 0 auto; background-repeat: no-repeat; background-position-x: center; position: relative; }
+#wrap .section .wrap{max-width: 1200px; padding:140px 0 150px; text-align: center;}
+#wrap .section .wrap>h3{font-size:38px; font-weight:700;}
+#wrap .section .wrap>p{font-size:22px; padding: 40px 0 110px; letter-spacing: -1.5px; }
+#wrap .section .wrap .more{font-size:22px; color:#1551c3; position: absolute; right: 0; padding: 10px;}
+
+#wrap #top{position: absolute; width: 100%;}
+#wrap #top h1{width:270px; font-size:24px;}
+#wrap #top .menu{left:320px;}
+#wrap #top .menu li{font-size:20px; color:rgb(255 255 255 / 80%); display: inline-block;}
+#wrap #top .menu li a{padding: 5px 35px;}
+#wrap #top .me{ float: right; cursor:pointer;}
+#wrap #top .content{height:80px; position: relative; padding: 27px 90px 0;}
+#wrap #top .content .mypage.type1{right:0;}
+#wrap #top .content .mypage.type1 li{display: inline-block; color:#fff; font-size:20px; }
+#wrap #top .content .mypage.type1 li.join{border:1px solid #fff; width:148px; text-align:center; line-height:42px;  height:42px; }
+#wrap #top .content .mypage.type1 li.join a{width:100%; height:100%;} 
+#wrap #top .content .mypage.type1 li.login a{padding:5px 5px 5px 20px; color:#fff; }
+#wrap #top .content .mypage.type2{right:0;}
+#wrap #top .content .mypage.type2 ul{display:none; margin-top: 63px; border-radius: 10px; padding:20px; background-color:#fff; box-shadow: 0px 0px 11px #e2e2e2;}
+#wrap #top .content .mypage.type2 li{font-size:18px;}
+#wrap #top .content .mypage.type2 li.active{color:#d10000;}
+#wrap #top .content .mypage.type2 li a{padding:5px;}
+#wrap #top.sticky { position: fixed; top: 0; background-color:#fff; z-index:10;}
+#wrap #top.sticky .menu li{color:rgb(9 9 9 / 80%);}
+#wrap #top.sticky .content .mypage.type1 li.join{background-color:#203864;}
+#wrap #top .content .mypage.type1 li.login a{color:#090909;}
+
+#wrap #footer .wrap{max-width: 100%; padding: 0;}
+#wrap #footer .wrap .content1{background-color:#7c7c7c; padding:45px 0;}
+#wrap #footer .wrap .content2{background-color:#282828; }
+#wrap #footer .wrap .content2>div{height: 300px; padding-top: 45px; box-sizing: border-box;}
+#wrap #footer .wrap .content>div{position: relative; color:#fff; max-width:1200px; margin: 0 auto;}
+#wrap #footer{background-color:#7c7c7c;}
+#wrap #footer .wrap .content1 h4{font-weight: 400; font-size:28px; margin-right:100px; display:inline-block;}
+#wrap #footer .wrap .content1 a{cursor:pointer; font-size:26px; border:1px solid #fff; width:216px; line-height:60px;  height:60px; display:inline-block; }
+#wrap #footer .terms{left: -1%;}
+#wrap #footer .terms li{font-size: 22px; display:inline-block;}
+#wrap #footer .terms li a{padding: 12px;}
+#wrap #footer .sns{right:-1%;}
+#wrap #footer .sns li{display:inline-block;}
+#wrap #footer .sns li a{padding: 12px;}
+#wrap #footer .lang{width: 190px;border: 1px solid #fff; left: 42%;}
+#wrap #footer .lang p{height: 56px;line-height: 56px;  position: relative;}
+#wrap #footer .lang p span{background: url(../images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
+#wrap #footer .lang ul{display:none;}
+#wrap #footer .lang.active ul{display:block;}
+#wrap #footer .lang.active p span{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
+#wrap #footer .lang li{height: 56px;line-height: 56px;}
+#wrap #footer .family{width: 190px;border: 1px solid #fff; left: 61%;}
+#wrap #footer .family p{height: 56px;line-height: 56px;  position: relative;}
+#wrap #footer .family p span{background: url(../images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
+#wrap #footer .family ul{display:none;}
+#wrap #footer .family.active ul{display:block;}
+#wrap #footer .family.active p span{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
+#wrap #footer .family li{font-size: 15px; height: 56px;line-height: 56px;}
+#wrap #footer .cr{top: 45%; color:#9b9b9b; font-size:18px;}
+
+#wrap.sub{background: url(../images/sub_bg.jpg); color: #090909; font-size:20px; background-size: cover; background-position: center;}
+#wrap.sub #section .wrap{padding-top: 130px; padding-bottom: 200px;}
+#wrap.sub .title{text-align: center; padding-bottom: 50px;}
+#wrap.sub .title h2{font-size:38px; font-weight:700;}
+#wrap.sub .title p{font-size:24px;margin-top: 10px; }
+#wrap.sub .title p a{color:#114fbf; display:inline-block; padding-left:22px; }
+#wrap.sub input{border:1px solid #9d9d9d; font-size:20px; color:#606060;}
+#wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("../images/select_arrow.png") no-repeat 98% 50%/15px auto;}
+#wrap.sub .blue{color:#114fbf; font-size:18px; }
+
+#wrap #main .slider{background-size: cover;  background-repeat: no-repeat;}
+#wrap #main .slider .text{color:#fff; padding:245px 0 200px  205px;}
+#wrap #main .slider .text h2{font-size:50px; font-weight:900;l}
+#wrap #main .slider .text p{font-size:24px; padding-top:55px;}
+
+#wrap .footer{}
+/*메인-----------------------------------------------------------*/
+#wrap.main{background-color:#fff;}
+#wrap.main #main .slider{background-image: url(../images/main_bg.jpg);;}
+#wrap.main #section1 .content div{background: url(../images/section1_bg.jpg); width: 100%; height: 520px; background-size: cover;}
+
+#wrap.main #section2{background-color:#f4f4f4;}
+#wrap.main #section2 .content li{padding:64px 45px; background-color:#fff; display:inline-block;}
+#wrap.main #section2 .content li h4{font-size:24px; font-weight:700; padding: 40px 0 25px;}
+#wrap.main #section2 .content li p{width: 280px; margin:0 auto;}
+#wrap.main #section2 .content .line1 li{width: 23%;}
+#wrap.main #section2 .content .line1 li:nth-child(2){margin: 0 3%;}
+#wrap.main #section2 .content .line2 {margin-top:30px;}
+#wrap.main #section2 .content .line2 li:last-child{margin-left:3%;}
+#wrap.main #section2 .content img{height:133px;}
+#wrap.main #section2 .more{bottom: 135px; right: 25px;}
+
+#wrap.main #section3 .content li{display:inline-block; font-size:22px; font-weight:700; color:#fff;width: 231px;height: 151px;line-height: 151px; background-size:cover; background-repeat:no-repeat;}
+#wrap.main #section3 .content li:nth-child(1){background-image:url(../images/section3_bg1.jpg)}
+#wrap.main #section3 .content li:nth-child(2){background-image:url(../images/section3_bg2.jpg)}
+#wrap.main #section3 .content li:nth-child(3){background-image:url(../images/section3_bg3.jpg)}
+#wrap.main #section3 .content li:nth-child(4){background-image:url(../images/section3_bg4.jpg)}
+#wrap.main #section3 .content li:nth-child(5){background-image:url(../images/section3_bg5.jpg)}
+#wrap.main #section3 .content li:nth-child(2),#wrap.main #section3 .content li:nth-child(3),#wrap.main #section3 .content li:nth-child(4){margin: 0 5px;}
+
+
+/*로그인-----------------------------------------------------------*/
+#wrap.login{}
+#wrap.login #section .content{background-color:#fff; width: 440px; margin: 0 auto; padding: 80px 65px;}
+#wrap.login #section .input input{width:100%; padding-left:17px; height: 60px;}
+#wrap.login #section .input li+li{margin-top:10px;}
+#wrap.login #section .searchPw{text-align: right; margin: 16px 0 38px;}
+#wrap.login #section .content button{width:100%; height: 60px; line-height: 60px;font-size:22px;}
+#wrap.login #section .content button.login{background-color:#203864; color:#fff; }
+#wrap.login #section .content button.google{ background-color:#fff; border:1px solid #9d9d9d; background-image:url(../images/login_google.png); background-repeat:no-repeat;}
+#wrap.login #section .content .line{margin:35px 0; display: block; text-align: center; color:#606060;}
+#wrap.login #section .content .line::after,#wrap.login #section .content .line::before{content:""; width: 170px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+#wrap.login #section .content .line::after{margin-left: 32px;}
+#wrap.login #section .content .line::before{margin-right: 32px;}
+
+/*회원가입-----------------------------------------------------------*/
+#wrap.register #section .wrap{padding-bottom: 25px;}
+#wrap.register #section .content{width: 1200px; margin: 0 auto;}
+#wrap.register #section .content>div{background-color:#fff; width: 440px; padding: 60px 65px;display: inline-block;}
+#wrap.register #section dl{padding-top: 110px; padding-left: 115px; display: inline-block; vertical-align: top;}
+#wrap.register #section dl dt{font-size:24px; color:#090909; margin-bottom: 50px;}
+#wrap.register #section dl dd{font-size:22px; color:#5a5a5a; line-height: 1.7;}
+#wrap.register #section dl dd::before{content:""; margin-right: 10px; background: url(../images/register_check.png) no-repeat; width: 15px; height: 12px; display: inline-block; vertical-align: 2px;} 
+#wrap.register #section .input input{width:100%; padding-left:17px; height: 60px;}
+#wrap.register #section .input li+li{margin-top:20px;}
+#wrap.register #section select{width:100%;height: 60px;  padding-left:17px; margin-top:20px;}
+#wrap.register #section .input li .sum{color:#9d9d9d; font-size:18px; margin:14px 0 26px; display:block;}
+#wrap.register #section .checkBox{padding: 30px;}
+#wrap.register #section .checkBox *{display:inline-block; color:#606060; }
+#wrap.register #section .checkBox p{margin-right: 70px;}
+#wrap.register #section .checkBox ul li+li{margin-left:20px;}
+#wrap.register #section .content button{width:100%; height: 60px; line-height: 60px;font-size:22px;}
+#wrap.register #section .content button.authentic{background-color:#203864; color:#fff; }
+#wrap.register #section .content button.google{background-color:#fff; border:1px solid #9d9d9d; background-image:url(../images/login_google.png); background-repeat:no-repeat;}
+#wrap.register #section .content .line{margin:35px 0; display: block; text-align: center; color:#606060;}
+#wrap.register #section .content .line::after,#wrap.register #section .content .line::before{content:""; width: 170px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+#wrap.register #section .content .line::after{margin-left: 32px;}
+#wrap.register #section .content .line::before{margin-right: 32px;}
+#wrap.register #section .checkBox input[type="radio"]{display:none; }
+#wrap.register #section .checkBox input[type="radio"] + em {width:18px; height:18px; margin-right:10px; vertical-align:-2px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block; background-image: url('../images/register_checkbox1.png'); }
+#wrap.register #section .checkBox input[type="radio"]:checked + em {display:inline-block; background-image: url('../images/register_checkbox2.png'); }
+
+/*이메일인증코드-----------------------------------------------------------*/
+#wrap.authentic{}
+#wrap.authentic #section .content{background-color:#fff; width: 500px; padding: 70px 110px; margin:0 auto;}
+#wrap.authentic #check_all[type="checkbox"]+ em {width:21px; height:16px; background-size:cover;}
+#wrap.authentic input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
+#wrap.authentic input[type="checkbox"] {display: none;}
+#wrap.authentic input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
+#wrap.authentic .input p{font-size: 22px; font-weight: 500; display:inline-block; margin: 30px 98px 20px 0;}
+#wrap.authentic .input input{width:320px; height:34px; padding-left:10px;}
+#wrap.authentic .input .sum{font-size:18px; color:#9d9d9d; font-weight: 400; margin: 0 0 32px 0;}
+#wrap.authentic #section .content .blue{display:inline-block;}
+#wrap.authentic #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; }
+#wrap.authentic #section .content .agree label{display:block; margin-bottom: 4px;}
+#wrap.authentic #section .content .agree label span{color:#b5b5b5;}
+#wrap.authentic #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}
+#wrap.authentic #section .content button.create{margin: 0 auto; margin-top:40px; margin-bottom:15px; display: block;font-size:22px; width:340px; height:60px; color:#fff; background-color:#bbb8b8; }
+#wrap.authentic #section .content button.create.active{background-color:#203864;}
+#wrap.authentic #section .content .back{font-size:20px; color:#04316f; text-align: center;}
+
+/*회원가입완료-----------------------------------------------------------*/
+#wrap.register_complete{}
+#wrap.sub.register_complete #section .wrap{padding-top: 60px;}
+#wrap.register_complete #section .content{width:1200px; margin:0 auto;}
+#wrap.register_complete #section .title p{margin-top:30px;}
+#wrap.register_complete #section ul{}
+#wrap.register_complete #section ul li:nth-child(2){margin: 0 1.5%;}
+#wrap.register_complete #section ul li{position:relative; width: 27%; height: 260px; display: inline-block; vertical-align: top; padding:55px 30px; background-color:#fff;}
+#wrap.register_complete #section ul li h3{font-size:28px; color:#203864; font-weight:700; margin-bottom:20px;}
+#wrap.register_complete #section ul li p{width: 90%; word-break:keep-all;}
+#wrap.register_complete #section ul li a{position:absolute; bottom:55px; text-align:center; transition:all .5s; width:140px; height:40px; line-height:40px; color: #203864; border:1px solid #203864;} 
+#wrap.register_complete #section ul li a:hover{background-color:#203864; color:#fff; } 
+
+/*회원가입_소셜-----------------------------------------------------------*/
+#wrap.register_sns #section .wrap{padding-bottom: 40px;}
+#wrap.register_sns #section .content{width: 1200px; margin: 0 auto;}
+#wrap.register_sns #section .content>div{background-color:#fff; width: 480px; padding: 90px 60px;display: inline-block;}
+#wrap.register_sns #section dl{padding-top: 110px; padding-left: 115px; display: inline-block; vertical-align: top;}
+#wrap.register_sns #section dl dt{font-size:24px; color:#090909; margin-bottom: 50px;}
+#wrap.register_sns #section dl dd{font-size:22px; color:#5a5a5a; line-height: 1.7;}
+#wrap.register_sns #section dl dd::before{content:""; margin-right: 10px; background: url(../images/register_check.png) no-repeat; width: 15px; height: 12px; display: inline-block; vertical-align: 2px;} 
+#wrap.register_sns #section .input input{width:100%; padding-left:17px; height: 60px;}
+#wrap.register_sns #section .input li+li{margin-top:20px;}
+#wrap.register_sns #section select{width:100%;height: 60px;  padding-left:17px; margin-top:20px;}
+#wrap.register_sns #section .checkBox{padding: 30px;}
+#wrap.register_sns #section .checkBox *{display:inline-block; color:#606060; }
+#wrap.register_sns #section .checkBox p{margin-right: 70px;}
+#wrap.register_sns #section .checkBox ul li+li{margin-left:20px;}
+#wrap.register_sns #section .content button{width:100%; height: 60px; line-height: 60px;font-size:22px;}
+#wrap.register_sns #section .content button.create{background-color:#203864; color:#fff; margin-top: 40px;}
+#wrap.register_sns #section .checkBox input[type="radio"]{display:none; }
+#wrap.register_sns #section .checkBox input[type="radio"] + em {width:18px; height:18px; margin-right:10px; vertical-align:-2px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block; background-image: url('../images/register_checkbox1.png'); }
+#wrap.register_sns #section .checkBox input[type="radio"]:checked + em {display:inline-block; background-image: url('../images/register_checkbox2.png'); }
+#wrap.register_sns #check_all[type="checkbox"]+ em {width:21px; height:16px; background-size:cover;}
+#wrap.register_sns input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
+#wrap.register_sns input[type="checkbox"] {display: none;}
+#wrap.register_sns input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
+#wrap.register_sns #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; c}
+#wrap.register_sns #section .content .agree label{display:block; margin-bottom: 4px;}
+#wrap.register_sns #section .content .agree label span{color:#b5b5b5;}
+#wrap.register_sns #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}
+#wrap.register_sns #section .content .blue{display:inline-block;}
+
+/*회원가입_소셜_실패-----------------------------------------------------------*/
+#wrap.register_sns_fail #section .wrap{padding-bottom: 40px;}
+#wrap.register_sns_fail #section .content{width: 1200px; margin: 0 auto;}
+#wrap.register_sns_fail #section .content>div{background-color:#fff; width: 480px; padding: 90px 60px;display: inline-block;}
+#wrap.register_sns_fail #section dl{padding-top: 110px; padding-left: 115px; display: inline-block; vertical-align: top;}
+#wrap.register_sns_fail #section dl dt{font-size:24px; color:#090909; margin-bottom: 50px;}
+#wrap.register_sns_fail #section dl dd{font-size:22px; color:#5a5a5a; line-height: 1.7;}
+#wrap.register_sns_fail #section dl dd::before{content:""; margin-right: 10px; background: url(../images/register_check.png) no-repeat; width: 15px; height: 12px; display: inline-block; vertical-align: 2px;} 
+#wrap.register_sns_fail #section .input input{width:100%; padding-left:17px; height: 60px;}
+#wrap.register_sns_fail #section .input li+li{margin-top:20px;}
+#wrap.register_sns_fail #section select{width:100%;height: 60px;  padding-left:17px; margin-top:20px;}
+#wrap.register_sns_fail #section .checkBox{padding: 30px;}
+#wrap.register_sns_fail #section .checkBox *{display:inline-block; color:#606060; }
+#wrap.register_sns_fail #section .checkBox p{margin-right: 70px;}
+#wrap.register_sns_fail #section .checkBox ul li+li{margin-left:20px;}
+#wrap.register_sns_fail #section .content button{width:100%; height: 60px; line-height: 60px;font-size:22px;}
+#wrap.register_sns_fail #section .content button.create{background-color:#203864; color:#fff; margin-top: 40px;}
+#wrap.register_sns_fail #section .checkBox input[type="radio"]{display:none; }
+#wrap.register_sns_fail #section .checkBox input[type="radio"] + em {width:18px; height:18px; margin-right:10px; vertical-align:-2px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block; background-image: url('../images/register_checkbox1.png'); }
+#wrap.register_sns_fail #section .checkBox input[type="radio"]:checked + em {display:inline-block; background-image: url('../images/register_checkbox2.png'); }
+#wrap.register_sns_fail #check_all[type="checkbox"]+ em {width:21px; height:16px; background-size:cover;}
+#wrap.register_sns_fail input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
+#wrap.register_sns_fail input[type="checkbox"] {display: none;}
+#wrap.register_sns_fail input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
+#wrap.register_sns_fail #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; c}
+#wrap.register_sns_fail #section .content .agree label{display:block; margin-bottom: 4px;}
+#wrap.register_sns_fail #section .content .agree label span{color:#b5b5b5;}
+#wrap.register_sns_fail #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}
+#wrap.register_sns_fail #section .content .blue{display:inline-block;}
+
+/*비밀번호 찾기-----------------------------------------------------------*/
+#wrap.searchPw{}
+#wrap.searchPw #section .content{background-color:#fff; width: 510px; padding: 80px 110px; margin:0 auto;}
+#wrap.searchPw #check_all[type="checkbox"]+ em {width:21px; height:16px; background-size:cover;}
+#wrap.searchPw input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
+#wrap.searchPw input[type="checkbox"] {display: none;}
+#wrap.searchPw input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
+#wrap.searchPw .input p{width: 125px; font-size: 22px; font-weight: 500; display:inline-block; margin: 30px 58px 20px 0;}
+#wrap.searchPw .input input{vertical-align: 0px; width:320px; height:34px; padding-left:10px;}
+#wrap.searchPw .input .sum{width: 100%; font-size:18px; color:#9d9d9d; font-weight: 400; margin-bottom: 0;}
+#wrap.searchPw #section .content button{margin: 0 auto; margin-top:40px; margin-bottom:15px; display: block;font-size:22px; width:340px; height:60px; color:#fff; background-color:#bbb8b8; }
+#wrap.searchPw #section .content button.active{background-color:#203864;}
+#wrap.searchPw #section .content .back{font-size:20px; color:#04316f; text-align: center;}
+#wrap.searchPw .step2 .input p{margin: 20px 58px 10px 0;}
+
+/*휴면계정-----------------------------------------------------------*/
+#wrap.activate{}
+#wrap.activate{}
+#wrap.activate #section .content{text-align: center; background-color:#fff; width: 390px; padding: 90px 160px; margin:0 auto;}
+#wrap.activate #section .content button{margin: 0 auto; margin-top:40px; margin-bottom:15px; display: block;font-size:22px; width:340px; height:60px; color:#fff; background-color:#bbb8b8; }
+#wrap.activate #section .content button.active{background-color:#203864;}
+#wrap.activate #section .content .back{font-size:20px; color:#04316f; text-align: center;}
+
+/*이용자설정-----------------------------------------------------------*/
+#wrap.account{}
+#wrap.account #section .content{width: 1200px; margin: 0 auto; background-color:#fff; padding: 80px;  }
+#wrap.account #section .content>div{width:52%;}
+#wrap.sub.account #section .wrap{padding-top: 50px; padding-bottom: 55px;}
+#wrap.account #section .input input{width:100%; padding-left:17px; height: 60px;}
+#wrap.account #section .input li{position:relative;}
+#wrap.account #section .input li+li{margin-top:20px;}
+#wrap.account #section select{width:100%;height: 60px;  padding-left:17px; margin-top:20px;}
+#wrap.account #section .checkBox{padding: 30px 30px 50px;}
+#wrap.account #section .checkBox *{display:inline-block; color:#606060; }
+#wrap.account #section .checkBox p{margin-right: 70px;}
+#wrap.account #section .checkBox ul li+li{margin-left:20px;}
+#wrap.account #section .checkBox input[type="radio"]{display:none; }
+#wrap.account #section .checkBox input[type="radio"] + em {width:18px; height:18px; margin-right:10px; vertical-align:-2px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block; background-image: url('../images/register_checkbox1.png'); }
+#wrap.account #section .checkBox input[type="radio"]:checked + em {display:inline-block; background-image: url('../images/register_checkbox2.png'); }
+#wrap.account #section .profile{margin-bottom: 40px; font-size:24px; font-weight:700;}
+#wrap.account #section button{font-size:20px; height:60px; line-height:60px;}
+#wrap.account #section button.email{padding:0 20px; color:#fff; background-color:#bbb8b8; position: absolute; right: -143px;}
+#wrap.account #section button.trans{right: -82px;}
+#wrap.account #section button.active{background-color:#203864; color:#fff;}
+#wrap.account #section .newsLetter{color:#606060;}
+#wrap.account #section .update{margin-top:40px;}
+#wrap.account #section .update button{width:150px;}
+#wrap.account #section .update button+button{margin-left:10px;}
+#wrap.account #section .update .cancel{background-color:transparent; border:1px solid #9d9d9d; }
+#wrap.account input[type="checkbox"]+ em {width:21px; height:16px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
+#wrap.account input[type="checkbox"] {display: none;}
+#wrap.account input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
+
+/*팝업*/
+.popup {position: fixed; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; overflow: auto; z-index: 900; box-sizing: border-box; background-color: rgba(0,0,0,0.7); text-align: center; display: none;}
+.popup:before{content: ""; display: inline-block; height: 100%; vertical-align: middle; margin-right: -0.05em;}
+.popup .wrap {padding:50px 70px; margin:10px 0px; vertical-align: middle; position: relative; z-index: 2; box-sizing: border-box; background: #fff; display: inline-block; }
+.popup .close{width:220px; height:60px; background-color:#9d9d9d; margin-top:30px; color:#fff; font-size:20px;}
+.popup h4{font-size:24px; padding-bottom: 40px;}
+
+#agree_popup .wrap p{font-size:20px;}
+#agree_popup .wrap p span{color:#114fbf;}
+
+#agree_popup .wrap p{font-size:20px;}
+#agree_popup .wrap p span{color:#114fbf;}
+
+#refuse_popup .wrap p{font-size:20px;}
+#refuse_popup .wrap p span{color:#114fbf;}
+
+
+@media (min-width: 0px) and (max-width: 1000px){
+   .pc{display: none}
+    .mobile{display: block;}     
+    img{width:100%; height:auto;}
+    #wrap{min-width:auto; }
+    #wrap .wrap{width:90% !important; min-width: auto;}
+    #wrap #section .content{width:auto !important;}
+    
+    #wrap #top .content{padding:10px 10px 0; height: 50px;}
+    #wrap #top .me{width:40px; float: right;}
+    #wrap #top .content .mypage.type2{right: -15px;}
+    #wrap #top .content .mypage.type2 ul{margin-top: 45px; padding:10px;}
+    #wrap #top .content .mypage.type2 li{font-size: 14px;}
+    
+    #wrap.sub .title h2{font-size: 22px;}
+    #wrap.sub .title p{font-size: 15px;}
+    #wrap.sub .title p a{padding-left: 10px;}
+    #wrap.sub input{font-size: 14px;}
+    #wrap.sub .blue{font-size: 13px;}
+    #wrap.sub #section .wrap{padding-top: 90px; padding-bottom: 40px;}
+    #wrap.sub{font-size: 14px;}
+    #wrap.sub select{background: url(../images/select_arrow.png) no-repeat 98% 50%/12px auto;}
+    
+/*로그인-----------------------------------------------------------*/
+    #wrap.login #section .content{padding: 20px;}
+    #wrap.login #section .input input{height:35px;}
+    #wrap.login #section .content button{height:35px; line-height: 35px; font-size: 16px;}
+    #wrap.login #section .content button.google{background-size: contain;}
+    #wrap.login #section .content .line{font-size: 14px; margin:15px  0; display: block; text-align: center; color:#606060;}
+	#wrap.login #section .content .line::after,#wrap.login #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+	#wrap.login #section .content .line::after{margin-left: 32px;}
+	#wrap.login #section .content .line::before{margin-right: 32px;}
+    
+/*회원가입-----------------------------------------------------------*/
+	#wrap.register #section .content{padding:20px; background-color:#fff; margin-top: 100px;}
+    #wrap.register #section .content>div{width: 100%;  padding: 0px;}
+    #wrap.register #section dl{position:absolute; top: 22%; left: 0; padding-left: 0; padding-top: 0;}
+    #wrap.register #section dl dt{font-size: 15px; margin-bottom: 10px;}
+    #wrap.register #section dl dd{font-size: 14px;}
+    #wrap.register #section .input li .sum{font-size:13px; margin: 5px 0 15px;}
+    #wrap.register #section .input input{height:35px; padding-left:10px;}
+    #wrap.register #section select{height:35px; font-size:14px; padding-left:10px;}
+    #wrap.register #section .input li+li{margin-top:10px;}
+    #wrap.register #section dl dd::before{width: 10px; height: 7px; background-size:cover; margin-right: 5px;}
+    #wrap.register #section .checkBox *{font-size: 12px;}
+    #wrap.register #section .checkBox{padding: 10px 5px 15px;}
+    #wrap.register #section .checkBox p{margin-right: 30px;}
+    #wrap.register #section .checkBox ul li+li{margin-left:10px;}
+    #wrap.register #section .content button{height:35px; line-height: 35px; font-size: 16px;}
+    #wrap.register #section .content .line{font-size: 14px; margin:15px  0; display: block; text-align: center; color:#606060;}
+	#wrap.register #section .content .line::after,#wrap.register #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+	#wrap.register #section .content .line::after{margin-left: 32px;}
+	#wrap.register #section .content .line::before{margin-right: 32px;}
+	#wrap.register #section .content button.google{background-size: contain;}
+/*이메일인증코드-----------------------------------------------------------*/
+    #wrap.authentic #section .content{padding:20px;}
+    #wrap.authentic .input p{font-size: 16px; margin: 15px 0 10px;}
+    #wrap.authentic .input input{width: 100%;}
+    #wrap.authentic .input .sum{font-size:13px;}
+    #wrap.authentic #section .content .agree label:first-child{font-size: 15px; margin-bottom: 10px;}
+    #wrap.authentic #section .content .agree{font-size:13px; padding-top: 20px;}
+    #wrap.authentic input[type="checkbox"]+ em{width: 10px; height: 7px; vertical-align: 1px;}
+    #wrap.authentic #check_all[type="checkbox"]+ em{width: 16px; height: 11px;}
+    #wrap.authentic #section .content button.create{height: 35px; width: 100%; font-size: 16px; margin: 20px 0 8px;}
+    #wrap.authentic #section .content .back{font-size: 15px;}
+    #wrap.authentic #section .content>p{font-size:13px;}
+/*회원가입완료-----------------------------------------------------------*/  
+    #wrap.sub.register_complete #section .wrap{padding-top:40px;}
+    #wrap.register_complete #section ul li{width:100%; padding: 15px; display: block; height: 178px; box-sizing: border-box;}
+    #wrap.register_complete #section ul li:nth-child(2){margin:1.5% 0; }
+    #wrap.register_complete #section ul li h3{margin-bottom:10px; font-size: 20px;}
+    #wrap.register_complete #section ul li p{font-size:13px;}
+    #wrap.register_complete #section ul li a{width:100px; height:30px; line-height: 30px; bottom: 10px;}
+/*회원가입_소셜-----------------------------------------------------------*/  
+    #wrap.register_sns #section .content{padding:20px; background-color:#fff; margin-top: 100px;}
+    #wrap.register_sns #section .content>div{width: 100%;  padding: 0px;}
+    #wrap.register_sns #section dl{position:absolute; top: 22%; left: 0; padding-left: 0; padding-top: 0;}
+    #wrap.register_sns #section dl dt{font-size: 15px; margin-bottom: 10px;}
+    #wrap.register_sns #section dl dd{font-size: 14px;}
+    #wrap.register_sns #section .input li .sum{font-size:14px; margin: 5px 0 15px;}
+    #wrap.register_sns #section .input input{height:35px; padding-left:10px;}
+    #wrap.register_sns #section select{height:35px; font-size:14px; padding-left:10px;} 
+    #wrap.register_sns #section .input li+li{margin-top:10px;}
+    #wrap.register_sns #section dl dd::before{width: 10px; height: 7px; background-size:cover; margin-right: 5px;}
+    #wrap.register_sns #section .checkBox *{ font-size: 12px;}
+    #wrap.register_sns #section .checkBox{padding: 10px 5px 15px;}
+    #wrap.register_sns #section .checkBox p{margin-right: 30px;}
+    #wrap.register_sns #section .checkBox ul li+li{margin-left:10px;}
+    #wrap.register_sns #section .content button{height:35px; line-height: 35px; font-size: 16px;}
+    #wrap.register_sns #section .content .agree label:first-child{font-size: 15px; margin-bottom: 10px;}
+    #wrap.register_sns #section .content .agree{font-size:13px; padding-top: 20px;}
+    #wrap.register_sns input[type="checkbox"]+ em{width: 10px; height: 7px; vertical-align: 1px;}
+    #wrap.register_sns #check_all[type="checkbox"]+ em{width: 16px; height: 11px;}
+    
+/*회원가입_소셜_실패-----------------------------------------------------------*/  
+    #wrap.register_sns_fail #section .content{padding:20px; background-color:#fff; margin-top: 100px;}
+    #wrap.register_sns_fail #section .content>div{width: 100%;  padding: 0px;}
+    #wrap.register_sns_fail #section dl{position:absolute; top: 25%; left: 0; padding-left: 0; padding-top: 0;}
+    #wrap.register_sns_fail #section dl dt{font-size: 15px; margin-bottom: 10px;}
+    #wrap.register_sns_fail #section dl dd{font-size: 14px;}
+    #wrap.register_sns_fail #section .input li .sum{font-size:14px; margin: 5px 0 15px;}
+    #wrap.register_sns_fail #section .input input{height:35px; padding-left:10px;}
+    #wrap.register_sns_fail #section select{height:35px; font-size:14px; padding-left:10px;} 
+    #wrap.register_sns_fail #section .input li+li{margin-top:10px;}
+    #wrap.register_sns_fail #section dl dd::before{width: 10px; height: 7px; background-size:cover; margin-right: 5px;}
+    #wrap.register_sns_fail #section .checkBox *{font-size: 12px;}
+    #wrap.register_sns_fail #section .checkBox{padding: 10px 5px 15px;}
+    #wrap.register_sns_fail #section .checkBox p{margin-right: 30px;}
+    #wrap.register_sns_fail #section .checkBox ul li+li{margin-left:10px;}
+    #wrap.register_sns_fail #section .content button{height:35px; line-height: 35px; font-size: 16px;}
+    #wrap.register_sns_fail #section .content .agree label:first-child{font-size: 15px; margin-bottom: 10px;}
+    #wrap.register_sns_fail #section .content .agree{font-size:13px; padding-top: 20px;}
+    #wrap.register_sns_fail input[type="checkbox"]+ em{width: 10px; height: 7px; vertical-align: 1px;}
+    #wrap.register_sns_fail #check_all[type="checkbox"]+ em{width: 16px; height: 11px;}
+
+/*비밀번호 찾기-----------------------------------------------------------*/ 
+	#wrap.searchPw #section .wrap{padding-bottom:150px;}
+    #wrap.searchPw #section .content{padding:20px;}
+    #wrap.searchPw #section .content>p{font-size:13px;}
+    #wrap.searchPw .input p{font-size:16px; margin: 15px 0 10px;}
+    #wrap.searchPw .input input{width:100%;}
+    #wrap.searchPw .input .sum{font-size:13px;}
+    #wrap.searchPw #section .content button{height: 35px; width:100%; font-size: 16px; margin: 20px 0 8px;}
+    #wrap.searchPw #section .content .back{font-size:15px;}
+    #wrap.searchPw .step2 .input p{margin: 15px 0 10px;}
+/*휴면계정-----------------------------------------------------------*/  
+    #wrap.activate #section .content{padding:20px; word-break:keep-all;}
+    #wrap.activate #section .content button{height:35px;width:100%; font-size: 16px;  margin: 20px 0 8px;}
+    #wrap.activate #section .content .back{font-size:15px;}
+    #wrap.activate #section .wrap{padding-bottom:230px;}
+/*이용자설정-----------------------------------------------------------*/   
+#wrap.sub.account #section .wrap{padding-bottom:120px;}
+    #wrap.account #section .content{padding:20px;}
+    #wrap.account #section .content>div{width: 100%;}
+    #wrap.account #section .profile{font-size:17px;}
+    #wrap.account #section button.email{padding:0 8px; font-size: 13px; right: 0; height: 35px; line-height: 35px;}
+	#wrap.account #section .input input{height:35px; padding-left:10px;}
+	#wrap.account #section select{height:35px; font-size:14px; padding-left:10px;}
+	#wrap.account #section .input input[name="email"]{padding-right: 27%;}
+	#wrap.account #section .checkBox *{font-size: 15px;}
+    #wrap.account #section .checkBox{padding: 10px 5px 15px;}
+    #wrap.account #section .checkBox p{margin-right: 30px;}
+    #wrap.account #section .checkBox ul li+li{margin-left:10px;}
+    #wrap.account input[type="checkbox"]+ em{width: 16px;height: 11px;}
+    #wrap.account #section .profile{margin-bottom: 25px;}
+    #wrap.account #section .update{margin-top: 20px;}
+    #wrap.account #section .update button{width:47%; font-size: 13px;}
+    #wrap.account #section button{height: 35px; line-height: 35px;}
+/*팝업*/    
+	.popup .wrap{padding:20px 0px; width:90%; }
+   	.popup h4{font-size: 17px; padding-bottom: 20px;}
+	.popup .close{width: 100px; height: 35px; font-size: 15px;     margin-top: 20px;}
+	
+	#agree_popup .wrap p{font-size: 14px;}
+	
+	#refuse_popup .wrap p{font-size: 14px;}
+
+}
