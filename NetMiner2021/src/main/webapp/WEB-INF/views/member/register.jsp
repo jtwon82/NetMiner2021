@@ -16,12 +16,12 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="../css/style.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="../css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="../js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="../js/swiper.min.js" type="text/javascript"></script>
-		<script src="../js/gnb.js" type="text/javascript"></script>
-		<script src="../js/main.js" type="text/javascript"></script>
+		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="resources/js/gnb.js" type="text/javascript"></script>
+		<script src="resources/js/main.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub register">
@@ -29,18 +29,19 @@
 				<div class="wrap">
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
-						<p>이미 계정을 가지고 있습니까? <a href="#">로그인</a></p>
+						<p>이미 계정을 가지고 있습니까? <a href="./login">로그인</a></p>
 					</div>
 					<div class="content">
 						<div>
+							<form action="./checkEmail" method="POST">
 							<ul class="input">
-								<li><input placeholder="이메일" type="text" /></li>
-								<li><input placeholder="비밀번호" type="password" /><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
-								<li><input placeholder="소속기관" type="text" /></li>
+								<li><input placeholder="이메일" type="text" name="email"/></li>
+								<li><input placeholder="비밀번호" type="password" name="pwd"/><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
+								<li><input placeholder="소속기관" type="text" name="company"/></li>
 							</ul>
 							<select>
-								<option value="" disabled selected hidden>국가</option>
-								<option value=""></option>
+								<option value="" disabled selected hidden name="nation">국가</option>
+								<option value="korea">한국</option>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
@@ -48,13 +49,14 @@
 							<div class="checkBox">
 								<p>이용용도</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1"><em></em>학술용</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1"><em></em>일반/기업용</label></li>
+									<li><label><input type="radio" checked="checked" name="useCode" value="01"><em></em>학술용</label></li>
+									<li ><label><input type="radio" checked="checked" name="useCode" value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<button class="authentic trs">이메일 인증</button>
+							<button class="authentic trs" type="submit">이메일 인증</button>
+							</form>
 							<span class="line">또는</span>
-							<button class="google trs">Continue in with Google</button>
+							<button class="google trs" onClick="location.href='./gooleJoin'">Continue in with Google</button>
 						</div>
 						<dl>
 							<dt>NetMiner 365에 회원으로 가입하면,</dt>

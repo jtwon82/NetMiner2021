@@ -10,7 +10,7 @@
 	Hello world!  
 </h1>
 
-<button onclick="location='login.jsp'"> login 기능 </button>
+<a href="./login"> login 기능 </a>
 
 </body>
 </html>
