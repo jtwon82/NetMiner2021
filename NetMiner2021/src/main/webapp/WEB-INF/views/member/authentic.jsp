@@ -21,9 +21,10 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<script src="resources/js/main.js" type="text/javascript"></script>
-	</head>
+	    <script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+ </head>
 	<body>
+	<div id = "top"></div>
 		<div id="wrap" class="sub authentic">
 			<div id="section">
 				<div class="wrap">
@@ -38,13 +39,15 @@
 							<input placeholder="" type="text" />
 							<p class="sum">메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.<br>또는 <a href="#" class="blue">인증코드 발송</a></p>
 						</div>
+						<form action="./">
 						<div class="agree">
 							<label><input id="check_all" type="checkbox" name=""><em></em>모두 동의합니다.</label>
 							<label><input id="check1" class="check" type="checkbox" name=""><em></em>만 16 세 이상입니다 <span>(필수)</span></label>
 							<label><input id="check2" class="check" type="checkbox" name=""><em></em><a href="#" class="blue">이용약관</a>과 <a href="#" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
 							<label><input id="check2" class="check" type="checkbox" name=""><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(필수)</span></label>
 						</div>
-						<button class="create trs active">계정 생성</button>
+						<button class="create trs active" type="submit">계정 생성</button>
+						</form>
 						<a class="back" href="#" >전 단계로 돌아가기</a>
 					</div>
 					

@@ -39,8 +39,8 @@
 								<li><input placeholder="비밀번호" type="password" name="pwd"/><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
 								<li><input placeholder="소속기관" type="text" name="company"/></li>
 							</ul>
-							<select>
-								<option value="" disabled selected hidden name="nation">국가</option>
+							<select name="nation">
+								<option value="" disabled selected hidden >국가</option>
 								<option value="korea">한국</option>
 								<option value=""></option>
 								<option value=""></option>

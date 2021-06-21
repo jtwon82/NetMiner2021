@@ -21,7 +21,7 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<script src="resources/js/main.js" type="text/javascript"></script>
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub login">
@@ -33,7 +33,7 @@
 					</div>
 					<div class="content">
 						<ul class="input">
-							<li><input placeholder="이메일" type="text" /></li>
+							<li><input placeholder="이메일" type="text"  /></li>
 							<li><input placeholder="비밀번호" type="password" /></li>
 						</ul>
 						<a class="searchPw blue" href="./findPwd">비밀번호를 잊으셨나요?</a>

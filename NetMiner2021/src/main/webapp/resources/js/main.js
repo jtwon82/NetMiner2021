@@ -24,9 +24,11 @@ $(document).ready(function() {
 		$("#"+id).fadeIn();
 	}
 	
-	$(".popup .close, .popup .closeBtn,").click(function() {
+	$(".popup .close, .popup .closeBtn").click(function() {
 		$(".popup").fadeOut();
 		$("body").css("overflow-y","auto");
 	});
-
+	
+	
 })
+
