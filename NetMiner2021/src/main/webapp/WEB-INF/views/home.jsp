@@ -6,11 +6,6 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
-<a href="./login"> login 기능 </a>
-
+<jsp:forward page="./homePage/main.jsp"></jsp:forward>
 </body>
 </html>

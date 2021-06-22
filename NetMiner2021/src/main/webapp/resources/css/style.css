@@ -131,7 +131,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 
 #wrap #main .slider{background-size: cover;  background-repeat: no-repeat;}
 #wrap #main .slider .text{color:#fff; padding:245px 0 200px  205px;}
-#wrap #main .slider .text h2{font-size:50px; font-weight:900;l}
+#wrap #main .slider .text h2{font-size:50px; font-weight:900;}
 #wrap #main .slider .text p{font-size:24px; padding-top:55px;}
 
 #wrap .footer{}
@@ -257,7 +257,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.register_sns input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
 #wrap.register_sns input[type="checkbox"] {display: none;}
 #wrap.register_sns input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
-#wrap.register_sns #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; c}
+#wrap.register_sns #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px;}
 #wrap.register_sns #section .content .agree label{display:block; margin-bottom: 4px;}
 #wrap.register_sns #section .content .agree label span{color:#b5b5b5;}
 #wrap.register_sns #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}
@@ -287,7 +287,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.register_sns_fail input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('../images/authentic_check.png'); }
 #wrap.register_sns_fail input[type="checkbox"] {display: none;}
 #wrap.register_sns_fail input[type="checkbox"]:checked + em {background-image:url(../images/authentic_check_active.png); background-size:cover; }
-#wrap.register_sns_fail #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; c}
+#wrap.register_sns_fail #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px;}
 #wrap.register_sns_fail #section .content .agree label{display:block; margin-bottom: 4px;}
 #wrap.register_sns_fail #section .content .agree label span{color:#b5b5b5;}
 #wrap.register_sns_fail #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}

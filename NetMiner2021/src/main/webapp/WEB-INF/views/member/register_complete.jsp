@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -31,7 +32,7 @@
 						<!-- 로그인 후-->
 						<div class="mypage obj type2" >
 							<p class="me">
-								<img src="images/top_me.png" alt="mypage">
+								<img src="resources/images/top_me.png" alt="mypage">
 							</p>
 							<ul>
 								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>

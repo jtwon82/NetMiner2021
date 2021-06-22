@@ -21,5 +21,24 @@ public class MemberServiceImpl implements MemberService{
 		
 		return "";
 	}
+	@Override
+	public MemberVo getUserInfo(MemberVo vo) {
+		MemberVo getMemberVo = null;
+		
+		getMemberVo = memberDao.getUserInfo(vo);
+		
+		return getMemberVo;
+	}
+	@Override
+	public void signUp(MemberVo memberVo) {
+		
+		memberDao.signUp(memberVo);
+		
+	}
+	@Override
+	public void updateAuthkey(MemberVo memberVo) {
+		memberDao.updateAuthkey(memberVo);
+		
+	}
 
 }

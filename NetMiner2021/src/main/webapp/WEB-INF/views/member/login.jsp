@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -32,12 +33,14 @@
 						<p>아직 계정이 없습니까?<a href="./register">등록</a></p>
 					</div>
 					<div class="content">
+						<form action="./loginUser" method="POST">
 						<ul class="input">
-							<li><input placeholder="이메일" type="text"  /></li>
-							<li><input placeholder="비밀번호" type="password" /></li>
-						</ul>
+							<li><input placeholder="이메일" type="text"  name="email"/></li>
+							<li><input placeholder="비밀번호" type="password" name="pwd"/></li>
+						</ul>						
 						<a class="searchPw blue" href="./findPwd">비밀번호를 잊으셨나요?</a>
-						<button class="login trs">로그인</button>
+						<button class="login trs" type="submit">로그인</button>
+						</form>
 						<span class="line">또는</span>
 						<button class="google trs">Sign in with Google</button>
 					</div>

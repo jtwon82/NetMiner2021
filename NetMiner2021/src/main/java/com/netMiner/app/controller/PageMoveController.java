@@ -35,5 +35,10 @@ public class PageMoveController extends HttpServlet {
 		
 		return "member/register_sns";
 	}
-
+	
+	@RequestMapping(value="moveCheckEmail", method = RequestMethod.GET)
+	public String moveCheckEmail() {
+		
+		return "member/authentic";
+	}
 }

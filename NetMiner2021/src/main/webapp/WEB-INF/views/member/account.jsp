@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -21,7 +22,7 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<!-- <script src="resources/js/main.js" type="text/javascript"></script> -->
+		<script src="resources/js/main.js" type="text/javascript"></script> 
 	</head>
 	<body>
 		<div id="wrap" class="sub account">
@@ -31,10 +32,10 @@
 						<!-- 로그인 후-->
 						<div class="mypage obj type2" >
 							<p class="me">
-								<img src="images/top_me.png" alt="mypage">
+								<img src="resources/images/top_me.png" alt="mypage">
 							</p>
 							<ul>
-								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>
+								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li> 
 								<li class="account"><a href="#" class="trs">Account</a></li>
 								<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 							</ul>

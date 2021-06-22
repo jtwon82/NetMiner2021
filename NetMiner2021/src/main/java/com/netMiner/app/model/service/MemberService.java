@@ -8,4 +8,10 @@ public interface MemberService {
 
 	String checkJoin(MemberVo vo);
 
+	MemberVo getUserInfo(MemberVo memberVo);
+
+	void signUp(MemberVo memberVo);
+
+	void updateAuthkey(MemberVo memberVo);
+
 }

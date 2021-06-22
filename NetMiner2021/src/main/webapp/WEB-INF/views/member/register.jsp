@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -21,9 +22,10 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<script src="resources/js/main.js" type="text/javascript"></script>
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
+		<div id="top"></div>
 		<div id="wrap" class="sub register">
 			<div id="section">
 				<div class="wrap">
@@ -32,14 +34,14 @@
 						<p>이미 계정을 가지고 있습니까? <a href="./login">로그인</a></p>
 					</div>
 					<div class="content">
-						<div>
-							<form action="./checkEmail" method="POST">
+						<div>	
+											
 							<ul class="input">
-								<li><input placeholder="이메일" type="text" name="email"/></li>
-								<li><input placeholder="비밀번호" type="password" name="pwd"/><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
-								<li><input placeholder="소속기관" type="text" name="company"/></li>
+								<li><input placeholder="이메일" type="text" name="email" id ="email"/></li>
+								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd"/><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
+								<li><input placeholder="소속기관" type="text" name="company" id="company"/></li>
 							</ul>
-							<select name="nation">
+							<select name="nation" id="nation">
 								<option value="" disabled selected hidden >국가</option>
 								<option value="korea">한국</option>
 								<option value=""></option>
@@ -53,8 +55,7 @@
 									<li ><label><input type="radio" checked="checked" name="useCode" value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<button class="authentic trs" type="submit">이메일 인증</button>
-							</form>
+							<button class="authentic trs" onClick="checkEmail()">이메일 인증</button>							
 							<span class="line">또는</span>
 							<button class="google trs" onClick="location.href='./gooleJoin'">Continue in with Google</button>
 						</div>

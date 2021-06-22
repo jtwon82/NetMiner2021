@@ -4,7 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -60,15 +62,46 @@ public class MemberController {
 
 		return "home";
 	}
-
-	@RequestMapping(value="checkEmail", method = RequestMethod.POST)
+	
+	@RequestMapping(value="loginUser", method = RequestMethod.POST) 
+	public ModelAndView loginUser(HttpServletRequest request,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		MemberVo memberVo = new MemberVo();
+		try {
+			request.setCharacterEncoding("UTF-8");
+			String userId = request.getParameter("email");
+			String userPwd = request.getParameter("pwd");
+			
+			memberVo.setUserId(userId);
+			memberVo.setUserPwd(userPwd);
+			
+			memberVo = memberService.getUserInfo(memberVo);
+			
+			if (memberVo == null) {
+				mv.setViewName("homePage/register");
+			} else {
+				session.setAttribute("memberVo", memberVo);
+				mv.setViewName("homePage/main");
+			}
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="logOut", method = RequestMethod.GET)
+	public String logOut(HttpSession session) {
+		session.invalidate();
+		return "homePage/main";
+	}
+	
+	@RequestMapping(value="registerStep1", method = RequestMethod.POST)
 	public ModelAndView goCheckEmail(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
-		if (session.getAttribute("randomNumber") == null  ) {
-			mv.setViewName("member/register");
-			return mv;
-		}
+		
 		
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -78,22 +111,26 @@ public class MemberController {
 			String company = request.getParameter("company");
 			String nation = request.getParameter("nation");
 			String useCode = request.getParameter("useCode");
+			String marketYn = request.getParameter("marketYn");
 
 			memberVo.setUserId(userId);
 			memberVo.setUserPwd(userPwd);
 			memberVo.setCompany(company);
 			memberVo.setNation(nation);
 			memberVo.setUseCode(useCode);
-			logger.info(memberVo.toString());
-			 
-			String randomNumber = (String) session.getAttribute("randomNumber");
-			if (session.getAttribute("randomNumber") == null) {
-				 randomNumber = sendEmail.sendCheckEmail(userId);				
+			memberVo.setMarketYn(marketYn);
+			if (nation.equals("korea")) {
+				memberVo.setLanguage("ko");
+			} else {
+				memberVo.setLanguage("en");
 			}
-			logger.info(randomNumber);
-			mv.setViewName("member/authentic");
-			session.setAttribute("member", memberVo);
-			session.setAttribute("randomNumber", randomNumber);
+			logger.info(memberVo.toString());
+			memberService.signUp(memberVo);			 
+	
+			//session.setAttribute("userId", memberVo.getUserId());
+			session.setAttribute("memberVo", memberVo);
+			
+		mv.setViewName("member/authentic");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,7 +140,17 @@ public class MemberController {
 		return mv;
 	}
 	
+	//email 재인증 또는 추후 회원정보 변경시 사용 
+	@RequestMapping(value="emailSender" , method=RequestMethod.GET)
+	public ModelAndView sendEmail(HttpSession session, ModelAndView mv) {
 	
+		String userId = (String) session.getAttribute("userId");
+		String randomNumber = sendEmail.sendCheckEmail(userId);
+
+		mv.addObject("randomNumber", randomNumber);
+		mv.setViewName("jsonView");
+		return mv;
+	}
 	
 
 	/*
