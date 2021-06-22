@@ -49,24 +49,17 @@ function checkEmail (){
 	$(function(){
 		$.ajax({
 			url :"./emailSender",
-			type:"GET",
+			type:"POST",
 			data:{
-				'userId':userId
+				'userId': userId,
+				'userpwd' : userpwd,
+				'company' : company,
+				'nation' : nation,
+				'useCode' : useCode
 			},
 			success: function (data){
-				var userInfo = new Object();
-				userInfo.userId = userId;
-				userInfo.userPwd = userpwd;
-				userInfo.company = company;
-				userInfo.nation = nation;
-				userInfo.useCode = useCode;
 				sessionStorage.setItem("randomNumber", data.randomNumber);
 				sessionStorage.setItem("email", userId);
-				sessionStorage.setItem("userpwd", userpwd);
-				sessionStorage.setItem("company", company);
-				sessionStorage.setItem("nation", nation);
-				sessionStorage.setItem("useCode", useCode);
-				
 				window.location.href= "./moveCheckEmail";
 			} 
 			
@@ -82,24 +75,28 @@ function register() {
 	}
 	
 	var email = sessionStorage.getItem("email");
-	var userPwd = sessionStorage.getItem("userpwd");
-	var company = sessionStorage.getItem("company");
-	var nation = sessionStorage.getItem("nation");
-	var useCode =  sessionStorage.getItem("useCode");
-	
 	$(function(){
 		$.ajax({
 			url :"./registerStep1",
 			type:"POST",
 			data:{
-				'email':email, 'pwd' :userPwd, 'company' : company , 'nation' : nation, 'useCode' : useCode, 'marketYn': marketYn 
+				'email':email, 'marketYn': marketYn 
 			},
 			success: function (data){
 				alert("회원가입 완료");
-				
+				sessionStorage.clear();
 				window.location.href= "./";
 			} 
 			
 		})
 	});
 }
+
+const onClickGoogleLogin = (e) => {
+		window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=3052517468-u80jg09gaa920p5sm1brodn0bvm412os.apps.googleusercontent.com" +
+				"&redirect_uri=http://localhost:8080/app/google/auth" +
+				"&response_type=code&scope=email%20profile%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file&access_type=offline")
+	}
+
+const googleLoginBtn = document.getElementById("google login");
+googleLoginBtn.addEventListener("click", onClickGoogleLogin) 

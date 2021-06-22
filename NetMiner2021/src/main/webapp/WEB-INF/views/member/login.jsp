@@ -42,7 +42,7 @@
 						<button class="login trs" type="submit">로그인</button>
 						</form>
 						<span class="line">또는</span>
-						<button class="google trs">Sign in with Google</button>
+						<button class="google trs" id="google login">Sign in with Google</button>
 					</div>
 					
 				</div>

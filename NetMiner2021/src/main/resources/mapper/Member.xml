@@ -30,6 +30,8 @@
 	#{userId} , PASSWORD(#{userPwd}) , #{company}, 
 	#{nation}  , #{useCode} , #{language} ,#{marketYn} , now(), now(), now()
 	);
+	
+	DELETE FROM netminer.MEMBER_INFO_TEMP WHERE USER_ID = #{userId};
  	</insert>
  	
  	<update id="updateAuthkey" parameterType="MemberVo">
@@ -37,4 +39,18 @@
  	SET AUTHKEY = #{authKey}
  	WHERE USER_ID = #{userId};
  	</update>
+ 	
+ 	
+ 	<insert id="insertMemberInfoTmp" parameterType="MemberVo">
+ 	INSERT INTO netminer.MEMBER_INFO_TEMP
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE )
+	VALUES( 
+	#{userId} , PASSWORD(#{userPwd}) , #{company}, #{nation}  , #{useCode} , #{language} 
+	);
+ 	</insert>
+ 	
+ 	<select id="getUserInfoTmp" resultType="MemberVo" parameterType="MemberVo">
+ 	select * from NetMiner.MEMBER_INFO_TEMP
+ 	where USER_ID = #{userId};
+ 	</select>
  </mapper>

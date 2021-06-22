@@ -40,5 +40,15 @@ public class MemberServiceImpl implements MemberService{
 		memberDao.updateAuthkey(memberVo);
 		
 	}
+	@Override
+	public void insertMemberInfoTmp(MemberVo memberVo) {
+		memberDao.insertMemberInfoTmp(memberVo);
+		
+	}
+	@Override
+	public MemberVo getUserInfoTmp(MemberVo memberVo) {
+		MemberVo member = memberDao.getUserInfoTmp(memberVo);
+		return member;
+	}
 
 }

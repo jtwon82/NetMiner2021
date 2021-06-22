@@ -44,4 +44,17 @@ public class MemberDaoImpl implements MemberDao{
 		
 	}
 
+	@Override
+	public void insertMemberInfoTmp(MemberVo memberVo) {
+		
+		sqlSession.insert("insertMemberInfoTmp", memberVo);
+		
+	}
+
+	@Override
+	public MemberVo getUserInfoTmp(MemberVo memberVo) {
+		MemberVo result = sqlSession.selectOne("getUserInfoTmp", memberVo);
+		return result;
+	}
+
 }

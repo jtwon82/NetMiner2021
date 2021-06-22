@@ -14,4 +14,8 @@ public interface MemberService {
 
 	void updateAuthkey(MemberVo memberVo);
 
+	void insertMemberInfoTmp(MemberVo memberVo);
+
+	MemberVo getUserInfoTmp(MemberVo memberVo);
+
 }
