@@ -51,8 +51,8 @@ function checkEmail (){
 			url :"./emailSender",
 			type:"POST",
 			data:{
-				'userId': userId,
-				'userpwd' : userpwd,
+				'email': userId,
+				'pwd' : userpwd,
 				'company' : company,
 				'nation' : nation,
 				'useCode' : useCode
@@ -77,7 +77,7 @@ function register() {
 	var email = sessionStorage.getItem("email");
 	$(function(){
 		$.ajax({
-			url :"./registerStep1",
+			url :"./registerStep",
 			type:"POST",
 			data:{
 				'email':email, 'marketYn': marketYn 
@@ -91,12 +91,49 @@ function register() {
 		})
 	});
 }
+function googleLogin(){
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://localhost:8080/app/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	
+}
 
-const onClickGoogleLogin = (e) => {
-		window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=3052517468-u80jg09gaa920p5sm1brodn0bvm412os.apps.googleusercontent.com" +
-				"&redirect_uri=http://localhost:8080/app/google/auth" +
-				"&response_type=code&scope=email%20profile%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file&access_type=offline")
+
+function registerSns(pwd) {
+	console.log(pwd);
+	var userId = $("#email").val();
+	var userpwd = pwd;
+	var company = $("#company").val();
+	var nation = $("#nation").val();
+	var useCode = $('input:radio[name="useCode"]:checked').val();
+	var marketYn = "N";
+	
+	if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+		marketYn = "Y";
 	}
+	
+	$(function(){
+		$.ajax({
+			url :"./registerSNS",
+			type:"POST",
+			data:{
+				'email': userId,
+				'pwd' : userpwd,
+				'company' : company,
+				'nation' : nation,
+				'useCode' : useCode,
+				'marketYn': marketYn 
+			},
+			success: function (data){
+				alert("회원가입 완료");
+				window.location.href= "./";
+			} 
+			
+		})
+	});
+}
+function googleRegister() {
+		window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://localhost:8080/app/socialRegister&response_type=code&scope=email%20profile%20openid&access_type=offline";
+}
 
-const googleLoginBtn = document.getElementById("google login");
-googleLoginBtn.addEventListener("click", onClickGoogleLogin) 
+
+
+

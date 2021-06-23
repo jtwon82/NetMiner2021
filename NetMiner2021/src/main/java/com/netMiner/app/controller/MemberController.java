@@ -3,25 +3,19 @@ package com.netMiner.app.controller;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.config.SendEmail;
@@ -78,7 +72,7 @@ public class MemberController {
 			memberVo = memberService.getUserInfo(memberVo);
 			
 			if (memberVo == null) {
-				mv.setViewName("homePage/register");
+				mv.setViewName("member/register");
 			} else {
 				session.setAttribute("memberVo", memberVo);
 				mv.setViewName("homePage/main");
@@ -97,7 +91,7 @@ public class MemberController {
 		return "homePage/main";
 	}
 	
-	@RequestMapping(value="registerStep1", method = RequestMethod.POST)
+	@RequestMapping(value="registerStep", method = RequestMethod.POST)
 	public ModelAndView goCheckEmail(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
@@ -113,7 +107,7 @@ public class MemberController {
 			memberVo.setMarketYn(marketYn);
 			
 			logger.info(memberVo.toString());
-			memberService.signUp(memberVo);			 
+			memberService.signUpGeneral(memberVo);			 
 	
 			session.setAttribute("memberVo", memberVo);
 			
@@ -167,5 +161,44 @@ public class MemberController {
 		return mv;
 	}
 
+	@RequestMapping(value="registerSNS" , method=RequestMethod.POST)
+	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request) {
+
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MemberVo memberVo = new MemberVo();
+		
+		String userId = request.getParameter("email");
+		String userPwd = request.getParameter("pwd");
+		String company = request.getParameter("company");
+		String nation = request.getParameter("nation");
+		String useCode = request.getParameter("useCode");
+		String marketYn = StringUtils.trimToNull(request.getParameter("marketYn")) == null ? "N" : "Y";
+		
+		memberVo.setUserId(userId);
+		memberVo.setUserPwd(userPwd);
+		memberVo.setCompany(company);
+		memberVo.setNation(nation);
+		memberVo.setUseCode(useCode);
+		memberVo.setMarketYn(marketYn);
+		
+		if (nation.equals("korea")) {
+			memberVo.setLanguage("ko");
+		} else {
+			memberVo.setLanguage("en");
+		}
+		logger.info("memberVo - {}", memberVo.toString());
+		memberService.signUp(memberVo);
+		
+		session.setAttribute("memberVo", memberVo);
+		mv.setViewName("homePage/main");
+		
+		return mv;
+	}
+		 
 
 }

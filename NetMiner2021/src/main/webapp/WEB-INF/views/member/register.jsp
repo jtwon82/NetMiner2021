@@ -57,7 +57,7 @@
 							</div>
 							<button class="authentic trs" onClick="checkEmail()">이메일 인증</button>							
 							<span class="line">또는</span>
-							<button class="google trs" onClick="location.href='./gooleJoin'">Continue in with Google</button>
+							<button class="google trs" onClick="googleRegister();">Continue in with Google</button>
 						</div>
 						<dl>
 							<dt>NetMiner 365에 회원으로 가입하면,</dt>

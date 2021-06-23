@@ -31,8 +31,10 @@
 	#{nation}  , #{useCode} , #{language} ,#{marketYn} , now(), now(), now()
 	);
 	
-	DELETE FROM netminer.MEMBER_INFO_TEMP WHERE USER_ID = #{userId};
  	</insert>
+	<delete id="deleteMemberInfoTmp">
+	DELETE FROM netminer.MEMBER_INFO_TEMP WHERE USER_ID = #{userId};
+ 	</delete>
  	
  	<update id="updateAuthkey" parameterType="MemberVo">
  	UPDATE netminer.member_info
@@ -53,4 +55,19 @@
  	select * from NetMiner.MEMBER_INFO_TEMP
  	where USER_ID = #{userId};
  	</select>
+ 	
+ 	<insert id="signUpGeneral" parameterType="MemberVo">
+ 	INSERT INTO netminer.member_info
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
+	SELECT USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, `LANGUAGE` ,#{marketYn} AS MARKET_YN , NOW() AS MARKET_DATE, NOW() AS LAST_LOGIN_DATE, NOW() AS LAST_LOGIN_DATE  
+	FROM netminer.member_info_temp;
+ 	;
+ 	</insert>
+ 	<update id="updateLastLoginDate" parameterType="MemberVo">
+ 	UPDATE NetMiner.MEMBER_INFO 
+ 	SET LAST_LOGIN_DATE = NOW() 
+ 	WHERE USER_ID = #{userId}
+	and USER_PWD  = password(#{userPwd}); 
+ 	</update>
+ 	
  </mapper>

@@ -25,6 +25,7 @@
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
+	<div id="top"></div>
 		<div id="wrap" class="sub login">
 			<div id="section">
 				<div class="wrap">
@@ -42,7 +43,7 @@
 						<button class="login trs" type="submit">로그인</button>
 						</form>
 						<span class="line">또는</span>
-						<button class="google trs" id="google login">Sign in with Google</button>
+						<button class="google trs" onClick="googleLogin();">Sign in with Google</button>
 					</div>
 					
 				</div>

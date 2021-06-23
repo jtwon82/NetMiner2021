@@ -18,4 +18,7 @@ public interface MemberService {
 
 	MemberVo getUserInfoTmp(MemberVo memberVo);
 
+	void signUpGeneral(MemberVo memberVo);
+
+	
 }

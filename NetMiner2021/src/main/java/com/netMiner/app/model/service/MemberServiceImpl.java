@@ -50,5 +50,10 @@ public class MemberServiceImpl implements MemberService{
 		MemberVo member = memberDao.getUserInfoTmp(memberVo);
 		return member;
 	}
+	@Override
+	public void signUpGeneral(MemberVo memberVo) {
+		memberDao.signUpGeneral(memberVo);
+		
+	}
 
 }

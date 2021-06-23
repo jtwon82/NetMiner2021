@@ -1,6 +1,7 @@
 package com.netMiner.app.controller;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="gooleJoin", method = RequestMethod.GET)
-	public String goGoogle() {
+	public String goGoogle(HttpServletRequest request) {
 		
 		return "member/register_sns";
 	}

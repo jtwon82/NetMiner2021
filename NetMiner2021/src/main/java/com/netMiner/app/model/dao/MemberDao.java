@@ -16,4 +16,6 @@ public interface MemberDao {
 
 	MemberVo getUserInfoTmp(MemberVo memberVo);
 
+	void signUpGeneral(MemberVo memberVo);
+
 }
