@@ -10,3 +10,23 @@ function noEvent() {
         return false;
     }
 }
+
+$(function (){
+	$.ajax({
+		url :"./getNationCode",
+			type:"GET",
+			success: function (data){
+				 var nation = data.NationVo;
+				 var html ="";
+				$.each(nation , function (i){
+					var nationCode = nation[i].NATION_CODE;
+					var nationNameKr = nation[i].NATION_NAME_KR;
+					
+					html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 
+				});
+				$("#nation").empty();
+				$("#nation").append(html);
+			} 
+	
+	});
+})

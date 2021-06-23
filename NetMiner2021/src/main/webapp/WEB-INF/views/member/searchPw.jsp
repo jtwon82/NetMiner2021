@@ -43,7 +43,7 @@
 	메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.</p>
 							</div>
 							<button class="requestPw trs active" onClick="resetPwd();">비밀번호 재설정 요청</button>
-							<a class="back" href="#" >로그인으로 돌아가기 </a>
+							<a class="back" href="./login" >로그인으로 돌아가기 </a>
 						</div>
 					</div>
 					

@@ -23,6 +23,7 @@
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="resources/js/event.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -43,7 +44,7 @@
 							</ul>
 							<select name="nation" id="nation">
 								<option value="" disabled selected hidden >국가</option>
-								<option value="korea">한국</option>
+								<option value="">한국</option>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>

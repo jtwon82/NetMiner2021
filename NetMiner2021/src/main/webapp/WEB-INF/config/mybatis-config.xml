@@ -7,8 +7,10 @@
   </settings>
   <typeAliases>
    <typeAlias type="com.netMiner.app.model.vo.MemberVo" alias="MemberVo"/>
+   <typeAlias type="com.netMiner.app.model.vo.NationVo" alias="NationVo"/>
   </typeAliases>
   <mappers>
     <mapper resource="/mapper/Member.xml"/>
+    <mapper resource="/mapper/Select.xml"/>
   </mappers>
 </configuration>
