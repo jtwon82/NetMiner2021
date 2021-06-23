@@ -32,7 +32,6 @@ $(document).ready(function() {
 	$(".content .input #code").on('input',function(){
 		var randomNumber = sessionStorage.getItem("randomNumber");
 		var inputNumber = $("#code").val();
-		console.log(randomNumber);
 		if (inputNumber==randomNumber) {
 			alert("인증완료 되었습니다.");
 		}
@@ -92,7 +91,7 @@ function register() {
 	});
 }
 function googleLogin(){
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://localhost:8080/app/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
 	
 }
 
@@ -131,9 +130,24 @@ function registerSns(pwd) {
 	});
 }
 function googleRegister() {
-		window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://localhost:8080/app/socialRegister&response_type=code&scope=email%20profile%20openid&access_type=offline";
+		window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
+function resetPwd() {
+	var userId = $("#email").val();
+	
+	$(function (){
+		$.ajax({
+			url:"./resetPwd",
+			type:"POST",
+			data:{'email': userId},
+			success : function (data){
+				console.log(data);
+			}
+				
+		})
+	});
+}
 
 
 

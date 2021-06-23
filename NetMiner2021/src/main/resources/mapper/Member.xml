@@ -18,13 +18,13 @@
  	</select>
  
  	<select id="getUserInfo" resultType="MemberVo" parameterType="MemberVo">
- 	select * from netminer.member_info mi 
+ 	select * from NetMiner.MEMBER_INFO mi 
 	where mi.USER_ID = #{userId}
 	and mi.USER_PWD  = password(#{userPwd});
  	</select>
  	
  	<insert id="insertSignUp" parameterType="MemberVo">
- 	INSERT INTO netminer.member_info
+ 	INSERT INTO NetMiner.MEMBER_INFO
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
 	VALUES( 
 	#{userId} , PASSWORD(#{userPwd}) , #{company}, 
@@ -33,18 +33,18 @@
 	
  	</insert>
 	<delete id="deleteMemberInfoTmp">
-	DELETE FROM netminer.MEMBER_INFO_TEMP WHERE USER_ID = #{userId};
+	DELETE FROM NetMiner.MEMBER_INFO_TEMP WHERE USER_ID = #{userId};
  	</delete>
  	
  	<update id="updateAuthkey" parameterType="MemberVo">
- 	UPDATE netminer.member_info
+ 	UPDATE NetMiner.MEMBER_INFO
  	SET AUTHKEY = #{authKey}
  	WHERE USER_ID = #{userId};
  	</update>
  	
  	
  	<insert id="insertMemberInfoTmp" parameterType="MemberVo">
- 	INSERT INTO netminer.MEMBER_INFO_TEMP
+ 	INSERT INTO NetMiner.MEMBER_INFO_TEMP
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE )
 	VALUES( 
 	#{userId} , PASSWORD(#{userPwd}) , #{company}, #{nation}  , #{useCode} , #{language} 
@@ -57,10 +57,10 @@
  	</select>
  	
  	<insert id="signUpGeneral" parameterType="MemberVo">
- 	INSERT INTO netminer.member_info
+ 	INSERT INTO NetMiner.MEMBER_INFO
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
 	SELECT USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, `LANGUAGE` ,#{marketYn} AS MARKET_YN , NOW() AS MARKET_DATE, NOW() AS LAST_LOGIN_DATE, NOW() AS LAST_LOGIN_DATE  
-	FROM netminer.member_info_temp;
+	FROM NetMiner.MEMBER_INFO_TEMP;
  	;
  	</insert>
  	<update id="updateLastLoginDate" parameterType="MemberVo">

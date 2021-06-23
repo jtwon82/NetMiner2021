@@ -31,12 +31,6 @@ public class PageMoveController extends HttpServlet {
 		return "member/searchPw";
 	}
 	
-	@RequestMapping(value="gooleJoin", method = RequestMethod.GET)
-	public String goGoogle(HttpServletRequest request) {
-		
-		return "member/register_sns";
-	}
-	
 	@RequestMapping(value="moveCheckEmail", method = RequestMethod.GET)
 	public String moveCheckEmail() {
 		

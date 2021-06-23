@@ -1,8 +1,6 @@
 package com.netMiner.app.config;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,7 +11,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -32,11 +29,11 @@ public class SendEmail {
 		   String user = "netminer@cyram.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
 	        String password = "dydrkfl2011@";   // 패스워드
 	        
-	        String senderUser = "NetMinerTeam@cyram.com";
+	        String senderUser = "netminer@cyram.com";
 	        // SMTP 서버 정보를 설정한다.
 	        Properties prop = new Properties();
 	        prop.put("mail.smtp.host", "smtp.gmail.com"); 
-	        prop.put("mail.smtp.port", 465); 
+	        prop.put("mail.smtp.port", 587); 
 	        prop.put("mail.smtp.auth", "true"); 
 	        prop.put("mail.smtp.ssl.enable", "true"); 
 	        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");

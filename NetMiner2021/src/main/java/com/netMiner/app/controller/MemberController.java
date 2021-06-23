@@ -200,5 +200,14 @@ public class MemberController {
 		return mv;
 	}
 		 
-
+	@RequestMapping( value="resetPwd", method=RequestMethod.POST)
+	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request) {
+		String userId = request.getParameter("email");
+		
+		//1. 해당유저의 존재 여부 파악  있으면  메일 보내기  없으면 해당 유저가 없으므로 가입창으로 
+		
+		//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
+		
+		return mv;
+	}
 }

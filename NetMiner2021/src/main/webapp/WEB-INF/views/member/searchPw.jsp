@@ -38,11 +38,11 @@
 							<p>가입했던 이메일 주소를 입력하고, 비밀번호 재설정을 요청하세요.</p>
 							<div class="input">
 								<p>이메일</p>
-								<input placeholder="" type="text" />
+								<input placeholder="" type="text" id="email" />
 								<p class="sum">비밀번호 재설정은 30 분 간 유효합니다.<br>
 	메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.</p>
 							</div>
-							<button class="requestPw trs active">비밀번호 재설정 요청</button>
+							<button class="requestPw trs active" onClick="resetPwd();">비밀번호 재설정 요청</button>
 							<a class="back" href="#" >로그인으로 돌아가기 </a>
 						</div>
 					</div>
