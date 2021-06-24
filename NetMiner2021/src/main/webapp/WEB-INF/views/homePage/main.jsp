@@ -58,7 +58,7 @@
 								</p>
 								<ul>
 									<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>
-									<li class="account"><a href="#" class="trs">Account</a></li>
+									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="signOut"><a href="./logOut" class="trs">Sign-Out</a></li>
 								</ul>
 							</div>

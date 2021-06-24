@@ -45,7 +45,13 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	final static String GOOGLE_CALL_BACK_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/app/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/app/socialRegister";
+	
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/socialRegister";
+	
+	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
 	private String clientSecret = "Xuvy3VghnbUWj0Y6racOHwCD";
 
@@ -68,7 +74,7 @@ public class GoogleController  {
 				.clientId(clientId)
 				.clientSecret(clientSecret)
 				.code(authCode)
-				.redirectUri(GOOGLE_CALL_BACK_URL)
+				.redirectUri(GOOGLE_CALL_BACK_LOGIN_URL)
 				.grantType("authorization_code").build();
 
 		
@@ -129,7 +135,7 @@ public class GoogleController  {
 				.clientId(clientId)
 				.clientSecret(clientSecret)
 				.code(authCode)
-				.redirectUri("http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/socialRegister")
+				.redirectUri(GOOGLE_CALL_BACK_REGISTER_URL)
 				.grantType("authorization_code").build();
 
 		

@@ -1,6 +1,10 @@
+<%@page import="com.netMiner.app.model.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -22,7 +26,8 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<script src="resources/js/main.js" type="text/javascript"></script> 
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="resources/js/event.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>  
 	</head>
 	<body>
 		<div id="wrap" class="sub account">
@@ -36,8 +41,8 @@
 							</p>
 							<ul>
 								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li> 
-								<li class="account"><a href="#" class="trs">Account</a></li>
-								<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
+								<li class="account"><a href="./account" class="trs">Account</a></li>
+								<li class="signOut"><a href="./logOut" class="trs">Sign-Out</a></li>
 							</ul>
 						</div>
 					</div>
@@ -53,14 +58,14 @@
 							<p class="profile">프로필</p>
 							<ul class="input">
 								<li>
-									<input name="email" placeholder="이메일" type="text" />
+									<input name="email" placeholder="${vo.getUserId()}" value="${vo.getUserId()}" type="text" disabled="disabled" />
 									<button class="authentic trs email" >이메일 인증</button>
 									<button class="trans trs email active" style="display:none;">변경</button>
 								</li>
 								<li><input placeholder="비밀번호" type="password" /></li>
 								<li><input placeholder="소속기관" type="text" /></li>
 							</ul>
-							<select>
+							<select id="nation">
 								<option value="" disabled selected hidden>국가</option>
 								<option value=""></option>
 								<option value=""></option>

@@ -52,7 +52,6 @@ public class PageMoveController extends HttpServlet {
 	@RequestMapping(value="getNationCode", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody ModelAndView getNationCode(ModelAndView mv, HttpServletRequest requets, HttpServletResponse response) {
 		List<NationVo> result = selectDao.getNation();
-		logger.info("Nation-Code-{}", result.toString());
 		mv.addObject("NationVo", result);
 		mv.setViewName("jsonView");
 		response.setContentType("application/x-json; charset=UTF-8");

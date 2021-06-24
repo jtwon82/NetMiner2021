@@ -91,7 +91,11 @@ function register() {
 	});
 }
 function googleLogin(){
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	var redirectLocal = "http://localhost:8080/app/auth";
+	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";
+
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 	
 }
 
@@ -130,7 +134,11 @@ function registerSns(pwd) {
 	});
 }
 function googleRegister() {
-		window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&redirect_uri=http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	var redirectLocal = "http://localhost:8080/app/socialRegister";
+	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister";
+
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
 function resetPwd() {
