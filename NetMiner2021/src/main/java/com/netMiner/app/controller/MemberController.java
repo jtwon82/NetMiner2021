@@ -205,10 +205,13 @@ public class MemberController {
 	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
 	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request) {
 		String userId = request.getParameter("email");
+		logger.info(userId);
+
 		MemberVo vo = new MemberVo();
 		vo.setUserId(userId);
 		//1. 해당유저의 존재 여부 파악  있으면  메일 보내기  없으면 해당 유저가 없으므로 가입창으로 
 		boolean checkResult = memberService.checkJoin(vo);
+		
 		boolean sendMail = false;
 		if (checkResult) {
 			String[] urlSp = request.getRequestURL().toString().split("/");
@@ -217,8 +220,13 @@ public class MemberController {
 					.append(urlSp[0]).append("//").append(urlSp[2])
 					.append("/").append("moveCheckEmail?")
 					.append("userId=").append(userId);
+			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
+		} else {
+			logger.info("checkResult false");
 		}
+		mv.addObject("checkResult", checkResult);
+		mv.addObject("userId", userId);
 		mv.addObject("sendMail", sendMail);
 		mv.setViewName("jsonView");
 		return mv;

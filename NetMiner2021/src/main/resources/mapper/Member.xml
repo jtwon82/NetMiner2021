@@ -69,5 +69,8 @@
  	WHERE USER_ID = #{userId}
 	and USER_PWD  = password(#{userPwd}); 
  	</update>
- 	
+ 	<select id="selectJoin" resultType="MemberVo" parameterType="MemberVo">
+ 	SELECT USER_ID FROM NetMiner.MEMBER_INFO 
+ 	WHERE USER_ID = #{userId};
+ 	</select>
  </mapper>

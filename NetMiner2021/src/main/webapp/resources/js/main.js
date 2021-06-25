@@ -100,7 +100,7 @@ function googleLogin(){
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 	
 }
 
@@ -143,11 +143,14 @@ function googleRegister() {
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 }
 
 function requestSetPwd() {
 	var userId = $("#email").val();
+	if (userId == "") {
+		alert("이메일을 입력해 주세요");
+	}
 	
 	$(function (){
 		$.ajax({
