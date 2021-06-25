@@ -70,4 +70,16 @@ public class MemberDaoImpl implements MemberDao{
 		
 	}
 
+	@Override
+	public boolean checkJoin(MemberVo vo) {
+		
+		MemberVo result = sqlSession.selectOne("selectJoin", vo);
+		
+		if (result == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

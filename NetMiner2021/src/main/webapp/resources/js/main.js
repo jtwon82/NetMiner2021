@@ -57,9 +57,14 @@ function checkEmail (){
 				'useCode' : useCode
 			},
 			success: function (data){
-				sessionStorage.setItem("randomNumber", data.randomNumber);
-				sessionStorage.setItem("email", userId);
-				window.location.href= "./moveCheckEmail";
+				if ("" == data.randomNumber) {
+					alert("이메일 전송 실패");
+					window.location.href = "./register";
+				} else{
+					sessionStorage.setItem("randomNumber", data.randomNumber);
+					sessionStorage.setItem("email", userId);
+					window.location.href= "./moveCheckEmail";					
+				}
 			} 
 			
 		})
@@ -94,8 +99,8 @@ function googleLogin(){
 	var redirectLocal = "http://localhost:8080/app/auth";
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";
 
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 	
 }
 
@@ -137,24 +142,29 @@ function googleRegister() {
 	var redirectLocal = "http://localhost:8080/app/socialRegister";
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister";
 
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 }
 
-function resetPwd() {
+function requestSetPwd() {
 	var userId = $("#email").val();
 	
 	$(function (){
 		$.ajax({
-			url:"./resetPwd",
+			url:"./findUserInfo",
 			type:"POST",
 			data:{'email': userId},
 			success : function (data){
+				/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
 				console.log(data);
 			}
 				
 		})
 	});
+}
+
+function changePwd(){
+	
 }
 
 

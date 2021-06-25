@@ -88,7 +88,7 @@ public class MemberController {
 	@RequestMapping(value="logOut", method = RequestMethod.GET)
 	public String logOut(HttpSession session) {
 		session.invalidate();
-		return "homePage/main";
+		return "home";
 	}
 	
 	@RequestMapping(value="registerStep", method = RequestMethod.POST)
@@ -145,7 +145,7 @@ public class MemberController {
 		memberVo.setNation(nation);
 		memberVo.setUseCode(useCode);
 		
-		if (nation.equals("korea")) {
+		if (nation.equals("KR")) {
 			memberVo.setLanguage("ko");
 		} else {
 			memberVo.setLanguage("en");
@@ -154,7 +154,9 @@ public class MemberController {
 		String randomNumber = sendEmail.sendCheckEmail(userId);
 		
 		//임시 유저 저장 
-		memberService.insertMemberInfoTmp(memberVo);		
+		if (!"".equals(randomNumber)) {
+			memberService.insertMemberInfoTmp(memberVo);					
+		}
 		
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");
@@ -200,14 +202,25 @@ public class MemberController {
 		return mv;
 	}
 		 
-	@RequestMapping( value="resetPwd", method=RequestMethod.POST)
+	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
 	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request) {
 		String userId = request.getParameter("email");
-		
+		MemberVo vo = new MemberVo();
+		vo.setUserId(userId);
 		//1. 해당유저의 존재 여부 파악  있으면  메일 보내기  없으면 해당 유저가 없으므로 가입창으로 
-		
-		//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
-		
+		boolean checkResult = memberService.checkJoin(vo);
+		boolean sendMail = false;
+		if (checkResult) {
+			String[] urlSp = request.getRequestURL().toString().split("/");
+			//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
+			StringBuffer sb = new StringBuffer()
+					.append(urlSp[0]).append("//").append(urlSp[2])
+					.append("/").append("moveCheckEmail?")
+					.append("userId=").append(userId);
+			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
+		}
+		mv.addObject("sendMail", sendMail);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 }

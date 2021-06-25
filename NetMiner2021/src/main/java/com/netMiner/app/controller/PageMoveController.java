@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,15 @@ public class PageMoveController extends HttpServlet {
 		mv.addObject("NationVo", result);
 		mv.setViewName("jsonView");
 		response.setContentType("application/x-json; charset=UTF-8");
+		return mv;
+	}
+	
+	@RequestMapping(value="goChangePwd", method=RequestMethod.GET) 
+	public ModelAndView goChangePwd (ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		String userId = request.getParameter("userId");
+		mv.addObject("userId", userId);
+		mv.setViewName("member/searchPw");
+		
 		return mv;
 	}
 }

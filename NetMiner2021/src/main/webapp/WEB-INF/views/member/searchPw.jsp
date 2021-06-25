@@ -22,13 +22,15 @@
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
-		<script src="resources/js/main.js" type="text/javascript"></script>
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
+	<div id="top"></div>
 		<div id="wrap" class="sub searchPw">
 			<div id="section">
 				<div class="wrap">
 					<!-- step1 비밀번호 재설정 요청 -->
+					<c:if test="${empty userId}">
 					<div class="step1">
 						<div class="title">
 							<h2>Do you forgot your password?</h2>
@@ -42,12 +44,14 @@
 								<p class="sum">비밀번호 재설정은 30 분 간 유효합니다.<br>
 	메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.</p>
 							</div>
-							<button class="requestPw trs active" onClick="resetPwd();">비밀번호 재설정 요청</button>
+							<button class="requestPw trs active" onClick="requestSetPwd();">비밀번호 재설정 요청</button>
 							<a class="back" href="./login" >로그인으로 돌아가기 </a>
 						</div>
 					</div>
+					</c:if>
 					
 					<!-- step2 비밀번호 재설정 -->
+					<c:if test="${!empty userId}">
 					<div class="step2" style="display:none;">
 						<div class="title">
 							<h2>Reset you password</h2>
@@ -67,11 +71,11 @@
 									</li>
 								</ul>
 							</div>
-							<button class="changePw trs active">비밀번호 재설정 및 로그인</button>
+							<button class="changePw trs active" onClick="changePwd()">비밀번호 재설정 및 로그인</button>
 							<a class="back" href="#" >로그인으로 돌아가기 </a>
 						</div>
 					</div>
-					
+					</c:if>
 				</div>
 			</div>
 		</div>

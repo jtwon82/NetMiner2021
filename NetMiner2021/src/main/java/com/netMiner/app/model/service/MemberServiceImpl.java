@@ -17,9 +17,10 @@ public class MemberServiceImpl implements MemberService{
 		return dbDate;
 	}
 	@Override
-	public String checkJoin(MemberVo vo) {
+	public boolean checkJoin(MemberVo vo) {
 		
-		return "";
+		boolean result = memberDao.checkJoin(vo);
+		return result;
 	}
 	@Override
 	public MemberVo getUserInfo(MemberVo vo) {
