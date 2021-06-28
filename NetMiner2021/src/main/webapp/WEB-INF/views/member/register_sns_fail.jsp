@@ -72,11 +72,8 @@
 							<dd>최신 소식 , 혜택을 뉴스레터로 수신</dd>
 						</dl>
 					</div>
-					
-					
 				</div>
 			</div>
 		</div>
-	
 	</body>
 </html>

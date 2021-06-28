@@ -4,7 +4,7 @@
 					<div class="content content1">
 						<div>
 							<h4>NM 365 무료로 시작</h4>
-							<a hrefe="">Start for free</a>
+							<a href="./">Start for free</a>
 						</div>
 					</div>
 					<div class="content content2">

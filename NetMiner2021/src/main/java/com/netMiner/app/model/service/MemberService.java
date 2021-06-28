@@ -28,5 +28,9 @@ public interface MemberService {
 
 	void updateNewUserInfo(MemberVo oldMemberVo, MemberVo memberVo);
 
+	int checkUser(String userId);
+
+	void deleteMemberInfoTmp(MemberVo memberVo);
+
 	
 }

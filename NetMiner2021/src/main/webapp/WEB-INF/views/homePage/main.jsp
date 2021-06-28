@@ -47,7 +47,7 @@
 오랜 기간 축적된 그래프 분석 노하우와 그래프 머신 러닝 기술이 접목된 NetMiner 365는 기존과 차별화된 새로운 혁신과 영감을 줄 것입니다.</p>
 					<div class="content">
 						<div class="bg"></div>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./whyNetMiner">Learn more  > ></a>
 					</div>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 가능합니다 (향후)</p>
 							</li>
 						</ul>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./feature">Learn more  > ></a>
 					</div>
 				</div>
 			</div>
@@ -110,7 +110,7 @@
 							<li>컴플라이언스 범죄</li>
 							<li>제조/공급망</li>
 						</ul>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./solution">Learn more  > ></a>
 					</div>
 				</div>
 			</div>

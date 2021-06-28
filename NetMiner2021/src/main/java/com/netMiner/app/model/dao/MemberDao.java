@@ -30,4 +30,8 @@ public interface MemberDao {
 
 	void dropTempUser();
 
+	int checkUser(String userId);
+
+	void deleteMemberInfoTmp(MemberVo memberVo);
+
 }

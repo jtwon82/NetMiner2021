@@ -21,14 +21,15 @@ public class SendEmailScheduler {
 	private SendEmail sendEmail;
 	
 	// 매일 9시 마지막 로그인 시간이 1년이 된 사용자에게 메일을 전송한다. 
-	@Scheduled(cron="* * 9 * *")
+	//@Scheduled(cron="* * 9 * * *")
 	public void sendEmail() {
 		logger.info("send Email 365 User");
 	}
 	
 	//temp 데이터 30분이상 지난 데이터는 삭제한다
-	@Scheduled(cron="* * * * *")
+	//@Scheduled(cron="* * * * * *")
 	public void dropTempUser() {
+		
 		memberDao.dropTempUser();
 	}
 }

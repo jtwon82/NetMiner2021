@@ -75,5 +75,14 @@ public class MemberServiceImpl implements MemberService{
 		memberDao.updateNewUserInfo(param);
 		
 	}
+	@Override
+	public int checkUser(String userId) {
+		int result = memberDao.checkUser(userId);
+		return result;
+	}
+	@Override
+	public void deleteMemberInfoTmp(MemberVo memberVo) {
+		memberDao.deleteMemberInfoTmp(memberVo);
+	}
 
 }

@@ -80,7 +80,7 @@ public class MemberController {
 			if (memberVo == null) {
 				response.setContentType("text/html; charset=UTF-8"); 
 				PrintWriter out = response.getWriter(); 
-				out.println("<script>alert('해당 아이디가 없습니다.'); location.href='./login';</script>"); 
+				out.println("<script>alert('해당 아이디가 없거나 비밀번호가 틀립니다.'); location.href='./login';</script>"); 
 				out.flush();
 				url  = "member/login";
 			} else {
@@ -119,9 +119,8 @@ public class MemberController {
 			String marketYn = request.getParameter("marketYn");
 			memberVo.setMarketYn(marketYn);
 			
-			logger.info(memberVo.toString());
 			memberService.signUpGeneral(memberVo);			 
-	
+			memberService.deleteMemberInfoTmp(memberVo);
 			session.setAttribute("memberVo", memberVo);
 			
 			mv.setViewName("jsonView");
@@ -324,6 +323,31 @@ public class MemberController {
 		
 		mv.setViewName("jsonView");
 		
+		return mv;
+	}
+	@RequestMapping(value="checkUser", method=RequestMethod.POST)
+	public ModelAndView checkUser (ModelAndView mv,HttpServletRequest request) {
+		
+		String userId = request.getParameter("email");
+		int count = memberService.checkUser(userId);
+			
+		boolean result = true ; 
+		if (count > 0) {
+			result = false;
+		}
+		
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="sendNewRandom", method=RequestMethod.POST)
+	public ModelAndView sendNewRandom (ModelAndView mv , HttpServletRequest request) {
+		String userId = request.getParameter("email");
+		String randomNumber = sendEmail.sendCheckEmail(userId);
+		mv.addObject("randomNumber", randomNumber);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 }

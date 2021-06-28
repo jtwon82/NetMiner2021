@@ -105,4 +105,16 @@ public class MemberDaoImpl implements MemberDao{
 		
 	}
 
+	@Override
+	public int checkUser(String userId) {
+		int result = sqlSession.selectOne("checkUser", userId);
+		
+		return result;
+	}
+
+	@Override
+	public void deleteMemberInfoTmp(MemberVo memberVo) {
+		sqlSession.delete("deleteMemberInfoTmp", memberVo);		
+	}
+
 }

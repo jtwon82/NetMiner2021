@@ -46,22 +46,28 @@
  	
  	<insert id="insertMemberInfoTmp" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO_TEMP
-	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE )
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE, REG_DATE )
 	VALUES( 
-	#{userId} , PASSWORD(#{userPwd}) , #{company}, #{nation}  , #{useCode} , #{language} 
+	#{userId} , PASSWORD(#{userPwd}) , #{company}, #{nation}  , #{useCode} , #{language} , NOW()
 	);
  	</insert>
  	
  	<select id="getUserInfoTmp" resultMap="MemberVo" parameterType="MemberVo">
  	select * from NetMiner.MEMBER_INFO_TEMP
- 	where USER_ID = #{userId};
+ 	where USER_ID = #{userId}
+ 	and no = (select MAX(NO) from NetMiner.MEMBER_INFO_TEMP
+			 	where USER_ID = #{userId}
+			 	ORDER BY REG_DATE DESC);
  	</select>
  	
  	<insert id="signUpGeneral" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
 	SELECT USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, `LANGUAGE` ,#{marketYn} AS MARKET_YN , NOW() AS MARKET_DATE, NOW() AS LAST_LOGIN_DATE, NOW() AS LAST_LOGIN_DATE  
-	FROM NetMiner.MEMBER_INFO_TEMP WHERE USER_ID = #{userId} LIMIT 1
+	FROM NetMiner.MEMBER_INFO_TEMP WHERE USER_ID = #{userId} 
+	AND NO = (select MAX(NO) from NetMiner.MEMBER_INFO_TEMP
+			 	where USER_ID = #{userId}
+			 	ORDER BY REG_DATE DESC)
  	;
  	</insert>
  	
@@ -102,7 +108,11 @@
  	</update>
  	<delete id="deleteTempUser">
  	<![CDATA[
-	DELETE FROM NetMiner.MEMBER_INFO_TEMP WHERE REG_DTTM <= DATE_ADD(NOW() , INTERVAL -30 MINUTE);
+	DELETE FROM NetMiner.MEMBER_INFO_TEMP WHERE REG_DATE <= DATE_ADD(NOW() , INTERVAL -30 MINUTE);
  	]]>
  	</delete>
+ 	<select id="checkUser" parameterType="String" resultType="Integer">
+ 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
+ 	WHERE USER_ID = #{userId};
+ 	</select>
  </mapper>
