@@ -1,5 +1,8 @@
 package com.netMiner.app.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +57,22 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void signUpGeneral(MemberVo memberVo) {
 		memberDao.signUpGeneral(memberVo);
+		
+	}
+	@Override
+	public void updateNewPwd(MemberVo vo) {
+		memberDao.updateNewPwd(vo);		
+	}
+	@Override
+	public void updateNewUserId(Map<String, Object> param) {
+		memberDao.updateNewUserId(param);		
+	}
+	@Override
+	public void updateNewUserInfo(MemberVo oldMemberVo, MemberVo memberVo) {
+		Map<String,Object> param = memberVo.getMemberInfoMap();
+		param.put("oldUserId", oldMemberVo.getUserId());
+		
+		memberDao.updateNewUserInfo(param);
 		
 	}
 

@@ -1,11 +1,16 @@
 package com.netMiner.app.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.MemberService;
@@ -49,18 +55,18 @@ public class MemberController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate );
-
-		//String dbDate = memberService.getTestDate();
-
-		//logger.info(dbDate);
-
-		return "home";
+		String url = "home";
+//		String location = locale.toString();
+//		if (!location.contains("KR")) {
+//			url = url+"_EN";
+//		}
+		return url;
 	}
 	
 	@RequestMapping(value="loginUser", method = RequestMethod.POST) 
-	public ModelAndView loginUser(HttpServletRequest request,HttpSession session) {
-		ModelAndView mv = new ModelAndView();
+	public String loginUser(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
 		MemberVo memberVo = new MemberVo();
+		String url  = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
 			String userId = request.getParameter("email");
@@ -72,17 +78,24 @@ public class MemberController {
 			memberVo = memberService.getUserInfo(memberVo);
 			
 			if (memberVo == null) {
-				mv.setViewName("member/register");
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('해당 아이디가 없습니다.'); location.href='./login';</script>"); 
+				out.flush();
+				url  = "member/login";
 			} else {
 				session.setAttribute("memberVo", memberVo);
-				mv.setViewName("homePage/main");
+				url  = "homePage/main";
 			}
 			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return mv;
+		return url;
 	}
 	
 	@RequestMapping(value="logOut", method = RequestMethod.GET)
@@ -218,17 +231,99 @@ public class MemberController {
 			//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
 			StringBuffer sb = new StringBuffer()
 					.append(urlSp[0]).append("//").append(urlSp[2])
-					.append("/").append("moveCheckEmail?")
+					.append("/").append("goChangePwd?")
 					.append("userId=").append(userId);
 			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
 		} else {
 			logger.info("checkResult false");
 		}
-		mv.addObject("checkResult", checkResult);
 		mv.addObject("userId", userId);
-		mv.addObject("sendMail", sendMail);
 		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="changeNewPwd" , method=RequestMethod.POST)
+	public ModelAndView chageNewPwd(ModelAndView mv,HttpServletRequest request) {
+		String userId = request.getParameter("email");
+		String userPwd = request.getParameter("pwd");
+		MemberVo vo = new MemberVo();
+		vo.setUserId(userId);
+		vo.setUserPwd(userPwd);
+		
+		memberService.updateNewPwd(vo);
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="account" , method=RequestMethod.GET)
+	public String accountUser(HttpSession session) {
+		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+		logger.info("MemberVo - {}",vo.toString());
+		return "member/account";
+	}
+	
+	@RequestMapping(value="changeEmail", method=RequestMethod.POST)
+	public ModelAndView changeEmail(ModelAndView mv , HttpServletRequest request, HttpSession session) {
+		String userId = request.getParameter("email");
+		
+		String randomNumber = sendEmail.sendCheckEmail(userId);
+		mv.addObject("randomNumber", randomNumber);
+		mv.setViewName("jsonView");
+		
+		if (!"".equals(randomNumber)) {
+			session.setAttribute("userId", userId);
+			session.setAttribute("randomNumber", randomNumber);			
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="chageUserId", method=RequestMethod.POST)
+	public ModelAndView chageUserId(ModelAndView mv , HttpServletRequest request, HttpSession session) {
+		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+		String newUserId = request.getParameter("email");
+		Map<String , Object> param = new HashMap<String, Object>();
+		param.put("userId", vo.getUserId());
+		param.put("newUserId", newUserId);
+		
+		memberService.updateNewUserId(param);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;		
+	}
+	
+	@RequestMapping(value="updateUserInfo", method=RequestMethod.POST)
+	public ModelAndView updateUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session) {
+		MemberVo memberVo = new MemberVo();
+		String userId = request.getParameter("email");
+		String userPwd = request.getParameter("pwd");
+		String company = request.getParameter("company");
+		String nation = request.getParameter("nation");
+		String useCode = request.getParameter("useCode");
+		String marketYn = StringUtils.trimToNull(request.getParameter("marketYn")) == null ? "N" : "Y";
+		
+		
+		memberVo.setUserId(userId);
+		memberVo.setUserPwd(userPwd);
+		memberVo.setCompany(company);
+		memberVo.setNation(nation);
+		memberVo.setUseCode(useCode);
+		memberVo.setMarketYn(marketYn);
+
+		if (nation.equals("KR")) {
+			memberVo.setLanguage("ko");
+		} else {
+			memberVo.setLanguage("en");
+		}
+		
+		MemberVo oldMemberVo = (MemberVo) session.getAttribute("memberVo");
+		
+		memberService.updateNewUserInfo(oldMemberVo, memberVo);
+		
+		session.setAttribute("memberVo", memberVo);
+		
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 }

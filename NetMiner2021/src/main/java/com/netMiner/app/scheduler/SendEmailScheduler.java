@@ -25,4 +25,10 @@ public class SendEmailScheduler {
 	public void sendEmail() {
 		logger.info("send Email 365 User");
 	}
+	
+	//temp 데이터 30분이상 지난 데이터는 삭제한다
+	@Scheduled(cron="* * * * *")
+	public void dropTempUser() {
+		memberDao.dropTempUser();
+	}
 }

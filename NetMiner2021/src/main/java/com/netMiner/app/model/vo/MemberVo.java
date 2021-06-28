@@ -1,6 +1,9 @@
 package com.netMiner.app.model.vo;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import lombok.Data;
 
@@ -18,4 +21,16 @@ public class MemberVo implements Serializable{
 	private String language;
 	private String marketYn;
 	private String authKey;
+	
+	public Map<String,Object> getMemberInfoMap(){
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("userId", this.userId);
+		result.put("userPwd", this.userPwd);
+		result.put("nation", this.nation);
+		result.put("company", this.company);
+		result.put("useCode", this.useCode);
+		result.put("language", this.language);
+		result.put("marketYn", this.marketYn);
+		return result;
+	}
 }

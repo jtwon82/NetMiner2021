@@ -48,7 +48,7 @@ public class SendEmail {
 		   String user = "netminer@cyram.com"; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
 	        String password = "dydrkfl2011@";   // 패스워드
 	        String host = "smtp.gmail.com";
-	        String senderUser = "netminer@cyram.com";
+	        String senderUser = "NetMiner Team <netminer@cyram.com>";
 	        // SMTP 서버 정보를 설정한다.
 	        Properties prop = new Properties();
 //	        prop.put("mail.smtp.host", "smtp.gmail.com"); 
@@ -86,8 +86,8 @@ public class SendEmail {
 	            message.setSubject(title); //메일 제목을 입력
 
 	            // Text
-	            message.setText(comment);    //메일 내용을 입력
-
+	            message.setContent(comment,"text/html;charset=UTF-8");
+	            
 	            // send the message
 	            Transport.send(message); ////전송
 	            System.out.println("message sent successfully...");

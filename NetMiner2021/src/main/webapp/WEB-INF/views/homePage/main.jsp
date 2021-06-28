@@ -26,85 +26,7 @@
 	</head>
 	<body>
 		<div id="wrap" class="main">
-			<div id="top">
-				<div class="content">
-					<div class="wrap">
-						<h1 class="obj"><a href="#"><img src="resources/resources/images/main_logo.png" alt="Why NetMiner 365 logo"></a></h1>
-						<div class="pc">
-							<div class="menu obj">
-								<span class="select">Why NetMiner 365</span>
-								<ul>
-									<li><a href="#">Why NetMiner 365</a></li>
-									<li><a href="#">Feature</a></li>
-									<li><a href="#">Function</a>
-									<li><a href="#">Solution</a>
-								</ul>
-							</div>
-							
-							<!-- 로그인 전-->
-							<c:if test="${empty memberVo}">
-							<div class="mypage obj type1" >
-								<ul>
-									<li class="join"><a href="#" >Start for free</a></li>
-									<li class="login"><a href="./login" >Sign in</a></li>
-								</ul>
-							</div>
-							</c:if>
-							<!-- 로그인 후-->
-							<c:if test="${!empty memberVo}">	
-							<div class="mypage obj type2" >
-								<p class="me">
-									<img src="resources/images/top_me.png" alt="mypage">
-								</p>
-								<ul>
-									<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>
-									<li class="account"><a href="./account" class="trs">Account</a></li>
-									<li class="signOut"><a href="./logOut" class="trs">Sign-Out</a></li>
-								</ul>
-							</div>
-							</c:if>
-						</div>
-					<div id="navBtn" class="mobile obj"><img src="resources/images/navBtn.png"></div>
-					<div id="navOn" class="mobile">
-						<div id="nav" class="obj">
-							<div class="navClose obj"><img src="resources/images/nav_close.png" alt="닫기"></div>
-							<div class="container">
-															
-								<!-- 로그인 전-->
-								<div class="mypage type1" style="display:none;">
-									<ul>
-										<li class="join"><a href="#" >Start for free</a></li>
-										<li class="login"><a href="#" >Sign in</a></li>
-									</ul>
-								</div>
-								
-								<!-- 로그인 후-->
-								<div class="mypage type2"  style="display:none;">
-									<p class="me">
-										<img src="resources/images/top_me.png" alt="mypage">
-									</p>
-									<ul>
-										<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>
-										<li class="account"><a href="#" class="trs">Account</a></li>
-										<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
-									</ul>
-								</div>
-								
-								<ul class="menu">
-									<li><a href="#">Why NetMiner 365</a></li>
-									<li><a href="#">Feature</a></li>
-									<li><a href="#">Function</a>
-									<li><a href="#">Solution</a>
-								</ul>
-							</div>
-						</div>
-						<div class="bg"></div>
-					</div>
-			
-			
-					</div>
-				</div>
-			</div>
+			<%@include file = "../common/top.jsp" %>
 			<div id="main">
 				<div class="wrap">
 					<div class="slider">
@@ -192,51 +114,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="footer">
-				<div class="wrap">
-					<div class="content content1">
-						<div>
-							<h4>NM 365 무료로 시작</h4>
-							<a hrefe="">Start for free</a>
-						</div>
-					</div>
-					<div class="content content2">
-						<div>
-							<ul class="terms obj">
-								<li><a href="">이용약관</a></li>
-								<li><a href="">개인정보처리방침</a></li>
-							</ul>
-							<div class="lang obj">
-								<p>KOREAN<span></span></p>
-								<ul>
-									<li style="display:none;"><a href="">KOREAN</a></li>
-									<li><a href="">ENGLISH</a></li>
-								</ul>
-							</div>
-							<div class="family obj">
-								<p>패밀리사이트<span></span></p>
-								<ul>
-									<li class="active"><a href="http://www.netminer.com/" target="_blank">netminer</a></li>
-									<li><a href="http://www.cyram.com/" target="_blank">cyram</a></li>
-									<li><a href="http://edu.cyram.com" target="_blank">edu.cyram</a></li>
-								</ul>
-							</div>
-							<ul class="sns kr obj">
-								<li class="fb"><a href="https://www.facebook.com/CyramInc" target="_blank"><img src="resources/images/footer_fb.png" alt="페이스북"></a></li>
-								<li class="ins"><a href="https://twitter.com/cyraminc" target="_blank"><img src="resources/images/footer_ins.png" alt="인스타그램"></a></li>
-								<li class="blog"><a href="https://cyram.tistory.com" target="_blank"><img src="resources/images/footer_blog.png" alt="블로그"></a></li>
-								<li class="yt"><a href="https://www.youtube.com/channel/UCEyZjvgAc4uEIuHKRI5Jk0w/" target="_blank"><img src="resources/images/footer_yt.png" alt="유튜브"></a></li>
-							</ul>
-							<ul class="sns en obj" style="display:none;">
-								<li class="fb"><a href="https://www.facebook.com/cyramnetminer" target="_blank"><img src="resources/images/footer_fb.png" alt="facebook"></a></li>
-								<li class="ins"><a href="https://twitter.com/netminer" target="_blank"><img src="resources/images/footer_ins.png" alt="instagram"></a></li>
-								<li class="yt"><a href="https://www.youtube.com/channel/UCEyZjvgAc4uEIuHKRI5Jk0w/" target="_blank"><img src="resources/images/footer_yt.png" alt="youtube"></a></li>
-							</ul>
-							<p class="cr obj">© CYRAM Inc. ALL RIGHTS RESERVED</p>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%@include file = "../common/footer.jsp" %>
 		</div>
 	
 	</body>

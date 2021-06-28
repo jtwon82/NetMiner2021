@@ -62,9 +62,37 @@ public class PageMoveController extends HttpServlet {
 	@RequestMapping(value="goChangePwd", method=RequestMethod.GET) 
 	public ModelAndView goChangePwd (ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		String userId = request.getParameter("userId");
+		logger.info("userid -{}", userId);
 		mv.addObject("userId", userId);
 		mv.setViewName("member/searchPw");
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
+	public String goCheckEmail () {
+		return "member/authentic";
+	}
+	
+	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
+	public String registerCheckEmail () {
+		return "member/account";
+	}
+	
+	@RequestMapping(value="whyNetMiner", method=RequestMethod.GET) 
+	public String whyNetMiner () {
+		return "homePage/whyNetminer";
+	}
+	@RequestMapping(value="feature", method=RequestMethod.GET) 
+	public String feature () {
+		return "homePage/feature";
+	}
+	@RequestMapping(value="function", method=RequestMethod.GET) 
+	public String function () {
+		return "homePage/function";
+	}
+	@RequestMapping(value="solution", method=RequestMethod.GET) 
+	public String solution () {
+		return "homePage/solution";
 	}
 }

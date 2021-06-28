@@ -52,7 +52,7 @@
 					
 					<!-- step2 비밀번호 재설정 -->
 					<c:if test="${!empty userId}">
-					<div class="step2" style="display:none;">
+					<div class="step2">
 						<div class="title">
 							<h2>Reset you password</h2>
 							<p>비밀번호를 재설정</p>
@@ -63,16 +63,16 @@
 								<ul>
 									<li>
 										<p>새 비밀번호</p>
-										<input placeholder="" type="password" />
+										<input placeholder="" type="password" id="newPwd" />
 									</li>
 									<li>
 										<p>비밀번호 확인</p>
-										<input placeholder="" type="password" />
+										<input placeholder="" type="password" id="newPwd2" />
 									</li>
 								</ul>
 							</div>
-							<button class="changePw trs active" onClick="changePwd()">비밀번호 재설정 및 로그인</button>
-							<a class="back" href="#" >로그인으로 돌아가기 </a>
+							<button class="changePw trs active" onClick="changePwd('${userId}')">비밀번호 재설정 및 로그인</button>
+							<a class="back" href="./login" >로그인으로 돌아가기 </a>
 						</div>
 					</div>
 					</c:if>

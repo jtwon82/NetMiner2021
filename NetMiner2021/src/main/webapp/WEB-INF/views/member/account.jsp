@@ -2,9 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-%>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -40,7 +37,7 @@ MemberVo vo = (MemberVo) session.getAttribute("memberVo");
 								<img src="resources/images/top_me.png" alt="mypage">
 							</p>
 							<ul>
-								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li> 
+								<li class="workSpace active"><a href="./" class="trs">My Workspace</a></li> 
 								<li class="account"><a href="./account" class="trs">Account</a></li>
 								<li class="signOut"><a href="./logOut" class="trs">Sign-Out</a></li>
 							</ul>
@@ -58,12 +55,17 @@ MemberVo vo = (MemberVo) session.getAttribute("memberVo");
 							<p class="profile">프로필</p>
 							<ul class="input">
 								<li>
-									<input name="email" placeholder="${vo.getUserId()}" value="${vo.getUserId()}" type="text" disabled="disabled" />
-									<button class="authentic trs email" >이메일 인증</button>
-									<button class="trans trs email active" style="display:none;">변경</button>
+									<c:if test="${empty userId}">
+									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
+									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')">이메일 인증</button>
+									</c:if>
+									<c:if test="${!empty userId}">
+									<input name="email" value="${userId}" type="text" id="email"/>
+									<button class="trans trs email active" onClick="chageUserId();">변경</button>
+									</c:if>
 								</li>
-								<li><input placeholder="비밀번호" type="password" /></li>
-								<li><input placeholder="소속기관" type="text" /></li>
+								<li><input placeholder="비밀번호" type="password" id ="pwd"/></li>
+								<li><input value="${memberVo.company}" type="text" id ="company"/></li>
 							</ul>
 							<select id="nation">
 								<option value="" disabled selected hidden>국가</option>
@@ -75,15 +77,17 @@ MemberVo vo = (MemberVo) session.getAttribute("memberVo");
 							<div class="checkBox">
 								<p>이용용도</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1"><em></em>학술용</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1"><em></em>일반/기업용</label></li>
+									<li><label><input type="radio" checked="checked" name="c1" value="01"><em></em>학술용</label></li>
+									<li ><label><input type="radio" checked="checked" name="c1" value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<label class="newsLetter"><input id="check" type="checkbox" name=""><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
-							<div class="update" style="display:none;">
+							<label class="newsLetter"><input id="check" type="checkbox" name="marketYn"><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
+							<c:if test="${!empty userId}">
+							<div class="update">
 								<button class="cancel trs">취소</button>
-								<button class="save trs active">저장</button>
+								<button class="save trs active" onClick="updateUserInfo();">저장</button>
 							</div>
+							</c:if>
 						</div>
 					</div>
 				</div>

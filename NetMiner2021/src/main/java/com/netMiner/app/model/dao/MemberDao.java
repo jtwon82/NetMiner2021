@@ -1,5 +1,7 @@
 package com.netMiner.app.model.dao;
 
+import java.util.Map;
+
 import com.netMiner.app.model.vo.MemberVo;
 
 public interface MemberDao {
@@ -19,5 +21,13 @@ public interface MemberDao {
 	void signUpGeneral(MemberVo memberVo);
 
 	boolean checkJoin(MemberVo vo);
+
+	void updateNewPwd(MemberVo vo);
+
+	void updateNewUserId(Map<String, Object> param);
+
+	void updateNewUserInfo(Map<String, Object> param);
+
+	void dropTempUser();
 
 }

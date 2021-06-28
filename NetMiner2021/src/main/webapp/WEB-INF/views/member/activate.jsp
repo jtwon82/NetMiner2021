@@ -40,7 +40,7 @@
 아래 ‘휴먼 계정 해제하고 로그인’을 클릭해 주세요.</p>
 					
 						<button class="actiAccount trs active">휴면 계정 해제하고 로그인</button>
-						<a class="back" href="#" >로그인으로 돌아가기 </a>
+						<a class="back" href="./login" >로그인으로 돌아가기 </a>
 					</div>
 					
 				</div>

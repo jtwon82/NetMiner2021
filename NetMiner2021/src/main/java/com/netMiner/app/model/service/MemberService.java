@@ -1,5 +1,7 @@
 package com.netMiner.app.model.service;
 
+import java.util.Map;
+
 import com.netMiner.app.model.vo.MemberVo;
 
 public interface MemberService {
@@ -19,6 +21,12 @@ public interface MemberService {
 	MemberVo getUserInfoTmp(MemberVo memberVo);
 
 	void signUpGeneral(MemberVo memberVo);
+
+	void updateNewPwd(MemberVo vo);
+
+	void updateNewUserId(Map<String, Object> param);
+
+	void updateNewUserInfo(MemberVo oldMemberVo, MemberVo memberVo);
 
 	
 }

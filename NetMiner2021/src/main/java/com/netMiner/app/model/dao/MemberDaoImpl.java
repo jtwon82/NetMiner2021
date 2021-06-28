@@ -82,4 +82,27 @@ public class MemberDaoImpl implements MemberDao{
 		}
 	}
 
+	@Override
+	public void updateNewPwd(MemberVo vo) {
+		sqlSession.update("updateNewPwd", vo);
+		
+	}
+
+	@Override
+	public void updateNewUserId(Map<String, Object> param) {
+		sqlSession.update("updateUserId", param);			
+	}
+
+	@Override
+	public void updateNewUserInfo(Map<String, Object> param) {
+		sqlSession.update("updateUserInfo", param);
+	}
+
+	@Override
+	public void dropTempUser() {
+		
+		sqlSession.delete("deleteTempUser");
+		
+	}
+
 }

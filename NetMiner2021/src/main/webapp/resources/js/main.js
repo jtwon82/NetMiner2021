@@ -36,6 +36,33 @@ $(document).ready(function() {
 			alert("인증완료 되었습니다.");
 		}
 	});
+	$("#check").change(function (){
+		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+			openPoup("agree_popup");
+		}
+		
+		if ($('input:checkbox[name="marketYn"]').is(":checked") == false) {
+			openPoup("refuse_popup");
+		}
+	});
+	$(".back").click(function(){
+		window.history.back();
+	})
+	
+	var filter = "win16|win32|win64|mac";
+	
+	if (navigator.platform ) {	
+	 if (filter.indexOf(navigator.platform.toLowerCase()) < 0) {	
+		const target = document.getElementsByClassName("mobile");
+		target.disabled = false;
+	
+	 } else {	
+		const target = document.getElementsByClassName("pc");
+		target.disabled = false;
+	 }
+
+}
+	
 })
 
 function checkEmail (){
@@ -159,16 +186,115 @@ function requestSetPwd() {
 			data:{'email': userId},
 			success : function (data){
 				/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
-				console.log(data);
+				//console.log(data);
 			}
 				
 		})
 	});
 }
 
-function changePwd(){
+function changePwd(userId){
+	console.log(userId);
+	var newPwd = $("#newPwd").val();
+	var newPwd2 = $("#newPwd2").val();
 	
+	if (newPwd == newPwd2) {	
+		$(function (){
+			$.ajax({
+				url:"./changeNewPwd",
+				type:"POST",
+				data:{'email': userId , 'pwd':newPwd},
+				success : function (data){
+					alert("비밀번호가 성공적으로 변경 되었습니다.");
+					window.location.href= "./login";
+				}
+					
+			})
+		});
+	} else {
+		alert("비밀번호가 틀립니다.");
+	}
 }
+
+
+function changeEmail(userId) {
+	var email = $("#email").val();
+	if (userId == email){
+		email = userId;
+	}
+	
+	$(function (){
+		$.ajax({
+			url:"./changeEmail",
+			type:"POST",
+			data:{'email':email},
+			success : function (data) {
+				if (data.randomNumber != "") {
+					sessionStorage.setItem("randomNumber", data.randomNumber);
+					window.location.href="./goCheckEmail";					
+				} else {
+					alert("이메일 전송 실패");
+				}
+			}
+		});
+	});
+}
+
+function chageUserId(){
+	var email = $("#email").val();
+	
+	$(function (){
+		$.ajax({
+			url : "./chageUserId",
+			type : "POST",
+			data : {'email' : email},
+			success : function(data) {
+				alert("이메일 변경 완료");
+			}
+		})
+	});
+}
+
+function registerCheckEmail(){
+	sessionStorage.clear();
+	window.location.href="./registerCheckEmail";
+}
+
+function updateUserInfo(){
+	
+	var userId = $("#email").val();
+	var userpwd = $("#pwd").val();
+	var company = $("#company").val();
+	var nation = $("#nation").val();
+	var useCode = $('input:radio[name="c1"]:checked').val();
+	var marketYn = "N";
+	
+	if ("" == userpwd || null == userpwd) {
+		alert("비밀번호를 입력해 주세요");
+	} else {
+			$(function (){
+		$.ajax({
+			url : "./updateUserInfo",
+			type : "POST",
+			data : {
+					'email': userId,
+				'pwd' : userpwd,
+				'company' : company,
+				'nation' : nation,
+				'useCode' : useCode,
+				'marketYn': marketYn 				
+			},
+			success : function (data) {
+			 	alert("회원정보가 성공적으로 변경 되었습니다.");
+				window.location.href="./";
+			}
+			
+		})
+	});
+	}
+	
+
+};
 
 
 
