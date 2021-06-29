@@ -10,6 +10,15 @@ function noEvent() {
         return false;
     }
 }
+function cancel (){
+	sessionStorage.clear();
+	window.location.href="./login";
+}
+
+function showUpdate() {
+	var updateDiv = document.getElementById("update");
+	updateDiv.style.removeProperty("display");
+}
 
 $(function (){
 	$.ajax({
@@ -21,7 +30,9 @@ $(function (){
 				$.each(nation , function (i){
 					var nationCode = nation[i].NATION_CODE;
 					var nationNameKr = nation[i].NATION_NAME_KR;
-					
+					if (nationCode==data.userNationCode) {
+						html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameKr+"</option>\n"
+					}
 					html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 
 				});
 				$("#nation").empty();

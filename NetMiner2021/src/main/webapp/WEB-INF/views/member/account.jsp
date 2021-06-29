@@ -57,17 +57,21 @@
 								<li>
 									<c:if test="${empty userId}">
 									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
-									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')">이메일 인증</button>
+									<c:if test="${memberVo.googleYn eq 'N'}">
+									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false" >이메일 인증</button>
+									</c:if>
 									</c:if>
 									<c:if test="${!empty userId}">
 									<input name="email" value="${userId}" type="text" id="email"/>
 									<button class="trans trs email active" onClick="chageUserId();">변경</button>
 									</c:if>
 								</li>
-								<li><input placeholder="비밀번호" type="password" id ="pwd"/></li>
-								<li><input value="${memberVo.company}" type="text" id ="company"/></li>
+								<c:if test="${memberVo.googleYn eq 'N'}">
+								<li><input placeholder="비밀번호" type="password" id ="pwd" onchange="showUpdate()"/></li>
+								</c:if>
+								<li><input value="${memberVo.company}" type="text" id ="company" onchange="showUpdate()"/></li>
 							</ul>
-							<select id="nation">
+							<select id="nation" onchange="showUpdate()">
 								<option value="" disabled selected hidden>국가</option>
 								<option value=""></option>
 								<option value=""></option>
@@ -77,17 +81,15 @@
 							<div class="checkBox">
 								<p>이용용도</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1" value="01"><em></em>학술용</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1" value="02"><em></em>일반/기업용</label></li>
+									<li><label><input type="radio"  name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>학술용</label></li>
+									<li ><label><input type="radio"  name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<label class="newsLetter"><input id="check" type="checkbox" name="marketYn"><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
-							<c:if test="${!empty userId}">
-							<div class="update">
-								<button class="cancel trs">취소</button>
+							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()"  name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
+							<div class="update" id="update" style="display: none;">
+								<button class="cancel trs" onClick="cancel()">취소</button>
 								<button class="save trs active" onClick="updateUserInfo();">저장</button>
 							</div>
-							</c:if>
 						</div>
 					</div>
 				</div>

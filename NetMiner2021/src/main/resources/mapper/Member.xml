@@ -12,13 +12,14 @@
  		<result property="useCode" column="USE_CODE"/>
  		<result property="language" column = "LANGUAGE"/>
  		<result property="marketYn" column="MARKET_YN"/>
+ 		<result property="googleYn" column="GOOGLE_YN"/>
  	</resultMap> 
  	<select id="selectDate" resultType="String">
  	select now();
  	</select>
  
  	<select id="getUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN
+ 	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO
 	WHERE USER_ID =  #{userId}
 	AND USER_PWD  = password(#{userPwd});
@@ -26,10 +27,10 @@
  	
  	<insert id="insertSignUp" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
-	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, GOOGLE_YN, LAST_LOGIN_DATE, REG_DATE)
 	VALUES( 
 	#{userId} , PASSWORD(#{userPwd}) , #{company}, 
-	#{nation}  , #{useCode} , #{language} ,#{marketYn} , now(), now(), now()
+	#{nation}  , #{useCode} , #{language} ,#{marketYn} , now(), #{googleYn},now(), now()
 	);
 	
  	</insert>
@@ -62,8 +63,8 @@
  	
  	<insert id="signUpGeneral" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
-	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, LAST_LOGIN_DATE, REG_DATE)
-	SELECT USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, `LANGUAGE` ,#{marketYn} AS MARKET_YN , NOW() AS MARKET_DATE, NOW() AS LAST_LOGIN_DATE, NOW() AS LAST_LOGIN_DATE  
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE,GOOGLE_YN ,LAST_LOGIN_DATE, REG_DATE)
+	SELECT USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, `LANGUAGE` ,#{marketYn} AS MARKET_YN , NOW() AS MARKET_DATE,#{googleYn} AS GOOGLE_YN, NOW() AS LAST_LOGIN_DATE, NOW() AS LAST_LOGIN_DATE  
 	FROM NetMiner.MEMBER_INFO_TEMP WHERE USER_ID = #{userId} 
 	AND NO = (select MAX(NO) from NetMiner.MEMBER_INFO_TEMP
 			 	where USER_ID = #{userId}

@@ -45,11 +45,11 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";	
-	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/socialRegister";
 	
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
@@ -61,7 +61,7 @@ public class GoogleController  {
 	 * Authentication Code를 전달 받는 엔드포인트
 	 **/
 	@GetMapping("auth")
-	public String googleAuth(Model model, @RequestParam(value = "code") String authCode, HttpSession session)
+	public String googleAuth(Model model, @RequestParam(value = "code") String authCode,HttpServletResponse response ,HttpSession session)
 			throws JsonProcessingException {
 		String url = "";
 		try {			
@@ -106,9 +106,22 @@ public class GoogleController  {
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
 		logger.info("userInfo - {}", userInfo.toString());
+		int count = memberService.checkUser( (String) userInfo.get("email"));
+		boolean checkUserCount = true; 
+		if (count > 0) {
+			checkUserCount = false;
+		}
 		MemberVo member = memberService.getUserInfo(memberVo);
-		if (member == null) {			
-			url = "member/register_sns_fail";
+		if (member == null) {
+			if (!checkUserCount) {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 				
+				out.flush();
+				url = "member/login";
+			} else {
+				url = "member/register_sns_fail";				
+			}
 		} else {
 			session.setAttribute("memberVo", member);
 			url = "homePage/main";
@@ -167,11 +180,17 @@ public class GoogleController  {
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
 		logger.info("userInfo - {}", userInfo.toString());
-		MemberVo member = memberService.getUserInfo(memberVo);
-		if (member == null) {			
+		int count = memberService.checkUser( (String) userInfo.get("email"));
+		logger.info("count - {}", count);
+		boolean checkUserCount = true; 
+		
+		if (count > 0) {
+			checkUserCount = false;
+		}
+		
+		if (checkUserCount) {			
 			url = "member/register_sns";
 		} else {
-			session.setAttribute("memberVo", member);
 			response.setContentType("text/html; charset=UTF-8"); 
 			PrintWriter out = response.getWriter(); 
 			out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 

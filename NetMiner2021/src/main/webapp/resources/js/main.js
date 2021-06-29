@@ -1,3 +1,4 @@
+var checkRandomNumber = false;
 $(document).ready(function() {
 	
 	
@@ -33,6 +34,8 @@ $(document).ready(function() {
 		var randomNumber = sessionStorage.getItem("randomNumber");
 		var inputNumber = $("#code").val();
 		if (inputNumber==randomNumber) {
+			checkRandomNumber = true;
+			document.getElementById('code').readOnly = true
 			alert("인증완료 되었습니다.");
 		}
 	});
@@ -68,8 +71,18 @@ $(document).ready(function() {
 		sessionStorage.clear();
 		window.location.href="./logOut";
 	});
-	
-	
+
+	$(".content .input li #email").on('input',function(){
+		var emailValue = $("#email").val();
+		var emailStyle = document.getElementById("checkEmailBtn");
+		if (CheckEmailRegx(emailValue)) {
+			emailStyle.style.background = "#203864";
+			emailStyle.disabled = "false";
+		} else {
+			emailStyle.style.background = "#bbb8b8";
+			emailStyle.disabled = "true";
+		}
+	})
 	
 })
 var emailNumber = "";
@@ -88,21 +101,22 @@ function CheckEmailRegx(emailVal)
 
 }
 function CheckPwd(pwdVal) {
-	console.log(pwdVal.length);
-	if (pwdVal.length >=6 && pwdVal.length <= 20) {
-		var regExp= /^[0-9a-zA-Z]*$/i;
+		var regExp= /^[0-9a-zA-Z]{4,20}$/i;
 		if (pwdVal.match(regExp)!= null) {
+			var numberExp = /^[0-9]{4,20}$/i
+			var strExp = /^[a-zA-Z]{4,20}$/i
+			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
+				alert("하나또는 두개이상의 문자혹은 숫자로 이루어져야합니다.");
+				return false;
+			}			
 			return true;
 		} else {
 			return false;
 		}
-	} else {
-		return false;
-	}
 }
 
 
-function checkEmail (){
+function checkEmail(){
 	var userId = $("#email").val();
 	var userpwd = $("#pwd").val();
 	var company = $("#company").val();
@@ -173,41 +187,45 @@ function checkEmail (){
 
 function register() {
 	var marketYn = "N";
-	
-	if ($('input:checkbox[id="check1"]').is(":checked") == false ||
-	 $('input:checkbox[id="check2"]').is(":checked") == false  ) {
-		alert("필수약관에 동의 해주세요");
-	} else {
-		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
-			marketYn = "Y";
+	console.log(checkRandomNumber);
+	if (checkRandomNumber) {
+		if ($('input:checkbox[id="check1"]').is(":checked") == false ||
+		 $('input:checkbox[id="check2"]').is(":checked") == false  ) {
+			alert("필수약관에 동의 해주세요");
+		} else {
+			if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+				marketYn = "Y";
+			}
+			
+			var email = sessionStorage.getItem("email");
+			var con = document.getElementById("dimmed");
+				con.style.removeProperty("display");
+			$(function(){
+				$.ajax({
+					url :"./registerStep",
+					type:"POST",
+					data:{
+						'email':email, 'marketYn': marketYn 
+					},
+					success: function (data){
+						alert("회원가입 완료");
+						sessionStorage.clear();
+						window.location.href= "./";
+					} 
+					
+				})
+			});	
 		}
-		
-		var email = sessionStorage.getItem("email");
-		var con = document.getElementById("dimmed");
-			con.style.removeProperty("display");
-		$(function(){
-			$.ajax({
-				url :"./registerStep",
-				type:"POST",
-				data:{
-					'email':email, 'marketYn': marketYn 
-				},
-				success: function (data){
-					alert("회원가입 완료");
-					sessionStorage.clear();
-					window.location.href= "./";
-				} 
-				
-			})
-		});	
+	} else {
+		alert("인증번호를 입력해주세요");
 	}
 }
 function googleLogin(){
 	var redirectLocal = "http://localhost:8080/auth";
-	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/NetMiner2021/auth";
+	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/auth";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 	
 }
 
@@ -252,10 +270,10 @@ function registerSns(pwd) {
 }
 function googleRegister() {
 	var redirectLocal = "http://localhost:8080/socialRegister";
-	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/app/socialRegister";
+	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/socialRegister";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 }
 
 function requestSetPwd() {
@@ -376,7 +394,11 @@ function updateUserInfo(){
 	var checkRegx = CheckEmailRegx(userId);	
 	
 	if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
-		alert("회원정보를 입력해주세요");
+		if (userpwd =="") {
+			alert("안전한 회원정보 수정을 위해 비밀번호를 입력해주세요");
+		}else {
+			alert("회원정보를 입력해주세요");		
+		}
 	} else {
 		if (checkRegx) {
 		checkRegx = CheckPwd(userpwd);

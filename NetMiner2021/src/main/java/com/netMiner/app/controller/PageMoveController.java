@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.model.dao.SelectDao;
+import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.model.vo.NationVo;
 
 /**
@@ -51,11 +52,21 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="getNationCode", method = RequestMethod.GET, produces = "application/text; charset=utf8")
-	public @ResponseBody ModelAndView getNationCode(ModelAndView mv, HttpServletRequest requets, HttpServletResponse response) {
+	public @ResponseBody ModelAndView getNationCode(ModelAndView mv, HttpServletRequest requets, HttpServletResponse response, HttpSession session) {
+		MemberVo vo = new MemberVo();
+		String nationCode = "";
+		if (session.getAttribute("memberVo") != null) {
+			vo = (MemberVo) session.getAttribute("memberVo");
+			if (vo.getNation() != null) {
+				nationCode = vo.getNation();		
+			}
+			mv.addObject("userNationCode", nationCode);
+		}
 		List<NationVo> result = selectDao.getNation();
 		mv.addObject("NationVo", result);
 		mv.setViewName("jsonView");
 		response.setContentType("application/x-json; charset=UTF-8");
+		logger.info("membervo- {}", vo.toString());
 		return mv;
 	}
 	

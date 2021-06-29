@@ -57,7 +57,7 @@
 									<li ><label><input type="radio" checked="checked" name="useCode" value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<button class="authentic trs" onClick="checkEmail()">이메일 인증</button>							
+							<button class="authentic trs" onClick="checkEmail();">이메일 인증</button>							
 							<span class="line">또는</span>
 							<button class="google trs" onClick="googleRegister();">Continue in with Google</button>
 						</div>

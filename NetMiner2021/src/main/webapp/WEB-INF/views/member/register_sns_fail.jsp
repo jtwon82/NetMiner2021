@@ -33,9 +33,9 @@
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p class="pc">NetMIner 365에 등록된 계정이 아닙니다. 지금 이 계정을 등록해보세요.<br>
-혹시 다른 계정으로 시도하시겠습니까? <a href="#">로그인</a></p>
+혹시 다른 계정으로 시도하시겠습니까? <a href="./login">로그인</a></p>
 						<p class="mobile">NetMIner 365에 등록된 계정이 아닙니다.<br>지금 이 계정을 등록해보세요.<br>
-혹시 다른 계정으로 시도하시겠습니까? <a href="#">로그인</a></p>
+혹시 다른 계정으로 시도하시겠습니까? <a href="./login">로그인</a></p>
 					</div>
 					<div class="content">
 						<div>
@@ -61,7 +61,7 @@
 								<label><input id="check_all" type="checkbox" name="marketYn" value="Y"><em></em>모두 동의합니다.</label>
 								<label><input id="check1" class="check" type="checkbox" name=""><em></em>만 16 세 이상입니다 <span>(필수)</span></label>
 								<label><input id="check2" class="check" type="checkbox" name=""><em></em><a href="#" class="blue">이용약관</a>과 <a href="#" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(필수)</span></label>
+								<label><input id="check2" class="check" type="checkbox" name=""><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(선택)</span></label>
 							</div>
 							<button class="create trs" onClick="registerSns('${userInfo.kid}')">계정생성</button>
 						</div>

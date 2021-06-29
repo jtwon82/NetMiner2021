@@ -118,7 +118,8 @@ public class MemberController {
 			memberVo = memberService.getUserInfoTmp(memberVo);
 			String marketYn = request.getParameter("marketYn");
 			memberVo.setMarketYn(marketYn);
-			
+			String googleYn = "N";
+			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
 			session.setAttribute("memberVo", memberVo);
@@ -192,14 +193,14 @@ public class MemberController {
 		String nation = request.getParameter("nation");
 		String useCode = request.getParameter("useCode");
 		String marketYn = StringUtils.trimToNull(request.getParameter("marketYn")) == null ? "N" : "Y";
-		
+		String googleYn = "Y";
 		memberVo.setUserId(userId);
 		memberVo.setUserPwd(userPwd);
 		memberVo.setCompany(company);
 		memberVo.setNation(nation);
 		memberVo.setUseCode(useCode);
 		memberVo.setMarketYn(marketYn);
-		
+		memberVo.setGoogleYn(googleYn);
 		if (nation.equals("korea")) {
 			memberVo.setLanguage("ko");
 		} else {
@@ -318,7 +319,7 @@ public class MemberController {
 		MemberVo oldMemberVo = (MemberVo) session.getAttribute("memberVo");
 		
 		memberService.updateNewUserInfo(oldMemberVo, memberVo);
-		
+		memberVo = memberService.getUserInfo(memberVo);
 		session.setAttribute("memberVo", memberVo);
 		
 		mv.setViewName("jsonView");
