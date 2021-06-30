@@ -41,7 +41,8 @@ public class MemberController {
 	
 	@Autowired
 	private SendEmail sendEmail;
-
+	
+	private String url ="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/"; 
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -112,7 +113,7 @@ public class MemberController {
 		
 		try {
 			request.setCharacterEncoding("UTF-8");
-			
+
 			String userId = request.getParameter("email");
 			memberVo.setUserId(userId);
 			memberVo = memberService.getUserInfoTmp(memberVo);
@@ -122,6 +123,10 @@ public class MemberController {
 			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
+			sendEmail.sendRegisterMail(userId, url);
+			if ("Y".equals(marketYn)) {
+				sendEmail.sendMarketEmail(userId);
+			}
 			session.setAttribute("memberVo", memberVo);
 			
 			mv.setViewName("jsonView");
@@ -209,6 +214,12 @@ public class MemberController {
 		logger.info("memberVo - {}", memberVo.toString());
 		memberService.signUp(memberVo);
 		
+
+		sendEmail.sendRegisterMail(userId, url);
+		
+		if ("Y".equals(marketYn)) {
+			sendEmail.sendMarketEmail(userId);
+		}
 		session.setAttribute("memberVo", memberVo);
 		mv.setViewName("homePage/main");
 		
@@ -319,6 +330,11 @@ public class MemberController {
 		MemberVo oldMemberVo = (MemberVo) session.getAttribute("memberVo");
 		
 		memberService.updateNewUserInfo(oldMemberVo, memberVo);
+		
+		if ("Y".equals(marketYn)) {
+			sendEmail.sendMarketEmail(userId);
+		}
+		
 		memberVo = memberService.getUserInfo(memberVo);
 		session.setAttribute("memberVo", memberVo);
 		

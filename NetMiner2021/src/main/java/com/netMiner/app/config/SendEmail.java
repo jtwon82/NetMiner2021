@@ -10,17 +10,50 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
+import com.netMiner.app.model.dao.SelectDao;
+import com.netMiner.app.model.vo.MailVo;
 
 @Configuration
 public class SendEmail {
+	
+	@Autowired
+	private SelectDao selectDao;
+	
+	//마켓팅 수신 정보동의
+	public void sendMarketEmail(String userId) {
+		MailVo vo = selectDao.getRandomMail("01");
+		String title = vo.getTitle();
+		String comment = vo.getComment();
+		boolean result = this.sendMailSender(userId , comment, title);
+		
+	}
+	
+	//비밀번호재설정을 위한 인증 
+	public boolean sendReSetPwd(String url, String userId) {
+		
+		MailVo vo = selectDao.getRandomMail("02");
+		String title = vo.getTitle();
+		String comment = vo.getComment();
+		comment = comment.replace("{changePwd}", url);
+		boolean result = this.sendMailSender(userId, comment, title);
+		
+		return result;
+		
+	}
+	
 	//인증번호 발송 
 	public String sendCheckEmail(String userId) {
 		// TODO Auto-generated method stub
+		MailVo vo = selectDao.getRandomMail("03");
 		String randomNumber = String.valueOf(this.getRandomNumber());
-		String comment = "test 입니다. "+ randomNumber;
-		String title = "test";
+		String comment = vo.getComment();
+		comment = comment.replace("{randomNumber}", randomNumber);
+		String title = vo.getTitle();
 		boolean result = this.sendMailSender(userId , comment, title);
 		
 		if (!result) {
@@ -29,19 +62,20 @@ public class SendEmail {
 		
 		return randomNumber;
 	}
-	
-	//비밀번호재설정을 위한 인증 
-	public boolean sendReSetPwd(String url, String userId) {
 		
-		String title = "비밀번호 재생성";
-		String comment = "<a href='"+url+"'>비밀번호 재설정</a>";
-			
-		boolean result = this.sendMailSender(userId, comment, title);
+	//가입 축하 이메일 발송 
+	public void sendRegisterMail(String userId, String url) {
+		url = url+"resources/images/edm_play.png";
 		
-		return result;
-		
+		MailVo vo = selectDao.getRandomMail("04");
+		String title = vo.getTitle();
+		String comment = vo.getComment();
+		comment = comment.replace("{imgUrl}", url);
+		boolean result = this.sendMailSender(userId , comment, title);
 	}
 
+	
+	
 	//이메일 발송 Sender
 	private boolean sendMailSender(String userId, String comment,String title) {
 			boolean result = true;
@@ -108,5 +142,9 @@ public class SendEmail {
 		// TODO Auto-generated method stub
 		return ThreadLocalRandom.current().nextInt(1000000, 10000000);
 	}
+
+	
+
+
 
 }

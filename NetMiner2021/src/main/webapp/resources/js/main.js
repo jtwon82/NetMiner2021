@@ -77,10 +77,10 @@ $(document).ready(function() {
 		var emailStyle = document.getElementById("checkEmailBtn");
 		if (CheckEmailRegx(emailValue)) {
 			emailStyle.style.background = "#203864";
-			emailStyle.disabled = "false";
+			$("#checkEmailBtn").attr('disabled', false);
 		} else {
 			emailStyle.style.background = "#bbb8b8";
-			emailStyle.disabled = "true";
+			$("#checkEmailBtn").attr('disabled', true);
 		}
 	})
 	
@@ -225,7 +225,7 @@ function googleLogin(){
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/auth";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 	
 }
 
@@ -244,7 +244,8 @@ function registerSns(pwd) {
 		if ($('input:checkbox[id="check3"]').is(":checked") == true) {
 			marketYn = "Y";
 		}
-		
+		var con = document.getElementById("dimmed");
+			con.style.removeProperty("display");
 		$(function(){
 			$.ajax({
 				url :"./registerSNS",
@@ -273,7 +274,7 @@ function googleRegister() {
 	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/socialRegister";
 
 	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
 }
 
 function requestSetPwd() {
@@ -283,6 +284,7 @@ function requestSetPwd() {
 	if (userId == "") {
 		alert("이메일을 입력해 주세요");
 	} else {
+		
 		if (checkRegx) {
 			$(function (){
 				$.ajax({
@@ -334,11 +336,13 @@ function changePwd(userId){
 
 
 function changeEmail(userId) {
+	
 	var email = $("#email").val();
 	if (userId == email){
 		email = userId;
 	}
-	
+	 var con = document.getElementById("dimmed");
+		 con.style.removeProperty("display");
 	$(function (){
 		$.ajax({
 			url:"./changeEmail",

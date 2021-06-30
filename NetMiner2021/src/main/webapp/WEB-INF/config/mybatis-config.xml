@@ -8,6 +8,7 @@
   <typeAliases>
    <typeAlias type="com.netMiner.app.model.vo.MemberVo" alias="MemberVo"/>
    <typeAlias type="com.netMiner.app.model.vo.NationVo" alias="NationVo"/>
+   <typeAlias type="com.netMiner.app.model.vo.MailVo" alias="MailVo"/>
   </typeAliases>
   <mappers>
     <mapper resource="/mapper/Member.xml"/>

@@ -3,7 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="select">
+  	<resultMap type="com.netMiner.app.model.vo.MailVo" id="MailVo">
+  		<id property="emailCode" column="EMAIL_CODE"/>
+  		<result property="title" column="TITLE"/>
+		<result property="comment" column="COMMENT"/>
+  	</resultMap>
+  
   	<select id="selectNation" resultType="hashMap">
   	SELECT NATION_CODE, NATION_NAME_KR, NATION_NAME_EN FROM  NetMiner.NATION_CODE;
+  	</select>
+  	
+  	<select id="selectEmail" parameterType="String" resultType="MailVo">
+  	SELECT EMAIL_CODE, TITLE, COMMENT
+	FROM NetMiner.EMAIL_INFO
+	WHERE EMAIL_CODE = #{mailCode};
   	</select>
   </mapper>
