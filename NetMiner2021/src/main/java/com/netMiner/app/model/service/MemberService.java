@@ -8,7 +8,7 @@ public interface MemberService {
 
 	String getTestDate();
 
-	boolean checkJoin(MemberVo vo);
+	MemberVo checkJoin(MemberVo vo);
 
 	MemberVo getUserInfo(MemberVo memberVo);
 

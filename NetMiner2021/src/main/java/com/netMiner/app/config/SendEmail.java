@@ -65,16 +65,14 @@ public class SendEmail {
 		
 	//가입 축하 이메일 발송 
 	public void sendRegisterMail(String userId, String url) {
-		url = url+"resources/images/edm_play.png";
+		
 		
 		MailVo vo = selectDao.getRandomMail("04");
 		String title = vo.getTitle();
 		String comment = vo.getComment();
-		comment = comment.replace("{imgUrl}", url);
 		boolean result = this.sendMailSender(userId , comment, title);
 	}
 
-	
 	
 	//이메일 발송 Sender
 	private boolean sendMailSender(String userId, String comment,String title) {

@@ -26,11 +26,12 @@
 	</head>
 	<body>
 		<div id="wrap" class="sub activate">
+			<%@include file = "../common/memberTop.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
-						<h2>Reset you password</h2>
-						<p>비밀번호를 재설정</p>
+						<h2>Activate your account</h2>
+						<p>계정이 휴면 상태입니다</p>
 					</div>
 					<div class="content">
 						<p>1년 이상 NetMiner 365 를 이용하지 않아서
@@ -45,6 +46,7 @@
 					
 				</div>
 			</div>
+			<%@include file = "../common/footer.jsp" %>
 		</div>
 	
 	</body>

@@ -22,7 +22,7 @@
 		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
-		<script src="resources/js/gnb.js" type="text/javascript"></script>
+		<script src="resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 		<script src="resources/js/event.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>  
 	</head>
@@ -32,17 +32,7 @@
 			<div id="top">
 				<div class="content">
 					<div class="wrap">
-						<!-- 로그인 후-->
-						<div class="mypage obj type2" >
-							<p class="me">
-								<img src="resources/images/top_me.png" alt="mypage">
-							</p>
-							<ul>
-								<li class="workSpace active"><a href="./" class="trs">My Workspace</a></li> 
-								<li class="account"><a href="./account" class="trs">Account</a></li>
-								<li class="signOut"><a href="./logOut" class="trs">Sign-Out</a></li>
-							</ul>
-						</div>
+						<h1 class="obj" ><a href="./"><img src="images/main_logo.png" alt="Why NetMiner 365 logo"></a></h1>
 					</div>
 				</div>
 			</div>
@@ -88,15 +78,22 @@
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()"  name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
 							<div class="update" id="update" style="display: none;">
-								<button class="cancel trs" onClick="cancel()">취소</button>
+								<button class="cancel trs">취소</button>
 								<button class="save trs active" onClick="updateUserInfo();">저장</button>
 							</div>
 						</div>
 					</div>
+					<div class="content leave">
+						<div>
+							<p>계정삭제</p>
+							<p>계정을 삭제하면, 데이터 및 로그는 영원히 삭제됩니다</p>
+							<button class="leave trs" >계정삭제</button>
+						</div>
+					</div>
 				</div>
 			</div>
+		<%@include file = "../common/footer.jsp" %>
 		</div>
-	
 		<!-- 마케팅 정보 수신 _ 동의  -->
 		<div id="agree_popup" class="popup" >
 			<div class="wrap">
@@ -117,7 +114,18 @@
 			</div>
 		</div>
 		
-		
+				<!-- 탈퇴 팝업  -->
+		<div id="leave_popup" class="popup" >
+			<div class="wrap">
+				<h4>계정을 삭제하시겠습니까?</h4>
+				<p>계정을 삭제하면 계정 정보와 데이터 등<br>
+				모든 정보가 영구히 삭제되고 복구할 수 없습니다.<br>
+				<span>(단, 이용기록 등 일부 정보는 개인정보처리방침에 따라 분리 보관됩니다)</span><br>
+				정말 계정을 삭제하시겠습니까? </p>
+				<button class="close trs">취소</button>
+				<button class="leave trs">계정삭제</button>
+			</div>
+		</div>
 		
 	</body>
 </html>

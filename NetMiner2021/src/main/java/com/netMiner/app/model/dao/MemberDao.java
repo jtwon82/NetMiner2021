@@ -20,7 +20,7 @@ public interface MemberDao {
 
 	void signUpGeneral(MemberVo memberVo);
 
-	boolean checkJoin(MemberVo vo);
+	MemberVo checkJoin(MemberVo vo);
 
 	void updateNewPwd(MemberVo vo);
 

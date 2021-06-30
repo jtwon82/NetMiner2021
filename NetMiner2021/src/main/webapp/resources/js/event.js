@@ -10,11 +10,6 @@ function noEvent() {
         return false;
     }
 }
-function cancel (){
-	sessionStorage.clear();
-	window.location.href="./login";
-}
-
 function showUpdate() {
 	var updateDiv = document.getElementById("update");
 	updateDiv.style.removeProperty("display");

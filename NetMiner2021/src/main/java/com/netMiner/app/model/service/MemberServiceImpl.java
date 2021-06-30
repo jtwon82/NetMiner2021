@@ -20,9 +20,9 @@ public class MemberServiceImpl implements MemberService{
 		return dbDate;
 	}
 	@Override
-	public boolean checkJoin(MemberVo vo) {
+	public MemberVo checkJoin(MemberVo vo) {
 		
-		boolean result = memberDao.checkJoin(vo);
+		MemberVo result = memberDao.checkJoin(vo);
 		return result;
 	}
 	@Override

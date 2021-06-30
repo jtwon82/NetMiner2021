@@ -234,10 +234,16 @@ public class MemberController {
 		MemberVo vo = new MemberVo();
 		vo.setUserId(userId);
 		//1. 해당유저의 존재 여부 파악  있으면  메일 보내기  없으면 해당 유저가 없으므로 가입창으로 
-		boolean checkResult = memberService.checkJoin(vo);
+		String googleYn = "";
+		MemberVo checkResult = memberService.checkJoin(vo);
 		
 		boolean sendMail = false;
-		if (checkResult) {
+		
+		if (checkResult != null) {
+			googleYn = checkResult.getGoogleYn();
+		}
+		
+		if (checkResult != null && checkResult.getGoogleYn().equals("N")) {
 			String[] urlSp = request.getRequestURL().toString().split("/");
 			//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
 			StringBuffer sb = new StringBuffer()
@@ -246,10 +252,10 @@ public class MemberController {
 					.append("userId=").append(userId);
 			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
-		} else {
-			logger.info("checkResult false");
+		} else {			
+			mv.addObject("googleYn", googleYn);
+			mv.addObject("userId", userId);
 		}
-		mv.addObject("userId", userId);
 		mv.setViewName("jsonView");
 		return mv;
 	}
@@ -364,6 +370,20 @@ public class MemberController {
 		String userId = request.getParameter("email");
 		String randomNumber = sendEmail.sendCheckEmail(userId);
 		mv.addObject("randomNumber", randomNumber);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+
+	@RequestMapping(value="goBack", method=RequestMethod.GET)
+	public ModelAndView goBack(HttpSession session, ModelAndView mv, HttpServletRequest request) {
+		if (session.getAttribute("userId")!= null) {
+			session.removeAttribute("userId");			
+		}
+		String form = request.getParameter("form");
+		if ("account".equals(form)) {
+			mv.addObject("getUrl", "-2");
+		}
 		mv.setViewName("jsonView");
 		return mv;
 	}

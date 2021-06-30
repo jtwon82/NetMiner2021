@@ -25,8 +25,8 @@
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
-	<div id="top"></div>
 		<div id="wrap" class="sub login">
+		<%@include file = "../common/memberTop.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -48,6 +48,7 @@
 					
 				</div>
 			</div>
+		<%@include file = "../common/memberFooter.jsp" %>
 		</div>
 	
 	</body>

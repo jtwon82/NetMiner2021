@@ -28,6 +28,7 @@
 	<div id = "top"></div>
 	<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub authentic">
+			<%@include file = "../common/memberTop.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -55,11 +56,12 @@
 						<c:if test="${!empty memberVo}">
 						<button class="create trs active" onClick="registerCheckEmail()">이메일 인증</button>
 						</c:if>
-						<a class="back" href="#" >전 단계로 돌아가기</a>
+						<a class="back">전 단계로 돌아가기</a>
 					</div>
 					
 				</div>
 			</div>
+			<%@include file = "../common/footer.jsp" %>
 		</div>
 	
 	</body>

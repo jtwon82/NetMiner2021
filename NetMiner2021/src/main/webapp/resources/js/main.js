@@ -48,9 +48,30 @@ $(document).ready(function() {
 			openPoup("refuse_popup");
 		}
 	});
-	$(".back").click(function(){
-		sessionStorage.clear();
-		window.history.back();
+	$(".back").click(function(){		
+		$(function(){
+			$.ajax({
+				url : "./goBack",
+				type : "GET",
+				success : function (data) {
+					sessionStorage.clear();
+					window.history.back();
+				}
+			})
+		})
+	})
+	$(".cancel").click(function(){
+		$(function (){
+			$.ajax({
+				url : "./goBack",
+				type : "GET",
+				data : {"form":"account"},
+				success : function (data) {
+					sessionStorage.clear();
+					window.location.href = data.getUrl;
+				}
+			})
+		})
 	})
 	
 	var filter = "win16|win32|win64|mac";
@@ -187,9 +208,8 @@ function checkEmail(){
 
 function register() {
 	var marketYn = "N";
-	console.log(checkRandomNumber);
 	if (checkRandomNumber) {
-		if ($('input:checkbox[id="check1"]').is(":checked") == false ||
+		if ($('input:checkbox[id="check1"]').is(":checked") == false &&
 		 $('input:checkbox[id="check2"]').is(":checked") == false  ) {
 			alert("필수약관에 동의 해주세요");
 		} else {
@@ -237,7 +257,7 @@ function registerSns(pwd) {
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="useCode"]:checked').val();
 	var marketYn = "N";
-	if ($('input:checkbox[id="check1"]').is(":checked") == false ||
+	if ($('input:checkbox[id="check1"]').is(":checked") == false &&
 	 $('input:checkbox[id="check2"]').is(":checked") == false ) {
 		alert("필수약관에 동의 해주세요");
 	} else {
@@ -286,6 +306,8 @@ function requestSetPwd() {
 	} else {
 		
 		if (checkRegx) {
+			 var con = document.getElementById("dimmed");
+			 con.style.removeProperty("display");
 			$(function (){
 				$.ajax({
 					url:"./findUserInfo",
@@ -294,6 +316,18 @@ function requestSetPwd() {
 					success : function (data){
 						/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
 						//console.log(data);
+						if (data.googleYn == 'Y') {
+							alert("해당 유저는 구글 유저로 비밀번호변경이 불가능합니다.");
+							window.history.back();
+						} else {
+							alert("해당 유저의 정보가 없습니다.");
+							window.location.href="./register";
+						}
+						
+						if (data.googleYn== 'N') {
+							alert("이메일 발송이 완료 되었습니다.");
+							window.location.href="./login";
+						}
 					}
 						
 				})
