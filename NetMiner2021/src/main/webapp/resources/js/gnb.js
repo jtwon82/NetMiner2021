@@ -20,21 +20,32 @@ $(document).ready(function() {
 		$("#navOn").fadeOut();
 	});
 
-	//스크롤시 헤더 고정
-	if($(window).width() >1000){
+	
+	var sticky;
+	function resizeFn() {
+		//스크롤시 헤더 고정
 		window.onscroll = function() {myFunction()};
-		var header = document.getElementById("top");
-		
-		var sticky = header.offsetTop;
-		
-		function myFunction() {
-		  if (window.pageYOffset > sticky) {
-		    header.classList.add("sticky");
-		  } else {
-		    header.classList.remove("sticky");
-		  }
-		}
+		header = document.getElementById("top");
+		sticky = header.offsetTop;
 	}
+	function myFunction() {
+		if($(window).width() >1000){
+			if (window.pageYOffset > sticky) {
+				$("#top").addClass("sticky");
+			} else {
+				$("#top").removeClass("sticky");
+			}
+		}else{
+			$("#top").removeClass("sticky");
+		}
+		
+	}
+	
+	
+	$(window).on('resize', function() {
+		resizeFn();
+	});
+	resizeFn();
 		
 	
 	//로그인 후 메뉴

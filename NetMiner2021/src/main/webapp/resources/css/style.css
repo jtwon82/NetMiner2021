@@ -69,7 +69,17 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap .section .wrap .content{padding-top:110px;}
 
 #wrap #top{position: absolute; width: 100%;  transition: all 0.3s;}
-#wrap #top h1{width:270px; font-size:24px; color: #fff; height: 50px;}
+#wrap #top h1{margin-top:-14px;}
+#wrap #top h1 .logo2{display: none;}
+#wrap #top.sticky h1 .logo1{display: none;}
+#wrap #top.sticky h1 .logo2{display: block;}
+
+#wrap.sub #top h1 .logo1{display: none;}
+#wrap.sub #top h1 .logo2{display: block;}
+#wrap.sub #top.sticky h1 .logo1{display: none;}
+#wrap.sub #top.sticky h1 .logo2{display: block;}
+
+
 #wrap #top .menu{left:320px;}
 #wrap #top .menu span{font-size:22px; color:#fff; cursor: pointer;}
 #wrap #top .menu span.active::after{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
@@ -149,9 +159,9 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.sub input{border:1px solid #9d9d9d; font-size:20px; color:#606060;}
 #wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("/resources/images/select_arrow.png") no-repeat 98% 50%/15px auto;}
 #wrap.sub .blue{color:#114fbf; font-size:18px; }
-#wrap.sub #top.sticky{position: absolute; width: 100%; background: none;}
-#wrap.sub #top.sticky .content{padding:44px 90px 0;}
-#wrap.sub  #top .gnbOff{display:none;}
+#wrap.sub #top .menu{display:none;}
+#wrap.sub #top .content .mypage.type1 li.join{background-color:#203864;}
+#wrap.sub #top .content .mypage.type1 li.login a{color:#090909;}
 
 
 #wrap #main .slider{background-size: cover;  background-repeat: no-repeat; background-position-x: 80%; background-position-y: 40%;}
@@ -380,7 +390,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.register_sns input[type="checkbox"]+ em {width:15px; height:12px; margin-right:5px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block;background-image: url('/resources/images/authentic_check.png'); }
 #wrap.register_sns input[type="checkbox"] {display: none;}
 #wrap.register_sns input[type="checkbox"]:checked + em {background-image:url(/resources/images/authentic_check_active.png); background-size:cover; }
-#wrap.register_sns #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px; }
+#wrap.register_sns #section .content .agree{border-top:1px solid #c7c7c7; padding-top: 32px; color:#606060; font-size:18px;}
 #wrap.register_sns #section .content .agree label{display:block; margin-bottom: 4px;}
 #wrap.register_sns #section .content .agree label span.silver{color:#b5b5b5;}
 #wrap.register_sns #section .content .agree label:first-child{font-size:20px; font-weight:700; margin-bottom: 17px;}
@@ -513,7 +523,9 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap #navOn #nav .menu li a{width: auto;}
     #wrap #navOn #nav .menu li a:active{color:#06a8e7;}
     #wrap #top{position: fixed;width: 100%;z-index: 10; }
-    #wrap #top h1{width: 200px; font-size: 17px;}
+    #wrap #top h1{width: 140px; margin-top:-8px; margin-left:-10px;}
+    #wrap #top h1 .logo1{display: none;}
+	#wrap #top h1 .logo2{display: block;}
     #wrap #top .content::before{background-color: #fff;  width:100%; height:100%; top:0px; left:0px; display:block; content: ""; position: absolute; z-index: 10;}
     #wrap #top .content #navOn .mypage.type1 li{border: none; line-height: 1; width: auto; height: auto;position:relative; }
     #wrap #top .content #navOn .mypage.type1 li:first-child::after{content:""; width:1px; height:12px; display:inline-block; background:#090909;     position: absolute; right: -8px; top: 13px;}
@@ -566,8 +578,6 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap .section .wrap .content{padding-top: 30px;}
     #wrap .section .wrap .more{font-size: 15px; padding: 5px;}
     
-   	#wrap.account #top .content::before, #wrap.activate #top .content::before, #wrap.authentic #top .content::before, #wrap.login #top .content::before, #wrap.register #top .content::before, #wrap.register_sns #top .content::before,  #wrap.register_sns_fail #top .content::before, #wrap.searchPw #top .content::before{content:none;}
-    #wrap.account #top, #wrap.activate #top, #wrap.authentic #top, #wrap.login #top, #wrap.register #top, #wrap.register_sns #top, #wrap.register_sns_fail #top, #wrap.searchPw #top{position:static;}
     #wrap.sub .title h2{font-size: 22px;}
     #wrap.sub .title p{font-size: 15px;}
     #wrap.sub .title p a{padding-left: 10px;}
@@ -576,11 +586,9 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.sub #section .wrap{padding-top: 90px; padding-bottom: 100px;}
     #wrap.sub{font-size: 14px;}
     #wrap.sub select{background: url(/resources/images/select_arrow.png) no-repeat 98% 50%/12px auto;}
-    #wrap.sub #top{position: absolute;}
-    #wrap.sub #top .me{float:right;}
-    #wrap.sub #top .content .mypage.type2{padding-top:0; right: -15px;}
-	#wrap.sub #top .content::before{display:none;}
-	#wrap.sub #top .content .mypage.type2 ul{display: none; text-align: left; margin-top: 50px;border-radius: 10px; padding: 10px; background-color: #fff;box-shadow: 0px 0px 11px #cacaca;}
+    #wrap.sub #top{background-color: #fff;}
+	#wrap.sub #top .content .mypage.type1 li.join{background-color: transparent;}
+
 /*메인-----------------------------------------------------------*/
     #wrap.main #section1 .content .bg{margin-left:0; margin:0 auto;width: 90%;height: 49vw;}
     #wrap.main #section1 .more{bottom: 8px;}
