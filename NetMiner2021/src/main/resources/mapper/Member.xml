@@ -22,9 +22,17 @@
  	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO
 	WHERE USER_ID =  #{userId}
-	AND USER_PWD  = password(#{userPwd});
+	<if test='googleYn.equals("N")'>
+	AND USER_PWD  = password(#{userPwd})
+	</if>;
  	</select>
- 	
+ 	<select id="getLoginUserInfo" resultMap="MemberVo" parameterType="MemberVo">
+ 	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+	FROM NetMiner.MEMBER_INFO
+	WHERE USER_ID =  #{userId}
+	AND USER_PWD  = password(#{userPwd})
+	; 	
+ 	</select>
  	<insert id="insertSignUp" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, GOOGLE_YN, LAST_LOGIN_DATE, REG_DATE)
@@ -97,9 +105,12 @@
  	</update>
  	
  	<update id="updateUserInfo" parameterType="Map">
- 	UPDATE netminer.member_info
-	SET USER_ID = #{userId},
+ 	UPDATE NetMiner.MEMBER_INFO
+	SET 
+	<if test='googleYn.equals("N")'>
+	USER_ID = #{userId},
 	 USER_PWD = password(#{userPwd}),
+	 </if>
 	 COMPANY = #{company},
 	 NATION = #{nation},
 	 `LANGUAGE` = #{language},
@@ -116,4 +127,8 @@
  	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
  	WHERE USER_ID = #{userId};
  	</select>
+ 	
+ 	<delete id="deleteMemberInfo" parameterType="MemberVo">
+ 	DELETE FROM NetMiner.MEMBER_INFO WHERE USER_ID = #{userId};
+ 	</delete>
  </mapper>

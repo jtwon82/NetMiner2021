@@ -26,23 +26,7 @@
 	</head>
 	<body>
 		<div id="wrap" class="sub register_complete">
-			<div id="top">
-				<div class="content">
-					<div class="wrap">
-						<!-- 로그인 후-->
-						<div class="mypage obj type2" >
-							<p class="me">
-								<img src="resources/images/top_me.png" alt="mypage">
-							</p>
-							<ul>
-								<li class="workSpace active"><a href="#" class="trs">My Workspace</a></li>
-								<li class="account"><a href="#" class="trs">Account</a></li>
-								<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">

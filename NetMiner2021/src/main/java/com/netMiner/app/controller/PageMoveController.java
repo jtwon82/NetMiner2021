@@ -106,4 +106,12 @@ public class PageMoveController extends HttpServlet {
 	public String solution () {
 		return "homePage/solution";
 	}
+	@RequestMapping(value="TermsOfService", method=RequestMethod.GET)
+	public String termsOfService() {
+		return "homePage/term";
+	}
+	@RequestMapping(value="Privacy", method=RequestMethod.GET)
+	public String Privacy() {
+		return "homePage/privacy";
+	}
 }

@@ -29,13 +29,7 @@
 	<body>
 		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub account">
-			<div id="top">
-				<div class="content">
-					<div class="wrap">
-						<h1 class="obj" ><a href="./"><img src="images/main_logo.png" alt="Why NetMiner 365 logo"></a></h1>
-					</div>
-				</div>
-			</div>
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -79,7 +73,7 @@
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()"  name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
 							<div class="update" id="update" style="display: none;">
 								<button class="cancel trs">취소</button>
-								<button class="save trs active" onClick="updateUserInfo();">저장</button>
+								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">저장</button>
 							</div>
 						</div>
 					</div>
@@ -87,7 +81,7 @@
 						<div>
 							<p>계정삭제</p>
 							<p>계정을 삭제하면, 데이터 및 로그는 영원히 삭제됩니다</p>
-							<button class="leave trs" >계정삭제</button>
+							<button class="leave trs" id="leaveBtn">계정삭제</button>
 						</div>
 					</div>
 				</div>
@@ -123,7 +117,7 @@
 				<span>(단, 이용기록 등 일부 정보는 개인정보처리방침에 따라 분리 보관됩니다)</span><br>
 				정말 계정을 삭제하시겠습니까? </p>
 				<button class="close trs">취소</button>
-				<button class="leave trs">계정삭제</button>
+				<button class="leave trs" onClick="delteUser()">계정삭제</button>
 			</div>
 		</div>
 		

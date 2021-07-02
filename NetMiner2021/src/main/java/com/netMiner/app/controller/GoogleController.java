@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
@@ -45,26 +47,36 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/auth";	
-	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
 	private String clientSecret = "Xuvy3VghnbUWj0Y6racOHwCD";
-
+	
+	
 	@Autowired
 	private MemberService memberService;
 	/**
 	 * Authentication Code를 전달 받는 엔드포인트
 	 **/
-	@GetMapping("auth")
-	public String googleAuth(Model model, @RequestParam(value = "code") String authCode,HttpServletResponse response ,HttpSession session)
+	@RequestMapping(value = "auth", method = RequestMethod.GET)
+	public ModelAndView googleAuth(ModelAndView mv ,HttpServletRequest request ,HttpServletResponse response ,HttpSession session)
 			throws JsonProcessingException {
 		String url = "";
+		String authCode = request.getParameter("code");
 		try {			
+			if (authCode == null || authCode.equals("")) {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('새로고침시 다시 시도해주세요');</script>"); 				
+				out.flush();
+				mv.setViewName("member/login");
+				return mv;
+			}
 			//HTTP Request를 위한 RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -99,18 +111,20 @@ public class GoogleController  {
 		String resultJson = restTemplate.getForObject(requestUrl, String.class);
 		
 		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
-		//model.addAllAttributes(userInfo);
-		model.addAttribute("token", result.getAccessToken());
-		model.addAttribute("userInfo", userInfo);
+		
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
-		logger.info("userInfo - {}", userInfo.toString());
+
 		int count = memberService.checkUser( (String) userInfo.get("email"));
+		
 		boolean checkUserCount = true; 
+		
 		if (count > 0) {
 			checkUserCount = false;
 		}
+		mv.addObject("userInfo",userInfo);
+		
 		MemberVo member = memberService.getUserInfo(memberVo);
 		if (member == null) {
 			if (!checkUserCount) {
@@ -122,7 +136,9 @@ public class GoogleController  {
 			} else {
 				url = "member/register_sns_fail";				
 			}
+		//	mv.addObject("checkUserCount", checkUserCount);
 		} else {
+			//mv.addObject("memberVo", member);
 			session.setAttribute("memberVo", member);
 			url = "homePage/main";
 		}
@@ -130,15 +146,25 @@ public class GoogleController  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		return url;
+		mv.setViewName(url);
+		return mv;
 	}
 	
 	
-	@GetMapping("socialRegister")
-	public String googleRegister(Model model, @RequestParam(value = "code") String authCode, HttpSession session, HttpServletResponse response)
+	@RequestMapping(value = "socialRegister", method = RequestMethod.GET)
+	public ModelAndView googleRegister(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response)
 			throws JsonProcessingException {
 		String url = "";
-		try {			
+		String authCode = request.getParameter("code");
+		try {
+			if (authCode == null || authCode.equals("")) {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('새로고침시 다시 시도해주세요'); window.location.href='./register';</script>"); 				
+				out.flush();
+				mv.setViewName("member/login");
+				return mv;
+			}
 			//HTTP Request를 위한 RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -174,14 +200,11 @@ public class GoogleController  {
 		
 		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
 		//model.addAllAttributes(userInfo);
-		model.addAttribute("token", result.getAccessToken());
-		model.addAttribute("userInfo", userInfo);
+		mv.addObject("userInfo", userInfo);
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
-		logger.info("userInfo - {}", userInfo.toString());
 		int count = memberService.checkUser( (String) userInfo.get("email"));
-		logger.info("count - {}", count);
 		boolean checkUserCount = true; 
 		
 		if (count > 0) {
@@ -202,7 +225,8 @@ public class GoogleController  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		return url;
+		mv.setViewName(url);
+		return mv;
 	}
 
 	/**

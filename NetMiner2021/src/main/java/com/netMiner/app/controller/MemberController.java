@@ -124,9 +124,7 @@ public class MemberController {
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
 			sendEmail.sendRegisterMail(userId, url);
-			if ("Y".equals(marketYn)) {
-				sendEmail.sendMarketEmail(userId);
-			}
+			
 			session.setAttribute("memberVo", memberVo);
 			
 			mv.setViewName("jsonView");
@@ -197,7 +195,7 @@ public class MemberController {
 		String company = request.getParameter("company");
 		String nation = request.getParameter("nation");
 		String useCode = request.getParameter("useCode");
-		String marketYn = StringUtils.trimToNull(request.getParameter("marketYn")) == null ? "N" : "Y";
+		String marketYn = request.getParameter("marketYn");
 		String googleYn = "Y";
 		memberVo.setUserId(userId);
 		memberVo.setUserPwd(userPwd);
@@ -217,9 +215,7 @@ public class MemberController {
 
 		sendEmail.sendRegisterMail(userId, url);
 		
-		if ("Y".equals(marketYn)) {
-			sendEmail.sendMarketEmail(userId);
-		}
+		
 		session.setAttribute("memberVo", memberVo);
 		mv.setViewName("homePage/main");
 		
@@ -234,7 +230,7 @@ public class MemberController {
 		MemberVo vo = new MemberVo();
 		vo.setUserId(userId);
 		//1. 해당유저의 존재 여부 파악  있으면  메일 보내기  없으면 해당 유저가 없으므로 가입창으로 
-		String googleYn = "";
+		String googleYn = "N";
 		MemberVo checkResult = memberService.checkJoin(vo);
 		
 		boolean sendMail = false;
@@ -252,10 +248,11 @@ public class MemberController {
 					.append("userId=").append(userId);
 			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
-		} else {			
+		} else {
+			userId="";
 			mv.addObject("googleYn", googleYn);
-			mv.addObject("userId", userId);
 		}
+		mv.addObject("userId", userId);
 		mv.setViewName("jsonView");
 		return mv;
 	}
@@ -312,22 +309,37 @@ public class MemberController {
 	@RequestMapping(value="updateUserInfo", method=RequestMethod.POST)
 	public ModelAndView updateUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session) {
 		MemberVo memberVo = new MemberVo();
-		String userId = request.getParameter("email");
-		String userPwd = request.getParameter("pwd");
-		String company = request.getParameter("company");
-		String nation = request.getParameter("nation");
-		String useCode = request.getParameter("useCode");
-		String marketYn = StringUtils.trimToNull(request.getParameter("marketYn")) == null ? "N" : "Y";
+		String googleYn = request.getParameter("googleYn");
 		
-		
-		memberVo.setUserId(userId);
-		memberVo.setUserPwd(userPwd);
-		memberVo.setCompany(company);
-		memberVo.setNation(nation);
-		memberVo.setUseCode(useCode);
-		memberVo.setMarketYn(marketYn);
+		if (googleYn.equals("N") ) {
+			String userId = request.getParameter("email");
+			String userPwd = request.getParameter("pwd");
+			String company = request.getParameter("company");
+			String nation = request.getParameter("nation");
+			String useCode = request.getParameter("useCode");
+			String marketYn = request.getParameter("marketYn");
+			memberVo.setUserId(userId);
+			memberVo.setUserPwd(userPwd);
+			memberVo.setCompany(company);
+			memberVo.setNation(nation);
+			memberVo.setUseCode(useCode);
+			memberVo.setMarketYn(marketYn);
+			memberVo.setGoogleYn(googleYn);
+		} else {
+			String userId = request.getParameter("email");
+			String company = request.getParameter("company");
+			String nation = request.getParameter("nation");
+			String useCode = request.getParameter("useCode");
+			String marketYn = request.getParameter("marketYn");
+			memberVo.setUserId(userId);
+			memberVo.setCompany(company);
+			memberVo.setNation(nation);
+			memberVo.setUseCode(useCode);
+			memberVo.setMarketYn(marketYn);
+			memberVo.setGoogleYn(googleYn);
+		}
 
-		if (nation.equals("KR")) {
+		if (memberVo.getNation().equals("KR")) {
 			memberVo.setLanguage("ko");
 		} else {
 			memberVo.setLanguage("en");
@@ -337,8 +349,8 @@ public class MemberController {
 		
 		memberService.updateNewUserInfo(oldMemberVo, memberVo);
 		
-		if ("Y".equals(marketYn)) {
-			sendEmail.sendMarketEmail(userId);
+		if ("Y".equals(memberVo.getMarketYn())) {
+			sendEmail.sendMarketEmail(memberVo.getUserId());
 		}
 		
 		memberVo = memberService.getUserInfo(memberVo);
@@ -383,7 +395,19 @@ public class MemberController {
 		String form = request.getParameter("form");
 		if ("account".equals(form)) {
 			mv.addObject("getUrl", "-2");
+		} else if ("delete".equals(form)) {
+			mv.addObject("getUrl", "./");
 		}
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="delteMember", method=RequestMethod.POST)
+	public ModelAndView delteMember(ModelAndView mv, HttpSession session) {
+		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+		
+		memberService.deleteMember(vo);
+		
+		session.invalidate();
 		mv.setViewName("jsonView");
 		return mv;
 	}

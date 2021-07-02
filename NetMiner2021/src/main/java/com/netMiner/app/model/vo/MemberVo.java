@@ -32,6 +32,7 @@ public class MemberVo implements Serializable{
 		result.put("useCode", this.useCode);
 		result.put("language", this.language);
 		result.put("marketYn", this.marketYn);
+		result.put("googleYn", this.googleYn);
 		return result;
 	}
 }

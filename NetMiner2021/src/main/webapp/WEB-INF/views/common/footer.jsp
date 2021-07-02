@@ -4,7 +4,12 @@
 					<div class="content">
 						<div>
 							<h4>NM 365 무료로 시작</h4>
-							<a hrefe="">Start for free</a>
+							<c:if test="${empty memberVo}">
+							<a href="./login">Start for free</a>
+							</c:if>
+							<c:if test="${!empty memberVo}">
+							<a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}">Start for free</a>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -14,8 +19,8 @@
 					<div class="content">
 						<div>
 							<ul class="terms obj">
-								<li><a href="">이용약관</a></li>
-								<li><a href="">개인정보처리방침</a></li>
+								<li><a href="./TermsOfService">이용약관</a></li>
+								<li><a href="./Privacy">개인정보처리방침</a></li>
 							</ul>
 							<div class="lang obj">
 								<p>KOREAN<span></span></p>

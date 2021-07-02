@@ -4,8 +4,8 @@
 					<div class="content">
 						<div>
 							<ul class="terms obj">
-								<li><a href="">이용약관</a></li>
-								<li><a href="">개인정보처리방침</a></li>
+								<li><a href="./TermsOfService">이용약관</a></li>
+								<li><a href="./Privacy">개인정보처리방침</a></li>
 							</ul>
 							<div class="lang obj">
 								<p>KOREAN<span></span></p>

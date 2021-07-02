@@ -34,4 +34,6 @@ public interface MemberDao {
 
 	void deleteMemberInfoTmp(MemberVo memberVo);
 
+	void deleteMember(MemberVo vo);
+
 }

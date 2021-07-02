@@ -84,5 +84,10 @@ public class MemberServiceImpl implements MemberService{
 	public void deleteMemberInfoTmp(MemberVo memberVo) {
 		memberDao.deleteMemberInfoTmp(memberVo);
 	}
+	@Override
+	public void deleteMember(MemberVo vo) {
+		memberDao.deleteMember(vo);
+		
+	}
 
 }

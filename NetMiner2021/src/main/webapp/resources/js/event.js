@@ -10,6 +10,7 @@ function noEvent() {
         return false;
     }
 }
+
 function showUpdate() {
 	var updateDiv = document.getElementById("update");
 	updateDiv.style.removeProperty("display");
@@ -35,4 +36,5 @@ $(function (){
 			} 
 	
 	});
+
 })

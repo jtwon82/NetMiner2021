@@ -105,6 +105,11 @@ $(document).ready(function() {
 		}
 	})
 	
+	$("#leaveBtn").click(function(){
+		openPoup("leave_popup");
+	})
+	
+	history.replaceState({}, null, location.pathname);	
 })
 var emailNumber = "";
 
@@ -183,6 +188,7 @@ function checkEmail(){
 												} else{
 													sessionStorage.setItem("randomNumber", data.randomNumber);
 													sessionStorage.setItem("email", userId);
+													alert(userId + "로 발송완료 했습니다.");
 													window.location.href= "./moveCheckEmail";					
 												}
 											} 
@@ -208,12 +214,14 @@ function checkEmail(){
 
 function register() {
 	var marketYn = "N";
+	var check1 = $("#check1").prop("checked");
+	var check2 = $("#check2").prop("checked");
+	var check3 = $("#check3").prop("checked");
 	if (checkRandomNumber) {
-		if ($('input:checkbox[id="check1"]').is(":checked") == false &&
-		 $('input:checkbox[id="check2"]').is(":checked") == false  ) {
+		if (check1 != true || check2 != true) {
 			alert("필수약관에 동의 해주세요");
 		} else {
-			if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+			if (check3 == true) {
 				marketYn = "Y";
 			}
 			
@@ -242,10 +250,11 @@ function register() {
 }
 function googleLogin(){
 	var redirectLocal = "http://localhost:8080/auth";
-	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/auth";
+	var redirectPrd="https://www.netminer365.com/auth";
 
-	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	
 	
 }
 
@@ -257,44 +266,51 @@ function registerSns(pwd) {
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="useCode"]:checked').val();
 	var marketYn = "N";
-	if ($('input:checkbox[id="check1"]').is(":checked") == false &&
-	 $('input:checkbox[id="check2"]').is(":checked") == false ) {
+	var check1 = $("#check1").prop("checked");
+	var check2 = $("#check2").prop("checked");
+	var check3 = $("#check3").prop("checked");
+	if (check1 != true || check2 != true) {
 		alert("필수약관에 동의 해주세요");
 	} else {
-		if ($('input:checkbox[id="check3"]').is(":checked") == true) {
-			marketYn = "Y";
+		if (""== company || ""== nation) {
+			alert("회원 정보를 모두 입력해주세요");
+		} else {
+			if (check3 == true) {
+				marketYn = "Y";
+			}
+			var con = document.getElementById("dimmed");
+				con.style.removeProperty("display");
+			$(function(){
+				$.ajax({
+					url :"./registerSNS",
+					type:"POST",
+					data:{
+						'email': userId,
+						'pwd' : userpwd,
+						'company' : company,
+						'nation' : nation,
+						'useCode' : useCode,
+						'marketYn': marketYn 
+					},
+					success: function (data){
+						alert("회원가입 완료");
+						window.location.href= "./";
+					} 
+					
+				})
+			});
+			
 		}
-		var con = document.getElementById("dimmed");
-			con.style.removeProperty("display");
-		$(function(){
-			$.ajax({
-				url :"./registerSNS",
-				type:"POST",
-				data:{
-					'email': userId,
-					'pwd' : userpwd,
-					'company' : company,
-					'nation' : nation,
-					'useCode' : useCode,
-					'marketYn': marketYn 
-				},
-				success: function (data){
-					alert("회원가입 완료");
-					window.location.href= "./";
-				} 
-				
-			})
-		});
 		
 	}
 	
 }
 function googleRegister() {
 	var redirectLocal = "http://localhost:8080/socialRegister";
-	var redirectPrd="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/socialRegister";
+	var redirectPrd="https://www.netminer365.com/socialRegister";
 
-	window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline");
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
 function requestSetPwd() {
@@ -320,13 +336,13 @@ function requestSetPwd() {
 							alert("해당 유저는 구글 유저로 비밀번호변경이 불가능합니다.");
 							window.history.back();
 						} else {
-							alert("해당 유저의 정보가 없습니다.");
-							window.location.href="./register";
-						}
-						
-						if (data.googleYn== 'N') {
-							alert("이메일 발송이 완료 되었습니다.");
-							window.location.href="./login";
+							if (data.userId == "") {
+								alert("해당 유저로 가입된 이력이 없습니다.");
+								window.location.href="./register";
+							} else {
+								alert("이메일 발송이 완료 되었습니다.");
+								window.location.href="./login";
+							}							
 						}
 					}
 						
@@ -420,7 +436,7 @@ function registerCheckEmail(){
 	window.location.href="./registerCheckEmail";
 }
 
-function updateUserInfo(){
+function updateUserInfo(googleYn){
 	
 	var userId = $("#email").val();
 	var userpwd = $("#pwd").val();
@@ -428,47 +444,78 @@ function updateUserInfo(){
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="c1"]:checked').val();
 	var marketYn = "N";
-	
-	var checkRegx = CheckEmailRegx(userId);	
-	
-	if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
-		if (userpwd =="") {
-			alert("안전한 회원정보 수정을 위해 비밀번호를 입력해주세요");
-		}else {
-			alert("회원정보를 입력해주세요");		
+	if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+		marketYn = "Y";
+	}
+	if (googleYn == 'Y') {
+		if (company == "" || nation =="" || useCode==""){
+			alert("회원정보를 입력해주세요");
+		} else {
+			$(function (){
+					$.ajax({
+						url : "./updateUserInfo",
+						type : "POST",
+						data : {
+								'email': userId,
+							'company' : company,
+							'nation' : nation,
+							'useCode' : useCode,
+							'marketYn': marketYn,
+							'googleYn' : googleYn 				
+						},
+						success : function (data) {
+						 	alert("회원정보가 성공적으로 변경 되었습니다.");
+							window.location.href="./";
+						}
+						
+					})
+				});		
 		}
 	} else {
-		if (checkRegx) {
-		checkRegx = CheckPwd(userpwd);
-			if ( ! checkRegx) {
-				alert("비밀번호 형식이 맞지 않습니다.");
-				$("#pwd").focus();
-			} else {
-				$(function (){
-				$.ajax({
-					url : "./updateUserInfo",
-					type : "POST",
-					data : {
-							'email': userId,
-						'pwd' : userpwd,
-						'company' : company,
-						'nation' : nation,
-						'useCode' : useCode,
-						'marketYn': marketYn 				
-					},
-					success : function (data) {
-					 	alert("회원정보가 성공적으로 변경 되었습니다.");
-						window.location.href="./";
-					}
-					
-				})
-			});			
+		
+		var checkRegx = CheckEmailRegx(userId);	
+		
+		if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
+			if (userpwd =="") {
+				alert("안전한 회원정보 수정을 위해 비밀번호를 입력해주세요");
+			}else {
+				alert("회원정보를 입력해주세요");		
 			}
 		} else {
-			alert("이메일 형식이 맞지 않습니다.");
-			 $("#email").focus();
+			if (checkRegx) {
+			checkRegx = CheckPwd(userpwd);
+				if ( ! checkRegx) {
+					alert("비밀번호 형식이 맞지 않습니다.");
+					$("#pwd").focus();
+				} else {
+					
+					$(function (){
+					$.ajax({
+						url : "./updateUserInfo",
+						type : "POST",
+						data : {
+								'email': userId,
+							'pwd' : userpwd,
+							'company' : company,
+							'nation' : nation,
+							'useCode' : useCode,
+							'marketYn': marketYn,
+							'googleYn' : googleYn 				
+						},
+						success : function (data) {
+						 	alert("회원정보가 성공적으로 변경 되었습니다.");
+							window.location.href="./";
+						}
+						
+					})
+				});			
+				}
+			} else {
+				alert("이메일 형식이 맞지 않습니다.");
+				 $("#email").focus();
+			}
+			
 		}
-		
 	}
 };
 
@@ -495,5 +542,19 @@ function newRandomNumber() {
 		})
 	})
 	
+}
+function delteUser () {
+	var con = document.getElementById("dimmed");
+			con.style.removeProperty("display");
+	$(function (){
+		$.ajax({
+			url : "./delteMember",
+			type : "POST",
+			success : function(data) {
+				window.location.href="./";
+			}
+			
+		})
+	})
 }
 

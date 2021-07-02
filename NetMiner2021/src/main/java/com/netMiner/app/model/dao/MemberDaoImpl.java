@@ -25,8 +25,12 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public MemberVo getUserInfo(MemberVo vo) {
-		 
-		MemberVo memberVo = sqlSession.selectOne("getUserInfo", vo);
+		MemberVo memberVo = new MemberVo();
+		if (vo.getGoogleYn()!=null) {
+			memberVo = sqlSession.selectOne("getUserInfo", vo);			
+		} else {
+			memberVo = sqlSession.selectOne("getLoginUserInfo", vo);
+		}
 		sqlSession.flushStatements();
 		if (memberVo != null) {
 			sqlSession.update("updateLastLoginDate", vo);
@@ -91,6 +95,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public void updateNewUserInfo(Map<String, Object> param) {
+		
 		sqlSession.update("updateUserInfo", param);
 	}
 
@@ -111,6 +116,11 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void deleteMemberInfoTmp(MemberVo memberVo) {
 		sqlSession.delete("deleteMemberInfoTmp", memberVo);		
+	}
+
+	@Override
+	public void deleteMember(MemberVo vo) {
+		sqlSession.delete("deleteMemberInfo", vo);		
 	}
 
 }

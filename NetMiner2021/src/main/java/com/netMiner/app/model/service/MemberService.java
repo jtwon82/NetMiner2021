@@ -32,5 +32,7 @@ public interface MemberService {
 
 	void deleteMemberInfoTmp(MemberVo memberVo);
 
+	void deleteMember(MemberVo vo);
+
 	
 }

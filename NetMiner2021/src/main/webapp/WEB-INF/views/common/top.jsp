@@ -3,7 +3,7 @@
 	<div id="top">
 				<div class="content">
 					<div class="wrap">
-						<h1 class="obj"><a href="#"><img src="/resources/images/main_logo.png" alt="Why NetMiner 365 logo" class="logo1"><img src="/resources/images/main_logo2.png" alt="Why NetMiner 365 logo" class="logo2"></a></h1>
+						<h1 class="obj"><a href="./"><img src="/resources/images/main_logo.png" alt="Why NetMiner 365 logo" class="logo1"><img src="/resources/images/main_logo2.png" alt="Why NetMiner 365 logo" class="logo2"></a></h1>
 						<div class="pc">
 							<div class="menu obj">
 								<span class="select">Why NetMiner 365</span>
@@ -18,7 +18,7 @@
 							<c:if test="${empty memberVo}">
 							<div class="mypage obj type1" >
 								<ul>
-									<li class="join"><a href="http://src.netminer.com/9009 " >Start for free</a></li>
+									<li class="join"><a href="./login" >Start for free</a></li>
 									<li class="login"><a href="./login" >Sign in</a></li>
 								</ul>
 							</div>
@@ -31,7 +31,7 @@
 									<img src="/resources/images/top_me.png" alt="mypage">
 								</p>
 								<ul>
-									<li class="workSpace active"><a href="./" class="trs">My Workspace</a></li>
+									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}" class="trs">My Workspace</a></li>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 								</ul>
@@ -48,8 +48,8 @@
 									<c:if test="${empty memberVo}">
 									<div class="mypage type1" >
 										<ul>
-											<li class="join"><a href="#" >Start for free</a></li>
-											<li class="login"><a href="#" >Sign in</a></li>
+											<li class="join"><a href="./login" >Start for free</a></li>
+											<li class="login"><a href="./login" >Sign in</a></li>
 										</ul>
 									</div>
 									</c:if>
@@ -60,7 +60,7 @@
 											<img src="/resources/images/top_me.png" alt="mypage">
 										</p>
 										<ul>
-											<li class="workSpace active"><a href="./" class="trs">My Workspace</a></li>
+											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}" class="trs">My Workspace</a></li>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 										</ul>
