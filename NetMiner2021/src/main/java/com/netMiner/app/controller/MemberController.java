@@ -35,19 +35,18 @@ import com.netMiner.app.model.vo.MemberVo;
 public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	
 	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
 	private SendEmail sendEmail;
 	
-	private String url ="http://ec2-3-36-122-128.ap-northeast-2.compute.amazonaws.com/"; 
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, HttpSession session) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
 		Date date = new Date();
@@ -57,10 +56,25 @@ public class MemberController {
 
 		model.addAttribute("serverTime", formattedDate );
 		String url = "home";
+
+		if (session.getAttribute("language") != null) {
+			url = url + session.getAttribute("language");
+		} else {
+			String location = locale.toString();
+			if (!location.contains("KR")) {
+				session.setAttribute("language", "_EN");							
+			} else {
+				session.setAttribute("language", "");
+				
+			}
+			
+		}
+		
 //		String location = locale.toString();
 //		if (!location.contains("KR")) {
 //			url = url+"_EN";
 //		}
+		
 		return url;
 	}
 	
@@ -68,6 +82,10 @@ public class MemberController {
 	public String loginUser(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
 		MemberVo memberVo = new MemberVo();
 		String url  = "";
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		try {
 			request.setCharacterEncoding("UTF-8");
 			String userId = request.getParameter("email");
@@ -79,14 +97,22 @@ public class MemberController {
 			memberVo = memberService.getUserInfo(memberVo);
 			
 			if (memberVo == null) {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out = response.getWriter(); 
-				out.println("<script>alert('해당 아이디가 없거나 비밀번호가 틀립니다.'); location.href='./login';</script>"); 
-				out.flush();
-				url  = "member/login";
+				if ("_EN".equals(language)) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('해당 아이디가 없거나 비밀번호가 틀립니다.'); location.href='./login';</script>"); 
+					out.flush();
+					url  = "member/login";					
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('The ID does not exist or the password is incorrect.'); location.href='./login';</script>"); 
+					out.flush();
+					url  = "member"+language+"/login";		
+				}
 			} else {
 				session.setAttribute("memberVo", memberVo);
-				url  = "homePage/main";
+				url  = "homePage"+language+"/main";
 			}
 			
 		} catch (UnsupportedEncodingException e) {
@@ -101,8 +127,13 @@ public class MemberController {
 	
 	@RequestMapping(value="logOut", method = RequestMethod.GET)
 	public String logOut(HttpSession session) {
-		session.invalidate();
-		return "home";
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		session.removeAttribute("memberVo");
+		session.setAttribute("language", language);		
+		return "home"+language;
 	}
 	
 	@RequestMapping(value="registerStep", method = RequestMethod.POST)
@@ -123,7 +154,7 @@ public class MemberController {
 			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
-			sendEmail.sendRegisterMail(userId, url);
+			sendEmail.sendRegisterMail(userId, "");
 			
 			session.setAttribute("memberVo", memberVo);
 			
@@ -181,7 +212,7 @@ public class MemberController {
 
 	@RequestMapping(value="registerSNS" , method=RequestMethod.POST)
 	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request) {
-
+		String language = (String) session.getAttribute("language");
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -213,11 +244,11 @@ public class MemberController {
 		memberService.signUp(memberVo);
 		
 
-		sendEmail.sendRegisterMail(userId, url);
+		sendEmail.sendRegisterMail(userId, "");
 		
 		
 		session.setAttribute("memberVo", memberVo);
-		mv.setViewName("homePage/main");
+		mv.setViewName("homePage"+language+"/main");
 		
 		return mv;
 	}
@@ -271,9 +302,13 @@ public class MemberController {
 	}
 	@RequestMapping(value="account" , method=RequestMethod.GET)
 	public String accountUser(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
 		logger.info("MemberVo - {}",vo.toString());
-		return "member/account";
+		return "member"+language+"/account";
 	}
 	
 	@RequestMapping(value="changeEmail", method=RequestMethod.POST)

@@ -17,14 +17,17 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/event_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub searchPw">
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<!-- step1 비밀번호 재설정 요청 -->
@@ -37,17 +40,18 @@
 							<p>Enter the email address and click 'Request password reset'.</p>
 							<div class="input">
 								<p>E-mail</p>
-								<input placeholder="" type="text" />
+								<input placeholder="" type="text" id="email"  />
 								<p class="sum">Please check your mailbox. This email will be valid for 30 minutes.<br>
 	Can't find your email? Check your spam folder..</p>
 							</div>
-							<button class="requestPw trs active">Request password reset</button>
+							<button class="requestPw trs active" onClick="requestSetPwd();">Request password reset</button>
 							<a class="back" href="#" >Back to Sign-in</a>
 						</div>
 					</div>
 					
 					<!-- step2 비밀번호 재설정 -->
-					<div class="step2" style="display:none;">
+					<c:if test="${!empty userId}">
+					<div class="step2" >
 						<div class="title">
 							<h2>Reset you password</h2>
 							<p>Reset your password</p>
@@ -58,21 +62,22 @@
 								<ul>
 									<li>
 										<p>New password</p>
-										<input placeholder="" type="password" />
+										<input placeholder="" type="password" id="newPwd" />
 									</li>
 									<li>
 										<p>Confirm password</p>
-										<input placeholder="" type="password" />
+										<input placeholder="" type="password" id="newPwd2"/>
 									</li>
 								</ul>
 							</div>
-							<button class="changePw trs active">Reset password and sign-in</button>
-							<a class="back" href="#" >Back to Sign-in </a>
+							<button class="changePw trs active" onClick="changePwd('${userId}')">Reset password and sign-in</button>
+							<a class="back" href="./login" >Back to Sign-in </a>
 						</div>
 					</div>
-					
+					</c:if>
 				</div>
 			</div>
+			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
 	
 	</body>

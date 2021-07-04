@@ -17,72 +17,57 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/gnb.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub register_complete">
-			<div id="top">
-				<div class="content">
+				<%@include file = "../common/top.jsp" %>
+				<div id="section">
 					<div class="wrap">
-						<!-- 로그인 후-->
-						<div class="mypage obj type2" >
-							<p class="me">
-								<img src="images/top_me.png" alt="mypage">
-							</p>
-							<ul>
-								<li class="workSpace"><a href="#" class="trs">My Workspace</a></li>
-								<li class="account"><a href="#" class="trs">Account</a></li>
-								<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
-							</ul>
+						<div class="title">
+							<h2>Hello!</h2>
+							<p>Let's get started with NetMner 365.<br>
+	NetMiner 365 gives you a lot of insights and findings from graph.</p>
 						</div>
+						<div class="content">
+							<ul>
+								<li>
+									<h3>Features</h3>
+									<p>NetMiner 365 is a big data analysis
+	platform capable of extracting graph
+	data from inside big data and
+	performing analysis combining
+	Graph Analytics and machine learning</p>
+									<a href="#">Learn more</a>
+								</li>
+								<li>
+									<h3>Support</h3>
+									<p>Need to talk to our team
+	about NetMiner 365?
+	<br><br>
+	Don't hesitate to contact us.</p>
+									<a href="#">Contact us</a>
+								</li>
+								<li>
+									<h3>Start NetMiner 365</h3>
+									<p>NetMiner 365 helps you to solve
+	problems in your business.
+	<br><br>
+	Let's get started with NetMiner 365<br>
+	for Free !</p>
+									<a href="#">Start now</a>
+								</li>
+							</ul>
+							
 					</div>
 				</div>
 			</div>
-			<div id="section">
-				<div class="wrap">
-					<div class="title">
-						<h2>Hello!</h2>
-						<p>Let's get started with NetMner 365.<br>
-NetMiner 365 gives you a lot of insights and findings from graph.</p>
-					</div>
-					<div class="content">
-						<ul>
-							<li>
-								<h3>Features</h3>
-								<p>NetMiner 365는 그래프 분석과
-머신러닝을 결합하여 예측의 정확도를
-높이고, 시간과 비용을 줄일 
-있도록 설계된 클라우드 기반의
-빅데이터 분석 플랫폼입니다.</p>
-								<a href="#">Learn more</a>
-							</li>
-							<li>
-								<h3>Support</h3>
-								<p>NetMiner 365 영업팀과의
-자세한 상담이 필요하십니까?
-<br><br>
-그렇다면 도움을 요청하세요.</p>
-								<a href="#">Contact us</a>
-							</li>
-							<li>
-								<h3>Start NetMiner 365</h3>
-								<p>NetMiner 365를 통해 비즈니스에서
-발생하는 다양한 문제들을
-해결할 수 있습니다.
-<br><br>
-NetMiner 365를 시작해보세요.</p>
-								<a href="#">Start now</a>
-							</li>
-						</ul>
-						
-				</div>
-			</div>
+			<%@include file = "../common_EN/footer.jsp" %>
 		</div>
-	
 	</body>
 </html>

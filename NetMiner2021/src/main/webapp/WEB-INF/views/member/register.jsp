@@ -46,7 +46,7 @@
 							</ul>
 							<select name="nation" id="nation">
 								<option value="" disabled selected hidden >국가</option>
-								<option value="">한국</option>
+								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>

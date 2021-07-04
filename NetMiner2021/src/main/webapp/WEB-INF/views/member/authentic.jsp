@@ -25,7 +25,6 @@
 	    <script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
  </head>
 	<body>
-	<div id = "top"></div>
 	<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub authentic">
 			<%@include file = "../common/top.jsp" %>

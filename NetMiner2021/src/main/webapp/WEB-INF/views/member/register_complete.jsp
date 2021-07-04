@@ -66,8 +66,9 @@ NetMiner 365를 시작해보세요.</p>
 						
 				</div>
 			</div>
-			<%@include file = "../common/memberFooter.jsp" %>
 		</div>
+			<%@include file = "../common/memberFooter.jsp" %>
+	</div>
 	
 	</body>
 </html>

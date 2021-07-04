@@ -32,23 +32,42 @@ public class PageMoveController extends HttpServlet {
 	private SelectDao selectDao;
 	
 	@RequestMapping(value="register" ,method =  RequestMethod.GET)
-	public String goRegister() {
-		return "member/register";		
+	public String goRegister(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path+"/register";		
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.GET)
-	public String goLogin() {
-		return "member/login";
+	public String goLogin(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path+"/login";
 	}
 	@RequestMapping(value="findPwd", method = RequestMethod.GET)
-	public String goFindPwd() {
-		return "member/searchPw";
+	public String goFindPwd(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path+"/searchPw";
 	}
 	
 	@RequestMapping(value="moveCheckEmail", method = RequestMethod.GET)
-	public String moveCheckEmail() {
-		
-		return "member/authentic";
+	public String moveCheckEmail(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return  path+"/authentic";
 	}
 	
 	@RequestMapping(value="getNationCode", method = RequestMethod.GET, produces = "application/text; charset=utf8")
@@ -81,37 +100,93 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
-	public String goCheckEmail () {
-		return "member/authentic";
+	public String goCheckEmail (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path+"/authentic";
 	}
 	
 	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
-	public String registerCheckEmail () {
-		return "member/account";
+	public String registerCheckEmail (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path+"/account";
 	}
 	
 	@RequestMapping(value="whyNetMiner", method=RequestMethod.GET) 
-	public String whyNetMiner () {
-		return "homePage/whyNetminer";
+	public String whyNetMiner (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/whyNetminer";
 	}
 	@RequestMapping(value="feature", method=RequestMethod.GET) 
-	public String feature () {
-		return "homePage/feature";
+	public String feature (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/feature";
 	}
 	@RequestMapping(value="function", method=RequestMethod.GET) 
-	public String function () {
-		return "homePage/function";
+	public String function (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/function";
 	}
 	@RequestMapping(value="solution", method=RequestMethod.GET) 
-	public String solution () {
-		return "homePage/solution";
+	public String solution (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/solution";
 	}
 	@RequestMapping(value="TermsOfService", method=RequestMethod.GET)
-	public String termsOfService() {
-		return "homePage/term";
+	public String termsOfService(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/term";
 	}
 	@RequestMapping(value="Privacy", method=RequestMethod.GET)
-	public String Privacy() {
-		return "homePage/privacy";
+	public String Privacy(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "homePage"+ language;
+		return path+"/privacy";
+	}
+	
+	@RequestMapping(value="changeLanguage", method=RequestMethod.POST)
+	public ModelAndView changeLanguage(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		String language = request.getParameter("language");
+
+		session.removeAttribute("language");
+		
+		if (language.equals("KR")) {
+			session.setAttribute("language", "");
+		} else {
+			session.setAttribute("language", "_EN");
+		}
+		mv.setViewName("jsonView");
+		
+		return mv;
 	}
 }

@@ -17,32 +17,17 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/gnb.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/event_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub account">
-			<div id="top">
-				<div class="content">
-					<div class="wrap">
-						<!-- 로그인 후-->
-						<div class="mypage obj type2" >
-							<p class="me">
-								<img src="images/top_me.png" alt="mypage">
-							</p>
-							<ul>
-								<li class="workSpace"><a href="#" class="trs">My Workspace</a></li>
-								<li class="account"><a href="#" class="trs">Account</a></li>
-								<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -53,12 +38,21 @@
 							<p class="profile">Profile</p>
 							<ul class="input">
 								<li>
-									<input name="email" placeholder="" value="dklsek!@naver.com"  type="text" />
-									<button class="authentic trs email">Verify</button>
-									<button class="trans trs email active" style="display:none;">Change</button>
+									<c:if test="${empty userId}">
+									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
+									<c:if test="${memberVo.googleYn eq 'N'}">
+									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false">Verify</button>
+									</c:if>
+									</c:if>
+									<c:if test="${!empty userId}">
+									<input name="email" value="${userId}" type="text" id="email"/>
+									<button class="trans trs email active"  onClick="chageUserId();">Change</button>
+									</c:if>
 								</li>
-								<li><input placeholder="" type="password"  value="**"/></li>
-								<li><input placeholder="Organization" type="text" /></li>
+								<c:if test="${memberVo.googleYn eq 'N'}">
+								<li><input placeholder="" type="password" id ="pwd" onchange="showUpdate()"/></li>
+								</c:if>
+								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onchange="showUpdate()"/></li>
 							</ul>
 							<select>
 								<option value="" disabled selected hidden>Country</option>
@@ -70,19 +64,27 @@
 							<div class="checkBox">
 								<p>Acount Type</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1"><em></em>Academic</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1"><em></em>Commercial</label></li>
+									<li><label><input type="radio" checked="checked" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio" checked="checked" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="01"><em></em>Commercial</label></li>
 								</ul>
 							</div>
-							<label class="newsLetter"><input id="check" type="checkbox" name=""><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>
+							<label class="newsLetter"><input id="check" type="checkbox" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>
 							<div class="update" style="display:none;">
 								<button class="cancel trs">Cancel</button>
-								<button class="save trs active">Save</button>
+								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">Save</button>
 							</div>
+						</div>
+					</div>
+					<div class="content leave">
+						<div>
+							<p>Delete account</p>
+							<p>Once you delete your account, your information, logs, and data will be gone.</p>
+							<button class="leave trs"  id="leaveBtn">Delete account</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
 	
 		<!-- 마케팅 정보 수신 _ 동의  -->
@@ -108,7 +110,19 @@ by e-mail since <em class="date">(변경 날짜)</em></p>
 			</div>
 		</div>
 		
-		
+		<!-- 탈퇴 팝업  -->
+		<div id="leave_popup" class="popup" >
+			<div class="wrap">
+				<h4>Permanently delete your account?</h4>
+				<p>We have now permanently deleted your account and your data.<br>
+					This action can't be undone.<br>
+					<span>(Some information can be stored seperately according to Privacy Policy)</span><br>
+					Are you sure you want to delete your account?
+				</p>
+				<button class="close trs">Cancle</button>
+				<button class="leave trs" onClick="delteUser()">Delete</button>
+			</div>
+		</div>
 		
 	</body>
 </html>

@@ -47,11 +47,11 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
-	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
@@ -68,14 +68,28 @@ public class GoogleController  {
 			throws JsonProcessingException {
 		String url = "";
 		String authCode = request.getParameter("code");
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		try {			
 			if (authCode == null || authCode.equals("")) {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out = response.getWriter(); 
-				out.println("<script>alert('새로고침시 다시 시도해주세요');</script>"); 				
-				out.flush();
-				mv.setViewName("member/login");
-				return mv;
+				if (language.equals("_EN")) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('Please try again when reloading');</script>"); 				
+					out.flush();
+					
+					mv.setViewName("member"+language+"/login");
+					return mv;			
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('새로고침시 다시 시도해주세요');</script>"); 				
+					out.flush();
+					mv.setViewName("member/login");
+					return mv;					
+				}
 			}
 			//HTTP Request를 위한 RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
@@ -128,19 +142,33 @@ public class GoogleController  {
 		MemberVo member = memberService.getUserInfo(memberVo);
 		if (member == null) {
 			if (!checkUserCount) {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out = response.getWriter(); 
-				out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 				
-				out.flush();
-				url = "member/login";
+				if (language.equals("_EN")) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('ID exists'); location.href='./login';</script>"); 				
+					out.flush();
+					url = "member"+language+"/login";
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 				
+					out.flush();
+					url = "member/login";					
+				}
 			} else {
-				url = "member/register_sns_fail";				
+				
+					url = "member"+language+"/register_sns_fail";									
 			}
 		//	mv.addObject("checkUserCount", checkUserCount);
 		} else {
 			//mv.addObject("memberVo", member);
 			session.setAttribute("memberVo", member);
-			url = "homePage/main";
+			
+			if (language.equals("_EN")) {
+				url = "homePage"+language+"/main";
+			} else {
+				url = "homePage/main";				
+			}
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -156,13 +184,25 @@ public class GoogleController  {
 			throws JsonProcessingException {
 		String url = "";
 		String authCode = request.getParameter("code");
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		try {
 			if (authCode == null || authCode.equals("")) {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out = response.getWriter(); 
-				out.println("<script>alert('새로고침시 다시 시도해주세요'); window.location.href='./register';</script>"); 				
-				out.flush();
-				mv.setViewName("member/login");
+				if (language.equals("_EN")) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('Please try again when reloading'); window.location.href='./register';</script>"); 				
+					out.flush();					
+					mv.setViewName("member"+language+"/login");
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('새로고침시 다시 시도해주세요'); window.location.href='./register';</script>"); 				
+					out.flush();
+					mv.setViewName("member/login");				
+				}
 				return mv;
 			}
 			//HTTP Request를 위한 RestTemplate
@@ -214,12 +254,22 @@ public class GoogleController  {
 		if (checkUserCount) {			
 			url = "member/register_sns";
 		} else {
-			response.setContentType("text/html; charset=UTF-8"); 
-			PrintWriter out = response.getWriter(); 
-			out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 
-			out.flush();
-
-			url = "member/login";
+			if (language.equals("_EN")) {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('ID exists'); location.href='./login';</script>"); 
+				out.flush();
+				
+				url = "member"+language+"/login";
+			} else {
+				response.setContentType("text/html; charset=UTF-8"); 
+				PrintWriter out = response.getWriter(); 
+				out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 
+				out.flush();
+				
+				url = "member/login";
+				
+			}
 		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

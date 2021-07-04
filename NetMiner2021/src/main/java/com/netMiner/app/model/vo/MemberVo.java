@@ -12,6 +12,7 @@ public class MemberVo implements Serializable{
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private String userId;
 	private String userPwd;
@@ -22,6 +23,7 @@ public class MemberVo implements Serializable{
 	private String marketYn;
 	private String authKey;
 	private String googleYn;
+	
 	
 	public Map<String,Object> getMemberInfoMap(){
 		Map<String,Object> result = new HashMap<String,Object>();

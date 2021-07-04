@@ -17,14 +17,16 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="wrap" class="sub activate">
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -39,11 +41,12 @@ If you want to restore your account,<br>
 click 'Restore and sign-in'.</p>
 					
 						<button class="actiAccount trs active">Restore and sign-in</button>
-						<a class="back" href="#" >Back to sign-in</a>
+						<a class="back" href="./login" >Back to sign-in</a>
 					</div>
 					
 				</div>
 			</div>
+			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
 	
 	</body>

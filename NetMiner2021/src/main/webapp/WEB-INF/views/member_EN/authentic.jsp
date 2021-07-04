@@ -17,14 +17,17 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
+		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub authentic">
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -35,21 +38,29 @@
 This code will be valid for 30 minites.</p>
 						<div class="input">
 							<p>Verification Code</p>
-							<input placeholder="" type="text" />
-							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="#" class="blue">Resend Code</a></p>
+							<input placeholder="" type="text" id="code"/>
+							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="#" class="blue" onClick="newRandomNumber();">Resend Code</a></p>
 						</div>
+						<c:if test="${empty memberVo}">
 						<div class="agree">
 								<label><input id="check_all" type="checkbox" name=""><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name=""><em></em><span class="text">I agree to the <a href="#" class="blue">terms and conditions</a> and the <a href="#" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
-							</div>
-						<button class="create trs active">Create Account</button>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a href="#" class="blue">terms and conditions</a> and the <a href="#" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
+								<label><input id="check2" class="check" type="checkbox" name="marketYn"  value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
+						</div>
+						</c:if>
+						<c:if test="${empty memberVo}">
+						<button class="create trs active" onClick="register()">Create Account</button>
+						</c:if>
+						<c:if test="${!empty memberVo}">
+						<button class="create trs active" onClick="registerCheckEmail()">Email Authentication</button>
+						</c:if>
 						<a class="back" href="#" >Back to Register</a>
 					</div>
 					
 				</div>
 			</div>
+			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
 	
 	</body>

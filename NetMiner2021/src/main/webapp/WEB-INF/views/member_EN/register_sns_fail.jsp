@@ -17,28 +17,32 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="css/style_en.css?st=<?=rand()?>" rel="stylesheet" type="text/css"/>
-		<link href="css/swiper.min.css" rel="stylesheet" type="text/css"/>
-		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-		<script src="js/swiper.min.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
+		<link href="/resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="/resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="/resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="/resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/main_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		<script src="/resources/js/event_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>	
 	</head>
 	<body>
+		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub register_sns_fail">
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p>You haven't registered yet. Register to continue.<br>
-Do you want to try again with other account?<a href="#">Sign in</a></p>
+Do you want to try again with other account?<a href="./login">Sign in</a></p>
 					</div>
 					<div class="content">
 						<div>
 							<ul class="input">
-								<li><input placeholder="E-mail" type="text" disabled="disabled"></li>
-								<li><input placeholder="Organization" type="text" ></li>
+								<li><input placeholder="${userInfo.email}" type="text" id="email" value="${userInfo.email}" disabled="disabled"></li>
+								<li><input placeholder="Organization" type="text" id="company"></li>
 							</ul>
-							<select>
+							<select id="nation">
 								<option value="" disabled selected hidden>Country</option>
 								<option value=""></option>
 								<option value=""></option>
@@ -48,17 +52,17 @@ Do you want to try again with other account?<a href="#">Sign in</a></p>
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1"><em></em>Academic</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1"><em></em>Commercial</label></li>
+									<li><label><input type="radio" checked="checked"  name="useCode" value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio" checked="checked"  name="useCode" value="02"><em></em>Commercial</label></li>
 								</ul>
 							</div>
 							<div class="agree">
-								<label><input id="check_all" type="checkbox" name=""><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name=""><em></em><span class="text">I agree to the <a href="#" class="blue">terms and conditions</a> and the <a href="#" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check_all" type="checkbox" name="marketYn" value="Y"><em></em>Agree to all</label>
+								<label><input id="check1" class="check" type="checkbox" name=""><em></em><span class="text">I agree to the <a href="./TermsOfService" class="blue">terms and conditions</a> and the <a href="./Privacy" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 							</div>
-							<button class="create trs">Create Account</button>
+							<button class="create trs" onClick="registerSns('${userInfo.kid}')">Create Account</button>
 						</div>
 						<dl>
 							<dt>Create NetMiner 365 account,</dt>
@@ -71,6 +75,7 @@ Do you want to try again with other account?<a href="#">Sign in</a></p>
 					
 				</div>
 			</div>
+			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
 	
 	</body>
