@@ -36,7 +36,7 @@ $(document).ready(function() {
 		if (inputNumber==randomNumber) {
 			checkRandomNumber = true;
 			document.getElementById('code').readOnly = true
-			alert("인증완료 되었습니다.");
+			alert("Authentication has been completed.");
 		}
 	});
 	$("#check").change(function (){

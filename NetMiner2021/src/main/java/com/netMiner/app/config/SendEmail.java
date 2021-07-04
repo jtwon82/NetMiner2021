@@ -25,18 +25,31 @@ public class SendEmail {
 	private SelectDao selectDao;
 	
 	//마켓팅 수신 정보동의
-	public void sendMarketEmail(String userId) {
-		MailVo vo = selectDao.getRandomMail("01");
-		String title = vo.getTitle();
-		String comment = vo.getComment();
+	public void sendMarketEmail(String userId, String language) {
+		MailVo vo =  new MailVo();
+		String title = "";
+		String comment = "";
+		if ("_EN".equals(language)) {
+			vo = selectDao.getRandomMail("06");
+		} else {
+			vo = selectDao.getRandomMail("01");
+		}
+		title = vo.getTitle();
+		comment = vo.getComment();
 		boolean result = this.sendMailSender(userId , comment, title);
 		
 	}
 	
 	//비밀번호재설정을 위한 인증 
-	public boolean sendReSetPwd(String url, String userId) {
+	public boolean sendReSetPwd(String url, String userId, String language) {
+		MailVo vo = new MailVo();
 		
-		MailVo vo = selectDao.getRandomMail("02");
+		if ("_EN".equals(language)) {
+			vo = selectDao.getRandomMail("07");
+		} else {
+			vo = selectDao.getRandomMail("02");
+		}
+		
 		String title = vo.getTitle();
 		String comment = vo.getComment();
 		comment = comment.replace("{changePwd}", url);
@@ -47,9 +60,15 @@ public class SendEmail {
 	}
 	
 	//인증번호 발송 
-	public String sendCheckEmail(String userId) {
+	public String sendCheckEmail(String userId, String language) {
 		// TODO Auto-generated method stub
-		MailVo vo = selectDao.getRandomMail("03");
+		MailVo vo = new MailVo();
+		
+		if ("_EN".equals(language)) {
+			vo = selectDao.getRandomMail("08");
+		} else {
+			vo = selectDao.getRandomMail("03");
+		}
 		String randomNumber = String.valueOf(this.getRandomNumber());
 		String comment = vo.getComment();
 		comment = comment.replace("{randomNumber}", randomNumber);
@@ -64,13 +83,22 @@ public class SendEmail {
 	}
 		
 	//가입 축하 이메일 발송 
-	public void sendRegisterMail(String userId, String url) {
+	public void sendRegisterMail(String userId, String url, String language) {
+		MailVo vo = new MailVo();
 		
-		
-		MailVo vo = selectDao.getRandomMail("04");
+		if ("_EN".equals(language)) {
+			vo = selectDao.getRandomMail("09");
+		} else {
+			vo = selectDao.getRandomMail("04");
+		}		
 		String title = vo.getTitle();
 		String comment = vo.getComment();
 		boolean result = this.sendMailSender(userId , comment, title);
+	}
+	
+	//휴면 유저 이메일 발송 
+	public void sendDormantUser(String userId, String url, String language) {
+		
 	}
 
 	

@@ -140,7 +140,10 @@ public class MemberController {
 	public ModelAndView goCheckEmail(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
-		
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -154,7 +157,7 @@ public class MemberController {
 			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
-			sendEmail.sendRegisterMail(userId, "");
+			sendEmail.sendRegisterMail(userId, "", language);
 			
 			session.setAttribute("memberVo", memberVo);
 			
@@ -171,7 +174,10 @@ public class MemberController {
 	//email 재인증 또는 추후 회원정보 변경시 사용 
 	@RequestMapping(value="emailSender" , method=RequestMethod.POST)
 	public ModelAndView sendEmail(HttpSession session, ModelAndView mv, HttpServletRequest request) {
-	
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -198,7 +204,7 @@ public class MemberController {
 			memberVo.setLanguage("en");
 		}
 		
-		String randomNumber = sendEmail.sendCheckEmail(userId);
+		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		
 		//임시 유저 저장 
 		if (!"".equals(randomNumber)) {
@@ -213,6 +219,9 @@ public class MemberController {
 	@RequestMapping(value="registerSNS" , method=RequestMethod.POST)
 	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -244,7 +253,7 @@ public class MemberController {
 		memberService.signUp(memberVo);
 		
 
-		sendEmail.sendRegisterMail(userId, "");
+		sendEmail.sendRegisterMail(userId, "", language);
 		
 		
 		session.setAttribute("memberVo", memberVo);
@@ -254,7 +263,13 @@ public class MemberController {
 	}
 		 
 	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
-	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request) {
+	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request, HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		
+		if (language == null) {
+			language = "";
+		}
+		
 		String userId = request.getParameter("email");
 		logger.info(userId);
 
@@ -276,9 +291,10 @@ public class MemberController {
 			StringBuffer sb = new StringBuffer()
 					.append(urlSp[0]).append("//").append(urlSp[2])
 					.append("/").append("goChangePwd?")
-					.append("userId=").append(userId);
+					.append("userId=").append(userId)
+					.append("&language=").append(language);
 			logger.info(sb.toString());
-			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId);
+			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId, language);
 		} else {
 			userId="";
 			mv.addObject("googleYn", googleYn);
@@ -314,8 +330,13 @@ public class MemberController {
 	@RequestMapping(value="changeEmail", method=RequestMethod.POST)
 	public ModelAndView changeEmail(ModelAndView mv , HttpServletRequest request, HttpSession session) {
 		String userId = request.getParameter("email");
+		String language = (String) session.getAttribute("language");
 		
-		String randomNumber = sendEmail.sendCheckEmail(userId);
+		if (language == null) {
+			language = "";
+		}
+		
+		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");
 		
@@ -343,6 +364,11 @@ public class MemberController {
 	
 	@RequestMapping(value="updateUserInfo", method=RequestMethod.POST)
 	public ModelAndView updateUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		
+		if (language == null) {
+			language = "";
+		}
 		MemberVo memberVo = new MemberVo();
 		String googleYn = request.getParameter("googleYn");
 		
@@ -385,7 +411,7 @@ public class MemberController {
 		memberService.updateNewUserInfo(oldMemberVo, memberVo);
 		
 		if ("Y".equals(memberVo.getMarketYn())) {
-			sendEmail.sendMarketEmail(memberVo.getUserId());
+			sendEmail.sendMarketEmail(memberVo.getUserId(), language);
 		}
 		
 		memberVo = memberService.getUserInfo(memberVo);
@@ -413,9 +439,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="sendNewRandom", method=RequestMethod.POST)
-	public ModelAndView sendNewRandom (ModelAndView mv , HttpServletRequest request) {
+	public ModelAndView sendNewRandom (ModelAndView mv , HttpServletRequest request, HttpSession session) {
 		String userId = request.getParameter("email");
-		String randomNumber = sendEmail.sendCheckEmail(userId);
+		String language = (String) session.getAttribute("language");
+		
+		if (language == null) {
+			language = "";
+		}
+		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");
 		return mv;

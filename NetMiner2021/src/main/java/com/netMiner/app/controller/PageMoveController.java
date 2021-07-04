@@ -92,9 +92,15 @@ public class PageMoveController extends HttpServlet {
 	@RequestMapping(value="goChangePwd", method=RequestMethod.GET) 
 	public ModelAndView goChangePwd (ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		String userId = request.getParameter("userId");
+		String language = request.getParameter("language");
+		
+		if (language == null) {
+			language = "";
+		}
+		
 		logger.info("userid -{}", userId);
 		mv.addObject("userId", userId);
-		mv.setViewName("member/searchPw");
+		mv.setViewName("member"+language+"/searchPw");
 		
 		return mv;
 	}
