@@ -1,1 +1,6 @@
 /NetMiner2021-ver1.0/
+.metadata/*
+.settings/*
+test/*
+/Servers/
+/RemoteSystemsTempFiles/
