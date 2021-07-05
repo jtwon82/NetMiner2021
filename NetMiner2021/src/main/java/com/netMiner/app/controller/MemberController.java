@@ -62,7 +62,8 @@ public class MemberController {
 		} else {
 			String location = locale.toString();
 			if (!location.contains("KR")) {
-				session.setAttribute("language", "_EN");							
+				session.setAttribute("language", "_EN");
+				url = url + "_EN";
 			} else {
 				session.setAttribute("language", "");
 				
