@@ -19,8 +19,8 @@
 									<span>이용자 검색</span>
 									<select id="SEARCH_KEY" name="SEARCH_KEY">
 										<option value="" disabled="" selected="" hidden="">컬럼</option>
-										<option value="">이메일</option>
-										<option value="">소속</option>
+										<option value="USER_ID">이메일</option>
+										<option value="COMPANY">소속</option>
 									</select>
 									<div class="search">
 										<input type="text" id='SEARCH_VALUE' name='SEARCH_VALUE' value="${json.SEARCH_VALUE }">
@@ -52,6 +52,7 @@
 // 	if('${json.FILTER2}'=='2')	$("#FILTER2").click();
 </script>
 <script type="text/javascript">SEARCH_KEY.value='${json.SEARCH_KEY}';</script>
+<script type="text/javascript">USER_CODE_STATS.value='${json.USER_CODE_STATS}';</script>
 
 						</div>
 						<table class="main">
