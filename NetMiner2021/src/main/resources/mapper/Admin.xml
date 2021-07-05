@@ -29,6 +29,13 @@
 		<if test="EDATE!=null and !EDATE.equals('')">
 			AND REG_DATE &lt;= #{EDATE}
 		</if>
+		
+		<if test="USER_CODE_STATS!=null and USER_CODE_STATS=='QUIT' ">
+			AND USER_CODE = '03'
+		</if>
+		<if test="USER_CODE_STATS!=null and USER_CODE_STATS=='REST'">
+			AND LAST_LOGIN_DATE &lt; 
+		</if>
 	</sql>
 	<sql id="listPagedWhere2">
 		WHERE 1=1
@@ -161,7 +168,6 @@
 			SELECT COUNT(1)totcnt, 1 rownum
 			FROM NetMiner.MEMBER_INFO A
 			<include refid="listPagedWhere"/>
-			AND USER_CODE='03'
 		) NO
 		<include refid="listPagedWhere2"/>
 	</select>
@@ -173,7 +179,6 @@
 				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
 			FROM NetMiner.MEMBER_INFO A
 			<include refid="listPagedWhere"/>
-			AND USER_CODE='03'
 		) NO
 		<include refid="listPagedWhere2"/>
 	</select>
