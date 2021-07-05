@@ -2,18 +2,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" import ="com.netMiner.app.util.Paging"%>
  
-<% Paging p= (Paging)request.getAttribute("paging");
-	    int pageNumber = p.getPageNumber();
-	    int entryCountPerOnePage = p.getEntryCountPerOnePage();
-	    int pageCountPerPageGroup = p.getPageCountPerPageGroup();
-	    int totalEntryCount = p.getTotalEntryCount();
-	    int curPageNavi = p.getCurPageNavi();
-	    int lastPageNumber = p.getLastPageNumber();
-	    int totalNaviCount = p.getTotalNaviCount(lastPageNumber);
-	    int startPageNumber = p.getStartPageNumber(curPageNavi);
-	    int endPageNumber = p.getEndPageNumber( startPageNumber);
-	    String urlFormat = p.getBaseUrlFormat();
-	%>
+<%
+	Paging p= (Paging)request.getAttribute("paging");
+	int pageNumber = p.getPageNumber();
+	int entryCountPerOnePage = p.getEntryCountPerOnePage();
+	int pageCountPerPageGroup = p.getPageCountPerPageGroup();
+	int totalEntryCount = p.getTotalEntryCount();
+	int curPageNavi = p.getCurPageNavi();
+	int lastPageNumber = p.getLastPageNumber();
+	int totalNaviCount = p.getTotalNaviCount(lastPageNumber);
+	int startPageNumber = p.getStartPageNumber(curPageNavi);
+	int endPageNumber = p.getEndPageNumber( startPageNumber);
+	String urlFormat = p.getBaseUrlFormat();
+%>
 	
 					<div class="pagingContainer">
 						<div class="paging">

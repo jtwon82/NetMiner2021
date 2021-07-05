@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -204,7 +205,7 @@ public class AdminController {
 	
 
 	@RequestMapping(value = "/user", method= {RequestMethod.GET, RequestMethod.POST})
-	public String user(Model model
+	public String user(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
@@ -212,6 +213,8 @@ public class AdminController {
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
 		
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
+		paging.setBaseUrlFormat( paging.getPagingBaseUrl("user", request.getQueryString(), pageNumber) );
+		
 		logger.info("paging {}", paging);
 
 		json.put("firstOffset", paging.getFirstOffset());
@@ -275,7 +278,7 @@ public class AdminController {
 
 
 	@RequestMapping(value = "/quit", method= {RequestMethod.GET, RequestMethod.POST})
-	public String quit(Model model
+	public String quit(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
@@ -283,6 +286,8 @@ public class AdminController {
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
 		
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
+		paging.setBaseUrlFormat( paging.getPagingBaseUrl("quit", request.getQueryString(), pageNumber) );
+		
 		logger.info("paging {}", paging);
 
 		json.put("firstOffset", paging.getFirstOffset());
