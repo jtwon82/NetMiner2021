@@ -351,5 +351,50 @@ public class AdminController {
 			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
 		}
 	}
-
+	
+	@RequestMapping(value="/email" , method =  {RequestMethod.GET, RequestMethod.POST})
+	public String email(Model model, HttpServletRequest request
+			, @RequestParam HashMap<String, Object> json) {
+		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
+		
+		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
+		paging.setBaseUrlFormat( paging.getPagingBaseUrl("email", request.getQueryString(), pageNumber) );
+		json.put("firstOffset", paging.getFirstOffset());
+		json.put("lastOffset", paging.getLastOffset());
+		
+		List list= adminService.getEmailList(json);
+		logger.info("email list size - {}", list.size());
+		CommonPagedList pagedList= new CommonPagedList();
+		pagedList.setList(list);
+		logger.info("firstOffset - {}, lastOffset- {}",paging.getFirstOffset() ,paging.getLastOffset());
+		if(pagedList != null && list.size()>0){
+			pagedList.setPaging(paging);
+			
+			int count= adminService.getEmailCount(json);
+			pagedList.setTotalEntryCount(count);
+		}
+		
+		model.addAttribute("json", json);
+		model.addAttribute("list", pagedList.getList());
+		model.addAttribute("paging", paging);
+		
+		return "admin/email";
+	}
+	
+	@RequestMapping(value="mail_modify", method={RequestMethod.GET, RequestMethod.POST})
+	public String mail_modify(Model model
+			, @RequestParam HashMap<String, Object> json) {
+			logger.info("json {}", json);
+		
+		if( MapUtils.KeyIsEmpty(json, "NO") ) {
+			AdminVo admin= new AdminVo();
+			model.addAttribute("item", admin);
+		} else {
+			
+			AdminVo admin= AdminVo.fromMap(adminService.getEmailDetailInfo(json));
+			model.addAttribute("item", admin);
+		}
+		return "admin/email_modify";
+	}
+	
 }

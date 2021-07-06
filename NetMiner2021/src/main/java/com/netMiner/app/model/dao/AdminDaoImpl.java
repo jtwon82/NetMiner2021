@@ -116,4 +116,25 @@ public class AdminDaoImpl implements AdminDao{
 	public void deleteMemberQuitInfo(Map<String, Object> map) {
 		sqlSession.update("deleteMemberInfo", map);
 	}
+
+
+	@Override
+	public List<HashMap<String, Object>> getEmailList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getEmailList", map);
+	}
+
+
+	@Override
+	public int getEmailCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getEmailCount", map);
+	}
+
+
+	@Override
+	public HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getEmailDetailInfo", map);
+	}
 }

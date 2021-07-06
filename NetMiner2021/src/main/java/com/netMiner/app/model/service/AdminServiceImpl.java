@@ -117,4 +117,25 @@ public class AdminServiceImpl implements AdminService{
 		adminDao.deleteMemberQuitInfo(map);
 	}
 
+
+	@Override
+	public List<HashMap<String, Object>> getEmailList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.getEmailList(map);
+	}
+
+
+	@Override
+	public int getEmailCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.getEmailCount(map);
+	}
+
+
+	@Override
+	public HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return adminDao.getEmailDetailInfo(map);
+	}
+
 }

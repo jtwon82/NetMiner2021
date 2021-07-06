@@ -46,4 +46,13 @@ public interface AdminDao {
 	void insertMemberQuitInfo(Map<String, Object> map);
 
 	void deleteMemberQuitInfo(Map<String, Object> map);
+
+
+	List<HashMap<String, Object>> getEmailList(Map<String, Object> map);
+
+
+	int getEmailCount(Map<String, Object> map);
+
+
+	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
 }

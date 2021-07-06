@@ -244,4 +244,30 @@
 			WHERE NO=#{NO}
 	</delete>
 	
+	<select id="getEmailList" parameterType="map" resultType="map">
+		SELECT * FROM (
+			SELECT A.*
+				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
+			FROM NetMiner.EMAIL_INFO A
+			<include refid="listPagedWhere"/>
+		) NO
+		<include refid="listPagedWhere2"/>
+	</select>
+	<select id="getEmailCount" parameterType="map" resultType="int">
+	SELECT * FROM (
+			SELECT COUNT(1)totcnt, 1 rownum
+			FROM NetMiner.EMAIL_INFO A
+			<include refid="listPagedWhere"/>
+		) NO
+		<include refid="listPagedWhere2"/>
+	</select>
+	<select id="getEmailDetailInfo" parameterType="map" resultType="map">
+	SELECT * FROM (
+			SELECT A.*
+				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+			FROM NetMiner.EMAIL_INFO A
+	<if test="NO!=null and !NO.equals('')">WHERE A.NO = #{NO}</if>
+		) NO
+	</select>
 </mapper>

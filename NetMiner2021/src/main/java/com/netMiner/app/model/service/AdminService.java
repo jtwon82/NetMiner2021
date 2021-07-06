@@ -49,4 +49,13 @@ public interface AdminService {
 	void deleteMemberQuitInfo(Map<String, Object> map);
 
 
+	List getEmailList(Map<String, Object> json);
+
+
+	int getEmailCount(Map<String, Object> json);
+
+
+	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
+
+
 }

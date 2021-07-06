@@ -42,6 +42,12 @@ public class AdminVo implements Serializable{
 	@JsonAlias("USER_OUT_DATE") private String USER_OUT_DATE= "";
 	@JsonAlias("USER_STATS_YN") private String USER_STATS_YN= "";
 	
+	//EMAIL
+	@JsonAlias("EMAIL_CODE") private String EMAIL_CODE = "";
+	@JsonAlias("TITLE") private String TITLE = "";
+	@JsonAlias("EXPLAIN") private String EXPLAIN = "";
+	@JsonAlias("COMMENT") private String COMMENT = "";
+	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
