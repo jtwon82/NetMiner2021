@@ -5,10 +5,51 @@
 <body OnUnload="location.href='logout'">
 <div id="wrap" class="email_modify">
 	<%@ include file = "top_gnb.jsp" %>
+	<div id="section">
+				<div class="wrap">
+					<div class="title">
+						<h2>자동 이메일</h2>
+					</div>
+					<div class="content">
+						<ul>
+							<li>
+								<span>이메일 제목</span>
+								<input type="text" value="${item.TITLE}">
+							</li>
+							<li>
+								<span>설명</span>
+								<input type="text" value="${item.EXPLAIN}">
+							</li>
+						</ul>
+						<div id="editor-area"></div>
+						<textarea id="editordata" name="editordata" style="display:none;">${item.COMMENT}</textarea>
+					<div class="delete">
+						<button class="red">삭제</button>
+					</div>
+						<div class="finish">
+							<button onclick="this.form.MODE.value='cancel';">취소</button>
+							<c:choose>
+							<c:when test="${item.NO!='' }">
+								<button class="navy" onclick="this.form.MODE.value='modify';">수정</button>
+							</c:when>
+							<c:otherwise>
+								<button class="navy" onclick="this.form.MODE.value='insert';">등록</button>
+							</c:otherwise>
+							</c:choose>
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+	</div>
+	
+	<script src="/resources/admin/js/summernote/summernote-lite.js"></script>
+	<script src="/resources/admin/js/summernote/lang/summernote-ko-KR.js"></script>
 	<script type="text/javascript">
 
     $(document).ready(function () {
-        $("#summernote").summernote({
+        $("#editor-area").summernote({
             lang: "ko-KR",
             height: 500,
             callbacks: {
@@ -19,7 +60,7 @@
             tooltip: false
         });
 
-        $("#summernote").summernote("code", $("#contents").val());
+        $("#editor-area").summernote("code", $("#editordata").val());
         //$('#summernote').summernote('insertText',"");
     });
 
@@ -47,37 +88,5 @@
    */
 	
 	</script>
-	<script src="/resources/admin/js/summernote/summernote-lite.js"></script>
-	<script src="/resources/admin/js/summernote/lang/summernote-ko-KR.js"></script>
-	<div id="section">
-				<div class="wrap">
-					<div class="title">
-						<h2>자동 이메일</h2>
-					</div>
-					<div class="content">
-						<ul>
-							<li>
-								<span>이메일 제목</span>
-								<input type="text" value="${item.TITLE}">
-							</li>
-							<li>
-								<span>설명</span>
-								<input type="text" value="${item.EXPLAIN}">
-							</li>
-						</ul>
-						<textarea id="summernote" name="editordata">${item.COMMENT}</textarea>
-					<div class="delete">
-						<button class="red">삭제</button>
-					</div>
-					<div class="finish">
-						<button>취소</button>
-						<button class="navy">수정</button>
-					</div>
-					</div>
-					
-				</div>
-			</div>
-	</div>
-	
 </body>
 </html>
