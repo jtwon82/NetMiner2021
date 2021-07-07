@@ -26,7 +26,7 @@
 							</li>
 						</ul>
 						<div id="editor-area"></div>
-						<textarea id="editordata" name="COMMENT"  style="display:none;">${item.COMMENT}</textarea>
+						<textarea id="COMMENT" name="COMMENT"  style="display:none;">${item.COMMENT}</textarea>
 						
 					<div class="delete">
 						<button class="red" onclick="this.form.MODE.value='delete';">삭제</button>
@@ -64,7 +64,7 @@
             tooltip: false
         });
 
-        $("#editor-area").summernote("code", $("#editordata").val());
+        $("#editor-area").summernote("code", $("#COMMENT").val());
       
     });
     $(function(){
@@ -77,6 +77,9 @@
     			history.go(-1);
     			break;
     		case "insert": case "modify":
+    			var code = $("#editor-area").summernote("code");
+                $("#COMMENT").val(code);
+                
     			return true;
     			break;
     		case "delete":
@@ -107,19 +110,16 @@
                 //성공후 서버에서 받은 데이터 처리
                 console.log(response);
                 if('SUCCESS'==response.result){
-                	console.log(response.COMMENT);
-                	if (response.fix == true) {
-                		alert("해당 이메일은 수정만 가능합니다.");
-                	} else if (response.MODE == 'delete'){
-	    				alert("정상 삭제 처리되었습니다.");            		
-                	} else {
-                		alert("정상 처리되었습니다. 자동메일 상세설정을 원하시면 관리자에게 문의하세요."); 
-                	}
+    				alert("정상 처리되었습니다.");
     				location.href='email';
         			
-                }else{
-                	alert("자동이메일 수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의하세요.");
-                }
+                } else if (response.result == 'FIX') {
+            		alert("해당 이메일은 수정만 가능합니다.");
+
+                } else {
+                	alert("자동이메일 수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의하세요."); 
+            	}
+                
             },
             error: function(){
             	alert("자동이메일 수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");

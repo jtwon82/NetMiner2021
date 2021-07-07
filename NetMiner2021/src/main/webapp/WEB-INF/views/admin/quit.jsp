@@ -92,7 +92,7 @@
 								</c:if>
 							</tbody>
 						</table>
-						<%@ include file="paging.jsp"%>
+						<c:if test="${not empty paging2 }">${paging2 }</c:if>
 						
 						<div class="pagingContainer">
 							<div class="paging">

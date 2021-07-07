@@ -24,6 +24,8 @@ public class Constant {
 	public enum ServiceResult {
         SUCCESS, 
         FAIL,
+        FIX,
+        DELETE,
         DUPLICATE,
         NOT_FOUND,
         INVALID_TOKEN,
