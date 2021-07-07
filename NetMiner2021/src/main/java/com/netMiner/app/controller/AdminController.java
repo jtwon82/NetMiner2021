@@ -294,29 +294,23 @@ public class AdminController {
 
 		logger.info("json {}", json);
 
-		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
 
-		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-		paging.setBaseUrlFormat( paging.getPagingBaseUrl("quit", request.getQueryString(), pageNumber) );
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 
 		logger.info("paging {}", paging);
 
-		json.put("firstOffset", paging.getFirstOffset());
-		json.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getMemberQuitList(json);
 
-		CommonPagedList pagedList= new CommonPagedList();
-		pagedList.setList(list);
-		if(pagedList != null && list.size()>0){
-			pagedList.setPaging(paging);
+		if(list != null && list.size()>0){
 
 			int count= adminService.getMemberQuitCount(json);
-			pagedList.setTotalEntryCount(count);
+
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_PAGE_GROUP), "quit?page=", "", "", "red"));
 		}
 
 		model.addAttribute("json", json);
-		model.addAttribute("list", pagedList.getList());
-		model.addAttribute("paging", paging);
 
 		return "admin/quit";
 	}

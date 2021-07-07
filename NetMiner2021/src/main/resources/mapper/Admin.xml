@@ -43,6 +43,12 @@
 			AND NO.rownum BETWEEN #{firstOffset} AND #{lastOffset}
 		</if>
 	</sql>
+	<sql id="listPagedWhere3">
+		WHERE 1=1
+		<if test="_parameter.containsKey('page')">
+			AND page= ${page}
+		</if>
+	</sql>
 
 
 
@@ -195,10 +201,11 @@
 			SELECT A.*
 				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
 				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
-			FROM ( <include refid="getMemberQuit"/> ) A
+				, @RNUM:=@RNUM+1 as ROWNUM2, CEIL(@RNUM / 3) as page
+			FROM ( <include refid="getMemberQuit"/> ) A, (SELECT @RNUM:=0) R
 			<include refid="listPagedWhere"/>
 		) NO
-		<include refid="listPagedWhere2"/>
+		<include refid="listPagedWhere3"/>
 	</select>
 	
 	<select id="getMemberQuitInfo" parameterType="map" resultType="map">

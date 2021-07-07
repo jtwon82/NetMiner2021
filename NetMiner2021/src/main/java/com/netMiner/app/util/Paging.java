@@ -154,4 +154,96 @@ public class Paging {
 
 		return baseUrl + "?" + queryString + "#list";
 	}
+
+	public String printPaging_S(int page, int page_size, int page_cnt, String url, String pImg, String nImg, String pColor) {
+		StringBuilder _html = new StringBuilder();
+
+		int n_page = (page - 1) / page_size + 1;
+		int s_page = (n_page - 1) * page_size + 1;
+		int e_page = n_page * page_size;
+
+		if (e_page > page_cnt) {
+			e_page = page_cnt;
+		}
+
+		if (page > 1) {
+			if (page > page_size) {
+				_html.append("<a href=\"");
+				_html.append(url);
+				_html.append(s_page - 1);
+				_html.append("\"><</a>");
+			} else {
+				_html.append("<");
+			}
+		} else {
+			_html.append("<");
+		}
+
+		_html.append(" &nbsp;");
+
+		for (int i = s_page; i <= e_page; ++i) {
+			if (i == page) {
+				_html.append("<font color='");
+				_html.append(pColor);
+				_html.append("'>");
+				_html.append(addzero(i, 2));
+				_html.append("</font>");
+			} else {
+				_html.append("<a href=\"");
+				_html.append(url);
+				_html.append(i);
+				_html.append("\">");
+				_html.append(addzero(i, 2));
+				_html.append("</a>");
+			}
+			if (i != e_page) {
+				_html.append(" &nbsp;| ");
+			} else {
+				_html.append(" &nbsp; ");
+			}
+
+		}
+
+		if (page < page_cnt) {
+			if (s_page + page_size <= page_cnt) {
+				_html.append("<a href=\"");
+				_html.append(url);
+				_html.append(s_page + page_size);
+				_html.append("\" class='brn01'>></a>");
+			} else {
+				_html.append(">");
+			}
+		} else {
+			_html.append(">");
+		}
+		return _html.toString();
+	}
+	public String addzero(int val, int pos) {
+		String sval = "";
+		String sbuf = "";
+		sval = Integer.toString(val);
+		while (pos > 0) {
+			if (sval.length() < pos) {
+				sbuf = sbuf + "0";
+			}
+			--pos;
+		}
+		return sbuf + sval;
+	}
+	public int pageCnt(int iTotal, int iListSize) {
+		int iTmp = 0;
+		int tmp = 0;
+		if (iTotal == 0) {
+			return 1;
+		}
+
+		iTmp = iTotal / iListSize;
+		tmp = iTotal % iListSize;
+
+		if (tmp > 0) {
+			return iTmp + 1;
+		}
+
+		return iTmp;
+	}
 }
