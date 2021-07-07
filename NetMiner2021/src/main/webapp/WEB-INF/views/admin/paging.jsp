@@ -23,14 +23,18 @@
 						<%} else { %>
 							<i class="prev arrow"><a href="#">이전</a></i>
 						<%}%>
-							<%for (int i = startPageNumber; i < endPageNumber ; i++ ) {%>
+						 <% if (lastPageNumber == 0)  {%> 
+							<em class="num first active"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(1) ) %>">1</a></em>
+						<%} else { %>
+							<%for (int i = startPageNumber; i <= lastPageNumber ; i++ ) {%>
 				            	<%if (i == pageNumber) {%>
 				            		<em class="num first active"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(i) ) %>"><%=i %></a></em>
 				            	<%} else { %>
 					            	<em class="num"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(i) ) %>"><%=i %></a></em>
 					            <%} %>
-				         	<%} %>
-						<% if  ( pageNumber < endPageNumber ) { %>
+				         	<%} %>						
+						<%} %>
+						<% if  ( pageNumber < endPageNumber && lastPageNumber != 0) { %>
 							<i class="next arrow"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(pageNumber + 1) ) %>">다음</a></i>
 						<%} else { %>
 							<i class="next arrow"><a href="#">다음</a></i>

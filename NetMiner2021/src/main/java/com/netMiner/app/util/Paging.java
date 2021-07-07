@@ -124,8 +124,8 @@ public class Paging {
 		return getEndPageNumber(getStartPageNumber());
 	}
 
-	public int getEndPageNumber(int startPageNumber) {
-		return startPageNumber + (pageCountPerPageGroup - 1);
+	public int getEndPageNumber(int startPageNumber) {			
+ 		return startPageNumber + (pageCountPerPageGroup - 1);
 	}
 
 	public String getBaseUrlFormat() {

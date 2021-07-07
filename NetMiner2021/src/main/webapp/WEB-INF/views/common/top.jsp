@@ -7,7 +7,7 @@
 						<div class="pc">
 							<div class="menu obj">
 								<span class="select">Why NetMiner 365</span>
-								<ul>
+								<ul class="menu">
 									<li><a href="./whyNetMiner">Why NetMiner 365</a></li>
 									<li><a href="./feature">Feature</a></li>
 									<li><a href="./function">Function</a>

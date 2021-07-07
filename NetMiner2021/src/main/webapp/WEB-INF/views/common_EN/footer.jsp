@@ -5,10 +5,10 @@
 						<div>
 							<h4>Start NetMiner 365 for Free</h4>
 							<c:if test="${empty memberVo}">
-							<a hrefe="./login">Start for free</a>
+							<a href="./login">Start for free</a>
 							</c:if>
 							<c:if test="${!empty memberVo}">
-							<a hrefe="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}">Start for free</a>
+							<a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}">Start for free</a>
 							</c:if>
 						</div>
 					</div>
@@ -33,8 +33,8 @@
 								<p>Family Site<span></span></p>
 								<ul>
 									<li><a href="http://www.netminer.com/" target="_blank">NetMiner</a></li>
-									<li><a href="http://www.cyram.com/" target="_blank">Cyram</a></li>
-									<li><a href="http://edu.cyram.com" target="_blank">Cyram Education </a></li>
+									<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank" style="">Cyram</a></li>
+									<li style="display:none;"><a href="http://edu.cyram.com" target="_blank">Cyram Education </a></li>
 								</ul>
 							</div>
 							<ul class="sns kr obj" style="display:none;">

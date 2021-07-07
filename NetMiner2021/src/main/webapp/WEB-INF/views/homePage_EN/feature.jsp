@@ -7,7 +7,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-		<title></title>
+		<title>Feature|NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -31,10 +31,10 @@
 				<div class="wrap">
 					<div class="slider">
 						<div class="text">
-							<h2>Everything for Big Data Analysis</h2>
-							<p>Various analysis methods can be used anytime, anywhere<br>
-to easily understand the graph data in a big data environment.<br>
-NetMiner 365 is a platform that has everything you need.</p>
+							<h2>All that is necessary for Big Data Analytics</h2>
+							<p>NetMiner 365 can help you understand graph data in big data easily<br> using various analysis methods anytime, anywhere.<br>
+NetMiner 365 is a platform that has everything you need.
+</p>
 						</div>
 						
 					</div>
@@ -51,23 +51,20 @@ designed to easily discover graph structures and apply graph and machine learnin
 								<div class="bg"></div>
 								<div class="text">
 									<h4>Graph Extraction from Big Data</h4>
-									<p>Use NetMiner 365 to extract the hidden graph structures in
-big data easily and quickly. All you have to do is select the
-data to be connected via “relationships.”<br>
-NetMiner 365 will take care of the graph data modeling and
-structuralization.</p>
+									<p>NetMiner 365 can help you extract the hidden graph structures in big data easily and quickly. All you have to do is select the data to be connected via “relationships.” 
+									<br>
+									NetMiner 365 will take care of the graph data modeling and structuralization.
+									</p>
 								</div>
 							</li>
 							<li>
 								<div class="bg"></div>
 								<div class="text">
 									<h4>Graph Analytics</h4>
-									<p>Because of the limitations of existing analysis methods, there
-has been more interest of late in finding value in “realationship.”
-Graph Analytics is the technology most suited to understanding
-“relationship” data. The core graph/network analysis algorithms
-and features such as graph data processing and visualization
-offered by NetMiner 365 help you find value within the graphs.</p>
+									<p>Due to the limitations of existing analysis methods, there has been more interest of late in finding value in “relationships.”<br>
+									Graph analytics is the technology most suited to understanding “relationship” data. The core graph/network analysis and features such as graph data processing and visualization offered by NetMiner 365 help you find value within the graphs. 
+	
+									</p>
 								</div>
 							</li>
 							<li>
@@ -89,8 +86,8 @@ Graph Analytics and machine learning.</p>
 									<p>NetMiner 365 is a cloud based online platform that can be
 accessed anytime and anywhere through the web, allowing
 you to maximize your productivity.<br>
-The fewer system and hardware limitations reduce the time
-and costs needed for big data analysis.</p>
+You can save the time and costs needed for big data analytics in a cloud environment.
+</p>
 								</div>
 							</li>
 							<li>
@@ -112,38 +109,32 @@ corporation through a customized version of NetMiner 365.</p>
 			<div id="section2" class="section">
 				<div class="wrap">
 					<h3>NetMiner 365 for Everyone</h3>
-					<p>Everyone can easily utilize NetMiner 365<br>
-to create unique insights that combine Machine Learning and Graph Analytics.</p>
+					<p>Anyone can easily use NetMiner 365 <br>
+to create unique insights that fuse machine learning and graph analytics.</p>
 					<div class="content">
 						<ul>
 							<li>
 								<div class="bg"></div>
 								<div class="text">
-									<h4>Experts of Network Analysis</h4>
-									<p>A lot of graph analytics algorithms and
-functions of NetMiner 365 help you
-understand graph structures and
-features accurately.</p>
+									<h4>Network Analysis Experts</h4>
+									<p>NetMiner 365 has many graph/network analysis algorithms and features to help you understand graph structures and characteristics accurately.
+</p>
 								</div>
 							</li>
 							<li>
 								<div class="bg"></div>
 								<div class="text">
-									<h4>For Beginners</h4>
-									<p>Handle data uploading, visualization,
-and graph/machine learning.<br>
-Analyze your data easily.<br>
-All it takes is just a few clicks.</p>
+									<h4>Novice Analysts</h4>
+									<p>NetMiner 365 helps you analyze your data easily, from data uploading, visualization, to graph analytics and machine learning. All it takes is just a few clicks.
+</p>
 								</div>
 							</li>
 							<li>
 								<div class="bg"></div>
 								<div class="text">
 									<h4>Advanced Analysts</h4>
-									<p>A fused analysis utilizing Graph
-Analytics, multivariate statistics, and
-machine learning can grant new and
-differentiated insights.</p>
+									<p>NetMiner 365 can help you get new, differentiated insights with a fused analysis using graph analytics, multivariate statistics, and machine learning.
+</p>
 								</div>
 							</li>
 						</ul>

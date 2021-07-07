@@ -7,7 +7,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-		<title></title>
+		<title>WhyNetMiner|NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -32,9 +32,9 @@
 					<div class="slider">
 						<div class="text">
 							<h2>Graph Data, A Core Component of Big Data</h2>
-							<p>Big data is composed of atypical data and graph data.<br>
+							<p>Big data is composed of unstructured data and graph data.<br>
 Therefore, if graph data is missing in analysis, it leads to considerable data loss.<br>
-Graph Analytics and machine learning is the only way to make sure this does not happen.</p>
+Graph analytics and machine learning is the only way to solve this problem.</p>
 						</div>
 						
 					</div>
@@ -47,29 +47,23 @@ Graph Analytics and machine learning is the only way to make sure this does not 
 However, how much do we understand about big data?</p>
 					<div class="content">
 						<div class="bg"></div>
-						<div class="text">In the past, big data referred to the processing of large amounts
-of data based on Hadoop, statistics, and machine learning and
-ascertaining and predicting data distribution.<br><br>
-
-However, big data is by nature substantially composed of graph
-data. Graph data describes the “relationship” between data,
-but a new approach is needed to arrive at meaningful insights.</div>
+						<div class="text">In the past, big data analytics referred to the processing of large amounts of data based on Hadoop, statistics, and machine learning and identifying distribution of data. 
+						<br><br>
+						However, a large component of big data is graph data by nature. Unfortunately, graph data describes the “relationship” between data, something that cannot be processed using past analysis methods, and therefore a new approach is needed to arrive at meaningful insights. 
+						</div>
 					</div>
 				</div>
 			</div>
 			<div id="section2" class="section">
 				<div class="wrap">
 					<h3>Graph Analytics, as one of the Top 10 Data and Analytics Technology</h3>
-					<p>In 2019, the global research and advisory firm Gartner<br>
-named Graph Analytics as one of the top 10 data and analytics technologies.</p>
+					<p>In 2019, the global research and advisory company Gartner<br>named graph analytics as one of the top 10 Data and Analytics Technology.
+					</p>
 					<div class="content">
-						<div class="text">Graph Analytics and graph machine learning are the only ways to
-analyze graph data, and it is slowly gathering more interest (as
-displayed by Garter’s designation).<br><br>
-
-NetMiner 365 features rich Graph Analytics algorithms and graph
-data analysis functions based on the network analysis software
-NetMiner.</div>
+						<div class="text">Graph analytics and graph-native machine learning are the only ways to analyze graph data. It’s getting the spotlight and named by Gartner as the top 10 data and analytics technology in 2019. 
+						<br><br>
+						NetMiner 365 features rich graph analytics algorithms and functions based on the network analysis software NetMiner. 
+						</div>
 						<div class="bg"></div>
 					</div>
 				</div>
@@ -80,19 +74,25 @@ NetMiner.</div>
 					<p>Graph Analytics can enhance the accuracy of data prediction and classification.</p>
 					<div class="content">
 						<div class="bg"></div>
-						<div class="text">Graph Analytics is not only the method of understanding
-graphs but also a method of increasing the accuracy of machine
-learning predictions.
-<br><br>
-Extracting the “relationship” from the graph structures inside
-big data and utilizing them in machine learning leads to a more
-detailed understanding and prediction of data. Graph learning
-algorithms for graphs can also learn graph data as is and
-predict data.</div>
+						<div class="text">Graph analytics is not only the method of understanding graphs but also that of increasing the accuracy of machine learning predictions. 
+						<br><br>
+						Extracting the “relationship” features from the graph structures inside big data and utilizing them in machine learning helps you to understand and predict data more precisely. Graph machine learning can also learn graph data and figure out relational features.
+						</div>
 					</div>
 				</div>
 			</div>
-			<%@include file = "../common_EN/footer.jsp" %>
+			<div id="free" class="section">
+				<div class="wrap">
+					<div class="content">
+						<div>
+							<h4>Start NetMiner 365 for Free</h4>
+							<a hrefe="">Start for free</a>
+						</div>
+					</div>
+				</div>
+			</div>
+					<%@include file = "../common_EN/footer.jsp" %>
+			</div>
 		</div>
 	</body>
 </html>

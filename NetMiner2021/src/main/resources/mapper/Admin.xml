@@ -60,7 +60,6 @@
 			FROM NetMiner.ADMIN_INFO A
 			<include refid="listPagedWhere"/>
 		) NO
-		<include refid="listPagedWhere2"/>
 	</select>
 	
 	<select id="getAdminList" parameterType="map" resultType="map">

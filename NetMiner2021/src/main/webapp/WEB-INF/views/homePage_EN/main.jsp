@@ -33,7 +33,7 @@
 						<div class="text">
 							<h2>Graph Machine Learning,<br>
 New Paradigm for Big Data</h2>
-							<p>Is BigQuery and machine learning granting you no more insights that are new?<br>
+							<p>Are Query and Statistics granting you no more new insights?<br>
 It is important to understand the graph structure hidden in big data<br>
 to predict and classify more precisely.</p>
 						</div>
@@ -45,14 +45,16 @@ to predict and classify more precisely.</p>
 				<div class="wrap">
 					<h3>NetMiner 365, A Platform for Graph Machine Learning</h3>
 					<p>It is essential to have the right approach to understand data properly.<br><br>
-There are immense amounts of graph (relation) data inside big data,<br>
+There are large amounts of graph/relation data inside big data, <br>
 But existing data analysis have only understood data through information structuralization, query, and statistics.<br><br>
-NetMiner 365 combines Graph Analytics know how built up over a long period<br>
-and graph machine learning, providing different innovation and inspiration.
-</p>
+NetMiner 365 combines graph/network analytics know-how built up 
+over a long period and machine learning algorithms. <br>
+So, it provides different innovations and inspiration.
+
+					</p>
 					<div class="content">
 						<div class="bg"></div>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./whyNetMiner">Learn more  > ></a>
 					</div>
 				</div>
 			</div>
@@ -60,46 +62,42 @@ and graph machine learning, providing different innovation and inspiration.
 				<div class="wrap">
 					<h3>Why you need NetMiner 365</h3>
 					<p>NetMiner 365 provides everything necessary for business<br>
-based on the innovative integration of machine learning and Graph Analytics.</p>
+based on the innovative integration of machine learning and graph analytics.</p>
 					<div class="content">
 						<ul class="line1">
 							<li>
 								<img src="/resources/images/main_section2_ico1.png" alt="Graph Extraction from Big Data"> 
 								<h4>Graph Extraction from Big Data</h4>
-								<p>NetMiner 365 helps you to extract<br>
-graph structure from Big Data</p>
+								<p>NetMiner 365 helps you extract <br>the hidden graph structures in <br>big data easily and quickly. 
+								</p>
 							</li>
 							<li>
 								<img src="/resources/images/main_section2_ico2.png" alt="Graph Analytics"> 
 								<h4>Graph Analytics</h4>
-								<p>We provides the data structures,<br>
-algorithms, and features needed to<br>
-understand graphs.</p>
+								<p>NetMiner 365 gives the data structures, <br>algorithms, and features to help you <br>understand the graph.
+								</p>
 							</li>
 							<li>
 								<img src="/resources/images/main_section2_ico3.png" alt="Machine Learning& Deep Learning"> 
 								<h4>Machine Learning & Deep Learning</h4>
-								<p>Algorithms for both machine learning for<br>
-graph data and widely used general<br>
-machine learning are provided.</p>
+								<p>NetMiner 365 provides algorithms for <br>both graph machine learning and <br>widely used machine learning.
+								</p>
 							</li>
 						</ul>
 						<ul class="line2">
 							<li>
 								<img src="/resources/images/main_section2_ico4.png" alt="Anytime, Anywhere, FreelyAnytime, Anywhere, Freely"> 
 								<h4>Anytime, Anywhere, Freely</h4>
-								<p>This cloud based online platform<br>
-can be accessed via the web anytime<br>
-and from any location.</p>
+								<p>NetMiner 365 is a cloud-based <br>online platform that can be accessed <br>via the web anytime, anywhere.
+								</p>
 							</li>
 							<li>
 								<img src="/resources/images/main_section2_ico5.png" alt="Enterprise"> 
 								<h4>Enterprise</h4>
-								<p>Onpremise, customized installation,<br>
-etc., is available for enterprise uses.<br><span>(Coming Soon)</span></p>
+								<p>NetMiner 365 can provide enterprise <br>with on-premise, customization, <br>and etc .<span>(later)</span></p>
 							</li>
 						</ul>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./feature">Learn more  > ></a>
 					</div>
 				</div>
 			</div>
@@ -115,7 +113,7 @@ etc., is available for enterprise uses.<br><span>(Coming Soon)</span></p>
 							<li></li>
 							<li></li>
 						</ul>
-						<a class="more"  href="#">Learn more  > ></a>
+						<a class="more"  href="./solution">Learn more  > ></a>
 					</div>
 				</div>
 			</div>		

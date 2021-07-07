@@ -1,8 +1,9 @@
 var checkRandomNumber = false;
 $(document).ready(function() {
-	
-	
-	
+	/*$(".menu li").on("click", function() {
+        $(".menu li").removeClass("active");
+        $(this).addClass("active");
+    });*/
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
 		    $(this).parents(".content").find('input').prop("checked", $(this).is(":checked"));
@@ -565,7 +566,8 @@ function changeLanguage(language) {
 			type : "POST",
 			data : {"language" : language},
 			success : function(data) {
-				window.location.reload();
+				window.location.reload(true);
+				window.scrollTo(0,0);
 			}
 			
 		})

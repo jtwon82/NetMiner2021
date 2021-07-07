@@ -566,6 +566,7 @@ function changeLanguage(language) {
 			data : {"language" : language},
 			success : function(data) {
 				window.location.reload();
+				window.scrollTo(0,0);
 			}
 			
 		})

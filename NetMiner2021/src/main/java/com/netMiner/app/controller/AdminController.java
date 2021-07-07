@@ -147,12 +147,13 @@ public class AdminController {
 
 
 	@RequestMapping(value = "/administrator", method=RequestMethod.GET)
-	public String administrator(Model model
+	public String administrator(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json){
 
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-
+		paging.setBaseUrlFormat( paging.getPagingBaseUrl("administrator", request.getQueryString(), pageNumber) );
+		
 		HashMap<String, Object> map= new HashMap();
 		map.put("firstOffset", paging.getFirstOffset());
 		map.put("lastOffset", paging.getLastOffset());
@@ -164,7 +165,7 @@ public class AdminController {
 			pagedList.setPaging(paging);
 
 			int count= adminService.getAdminCount(map);
-			pagedList.setTotalEntryCount(count);
+			paging.setTotalEntryCount(count);
 		}
 
 		model.addAttribute("list", pagedList.getList());
@@ -237,9 +238,8 @@ public class AdminController {
 			pagedList.setPaging(paging);
 
 			int count= adminService.getMemberCount(json);
-			pagedList.setTotalEntryCount(count);
+			paging.setTotalEntryCount(count);
 		}
-
 		model.addAttribute("json", json);
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);

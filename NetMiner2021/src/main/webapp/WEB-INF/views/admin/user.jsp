@@ -108,11 +108,7 @@
 								</c:if>
 							</tbody>
 						</table>
-					
-					
-						<div class="pagingContainer">
-							<%@ include file="paging.jsp"%>
-						</div>
+						<%@ include file="paging.jsp"%>
 						<div class="register">
 							<button class="navy" onClick="downLoad();">다운로드</button>
 							<button class="navy" onclick="location.href='user_modify'">등록</button>

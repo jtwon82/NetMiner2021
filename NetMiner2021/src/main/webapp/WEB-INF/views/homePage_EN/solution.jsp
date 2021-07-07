@@ -7,7 +7,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-		<title></title>
+		<title>Solution|NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -46,10 +46,8 @@ through our stories.</p>
 						<div class="bg"></div>
 						<div class="text">
 							<h4>Human Resources / Organization</h4>
-							<p>The networks among the tasks, resources, and people
-that make up an organizational system are critical
-elements to an organization’s performance and
-development. Communication patterns that occur in the
+							<p>A variety of networks among the data, tasks, resources, and people in an organization are important elements to an organization’s performance and development. 
+ Communication patterns that occur in the
 organization are collected to diagnose the efficiency and
 structure of communication, allowing the corporation to
 understand the organization's processes better and
@@ -64,13 +62,8 @@ effectively improve the organization's performance.</p>
 						<div class="bg"></div>
 						<div class="text">
 							<h4>Sales / Marketing</h4>
-							<p>An era of new spending. There’s an immense amount
-of data available online that allows you to ascertain
-customers’ behavioral patterns and interests.
-Using Graph Analytics and machine learning analysis
-to analyze customer behavior and diffusion patterns,
-marketers can predict customer profiles and actions
-to make personalized suggestions.</p>
+							<p>A new era of spending. There’s a large amount of data available online that allows you to understand customers’ behavioral patterns and interests. Using graph analytics and machine learning to analyze customer behavior and diffusion patterns, marketers can predict customer profiles and actions to make personalized suggestions.
+</p>
 						</div>
 					</div>
 				</div>
@@ -81,14 +74,9 @@ to make personalized suggestions.</p>
 						<div class="bg"></div>
 						<div class="text">
 							<h4>Strategy / R&D</h4>
-							<p>For a government agency or corporation to develop,
-it needs a clear strategy and corresponding R&D
-investment to achieve its goals. A graph based
-knowledge map facilitates a visual understanding of
-knowledge structures in vast amounts of literature
-materials. At the same time, machine learning can
-significantly reduce the amount of time and expense
-incurred in data classification and prediction.</p>
+							<p>For a government agency or corporation to develop, it needs a clear strategy and corresponding R&D investment plan to achieve its goals. 
+A graph-based knowledge map facilitates a visual understanding of knowledge structures in vast amounts of documents. At the same time, machine learning can significantly reduce the amount of time and expense incurred in data classification and prediction. 
+</p>
 						</div>
 					</div>
 				</div>
@@ -102,10 +90,8 @@ incurred in data classification and prediction.</p>
 							<p>With the advancement of social systems, patterns of
 fraud, conspiracy, and fraudulent actions are becoming
 more complex; tracking them down involves a lot of
-time and high costs. Using Graph Analytics and machine
-learning allows you to quickly ascertain abnormal
-patterns and understand the relational structure of
-entire suspect groups.</p>
+time and high costs. NetMiner 365 allows you to quickly find abnormal patterns and understand the graph structure in entire suspect groups using graph analytics and machine learning.
+</p>
 						</div>
 					</div>
 				</div>
@@ -116,18 +102,15 @@ entire suspect groups.</p>
 						<div class="bg"></div>
 						<div class="text">
 							<h4>Manufacturing / Supply Chain Management</h4>
-							<p>Making production processes more efficient, accurately
-predicting supply and demand of products, and
-optimizing logistics routes or conditions can significantly
-increase corporate profits. Graph Analytics allows you to
-ascertain process structures, business relationships with
-other corporations, logistics patterns, etc., to reduce loss
-and alleviate bottlenecks in supply networks.</p>
+							<p>NetMiner 365 can help you significantly increase corporate profits by making production processes more efficient, accurately predicting the supply and demand of products, and optimizing logistics routes. In addition, graph analytics allows you to understand process structures, business transactions with other companies, logistics patterns, etc., to reduce loss and eliminate bottlenecks in the supply chain network. 
+</p>
 						</div>
 					</div>
 				</div>
 			</div>
-				<%@include file = "../common_EN/footer.jsp" %>
+			<%@include file = "../common_EN/footer.jsp" %>
+			</div>
+		
 		</div>
 	</body>
 </html>

@@ -37,26 +37,7 @@
 							</c:if>
 						</tbody>
 					</table>
-					<%@ include file="paging.jsp"%>
-					
-					<div class="pagingContainer">
-						<div class="paging">
-							<i class="first arrow"><a href="#">처음</a></i>
-							<i class="prev arrow"><a href="#">이전</a></i>
-							<em class="num first active"><a href="#">1</a></em>
-							<em class="num"><a href="#">2</a></em>
-							<em class="num"><a href="#">3</a></em>
-							<em class="num"><a href="#">4</a></em>
-							<em class="num"><a href="#">5</a></em>
-							<em class="num"><a href="#">6</a></em>
-							<em class="num"><a href="#">7</a></em>
-							<em class="num"><a href="#">8</a></em>
-							<em class="num"><a href="#">9</a></em>
-							<em class="num"><a href="#">10</a></em>
-							<i class="next arrow"><a href="#">다음</a></i>
-							<i class="last arrow"><a href="#">마지막</a></i>
-						</div>
-					</div>
+					 <%@ include file="paging.jsp"%>
 					<div class="register">
 						<button class="navy"><a href="administrator_modify">등록</a></button>
 					</div>
