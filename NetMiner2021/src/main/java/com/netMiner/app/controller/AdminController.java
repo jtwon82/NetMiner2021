@@ -416,9 +416,10 @@ public class AdminController {
 			if(json.get("MODE").equals("delete")) {
 				String EMAIL_CODE = (String) json.get("EMAIL_CODE");
 				if(!EMAIL_CODE.contains("01|02|03|04|05|06|07|08|09|10")) {
-					adminService.deleteEmailInfo(json);					
+					adminService.deleteEmailInfo(json);
 				} else {
-					json.put("fix", true);
+//					json.put("fix", true);
+					return Constant.ResultJson(ServiceResult.FIX.name(),"", "");
 				}
 
 			} else if(json.get("MODE").equals("insert")) {
@@ -427,10 +428,10 @@ public class AdminController {
 			} else if(json.get("MODE").equals("modify")) {
 				adminService.modifyEmailInfo(json);
 			}
-			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
+			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", "");
 
 		} catch(Exception e) {
-			return Constant.ResultJson(ServiceResult.FAIL.name(),"", "");
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"", e.toString());
 
 		}
 	}

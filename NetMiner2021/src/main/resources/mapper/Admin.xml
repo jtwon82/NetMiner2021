@@ -287,15 +287,11 @@
 	FROM EMAIL_INFO;
 	</update>
 	<update id="modifyEmailInfo"  parameterType="map">
-	UPDATE FROM NetMiner.EMAIL_INFO 
-	SET
-	<if test="TITLE!=null and ! TITLE.equals('')"> 
-	TITLE = #{TITLE} ,
-	</if> 
-	<if test="COMMENT!=null and !COMMENT.equals('')"> 
-	COMMENT = #{COMMENT}
-	</if> 
-	WHERE NO = ${NO}
+	UPDATE NetMiner.EMAIL_INFO 
+		SET EMAIL_CODE = #{EMAIL_CODE}
+		<if test="TITLE!=null and ! TITLE.equals('')">, TITLE = #{TITLE}</if> 
+		<if test="COMMENT!=null and !COMMENT.equals('')">, COMMENT = #{COMMENT}</if> 
+	WHERE `NO` = ${NO}
 	
 	</update>
 </mapper>
