@@ -152,6 +152,6 @@ public class Paging {
 		}
 		queryString = queryString.replace("pageNumber=" + pageNumber, "pageNumber=%pageNumber%");
 
-		return baseUrl + "?" + queryString + "#list";
+		return baseUrl + "?" + queryString;
 	}
 }

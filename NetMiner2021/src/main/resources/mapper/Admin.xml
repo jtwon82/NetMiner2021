@@ -112,7 +112,6 @@
 			<include refid="listPagedWhere"/>
 			AND USER_CODE='02'
 		) NO
-		<include refid="listPagedWhere2"/>
 	</select>
 	
 	<select id="getMemberList" parameterType="map" resultType="map">
