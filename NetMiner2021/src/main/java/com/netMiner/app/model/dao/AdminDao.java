@@ -55,4 +55,13 @@ public interface AdminDao {
 
 
 	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
+
+
+	void deleteEmailInfo(HashMap<String, Object> map);
+
+
+	void insertEmailInfo(HashMap<String, Object> map);
+
+
+	void modifyEmailInfo(HashMap<String, Object> map);
 }

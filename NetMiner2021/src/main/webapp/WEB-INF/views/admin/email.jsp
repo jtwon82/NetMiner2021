@@ -56,7 +56,7 @@
 						</div>
 					</div>
 					<div class="register">
-						<button class="navy">등록</button>
+						<button class="navy" onclick="location.href='mail_modify'">등록</button>
 					</div>
 					</div>
 					

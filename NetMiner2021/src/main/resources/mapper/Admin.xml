@@ -270,4 +270,32 @@
 	<if test="NO!=null and !NO.equals('')">WHERE A.NO = #{NO}</if>
 		) NO
 	</select>
+	
+	<delete id="delteEmailInfo" parameterType="map">
+	DELETE FROM NetMiner.EMAIL_INFO
+	WHERE `NO` = #{NO}
+	</delete>
+	<update id="insertEmailInfo"  parameterType="map">
+	INSERT INTO NetMiner.EMAIL_INFO
+	(EMAIL_CODE, TITLE, `EXPLAIN`, COMMENT, REG_DATE)
+	SELECT 
+	MAX(EMAIL_CODE)+1 AS EMAIL_CODE
+	, #{TITLE} AS TITLE
+	, #{EXPLAIN} AS `EXPLAIN`
+	, #{COMMENT} AS COMMENT
+	, NOW() AS REG_DATE
+	FROM EMAIL_INFO;
+	</update>
+	<update id="modifyEmailInfo"  parameterType="map">
+	UPDATE FROM NetMiner.EMAIL_INFO 
+	SET
+	<if test="TITLE!=null and ! TITLE.equals('')"> 
+	TITLE = #{TITLE} ,
+	</if> 
+	<if test="COMMENT!=null and !COMMENT.equals('')"> 
+	COMMENT = #{COMMENT}
+	</if> 
+	WHERE NO = ${NO}
+	
+	</update>
 </mapper>

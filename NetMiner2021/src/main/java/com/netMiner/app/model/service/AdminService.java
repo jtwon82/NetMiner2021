@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
+import com.netMiner.app.model.vo.AdminVo;
+
 public interface AdminService {
 
 	String selectDate();
@@ -56,6 +60,18 @@ public interface AdminService {
 
 
 	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
+
+
+	void deleteEmailInfo(HashMap<String, Object> json);
+
+
+	void insertEmailInfo(HashMap<String, Object> json);
+
+
+	void modifyEmailInfo(HashMap<String, Object> json);
+
+
+	SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list);
 
 
 }

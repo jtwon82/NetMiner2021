@@ -4,10 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netMiner.app.model.dao.AdminDao;
+import com.netMiner.app.model.vo.AdminVo;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -136,6 +141,98 @@ public class AdminServiceImpl implements AdminService{
 	public HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return adminDao.getEmailDetailInfo(map);
+	}
+	
+	@Override
+	public void deleteEmailInfo(HashMap<String, Object> map) {
+		adminDao.deleteEmailInfo(map);
+		
+	}
+
+
+	@Override
+	public void insertEmailInfo(HashMap<String, Object> map) {
+		adminDao.insertEmailInfo(map);
+		
+	}
+
+
+	@Override
+	public void modifyEmailInfo(HashMap<String, Object> map) {
+		adminDao.modifyEmailInfo(map);
+		
+	}
+
+
+	@Override
+	public SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list) {
+		 SXSSFWorkbook workbook = new SXSSFWorkbook();
+	        
+	        // 시트 생성
+	        SXSSFSheet sheet = workbook.createSheet("USER_INFO");
+	        
+	        //시트 열 너비 설정
+	        sheet.setColumnWidth(0, 1500);
+	        sheet.setColumnWidth(0, 3000);
+	        sheet.setColumnWidth(0, 3000);
+	        sheet.setColumnWidth(0, 1500);
+	        
+	        // 헤더 행 생
+	        Row headerRow = sheet.createRow(0);
+	        // 해당 행의 첫번째 열 셀 생성
+	        Cell headerCell = headerRow.createCell(0);
+	        headerCell.setCellValue("가입일시");
+	        // 해당 행의 두번째 열 셀 생성
+	        headerCell = headerRow.createCell(1);
+	        headerCell.setCellValue("용도");
+	        // 해당 행의 세번째 열 셀 생성
+	        headerCell = headerRow.createCell(2);
+	        headerCell.setCellValue("이메일");
+	        // 해당 행의 네번째 열 셀 생성
+	        headerCell = headerRow.createCell(3);
+	        headerCell.setCellValue("언어");
+	        
+	        headerCell = headerRow.createCell(4);
+	        headerCell.setCellValue("국가");
+	        
+	        headerCell = headerRow.createCell(5);
+	        headerCell.setCellValue("소속");
+	        
+	        headerCell = headerRow.createCell(6);
+	        headerCell.setCellValue("수신동의");
+	        
+	        // 과일표 내용 행 및 셀 생성
+	        Row bodyRow = null;
+	        Cell bodyCell = null;
+	        for (int i = 0; i < list.size(); i ++) {
+	        	HashMap<String , Object> result  = list.get(i);
+	        	// 행 생성
+	            bodyRow = sheet.createRow(i+1);
+	            // 데이터 번호 표시
+	            bodyCell = bodyRow.createCell(0);
+	            bodyCell.setCellValue(i + 1);
+	            // 데이터 이름 표시
+	            bodyCell = bodyRow.createCell(1);
+	            bodyCell.setCellValue((String) result.get("REG_DATES"));
+	            // 데이터 가격 표시
+	            bodyCell = bodyRow.createCell(2);
+	            bodyCell.setCellValue((String) result.get("USE_CODE"));
+	            // 데이터 수량 표시
+	            bodyCell = bodyRow.createCell(3);
+	            bodyCell.setCellValue((String) result.get("USER_ID"));
+	            
+	            bodyCell = bodyRow.createCell(4);
+	            bodyCell.setCellValue((String) result.get("LANGUAGE"));
+	            
+	            bodyCell = bodyRow.createCell(5);
+	            bodyCell.setCellValue((String) result.get("NATION"));
+	            
+	            bodyCell = bodyRow.createCell(6);
+	            bodyCell.setCellValue((String) result.get("MARKET_YN"));
+	            
+	        }
+	        
+	        return workbook;
 	}
 
 }

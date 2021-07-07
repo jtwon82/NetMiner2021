@@ -1,25 +1,35 @@
 package com.netMiner.app.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.config.Constant;
 import com.netMiner.app.config.Constant.ServiceResult;
@@ -39,7 +49,7 @@ public class AdminController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private AdminService adminService;
 
@@ -47,15 +57,15 @@ public class AdminController {
 	public String test(Model model, @PathVariable String page) {
 		return String.format("admin/%s", page);
 	}
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
-//		model.addAttribute("testData", memberService.getTestDate());
+		//		logger.info("Welcome home! The client locale is {}.", locale);
+		//		model.addAttribute("testData", memberService.getTestDate());
 		return "redirect:/admin/login";
 	}
-	
-	
+
+
 
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(Model model, HttpSession session){
@@ -65,7 +75,7 @@ public class AdminController {
 				LoginManager loginManager= LoginManager.getInstance();
 				loginManager.removeSession(admin.getADMIN_ID());
 			}
-			
+
 			session.setAttribute(Constant.ADMIN_SESSION, null);
 			session.removeAttribute(Constant.ADMIN_SESSION);
 		}catch(Exception e) {
@@ -83,21 +93,21 @@ public class AdminController {
 			AdminVo admin= AdminVo.fromMap(adminService.getAdminInfo(json));
 			if(admin== null)
 				return Constant.ResultJson(ServiceResult.NOT_FOUND.name(),"1","");
-			
+
 			if(!admin.getADMIN_PWD().equals(admin.getPwd())) {
 				return Constant.ResultJson(ServiceResult.NOT_FOUND.name(),"2","");
 			}
-		    session.setAttribute(Constant.ADMIN_SESSION, admin);
-		    
-		    LoginManager loginManager= LoginManager.getInstance();
-		    if(loginManager.isUsing(admin.getADMIN_ID())){
-		    	return Constant.ResultJson(ServiceResult.DUPLICATE.name(),"","");
-		    }
-		    
-		    loginManager.setSession(session, admin.getADMIN_ID());
-		    
+			session.setAttribute(Constant.ADMIN_SESSION, admin);
+
+			LoginManager loginManager= LoginManager.getInstance();
+			if(loginManager.isUsing(admin.getADMIN_ID())){
+				return Constant.ResultJson(ServiceResult.DUPLICATE.name(),"","");
+			}
+
+			loginManager.setSession(session, admin.getADMIN_ID());
+
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"","");
-			
+
 		}catch(Exception e){
 			logger.error("err ", e);
 			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
@@ -110,16 +120,16 @@ public class AdminController {
 			if(admin == null){
 				return "redirect:/admin/login";
 			}else{
-				 //기존의 접속(세션)을 끊는다.
+				//기존의 접속(세션)을 끊는다.
 				LoginManager loginManager = LoginManager.getInstance(); 
 				loginManager.removeSession(admin.getADMIN_ID());
-				
+
 				//새로운 세션을 등록한다. setSession함수를 수행하면 valueBound()함수가 호출된다.
-		        loginManager.setSession(session, admin.getADMIN_ID());
+				loginManager.setSession(session, admin.getADMIN_ID());
 			}
-		    
+
 			return "redirect:/admin/login/confirm";
-			
+
 		}catch(Exception e){
 			logger.error(e.getMessage());
 			return "redirect:/admin/login";
@@ -130,12 +140,12 @@ public class AdminController {
 		AdminVo admin= (AdminVo)session.getAttribute(Constant.ADMIN_SESSION);
 		if(admin == null )
 			return "redirect:/admin/login";
-		
+
 		return "redirect:/admin/administrator";
 	}
-	
-	
-	
+
+
+
 	@RequestMapping(value = "/administrator", method=RequestMethod.GET)
 	public String administrator(Model model
 			, @RequestParam HashMap<String, Object> json){
@@ -147,16 +157,16 @@ public class AdminController {
 		map.put("firstOffset", paging.getFirstOffset());
 		map.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getAdminList(map);
-		
+
 		CommonPagedList pagedList= new CommonPagedList();
 		pagedList.setList(list);
 		if(pagedList != null && list.size()>0){
 			pagedList.setPaging(paging);
-			
+
 			int count= adminService.getAdminCount(map);
 			pagedList.setTotalEntryCount(count);
 		}
-		
+
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);
 
@@ -167,16 +177,16 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
-		
+
 		if( MapUtils.KeyIsEmpty(json, "NO") ) {
 			AdminVo admin= new AdminVo();
 			model.addAttribute("item", admin);
 		} else {
-			
+
 			AdminVo admin= AdminVo.fromMap(adminService.getAdminInfo(json));
 			model.addAttribute("item", admin);
 		}
-		
+
 		return "admin/administrator_modify";
 	}
 	@RequestMapping(value = "/administrator_modify/check", method = RequestMethod.POST)
@@ -184,55 +194,56 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json) {
 		try {
 			logger.info("json {}", json);
-			
+
 			if(json.get("MODE").equals("delete")) {
 				adminService.deleteAdminInfo(json);
-				
+
 			} else if(json.get("MODE").equals("insert")) {
 				adminService.insertAdminInfo(json);
-				
+
 			} else if(json.get("MODE").equals("modify")) {
 				adminService.modifyAdminInfo(json);
 			}
-			
+
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
 		}catch(Exception e) {
 			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
 		}
 	}
 
-	
-	
+
+
 
 	@RequestMapping(value = "/user", method= {RequestMethod.GET, RequestMethod.POST})
 	public String user(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
-		
+
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
-		
+
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		paging.setBaseUrlFormat( paging.getPagingBaseUrl("user", request.getQueryString(), pageNumber) );
-		
+
 		logger.info("paging {}", paging);
 
 		json.put("firstOffset", paging.getFirstOffset());
 		json.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getMemberList(json);
-		
+
 		CommonPagedList pagedList= new CommonPagedList();
 		pagedList.setList(list);
 		if(pagedList != null && list.size()>0){
 			pagedList.setPaging(paging);
-			
+
 			int count= adminService.getMemberCount(json);
 			pagedList.setTotalEntryCount(count);
 		}
-		
+
 		model.addAttribute("json", json);
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);
+
 
 		return "admin/user";
 	}
@@ -241,16 +252,16 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
-		
+
 		if( MapUtils.KeyIsEmpty(json, "NO") ) {
 			AdminVo admin= new AdminVo();
 			model.addAttribute("item", admin);
 		} else {
-			
+
 			AdminVo admin= AdminVo.fromMap(adminService.getMemberInfo(json));
 			model.addAttribute("item", admin);
 		}
-		
+
 		return "admin/user_modify";
 	}
 	@RequestMapping(value = "/user_modify/check", method = RequestMethod.POST)
@@ -258,17 +269,17 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json) {
 		try {
 			logger.info("json {}", json);
-			
+
 			if(json.get("MODE").equals("delete")) {
 				adminService.deleteMemberInfo(json);
-				
+
 			} else if(json.get("MODE").equals("insert")) {
 				adminService.insertMemberInfo(json);
-				
+
 			} else if(json.get("MODE").equals("modify")) {
 				adminService.modifyMemberInfo(json);
 			}
-			
+
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
 		}catch(Exception e) {
 			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
@@ -282,27 +293,27 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
-		
+
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
-		
+
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		paging.setBaseUrlFormat( paging.getPagingBaseUrl("quit", request.getQueryString(), pageNumber) );
-		
+
 		logger.info("paging {}", paging);
 
 		json.put("firstOffset", paging.getFirstOffset());
 		json.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getMemberQuitList(json);
-		
+
 		CommonPagedList pagedList= new CommonPagedList();
 		pagedList.setList(list);
 		if(pagedList != null && list.size()>0){
 			pagedList.setPaging(paging);
-			
+
 			int count= adminService.getMemberQuitCount(json);
 			pagedList.setTotalEntryCount(count);
 		}
-		
+
 		model.addAttribute("json", json);
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);
@@ -314,16 +325,16 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json){
 
 		logger.info("json {}", json);
-		
+
 		if( MapUtils.KeyIsEmpty(json, "NO") ) {
 			AdminVo admin= new AdminVo();
 			model.addAttribute("item", admin);
 		} else {
-			
+
 			AdminVo admin= AdminVo.fromMap(adminService.getMemberQuitInfo(json));
 			model.addAttribute("item", admin);
 		}
-		
+
 		return "admin/quit_modify";
 	}
 	@RequestMapping(value = "/quit_modify/check", method = RequestMethod.POST)
@@ -331,37 +342,37 @@ public class AdminController {
 			, @RequestParam HashMap<String, Object> json) {
 		try {
 			logger.info("json {}", json);
-			
+
 			if(json.get("MODE").equals("recover")) {
 				json.put("USE_CODE", "02");
 				adminService.modifyMemberQuitInfo(json);
-				
+
 			}else if(json.get("MODE").equals("delete")) {
 				adminService.deleteMemberQuitInfo(json);
-				
+
 			} else if(json.get("MODE").equals("insert")) {
 				adminService.insertMemberQuitInfo(json);
-				
+
 			} else if(json.get("MODE").equals("modify")) {
 				adminService.modifyMemberQuitInfo(json);
 			}
-			
+
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
 		}catch(Exception e) {
 			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
 		}
 	}
-	
+
 	@RequestMapping(value="/email" , method =  {RequestMethod.GET, RequestMethod.POST})
 	public String email(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json) {
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
-		
+
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		paging.setBaseUrlFormat( paging.getPagingBaseUrl("email", request.getQueryString(), pageNumber) );
 		json.put("firstOffset", paging.getFirstOffset());
 		json.put("lastOffset", paging.getLastOffset());
-		
+
 		List list= adminService.getEmailList(json);
 		logger.info("email list size - {}", list.size());
 		CommonPagedList pagedList= new CommonPagedList();
@@ -369,32 +380,150 @@ public class AdminController {
 		logger.info("firstOffset - {}, lastOffset- {}",paging.getFirstOffset() ,paging.getLastOffset());
 		if(pagedList != null && list.size()>0){
 			pagedList.setPaging(paging);
-			
+
 			int count= adminService.getEmailCount(json);
 			pagedList.setTotalEntryCount(count);
 		}
-		
+
 		model.addAttribute("json", json);
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);
-		
+
 		return "admin/email";
 	}
-	
+
 	@RequestMapping(value="mail_modify", method={RequestMethod.GET, RequestMethod.POST})
 	public String mail_modify(Model model
 			, @RequestParam HashMap<String, Object> json) {
-			logger.info("json {}", json);
-		
+		logger.info("json {}", json);
+
 		if( MapUtils.KeyIsEmpty(json, "NO") ) {
 			AdminVo admin= new AdminVo();
 			model.addAttribute("item", admin);
 		} else {
-			
+
 			AdminVo admin= AdminVo.fromMap(adminService.getEmailDetailInfo(json));
 			model.addAttribute("item", admin);
 		}
 		return "admin/email_modify";
 	}
+
+	@RequestMapping(value="/email_modify/check", method = RequestMethod.POST)
+	public @ResponseBody String email_modify_check(HttpSession session
+			, @RequestParam HashMap<String, Object> json) {
+		try {
+			logger.info("json {}", json);
+			if(json.get("MODE").equals("delete")) {
+				String EMAIL_CODE = (String) json.get("EMAIL_CODE");
+				if(!EMAIL_CODE.contains("01|02|03|04|05|06|07|08|09|10")) {
+					adminService.deleteEmailInfo(json);					
+				} else {
+					json.put("fix", true);
+				}
+
+			} else if(json.get("MODE").equals("insert")) {
+				adminService.insertEmailInfo(json);
+
+			} else if(json.get("MODE").equals("modify")) {
+				adminService.modifyEmailInfo(json);
+			}
+			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
+
+		} catch(Exception e) {
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"", "");
+
+		}
+	}
+	@RequestMapping(value="/user/downLoadExcel", method=RequestMethod.POST)
+	public void downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response) {
+
+		String USER_ID = request.getParameter("USER_ID");
+		String COMPANY = request.getParameter("COMPANY");
+		String USE_CODE = request.getParameter("USE_CODE");
+		String MARKET_YN = request.getParameter("MARKET_YN");
+		String SDATE = request.getParameter("SDATE");
+		String EDATE  = request.getParameter("EDATE");
+
+		Map<String , Object> param = new HashMap<String , Object> ();
+		param.put("USER_ID", USER_ID);
+		param.put("COMPANY", COMPANY);
+		param.put("USE_CODE", USE_CODE);
+		param.put("MARKET_YN", MARKET_YN);
+		param.put("SDATE", SDATE);
+		param.put("EDATE", EDATE);
+
+		List<HashMap<String, Object>> list= adminService.getMemberList(param);
+
+		SXSSFWorkbook workbook = adminService.excelFileDownloadProcess(list);
+
+		Date date = new Date();
+		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
+		String day = dayformat.format(date);
+		String hour = hourformat.format(date);
+		String fileName = "유저정보" + "_" + day + "_" + hour + ".xlsx";
+	
+		OutputStream os = null;
+
+		try {
+			String browser = request.getHeader("User-Agent");
+			if (browser.indexOf("MSIE") > -1) {
+				fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+			} else if (browser.indexOf("Trident") > -1) {       // IE11
+				fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+			} else if (browser.indexOf("Firefox") > -1) {
+				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
+			} else if (browser.indexOf("Opera") > -1) {
+				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
+			} else if (browser.indexOf("Chrome") > -1) {
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < fileName.length(); i++) {
+					char c = fileName.charAt(i);
+					if (c > '~') {
+						sb.append(URLEncoder.encode("" + c, "UTF-8"));
+					} else {
+						sb.append(c);
+					}
+				}
+				fileName = sb.toString();
+			} else if (browser.indexOf("Safari") > -1){
+				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
+			} else {
+				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
+			}
+
+
+
+			response.setContentType("application/vnd.ms-excel;UTF-8");
+			response.setHeader("Content-Disposition", "attachment; filename="+fileName);
+			response.setHeader("Content-Description", "JSP Generated Data");
+			response.setHeader("Pragma", "no-cache");
+		
+			os =response.getOutputStream();
+			workbook.write(os);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(workbook != null) {
+				try {
+					workbook.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			if(os != null) {
+				try {
+					os.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
+	
 	
 }

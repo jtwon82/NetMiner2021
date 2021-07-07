@@ -63,6 +63,7 @@
 	});
 	if('${json.FILTER1}'=='1')	$("#FILTER1").click();
 	if('${json.FILTER2}'=='2')	$("#FILTER2").click();
+	
 </script>
 <script type="text/javascript">SEARCH_KEY.value='${json.SEARCH_KEY}';</script>
 <script type="text/javascript">USE_CODE.value='${json.USE_CODE}';</script>
@@ -128,7 +129,7 @@
 							</div>
 						</div>
 						<div class="register">
-							<button class="navy">다운로드</button>
+							<button class="navy" onClick="downLoad()">다운로드</button>
 							<button class="navy" onclick="location.href='user_modify'">등록</button>
 						</div>
 					</div>
@@ -139,6 +140,26 @@
 	
 	</body>
 <script type="text/javascript">
+function downLoad() {
+	/* var searchKey = SEARCH_KEY.value;
+	$.ajax({
+		url : "user/downLoadExcel",
+		type : "POST",
+		data : {
+			searchKey : $(".SEARCH_VALUE").val(),
+			"USE_CODE" : $(".USER_CODE").val(),
+			"MARKET_YN" : $(".MARKET_YN").val(),
+			"SDATE" : $(".SDATE").val(),
+			"EDATE" : $(".EDATE").val()
+		},
+		success : function (data){
+
+		}
+	}) */
+	  var f = document.form;
+      f.action = "user/downLoadExcel";
+      f.submit();
+}
 // $(function(){
 // 	$('form').ajaxForm({
 // 		dataType: 'json',

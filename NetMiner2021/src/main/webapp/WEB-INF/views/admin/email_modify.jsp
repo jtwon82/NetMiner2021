@@ -11,35 +11,39 @@
 						<h2>자동 이메일</h2>
 					</div>
 					<div class="content">
+					<form id="Form" name="Form" method="post" action="/admin/email_modify/check">
+					<input type="hidden1" name="MODE" style="display:none;">
+					<input type="hidden1" name="NO" readOnly value="${item.NO }" style="display:none;">
+					<input type="hidden1" name="EMAIL_CODE" readOnly value="${item.EMAIL_CODE }" style="display:none;">
 						<ul>
 							<li>
 								<span>이메일 제목</span>
-								<input type="text" value="${item.TITLE}">
+								<input type="text" value="${item.TITLE}" name="TITLE">
 							</li>
 							<li>
 								<span>설명</span>
-								<input type="text" value="${item.EXPLAIN}">
+								<input type="text" value="${item.EXPLAIN}" name="EXPLAIN">
 							</li>
 						</ul>
 						<div id="editor-area"></div>
-						<textarea id="editordata" name="editordata" style="display:none;">${item.COMMENT}</textarea>
+						<textarea id="editordata" name="COMMENT"  style="display:none;">${item.COMMENT}</textarea>
+						
 					<div class="delete">
-						<button class="red">삭제</button>
+						<button class="red" onclick="this.form.MODE.value='delete';">삭제</button>
 					</div>
 						<div class="finish">
 							<button onclick="this.form.MODE.value='cancel';">취소</button>
 							<c:choose>
-							<c:when test="${item.NO!='' }">
+							<c:when test="${item.COMMENT!='' }">
 								<button class="navy" onclick="this.form.MODE.value='modify';">수정</button>
 							</c:when>
 							<c:otherwise>
 								<button class="navy" onclick="this.form.MODE.value='insert';">등록</button>
 							</c:otherwise>
-							</c:choose>
-							
+							</c:choose>							
 						</div>
+					</form>
 					</div>
-					
 				</div>
 			</div>
 	</div>
@@ -61,10 +65,68 @@
         });
 
         $("#editor-area").summernote("code", $("#editordata").val());
-        //$('#summernote').summernote('insertText',"");
+      
     });
+    $(function(){
+    	console.log($("#editor-area").summernote("code"));
+    	$('form').submit(function(event){
+    		var f= document.Form;
+    		switch(f.MODE.value){
+    		case "cancel":
+    			history.go(-1);
+    			break;
+    		case "insert": case "modify":
+    			return true;
+    			break;
+    		case "delete":
+    			return confirm("이메일 삭제를 하시겠습니까?");
+    			break;
+    		}
+    		
+    		event.preventDefault();
+    		return false;
+    	}).ajaxForm({
+    		dataType: 'json',
+            beforeSubmit: function (data,form,option) {
+                //validation체크 
+                var f= document.Form;
+                switch(f.MODE.value){
+                case "insert": case "modify":
+                	if( form.find('input[name="TITLE"]').val()=='' ){	alert('제목을 작성해주세요'); return false; }
+                	if( form.find('input[name="EXPLAIN"]').val()=='' ){	alert('설명을 작성해주세요'); return false; }
+                
+                	break;
+          
+                }
 
-   /*  function uploadImageFile(file, editor) {
+                return true;
+            },
+            success: function(response,status){
+                //성공후 서버에서 받은 데이터 처리
+                console.log(response);
+                if('SUCCESS'==response.result){
+                	console.log(response.COMMENT);
+                	if (response.fix == true) {
+                		alert("해당 이메일은 수정만 가능합니다.");
+                	} else if (response.MODE == 'delete'){
+	    				alert("정상 삭제 처리되었습니다.");            		
+                	} else {
+                		alert("정상 처리되었습니다. 자동메일 상세설정을 원하시면 관리자에게 문의하세요."); 
+                	}
+    				location.href='email';
+        			
+                }else{
+                	alert("자동이메일 수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의하세요.");
+                }
+            },
+            error: function(){
+            	alert("자동이메일 수정이 정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
+            }                               
+        });
+    	
+    })
+    /*
+     function uploadImageFile(file, editor) {
         var data = new FormData();
         data.append("file", file);
 
