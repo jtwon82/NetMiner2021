@@ -68,7 +68,8 @@
       
     });
     $(function(){
-    	console.log($("#editor-area").summernote("code"));
+    	
+    	$('form[name="Form"]').serialize();
     	$('form').submit(function(event){
     		var f= document.Form;
     		switch(f.MODE.value){
@@ -94,7 +95,8 @@
                 case "insert": case "modify":
                 	if( form.find('input[name="TITLE"]').val()=='' ){	alert('제목을 작성해주세요'); return false; }
                 	if( form.find('input[name="EXPLAIN"]').val()=='' ){	alert('설명을 작성해주세요'); return false; }
-                
+                	if( form.find('textarea[name="COMMENT"]').val()=='' ){	alert('내용을 작성해주세요'); return false; }
+                	
                 	break;
           
                 }

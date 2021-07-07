@@ -434,8 +434,8 @@ public class AdminController {
 
 		}
 	}
-	@RequestMapping(value="/user/downLoadExcel", method=RequestMethod.POST)
-	public void downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response) {
+	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.POST)
+	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response) {
 
 		String USER_ID = request.getParameter("USER_ID");
 		String COMPANY = request.getParameter("COMPANY");
@@ -454,75 +454,19 @@ public class AdminController {
 
 		List<HashMap<String, Object>> list= adminService.getMemberList(param);
 
-		SXSSFWorkbook workbook = adminService.excelFileDownloadProcess(list);
-
 		Date date = new Date();
 		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
 		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
 		String day = dayformat.format(date);
 		String hour = hourformat.format(date);
-		String fileName = "유저정보" + "_" + day + "_" + hour + ".xlsx";
-	
-		OutputStream os = null;
-
-		try {
-			String browser = request.getHeader("User-Agent");
-			if (browser.indexOf("MSIE") > -1) {
-				fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
-			} else if (browser.indexOf("Trident") > -1) {       // IE11
-				fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
-			} else if (browser.indexOf("Firefox") > -1) {
-				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
-			} else if (browser.indexOf("Opera") > -1) {
-				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1") + "\"";
-			} else if (browser.indexOf("Chrome") > -1) {
-				StringBuffer sb = new StringBuffer();
-				for (int i = 0; i < fileName.length(); i++) {
-					char c = fileName.charAt(i);
-					if (c > '~') {
-						sb.append(URLEncoder.encode("" + c, "UTF-8"));
-					} else {
-						sb.append(c);
-					}
-				}
-				fileName = sb.toString();
-			} else if (browser.indexOf("Safari") > -1){
-				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
-			} else {
-				fileName = "\"" + new String(fileName.getBytes("UTF-8"), "8859_1")+ "\"";
-			}
-
-
-
-			response.setContentType("application/vnd.ms-excel;UTF-8");
-			response.setHeader("Content-Disposition", "attachment; filename="+fileName);
-			response.setHeader("Content-Description", "JSP Generated Data");
-			response.setHeader("Pragma", "no-cache");
+		String fileName = "_" + day + "_" + hour + ".xls";
 		
-			os =response.getOutputStream();
-			workbook.write(os);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if(workbook != null) {
-				try {
-					workbook.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-			if(os != null) {
-				try {
-					os.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		model.addObject("fileName", fileName);
+		model.addObject("list", list);
+		model.addObject("sheetName", "USER_INFO");
+		model.setViewName("jsonView");
 		
-		
+		return model;
 	}
 	
 	
