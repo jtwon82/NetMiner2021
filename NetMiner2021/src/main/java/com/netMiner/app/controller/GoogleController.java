@@ -36,6 +36,7 @@ import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.GoogleOAuthRequest;
 import com.netMiner.app.model.vo.GoogleOAuthResponse;
 import com.netMiner.app.model.vo.MemberVo;
+import com.netMiner.app.util.CryptUtil;
 
 /**
  * Servlet implementation class GoogleController
@@ -47,11 +48,11 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
@@ -67,6 +68,7 @@ public class GoogleController  {
 	public ModelAndView googleAuth(ModelAndView mv ,HttpServletRequest request ,HttpServletResponse response ,HttpSession session)
 			throws JsonProcessingException {
 		String url = "";
+		CryptUtil cu = new CryptUtil();
 		String authCode = request.getParameter("code");
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
@@ -163,7 +165,7 @@ public class GoogleController  {
 		} else {
 			//mv.addObject("memberVo", member);
 			session.setAttribute("memberVo", member);
-			
+			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
 			if (language.equals("_EN")) {
 				url = "homePage"+language+"/main";
 			} else {
@@ -171,6 +173,9 @@ public class GoogleController  {
 			}
 		}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

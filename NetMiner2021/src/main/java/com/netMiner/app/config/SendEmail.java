@@ -1,6 +1,9 @@
 package com.netMiner.app.config;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -97,8 +100,28 @@ public class SendEmail {
 	}
 	
 	//휴면 유저 이메일 발송 
-	public void sendDormantUser(String userId, String url, String language) {
+	public boolean sendDormantUser(String userId, String url, String language) {
+		MailVo vo = new MailVo();
 		
+		if ("en".equals(language)) {
+			vo = selectDao.getRandomMail("10");
+		} else {
+			vo = selectDao.getRandomMail("05");
+		}
+		Date nowDate = new Date();
+		SimpleDateFormat form = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(nowDate);
+		cal.add(Calendar.DATE, 30);
+		String date = form.format(cal.getTime());
+		
+		String title = vo.getTitle();
+		String comment = vo.getComment();
+		comment = comment.replace("{goNetminer}", url);
+		comment = comment.replace("{YYYY/MM/DD}", date);
+		boolean result = this.sendMailSender(userId , comment, title);
+		
+		return result;
 	}
 
 	
@@ -150,14 +173,11 @@ public class SendEmail {
 	            
 	            // send the message
 	            Transport.send(message); ////전송
-	            System.out.println("message sent successfully...");
 	        } catch (AddressException e) {
 	            // TODO Auto-generated catch block
-	            e.printStackTrace();
 	            result = false;
 	        } catch (MessagingException e) {
 	            // TODO Auto-generated catch block
-	            e.printStackTrace();
 	            result = false;
 	        }
 	        return result;

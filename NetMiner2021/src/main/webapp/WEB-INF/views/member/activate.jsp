@@ -40,7 +40,7 @@
 서비스를 다시 이용하고 싶은 경우에는
 아래 ‘휴먼 계정 해제하고 로그인’을 클릭해 주세요.</p>
 					
-						<button class="actiAccount trs active">휴면 계정 해제하고 로그인</button>
+						<button class="actiAccount trs active" onClick="window.location.href='./login'">휴면 계정 해제하고 로그인</button>
 						<a class="back" href="./login" >로그인으로 돌아가기 </a>
 					</div>
 					

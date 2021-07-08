@@ -31,7 +31,7 @@
 									<img src="/resources/images/top_me.png" alt="mypage">
 								</p>
 								<ul>
-									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}" class="trs">My Workspace</a></li>
+									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 								</ul>
@@ -60,7 +60,7 @@
 											<img src="/resources/images/top_me.png" alt="mypage">
 										</p>
 										<ul>
-											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}" class="trs">My Workspace</a></li>
+											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 										</ul>

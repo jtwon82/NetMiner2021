@@ -1,5 +1,6 @@
 package com.netMiner.app.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -121,6 +122,29 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void deleteMember(MemberVo vo) {
 		sqlSession.delete("deleteMemberInfo", vo);		
+	}
+
+	@Override
+	public List<Map<String, Object>> getLastLoginFerYear() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getLastLoginFerYear");
+	}
+
+	@Override
+	public void changeMemberState(String userId) {
+		sqlSession.update("changeMemberInfo", userId);
+	}
+
+	@Override
+	public void getPassByDormant() {
+		// TODO Auto-generated method stub
+		sqlSession.update("getPassByDormant");
+	}
+
+	@Override
+	public List<Map<String, Object>> getMarketYnUser() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getMarketYnUser");
 	}
 
 }

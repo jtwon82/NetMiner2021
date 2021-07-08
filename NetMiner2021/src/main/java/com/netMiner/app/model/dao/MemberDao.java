@@ -1,5 +1,6 @@
 package com.netMiner.app.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.netMiner.app.model.vo.MemberVo;
@@ -35,5 +36,13 @@ public interface MemberDao {
 	void deleteMemberInfoTmp(MemberVo memberVo);
 
 	void deleteMember(MemberVo vo);
+
+	List<Map<String, Object>> getLastLoginFerYear();
+
+	void changeMemberState(String userId);
+
+	void getPassByDormant();
+
+	List<Map<String, Object>> getMarketYnUser();
 
 }

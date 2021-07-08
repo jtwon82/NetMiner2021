@@ -8,7 +8,7 @@
 							<a href="./login">Start for free</a>
 							</c:if>
 							<c:if test="${!empty memberVo}">
-							<a href="http://online.netminer365.com/Loginfo?passport=${memberVo.userId}">Start for free</a>
+							<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start for free</a>
 							</c:if>
 						</div>
 					</div>

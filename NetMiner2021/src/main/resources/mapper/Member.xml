@@ -24,13 +24,16 @@
 	WHERE USER_ID =  #{userId}
 	<if test='googleYn.equals("N")'>
 	AND USER_PWD  = password(#{userPwd})
-	</if>;
+	</if>
+	AND USER_CODE = '02'
+	AND USER_STATS_YN = 'N' ;
  	</select>
  	<select id="getLoginUserInfo" resultMap="MemberVo" parameterType="MemberVo">
  	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO
 	WHERE USER_ID =  #{userId}
 	AND USER_PWD  = password(#{userPwd})
+	AND USER_STATS_YN = 'N'
 	; 	
  	</select>
  	<insert id="insertSignUp" parameterType="MemberVo">
@@ -82,7 +85,8 @@
  	
  	<update id="updateLastLoginDate" parameterType="MemberVo">
  	UPDATE NetMiner.MEMBER_INFO 
- 	SET LAST_LOGIN_DATE = NOW() 
+ 	SET LAST_LOGIN_DATE = NOW()
+ 	, USER_CODE = '02' 
  	WHERE USER_ID = #{userId}
 	and USER_PWD  = password(#{userPwd}); 
  	</update>
@@ -129,6 +133,41 @@
  	</select>
  	
  	<delete id="deleteMemberInfo" parameterType="MemberVo">
- 	DELETE FROM NetMiner.MEMBER_INFO WHERE USER_ID = #{userId};
+ 	UPDATE NetMiner.MEMBER_INFO 
+ 	SET USER_STATS_YN = 'Y'
+ 	WHERE USER_ID = #{userId};
  	</delete>
+ 	
+ 	<select id="getLastLoginFerYear"  resultType="Map">
+ 	<![CDATA[
+ 	SELECT USER_ID, LANGUAGE 
+ 	FROM NetMiner.MEMBER_INFO 
+ 	WHERE TIMESTAMPDIFF(DAY, LAST_LOGIN_DATE, NOW()) = 365
+ 	AND USER_CODE = '02';
+ 	]]>
+ 	</select>
+ 	
+ 	<update id="changeMemberInfo" parameterType="String">
+ 	UPDATE NetMiner.MEMBER_INFO
+ 	SET USER_CODE = '03'
+ 	WHERE USER_ID = #{userId};
+ 	</update>
+ 	<update id="getPassByDormant">
+ 	UPDATE NetMiner.MEMBER_INFO 
+ 	SET USER_OUT_DATE = NOW(),
+ 	USER_STATS_YN = 'Y'
+ 	WHERE TIMESTAMPDIFF(DAY, LAST_LOGIN_DATE, NOW()) = 395
+ 	AND USER_CODE = '03'
+ 	</update>
+ 	
+ 	<select id="getMarketYnUser" resultType="Map">
+ 	<![CDATA[
+ 	SELECT USER_ID, `LANGUAGE` 
+ 	FROM NetMiner.MEMBER_INFO 
+ 	WHERE TIMESTAMPDIFF(DAY, MARKET_DATE, NOW()) = 730
+ 	AND USER_CODE = '02'
+ 	AND MARKET_YN = 'Y'
+ 	AND `LANGUAGE` = 'ko';
+ 	]]>
+ 	</select>
  </mapper>

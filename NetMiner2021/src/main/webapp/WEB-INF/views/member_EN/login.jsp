@@ -31,7 +31,7 @@
 				<div class="wrap">
 					<div class="title">
 						<h2>Welcome to NetMiner 365</h2>
-						<p>Don’t have an account?<a href="./register">Register</a></p>
+						<p>Don’t have an account?<a href="javascript:;" onclick="alert('Currently, a closed beta of NetMiner 365 has been released since 1st July. NetMiner 365 open beta will be available soon, please look forward to the next !')">Register</a></p>
 					</div>
 					<div class="content">
 						<form action="./loginUser" method="POST">
@@ -43,7 +43,7 @@
 						<button class="login trs" type="submit">Sign-in</button>
 						</form>
 						<span class="line">or</span>
-						<button class="google trs" onClick="googleLogin()" >Sign in with Google</button>
+						<button class="google trs" onClick="alert('Currently, a closed beta of NetMiner 365 has been released since 1st July. NetMiner 365 open beta will be available soon, please look forward to the next !')" >Sign in with Google</button>
 					</div>
 					
 				</div>

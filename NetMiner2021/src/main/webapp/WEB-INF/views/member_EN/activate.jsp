@@ -40,7 +40,7 @@ your account is currently inactivated.
 If you want to restore your account,<br>
 click 'Restore and sign-in'.</p>
 					
-						<button class="actiAccount trs active">Restore and sign-in</button>
+						<button class="actiAccount trs active" onclick = "window.location.href='./login'">Restore and sign-in</button>
 						<a class="back" href="./login" >Back to sign-in</a>
 					</div>
 					

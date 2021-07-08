@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.MvcNamespaceHandler;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.MemberVo;
+import com.netMiner.app.util.CryptUtil;
 
 /**
  * Handles requests for the application home page.
@@ -81,6 +82,7 @@ public class MemberController {
 	
 	@RequestMapping(value="loginUser", method = RequestMethod.POST) 
 	public String loginUser(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
+		CryptUtil cu = new CryptUtil();
 		MemberVo memberVo = new MemberVo();
 		String url  = "";
 		String language = (String) session.getAttribute("language");
@@ -113,6 +115,7 @@ public class MemberController {
 				}
 			} else {
 				session.setAttribute("memberVo", memberVo);
+				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
 				url  = "homePage"+language+"/main";
 			}
 			
@@ -120,6 +123,9 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -142,6 +148,7 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
 		String language = (String) session.getAttribute("language");
+		CryptUtil cu = new CryptUtil();
 		if (language == null) {
 			language = "";
 		}
@@ -161,9 +168,13 @@ public class MemberController {
 			sendEmail.sendRegisterMail(userId, "", language);
 			
 			session.setAttribute("memberVo", memberVo);
+			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
 			
 			mv.setViewName("jsonView");
 		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -220,6 +231,7 @@ public class MemberController {
 	@RequestMapping(value="registerSNS" , method=RequestMethod.POST)
 	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
+		CryptUtil cu = new CryptUtil();
 		if (language == null) {
 			language = "";
 		}
@@ -238,6 +250,7 @@ public class MemberController {
 		String useCode = request.getParameter("useCode");
 		String marketYn = request.getParameter("marketYn");
 		String googleYn = "Y";
+		try {
 		memberVo.setUserId(userId);
 		memberVo.setUserPwd(userPwd);
 		memberVo.setCompany(company);
@@ -258,6 +271,12 @@ public class MemberController {
 		
 		
 		session.setAttribute("memberVo", memberVo);
+		
+			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mv.setViewName("homePage"+language+"/main");
 		
 		return mv;
