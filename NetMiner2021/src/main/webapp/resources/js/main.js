@@ -1,9 +1,6 @@
 var checkRandomNumber = false;
 $(document).ready(function() {
-	/*$(".menu li").on("click", function() {
-        $(".menu li").removeClass("active");
-        $(this).addClass("active");
-    });*/
+
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
 		    $(this).parents(".content").find('input').prop("checked", $(this).is(":checked"));

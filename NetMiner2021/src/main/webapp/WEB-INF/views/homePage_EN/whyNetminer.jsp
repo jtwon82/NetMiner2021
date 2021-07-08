@@ -81,18 +81,7 @@ However, how much do we understand about big data?</p>
 					</div>
 				</div>
 			</div>
-			<div id="free" class="section">
-				<div class="wrap">
-					<div class="content">
-						<div>
-							<h4>Start NetMiner 365 for Free</h4>
-							<a hrefe="">Start for free</a>
-						</div>
-					</div>
-				</div>
-			</div>
 					<%@include file = "../common_EN/footer.jsp" %>
-			</div>
 		</div>
 	</body>
 </html>

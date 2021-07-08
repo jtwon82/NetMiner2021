@@ -47,7 +47,7 @@
 	Can't find your email? Check your spam folder..</p>
 							</div>
 							<button class="requestPw trs active" onClick="requestSetPwd();">Request password reset</button>
-							<a class="back" href="#" >Back to Sign-in</a>
+							<a class="back" href="./login" >Back to Sign-in</a>
 						</div>
 					</div>
 					</c:if>

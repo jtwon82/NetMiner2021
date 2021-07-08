@@ -217,7 +217,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 /*feature-----------------------------------------------------------*/
 #wrap.feature #main .slider .text{padding: 238px 0 230px 205px;}
 #wrap.feature{background-color:#fff;}
-#wrap.feature #main .slider{background-image: url(../images/feature_bg.jpg);}
+#wrap.feature #main .slider{background-image: url(/resources/images/feature_bg.jpg);}
 
 #wrap.feature #section1{background-color:#f4f4f4;}
 #wrap.feature #section1 .content ul{text-align:left;}

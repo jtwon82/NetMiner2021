@@ -26,7 +26,7 @@
 	</head>
 	<body>
 		<div id="wrap" class="sub login">
-		<%@include file = "../common/top.jsp" %>
+			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
