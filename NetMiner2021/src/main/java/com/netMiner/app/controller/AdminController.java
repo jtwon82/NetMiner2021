@@ -222,12 +222,13 @@ public class AdminController {
 		logger.info("json {}", json);
 
 		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
+		
+		logger.info("pageNumber-{}", pageNumber);
 
 		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		paging.setBaseUrlFormat( paging.getPagingBaseUrl("user", request.getQueryString(), pageNumber) );
 
-		logger.info("paging {}", paging);
-
+	
 		json.put("firstOffset", paging.getFirstOffset());
 		json.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getMemberList(json);
@@ -240,6 +241,9 @@ public class AdminController {
 			int count= adminService.getMemberCount(json);
 			paging.setTotalEntryCount(count);
 		}
+		logger.info("paging {}", paging);
+
+		
 		model.addAttribute("json", json);
 		model.addAttribute("list", pagedList.getList());
 		model.addAttribute("paging", paging);
@@ -378,7 +382,7 @@ public class AdminController {
 			pagedList.setPaging(paging);
 
 			int count= adminService.getEmailCount(json);
-			pagedList.setTotalEntryCount(count);
+			paging.setTotalEntryCount(count);
 		}
 
 		model.addAttribute("json", json);

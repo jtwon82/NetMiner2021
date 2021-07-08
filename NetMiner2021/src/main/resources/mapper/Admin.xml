@@ -269,7 +269,6 @@
 			FROM NetMiner.EMAIL_INFO A
 			<include refid="listPagedWhere"/>
 		) NO
-		<include refid="listPagedWhere2"/>
 	</select>
 	<select id="getEmailDetailInfo" parameterType="map" resultType="map">
 	SELECT * FROM (
