@@ -26,7 +26,7 @@
 						 <% if (lastPageNumber == 0)  {%> 
 							<em class="num first active"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(1) ) %>">1</a></em>
 						<%} else { %>
-							<%for (int i = startPageNumber; i <= lastPageNumber ; i++ ) {%>
+							<%for (int i = 1 ; i <= lastPageNumber ; i++ ) {%>
 				            	<%if (i == pageNumber) {%>
 				            		<em class="num first active"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(i) ) %>"><%=i %></a></em>
 				            	<%} else { %>
@@ -34,7 +34,7 @@
 					            <%} %>
 				         	<%} %>						
 						<%} %>
-						<% if  ( pageNumber < endPageNumber && lastPageNumber != 0) { %>
+						<% if  ( lastPageNumber != pageNumber ) { %>
 							<i class="next arrow"><a href="<%=urlFormat.replace("%pageNumber%", Integer.toString(pageNumber + 1) ) %>">다음</a></i>
 						<%} else { %>
 							<i class="next arrow"><a href="#">다음</a></i>
