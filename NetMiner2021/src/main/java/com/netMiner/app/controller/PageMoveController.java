@@ -69,6 +69,18 @@ public class PageMoveController extends HttpServlet {
 		String path = "member"+ language;
 		return  path+"/authentic";
 	}
+	@RequestMapping(value="activate", method = RequestMethod.GET)
+	public String moveactivate(HttpSession session, HttpServletRequest request) {
+		String language = (String) request.getAttribute("language");
+		if (language == null) {
+			language = "";
+		} else {
+			session.setAttribute("language", "_EN");
+		}
+		String path = "member"+ language;
+		
+		return path+"/activate";
+	}
 	
 	@RequestMapping(value="getNationCode", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody ModelAndView getNationCode(ModelAndView mv, HttpServletRequest requets, HttpServletResponse response, HttpSession session) {
