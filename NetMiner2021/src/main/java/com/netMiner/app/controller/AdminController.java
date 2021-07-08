@@ -295,6 +295,8 @@ public class AdminController {
 		logger.info("json {}", json);
 
 		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		
+		json.put("page", page);
 
 		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 
@@ -338,7 +340,7 @@ public class AdminController {
 			logger.info("json {}", json);
 
 			if(json.get("MODE").equals("recover")) {
-				json.put("USE_CODE", "02");
+				json.put("USER_CODE", "02");
 				adminService.modifyMemberQuitInfo(json);
 
 			}else if(json.get("MODE").equals("delete")) {

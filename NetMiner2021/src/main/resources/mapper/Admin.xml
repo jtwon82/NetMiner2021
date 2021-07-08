@@ -123,6 +123,8 @@
 		/* getMemberList */
 		SELECT * FROM (
 			SELECT A.*
+				, CASE WHEN USE_CODE='01' THEN 'Academic'
+					WHEN USE_CODE='02' THEN 'Commercial' END USE_CODE_STR
 				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
 				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
 			FROM NetMiner.MEMBER_INFO A
@@ -135,9 +137,10 @@
 	<select id="getMemberInfo" parameterType="map" resultType="map">
 		/* getMemberInfo */
 		SELECT A.*
-			, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
-			, DATE_FORMAT(MARKET_DATE,'%Y-%m-%d')MARKET_DATES
-			, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s')REG_DATES
+			, DATE_FORMAT(MARKET_DATE,'%Y-%m-%d %H:%i:%s')MARKET_DATES
+			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s')REG_DATES
+			, DATE_FORMAT(LAST_LOGIN_DATE,'%Y-%m-%d')LAST_LOGIN_DATES
 			<if test="pwd!=''">, password(#{pwd}) pwd</if>
 		FROM NetMiner.MEMBER_INFO A
 		WHERE 1=1
@@ -209,9 +212,10 @@
 	<select id="getMemberQuitInfo" parameterType="map" resultType="map">
 		/* getMemberQuitInfo */
 		SELECT A.*
-			, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
-			, DATE_FORMAT(MARKET_DATE,'%Y-%m-%d')MARKET_DATES
-			, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s')REG_DATES
+			, DATE_FORMAT(MARKET_DATE,'%Y-%m-%d %H:%i:%s')MARKET_DATES
+			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s')REG_DATES
+			, DATE_FORMAT(LAST_LOGIN_DATE,'%Y-%m-%d %H:%i:%s')LAST_LOGIN_DATES
 			<if test="pwd!=''">, password(#{pwd}) pwd</if>
 		FROM NetMiner.MEMBER_INFO A
 		WHERE 1=1

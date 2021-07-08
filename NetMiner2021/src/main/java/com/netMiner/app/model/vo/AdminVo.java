@@ -20,6 +20,7 @@ public class AdminVo implements Serializable{
 	@JsonAlias("REG_DATE") private String REG_DATE= "";
 	@JsonAlias("REG_DATES") private String REG_DATES= "";
 	@JsonAlias("LAST_LOGIN_DATE") private String LAST_LOGIN_DATE= "";
+	@JsonAlias("LAST_LOGIN_DATES") private String LAST_LOGIN_DATES= "";
 	
 	//ADMIN
 	@JsonAlias("ADMIN_CODE") private String ADMIN_CODE= "";
@@ -38,8 +39,10 @@ public class AdminVo implements Serializable{
 	@JsonAlias("USE_CODE") private String USE_CODE= "";
 	@JsonAlias("MARKET_YN") private String MARKET_YN= "";
 	@JsonAlias("MARKET_DATE") private String MARKET_DATE= "";
+	@JsonAlias("MARKET_DATES") private String MARKET_DATES= "";
 	@JsonAlias("GOOGLE_YN") private String GOOGLE_YN= "";
 	@JsonAlias("USER_OUT_DATE") private String USER_OUT_DATE= "";
+	@JsonAlias("USER_OUT_DATES") private String USER_OUT_DATES= "";
 	@JsonAlias("USER_STATS_YN") private String USER_STATS_YN= "";
 	
 	//EMAIL

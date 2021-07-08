@@ -12,9 +12,9 @@
 					</div>
 					<div class="content">
 					<form id="Form" name="Form" method="post" action="/admin/email_modify/check">
-					<input type="hidden1" name="MODE" style="display:none;">
-					<input type="hidden1" name="NO" readOnly value="${item.NO }" style="display:none;">
-					<input type="hidden1" name="EMAIL_CODE" readOnly value="${item.EMAIL_CODE }" style="display:none;">
+					<input type="hidden" name="MODE" style="display:none;">
+					<input type="hidden" name="NO" readOnly value="${item.NO }" style="display:none;">
+					<input type="hidden" name="EMAIL_CODE" readOnly value="${item.EMAIL_CODE }" style="display:none;">
 						<ul>
 							<li>
 								<span>이메일 제목</span>

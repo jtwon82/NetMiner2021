@@ -13,8 +13,8 @@
 					</div>
 					<div class="content">
 						<form id="Form" name="Form" method="post" action="/admin/user_modify/check">
-						<input type="hidden1" name="MODE">
-						<input type="hidden1" name="NO" readOnly value="${item.NO }">
+						<input type="hidden" name="MODE">
+						<input type="hidden" name="NO" readOnly value="${item.NO }">
 						<table class="modify">
 							<colgroup>
 								<col width="25%">
@@ -23,13 +23,7 @@
 							<tbody>
 								<tr>
 									<th>가입일시</td>
-									<td>${item.REG_DATE }</td>
-								</tr>
-								<tr>
-									<th>USER_CODE</td>
-									<td>
-										<input type="hidden1" id="USER_CODE" name="USER_CODE" value="${item.USER_CODE}"/>
-									</td>
+									<td>${item.REG_DATES }</td>
 								</tr>
 								<tr>
 									<th>구분</td>
@@ -83,11 +77,11 @@
 								</tr>
 								<tr>
 									<th>최근 수신 동의  </td>
-									<td>${item.MARKET_DATE }</td>
+									<td>${item.MARKET_DATES }</td>
 								</tr>
 								<tr>
 									<th>최근 로그인</td>
-									<td>${item.LAST_LOGIN_DATE }</td>
+									<td>${item.LAST_LOGIN_DATES }</td>
 								</tr>
 							</tbody>
 						</table>

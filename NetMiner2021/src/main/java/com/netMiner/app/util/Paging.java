@@ -168,53 +168,30 @@ public class Paging {
 
 		if (page > 1) {
 			if (page > page_size) {
-				_html.append("<a href=\"");
-				_html.append(url);
-				_html.append(s_page - 1);
-				_html.append("\"><</a>");
+				_html.append(String.format("<i class=\"prev arrow\"><a href=\"%s%s\">이전</a></i>", url, s_page-1));
 			} else {
-				_html.append("<");
+				_html.append("<i class=\"prev arrow\"><a href=\"#\">이전</a></i>");
 			}
 		} else {
-			_html.append("<");
+			_html.append("<i class=\"prev arrow\"><a href=\"#\">이전</a></i>");
 		}
-
-		_html.append(" &nbsp;");
 
 		for (int i = s_page; i <= e_page; ++i) {
 			if (i == page) {
-				_html.append("<font color='");
-				_html.append(pColor);
-				_html.append("'>");
-				_html.append(addzero(i, 2));
-				_html.append("</font>");
+				_html.append(String.format("<em class=\"num first active\"><a href=\"javascript:;\">%s</a></em>", i));
 			} else {
-				_html.append("<a href=\"");
-				_html.append(url);
-				_html.append(i);
-				_html.append("\">");
-				_html.append(addzero(i, 2));
-				_html.append("</a>");
+				_html.append(String.format("<em class=\"num\"><a href=\"%s%s\">%s</a></em>", url, i, i));
 			}
-			if (i != e_page) {
-				_html.append(" &nbsp;| ");
-			} else {
-				_html.append(" &nbsp; ");
-			}
-
 		}
 
 		if (page < page_cnt) {
 			if (s_page + page_size <= page_cnt) {
-				_html.append("<a href=\"");
-				_html.append(url);
-				_html.append(s_page + page_size);
-				_html.append("\" class='brn01'>></a>");
+				_html.append(String.format("<i class=\"next arrow\"><a href=\"%s%s\">다음</a></i>", url, s_page+page_size));
 			} else {
-				_html.append(">");
+				_html.append(String.format("<i class=\"next arrow\"><a href=\"#\">다음</a></i>"));
 			}
 		} else {
-			_html.append(">");
+			_html.append(String.format("<i class=\"next arrow\"><a href=\"#\">다음</a></i>"));
 		}
 		return _html.toString();
 	}

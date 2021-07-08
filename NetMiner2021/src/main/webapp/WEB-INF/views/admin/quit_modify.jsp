@@ -13,9 +13,9 @@
 					</div>
 					<div class="content">
 						<form id="Form" name="Form" method="post" action="/admin/quit_modify/check">
-						<input type="hidden1" name="MODE">
-						<input type="hidden1" name="NO" readOnly value="${item.NO }">
-						<input type="hidden1" name="USER_CODE">
+						<input type="hidden" name="MODE">
+						<input type="hidden" name="NO" readOnly value="${item.NO }">
+						<input type="hidden" name="USER_CODE">
 						<table class="modify">
 							<colgroup>
 								<col width="25%">

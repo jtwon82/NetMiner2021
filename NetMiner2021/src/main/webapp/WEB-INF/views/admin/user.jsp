@@ -97,7 +97,7 @@
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('user_modify?NO=${item.NO}')">
 											<td>${item.REG_DATES }</td>
-											<td>${item.USE_CODE }</td>
+											<td>${item.USE_CODE_STR }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
 											<td>${item.NATION }</td>
