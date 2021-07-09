@@ -23,15 +23,9 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		AdminVo admin= (AdminVo)session.getAttribute(Constant.ADMIN_SESSION);
 		logger.info("admin {}", admin);
 		if(admin== null){
-			response.sendRedirect("/admin");
+			response.sendRedirect("/admin/login");
 			return false;
 		}
-		
-//		if(!request.getRequestURI().contains("/mgr/login/pw") && 
-//				admin.getRegidate().equals(admin.getLast_pwd())) {
-//			response.sendRedirect("/mgr/login/pw?isforce=1");
-//			return false;
-//		}
 		
 		return true;
 	}

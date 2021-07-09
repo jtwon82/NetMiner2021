@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8 " pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file = "top.jsp" %>
-<%@ include file = "sessionCheck.jsp" %>
 <link rel="stylesheet" href="/resources/admin/css/summernote/summernote-lite.css">
 <body OnUnload="location.href='logout'">
 <div id="wrap" class="email_modify">

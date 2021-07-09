@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8 " pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file = "top.jsp" %>
-<%@ include file = "sessionCheck.jsp" %>
 	<body OnUnload="location.href='logout'">
 		<div id="wrap" class="quit_modify">
 <%@ include file = "top_gnb.jsp" %>
