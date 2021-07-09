@@ -121,17 +121,20 @@
 	</body>
 <script type="text/javascript">
 function downLoad() {
-	 var searchKey = SEARCH_KEY.value;
+	
 	$.ajax({
 		url : "user/downLoadExcel",
 		type : "POST",
-		data : {
-			searchKey : $(".SEARCH_VALUE").val(),
-			"USE_CODE" : $(".USER_CODE").val(),
-			"MARKET_YN" : $(".MARKET_YN").val(),
-			"SDATE" : $(".SDATE").val(),
-			"EDATE" : $(".EDATE").val()
-		},
+		data : 	{ 
+			
+			'${json.SEARCH_KEY}' : '${json.SEARCH_VALUE}',			
+			"USE_CODE": '${json.USE_CODE}',
+			"LANGUAGE": '${json.LANGUAGE}',
+			"MARKET_YN": '${json.MARKET_YN}', 
+			"SDATE": '${json.SDATE}',
+			"EDATE": '${json.EDATE}'
+			} 
+	 ,
 		success : function (data){
 			
 			var sheetName = data.sheetName;
@@ -140,7 +143,7 @@ function downLoad() {
 			var html = ''; 
 			html += '<html xmlns:x="urn:schemas-microsoft-com:office:excel">'; 
 			html += ' <head>';
-			html += ' <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
+			html += ' <meta http-equiv="content-type" content="application/csv; charset=UTF-8">';
 			html += ' <xml>';
 			html += ' <x:ExcelWorkbook>'; 
 			html += ' <x:ExcelWorksheets>'; 
@@ -173,9 +176,9 @@ function downLoad() {
 			html += '</html>';
 			
 			
-			var data_type = 'data:application/vnd.ms-excel';
+			var data_type = 'data:application/csv;charset=utf-8,';
 			 var ua = window.navigator.userAgent;
-			 var blob = new Blob([html], {type: "application/csv;charset=utf-8;"});
+			 var blob = new Blob([html], {type: 'text/csv;charset=utf8'});
 			 if ((ua.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) && window.navigator.msSaveBlob) {
 			  navigator.msSaveBlob(blob, fileName);
 			 } else { 
@@ -188,7 +191,7 @@ function downLoad() {
 			 }
 
 		}
-	})  
+	})   
 }
 // $(function(){
 // 	$('form').ajaxForm({

@@ -26,6 +26,7 @@
 		<script src="/resources/js/event_EN.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
+		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub account">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
@@ -54,7 +55,7 @@
 								</c:if>
 								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onchange="showUpdate()"/></li>
 							</ul>
-							<select>
+							<select id="nation" onchange="showUpdate()">
 								<option value="" disabled selected hidden>Country</option>
 								<option value=""></option>
 								<option value=""></option>
@@ -64,13 +65,13 @@
 							<div class="checkBox">
 								<p>Acount Type</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
-									<li ><label><input type="radio" checked="checked" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="01"><em></em>Commercial</label></li>
+									<li><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="01"><em></em>Commercial</label></li>
 								</ul>
 							</div>
-							<label class="newsLetter"><input id="check" type="checkbox" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>
-							<div class="update" style="display:none;">
-								<button class="cancel trs">Cancel</button>
+							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>
+							<div class="update"  id="update" style="display:none;">
+								<button class="cancel trs" onClick="clear();">Cancel</button>
 								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">Save</button>
 							</div>
 						</div>
@@ -93,7 +94,7 @@
 				<h4>Receive Promotional Information</h4>
 				<p>You <span>agree to receive</span> promotional information<br>
 and commercial offers about NetMiner 365<br>
-by e-mail on <em class="date">(변경 날짜)</em></p>
+by e-mail on <em class="date">${nowDate}</em></p>
 				
 				<button class="close trs">Close</button>
 			</div>
@@ -105,7 +106,7 @@ by e-mail on <em class="date">(변경 날짜)</em></p>
 				<h4>Receive Promotional Information</h4>
 				<p>You <span>no longer can receive</span> promotional information<br>
 and commercial offers about NetMiner 365<br>
-by e-mail since <em class="date">(변경 날짜)</em></p>
+by e-mail since <em class="date">${nowDate}</em></p>
 				<button class="close trs">Close</button>
 			</div>
 		</div>

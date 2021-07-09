@@ -28,8 +28,10 @@ $(function (){
 					var nationNameEn = nation[i].NATION_NAME_EN;
 					if (nationCode==data.userNationCode) {
 						html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameEn+"</option>\n"
+					} else {
+						html += "<option value='"+nationCode+"\'>"+nationNameEn+"</option>\n"; 
+						
 					}
-					html += "<option value='"+nationCode+"\'>"+nationNameEn+"</option>\n"; 
 				});
 				$("#nation").empty();
 				$("#nation").append(html);

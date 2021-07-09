@@ -183,7 +183,7 @@
 
 
 	<sql id="getMemberQuit">
-		SELECT * FROM NetMiner.MEMBER_INFO 
+		SELECT * FROM NetMiner.MEMBER_INFO_DROP 
 			WHERE USER_CODE='03' OR LAST_LOGIN_DATE &lt; DATE_ADD(NOW(), INTERVAL -365 DAY)
 	</sql>
 	<select id="getMemberQuitCount" parameterType="map" resultType="int">

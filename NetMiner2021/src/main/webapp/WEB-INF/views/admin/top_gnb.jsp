@@ -8,7 +8,7 @@
 			</div>
 			<div id="nav">
 				<div class="wrap">
-					<h1><a href="#">NetMiner 365 Admin</a></h1>
+					<h1><a href="https://www.netminer365.com/">NetMiner 365 Admin</a></h1>
 					<div>
 						<div class="menu menu1">
 							<span class="on">이용자 관리</span>

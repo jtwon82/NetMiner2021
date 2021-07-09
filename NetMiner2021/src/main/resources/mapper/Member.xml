@@ -36,6 +36,23 @@
 	AND USER_STATS_YN = 'N'
 	; 	
  	</select>
+ 	<select id="getDormantUserInfo" resultMap="MemberVo" parameterType="MemberVo">
+ 	SELECT USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+	FROM NetMiner.MEMBER_INFO_DROP
+	WHERE USER_ID =  #{userId}
+	AND USER_PWD  = password(#{userPwd})
+	AND USER_STATS_YN = 'N'
+ 	</select>
+ 	<insert id="returnUserInfo" parameterType="MemberVo">
+ 	INSERT INTO NetMiner.MEMBER_INFO
+	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, GOOGLE_YN, LAST_LOGIN_DATE, REG_DATE)
+	VALUES( 
+	#{userId} , PASSWORD(#{userPwd}) , #{company}, 
+	#{nation}  , #{useCode} , #{language} ,#{marketYn} , now(), #{googleYn},now(), now()
+	);
+	
+	DELETE FROM NetMiner.MEMBER_INFO_DROP WHERE USER_ID = #{userId};
+ 	</insert>
  	<insert id="insertSignUp" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
 	( USER_ID, USER_PWD, COMPANY, NATION, USE_CODE, LANGUAGE ,MARKET_YN ,MARKET_DATE, GOOGLE_YN, LAST_LOGIN_DATE, REG_DATE)
@@ -148,9 +165,15 @@
  	</select>
  	
  	<update id="changeMemberInfo" parameterType="String">
- 	UPDATE NetMiner.MEMBER_INFO
- 	SET USER_CODE = '03'
- 	WHERE USER_ID = #{userId};
+ 	INSERT INTO NetMiner.MEMBER_INFO_DROP
+	(USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, USER_OUT_DATE, USER_STATS_YN, UPDATE_DATE)
+	SELECT * FROM (
+	SELECT '03' AS `USER_CODE`, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, USER_OUT_DATE, USER_STATS_YN, UPDATE_DATE 
+	FROM NetMiner.MEMBER_INFO 
+	WHERER USER_ID = #{userId}
+	)
+	; 	
+ 	DELETE NetMiner.MEMBER_INFO WHERE USER_ID = #{userId};
  	</update>
  	<update id="getPassByDormant">
  	UPDATE NetMiner.MEMBER_INFO 

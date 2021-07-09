@@ -429,31 +429,18 @@ public class AdminController {
 		}
 	}
 	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.POST)
-	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response) {
+	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
 
-		String USER_ID = request.getParameter("USER_ID");
-		String COMPANY = request.getParameter("COMPANY");
-		String USE_CODE = request.getParameter("USE_CODE");
-		String MARKET_YN = request.getParameter("MARKET_YN");
-		String SDATE = request.getParameter("SDATE");
-		String EDATE  = request.getParameter("EDATE");
-
-		Map<String , Object> param = new HashMap<String , Object> ();
-		param.put("USER_ID", USER_ID);
-		param.put("COMPANY", COMPANY);
-		param.put("USE_CODE", USE_CODE);
-		param.put("MARKET_YN", MARKET_YN);
-		param.put("SDATE", SDATE);
-		param.put("EDATE", EDATE);
-
-		List<HashMap<String, Object>> list= adminService.getMemberList(param);
+		List<HashMap<String, Object>> list= adminService.getMemberList(json);
 
 		Date date = new Date();
 		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
 		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
 		String day = dayformat.format(date);
 		String hour = hourformat.format(date);
-		String fileName = "_" + day + "_" + hour + ".xls";
+		String fileName = "_" + day + "_" + hour + ".csv";
+		
+		logger.info("list - {}", list.toString());
 		
 		model.addObject("fileName", fileName);
 		model.addObject("list", list);

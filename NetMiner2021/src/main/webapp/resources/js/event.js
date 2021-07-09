@@ -28,8 +28,9 @@ $(function (){
 					var nationNameKr = nation[i].NATION_NAME_KR;
 					if (nationCode==data.userNationCode) {
 						html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameKr+"</option>\n"
+					} else {
+					html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 						
 					}
-					html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 
 				});
 				$("#nation").empty();
 				$("#nation").append(html);

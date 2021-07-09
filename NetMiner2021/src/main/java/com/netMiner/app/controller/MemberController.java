@@ -3,7 +3,12 @@ package com.netMiner.app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -283,7 +288,7 @@ public class MemberController {
 	}
 		 
 	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
-	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request, HttpSession session) {
+	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
 		String language = (String) session.getAttribute("language");
 		
 		if (language == null) {
@@ -308,11 +313,15 @@ public class MemberController {
 		if (checkResult != null && checkResult.getGoogleYn().equals("N")) {
 			String[] urlSp = request.getRequestURL().toString().split("/");
 			//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
-			StringBuffer sb = new StringBuffer()
-					.append(urlSp[0]).append("//").append(urlSp[2])
-					.append("/").append("goChangePwd?")
-					.append("userId=").append(userId)
-					.append("&language=").append(language);
+			byte[] userIdEncoding = userId.getBytes();
+			byte[] languageEncoding = language.getBytes();
+			Encoder encoder = Base64.getEncoder();
+			StringBuffer sb;
+				sb = new StringBuffer()
+						.append(urlSp[0]).append("//").append(urlSp[2])
+						.append("/").append("goChangePwd?")
+						.append("userId=").append(encoder.encode(userIdEncoding))
+						.append("&language=").append(encoder.encode(languageEncoding));
 			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId, language);
 		} else {
@@ -327,8 +336,11 @@ public class MemberController {
 	public ModelAndView chageNewPwd(ModelAndView mv,HttpServletRequest request) {
 		String userId = request.getParameter("email");
 		String userPwd = request.getParameter("pwd");
+		Decoder decoder = Base64.getDecoder();
+		byte[] userIdDecode = decoder.decode(userId);
+		
 		MemberVo vo = new MemberVo();
-		vo.setUserId(userId);
+		vo.setUserId(new String(userIdDecode));
 		vo.setUserPwd(userPwd);
 		
 		memberService.updateNewPwd(vo);
@@ -337,14 +349,40 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="account" , method=RequestMethod.GET)
-	public String accountUser(HttpSession session) {
+	public String accountUser(HttpSession session, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
-		if (language == null) {
-			language = "";
+		Date date = new Date();
+		String nowDate = "";
+		if (session.getAttribute("userId") != null) {
+			session.removeAttribute("userId");
 		}
+		
+		if (language == null) {
+			SimpleDateFormat form = new SimpleDateFormat("yyyy년 MM월 dd일");
+			nowDate = form.format(date);
+			language = "";
+		} else {
+			SimpleDateFormat form = new SimpleDateFormat("yyyy/ MM/ dd");
+			nowDate = form.format(date);			
+		}
+		session.setAttribute("nowDate", nowDate);
+		try {
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-		logger.info("MemberVo - {}",vo.toString());
-		return "member"+language+"/account";
+		if (vo == null) {
+			response.setContentType("text/html; charset=UTF-8"); 
+			PrintWriter out;
+			out = response.getWriter();
+			out.println("<script>alert('로그인 정보가 없습니다.'); location.href='./login';</script>"); 
+			return "member/login";
+		} else {
+
+			return "member"+language+"/account";
+		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return "/";
 	}
 	
 	@RequestMapping(value="changeEmail", method=RequestMethod.POST)

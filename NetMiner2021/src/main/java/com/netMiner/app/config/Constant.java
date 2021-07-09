@@ -8,7 +8,7 @@ import com.netMiner.app.controller.AdminController;
 public class Constant {
 	private static final Logger logger= LoggerFactory.getLogger(Constant.class);
 
-	public static int PER_ONE_PAGE=3;
+	public static int PER_ONE_PAGE=10;
 	public static int PER_PAGE_GROUP=3;
 	
 	public static String ServiceResultJsonValue= "{\"result\" : \"%s\", \"value\" : \"%s\", \"value2\" : \"%s\"}";

@@ -28,13 +28,20 @@ public class MemberDaoImpl implements MemberDao{
 	public MemberVo getUserInfo(MemberVo vo) {
 		MemberVo memberVo = new MemberVo();
 		if (vo.getGoogleYn()!=null) {
-			memberVo = sqlSession.selectOne("getUserInfo", vo);			
+			memberVo = sqlSession.selectOne("getUserInfo", vo);	
 		} else {
 			memberVo = sqlSession.selectOne("getLoginUserInfo", vo);
 		}
-		sqlSession.flushStatements();
-		if (memberVo != null) {
-			sqlSession.update("updateLastLoginDate", vo);
+		if (memberVo == null) {
+			memberVo = sqlSession.selectOne("getDormantUserInfo", vo);
+			if (memberVo != null) {
+				sqlSession.insert("returnUserInfo", vo);
+				sqlSession.flushStatements();
+			}
+		}
+		
+		if (memberVo != null) {			
+			sqlSession.update("updateLastLoginDate", vo);			
 			sqlSession.flushStatements();
 		}
 		return memberVo;

@@ -92,7 +92,7 @@
 		<div id="agree_popup" class="popup" >
 			<div class="wrap">
 				<h4>마케팅 정보 수신 동의 변경</h4>
-				<p><em class="date">2021년 6월 12일</em>에 NetMiner 365 관련 마케팅 정보를 위한<br>
+				<p><em class="date">${nowDate}</em>에 NetMiner 365 관련 마케팅 정보를 위한<br>
 <span>이메일 수신 동의</span>가 처리되었습니다.</p>
 				<button class="close trs">닫기</button>
 			</div>
@@ -102,7 +102,7 @@
 		<div id="refuse_popup" class="popup" >
 			<div class="wrap">
 				<h4>마케팅 정보 수신 동의 변경</h4>
-				<p><em  class="date">2021년 6월 12일</em>에 NetMiner 365 관련 마케팅 정보를 위한<br>
+				<p><em  class="date">${nowDate}</em>에 NetMiner 365 관련 마케팅 정보를 위한<br>
 <span>이메일 수신 거부</span>가 처리되었습니다.</p>
 				<button class="close trs">닫기</button>
 			</div>

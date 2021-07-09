@@ -58,19 +58,10 @@ $(document).ready(function() {
 			})
 		})
 	})
-	$(".cancel").click(function(){
-		$(function (){
-			$.ajax({
-				url : "./goBack",
-				type : "GET",
-				data : {"form":"account"},
-				success : function (data) {
-					sessionStorage.clear();
-					window.location.href = data.getUrl;
-				}
-			})
-		})
-	})
+	$(".cancel").click(function (){
+		sessionStorage.clear();
+		window.location.href = "/account";
+	});
 	
 	var filter = "win16|win32|win64|mac";
 	
@@ -563,11 +554,11 @@ function changeLanguage(language) {
 			type : "POST",
 			data : {"language" : language},
 			success : function(data) {
-				window.location.reload(true);
-				window.scrollTo(0,0);
 			}
 			
 		})
+		var path = $(location).attr('pathname');
+		window.location.href = path;
 	})
 }
 
