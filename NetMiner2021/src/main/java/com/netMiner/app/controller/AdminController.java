@@ -428,7 +428,7 @@ public class AdminController {
 
 		}
 	}
-	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.POST)
+	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.GET)
 	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
 
 		List<HashMap<String, Object>> list= adminService.getMemberList(json);
@@ -438,12 +438,12 @@ public class AdminController {
 		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
 		String day = dayformat.format(date);
 		String hour = hourformat.format(date);
-		String fileName = "_" + day + "_" + hour + ".xls";
+		String fileName = "_" + day + "_" + hour;
 		
 		model.addObject("fileName", fileName);
 		model.addObject("list", list);
 		model.addObject("sheetName", "USER_INFO");
-		model.setViewName("jsonView");
+		model.setViewName( "admin/excelDownLoad");
 		
 		return model;
 	}

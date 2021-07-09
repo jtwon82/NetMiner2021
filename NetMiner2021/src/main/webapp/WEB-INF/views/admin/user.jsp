@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8 " pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file = "top.jsp" %>
+
 	<body OnUnload="location.href='logout'">
 		<div id="wrap" class="user">
 <%@ include file = "top_gnb.jsp" %>
@@ -120,78 +121,9 @@
 	
 	</body>
 <script type="text/javascript">
+
 function downLoad() {
-	
-	$.ajax({
-		url : "user/downLoadExcel",
-		type : "POST",
-		data : 	{ 
-			
-			'${json.SEARCH_KEY}' : '${json.SEARCH_VALUE}',			
-			"USE_CODE": '${json.USE_CODE}',
-			"LANGUAGE": '${json.LANGUAGE}',
-			"MARKET_YN": '${json.MARKET_YN}', 
-			"SDATE": '${json.SDATE}',
-			"EDATE": '${json.EDATE}'
-			} 
-	 ,
-		success : function (data){
-			
-			var sheetName = data.sheetName;
-			var fileName = data.fileName;
-
-			var html = ''; 
-			html += '<html xmlns:x="urn:schemas-microsoft-com:office:excel">'; 
-			html += ' <head>';
-			html += ' <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
-			html += ' <xml>';
-			html += ' <x:ExcelWorkbook>'; 
-			html += ' <x:ExcelWorksheets>'; 
-			html += ' <x:ExcelWorksheet>' 
-			html += ' <x:Name>' + sheetName + '</x:Name>'; 
-			html += ' <x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions>'; 
-			html += ' </x:ExcelWorksheet>'; 
-			html += ' </x:ExcelWorksheets>';
-			html += ' </x:ExcelWorkbook>';
-			html += ' </xml>';
-			html += ' </head>'; 
-			html += ' <body>';
-			
-			var body  = "<table class='main'><thead><tr><th>가입일시</th><th>용도</th><th>이메일</th><th>언어</th><th>국가</th><th>소속</th><th>수신동의</th></tr></thead><tbody>";				
-			data.list.forEach(function (item, index, array){
-					body += "<tr>";
-					body += "<td>"+item.REG_DATES +"</td>";
-					body += "<td>"+item.USE_CODE  +"</td>";
-					body += "<td>"+item.USER_ID   +"</td>";
-					body += "<td>"+item.LANGUAGE  +"</td>";
-					body += "<td>"+item.NATION    +"</td>";
-					body += "<td>"+item.COMPANY   +"</td>";
-					body += "<td>"+item.MARKET_YN +"</td>";
-					body += "</tr>";
-			})
-			html += body;
-			html += "</tbody>";
-			html += "</table>";
-			html += ' </body>'; 
-			html += '</html>';
-			
-			
-			 var data_type = 'data:application/vnd.ms-excel';
-			 var ua = window.navigator.userAgent;
-			 var blob = new Blob([html], {type: "application/csv;charset=utf-8;"});
-			 if ((ua.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) && window.navigator.msSaveBlob) {
-			  navigator.msSaveBlob(blob, fileName);
-			 } else { 
-			 var anchor = window.document.createElement('a');
-			 anchor.href = window.URL.createObjectURL(blob);
-			 anchor.download = "USER_INFO"+fileName;
-			 document.body.appendChild(anchor);
-			 anchor.click();
-			 document.body.removeChild(anchor);
-			 }
-
-		}
-	})   
+	location.href = "user/downLoadExcel"	
 }
 // $(function(){
 // 	$('form').ajaxForm({
