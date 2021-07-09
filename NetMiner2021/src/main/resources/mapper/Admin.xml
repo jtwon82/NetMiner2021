@@ -173,14 +173,18 @@
 				, #{MARKET_YN} MARKET_YN, NOW() MARKET_DATE, NOW() REG_DATE
 	</update>
 	
-	<delete id="deleteMemberInfo" parameterType="map">
-		/* deleteMemberInfo */
-		DELETE FROM NetMiner.MEMBER_INFO
-			WHERE NO=#{NO}
-	</delete>
-
-
-
+	<insert id="insertMemberInfoDrop" parameterType="map">
+	INSERT INTO NetMiner.MEMBER_INFO_DROP(USER_CODE, USER_ID, USER_PWD
+				, COMPANY, NATION, LANGUAGE, USE_CODE
+				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE , USER_OUT_DATE)
+		SELECT '03' AS USER_CODE , USER_ID ,USER_PWD ,COMPANY,NATION,LANGUAGE, USE_CODE
+				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE, NOW() USER_OUT_DATE
+				FROM NetMiner.MEMBER_INFO
+				WHERE NO = #{NO};
+	DELETE FROM NetMiner.MEMBER_INFO
+			WHERE NO=#{NO};			
+	</insert>
+	
 
 	<sql id="getMemberQuit">
 		SELECT * FROM NetMiner.MEMBER_INFO_DROP 
@@ -216,15 +220,16 @@
 			, DATE_FORMAT(MARKET_DATE,'%Y-%m-%d %H:%i:%s')MARKET_DATES
 			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s')REG_DATES
 			, DATE_FORMAT(LAST_LOGIN_DATE,'%Y-%m-%d %H:%i:%s')LAST_LOGIN_DATES
+			, DATE_FORMAT(USER_OUT_DATE,'%Y-%m-%d %H:%i:%s')USER_OUT_DATES
 			<if test="pwd!=''">, password(#{pwd}) pwd</if>
-		FROM NetMiner.MEMBER_INFO A
+		FROM NetMiner.MEMBER_INFO_DROP A
 		WHERE 1=1
 			<if test="NO!=null and !NO.equals('')">AND NO = #{NO}</if>
 	</select>
-	
+<!-- 	
 	<update id="modifyMemberQuitInfo" parameterType="map">
 		/* modifyMemberQuitInfo */
-		UPDATE NetMiner.MEMBER_INFO
+		UPDATE NetMiner.MEMBER_INFO_DROP
 			SET UPDATE_DATE = NOW()
 			<if test="USE_CODE!=null and !USE_CODE.equals('')">, USE_CODE= #{USE_CODE}</if>
 			<if test="USER_ID!=null and !USER_ID.equals('')">, USER_ID= #{USER_ID}</if>
@@ -234,22 +239,26 @@
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
 			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN}</if>
 			WHERE NO=#{NO}
-	</update>
+	</update> -->
 	
-	<update id="insertMemberQuitInfo" parameterType="map">
+	<update id="modifyMemberQuitInfo" parameterType="map">
 		/* insertMemberQuitInfo */
 		INSERT INTO NetMiner.MEMBER_INFO(USER_CODE, USER_ID, USER_PWD
-				, COMPANY, NATION, LANGUAGE, USE_CODE
+				, COMPANY, NATION, LANGUAGE, USE_CODE , LAST_LOGIN_DATE
 				, MARKET_YN, MARKET_DATE, REG_DATE)
 				
-			SELECT '02' USER_CODE, #{USER_ID} USER_ID, password(#{USER_PWD}) USER_PWD
-				, #{COMPANY} COMPANY, #{NATION} NATION, #{LANGUAGE} LANGUAGE, #{USE_CODE} USE_CODE
-				, #{MARKET_YN} MARKET_YN, NOW() MARKET_DATE, NOW() REG_DATE
+			SELECT '02' USER_CODE, USER_ID, USER_PWD
+				, COMPANY, NATION, LANGUAGE, USE_CODE , NOW() LAST_LOGIN_DATE
+				, MARKET_YN, NOW() MARKET_DATE, NOW() REG_DATE
+				FROM NetMiner.MEMBER_INFO_DROP
+				WHERE NO = #{NO};
+			DELETE FROM NetMiner.MEMBER_INFO_DROP
+			WHERE NO = #{NO};
 	</update>
 	
 	<delete id="deleteMemberQuitInfo" parameterType="map">
 		/* deleteMemberQuitInfo */
-		DELETE FROM NetMiner.MEMBER_INFO
+		DELETE FROM NetMiner.MEMBER_INFO_DROP
 			WHERE NO=#{NO}
 	</delete>
 	

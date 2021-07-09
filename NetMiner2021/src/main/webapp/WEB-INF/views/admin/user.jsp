@@ -143,7 +143,7 @@ function downLoad() {
 			var html = ''; 
 			html += '<html xmlns:x="urn:schemas-microsoft-com:office:excel">'; 
 			html += ' <head>';
-			html += ' <meta http-equiv="content-type" content="application/csv; charset=UTF-8">';
+			html += ' <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
 			html += ' <xml>';
 			html += ' <x:ExcelWorkbook>'; 
 			html += ' <x:ExcelWorksheets>'; 
@@ -152,7 +152,7 @@ function downLoad() {
 			html += ' <x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions>'; 
 			html += ' </x:ExcelWorksheet>'; 
 			html += ' </x:ExcelWorksheets>';
-			html += ' </x:ExcelWorkbook>'; 
+			html += ' </x:ExcelWorkbook>';
 			html += ' </xml>';
 			html += ' </head>'; 
 			html += ' <body>';
@@ -176,9 +176,9 @@ function downLoad() {
 			html += '</html>';
 			
 			
-			var data_type = 'data:application/csv;charset=utf-8,';
+			 var data_type = 'data:application/vnd.ms-excel';
 			 var ua = window.navigator.userAgent;
-			 var blob = new Blob([html], {type: 'text/csv;charset=utf8'});
+			 var blob = new Blob([html], {type: "application/csv;charset=utf-8;"});
 			 if ((ua.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) && window.navigator.msSaveBlob) {
 			  navigator.msSaveBlob(blob, fileName);
 			 } else { 

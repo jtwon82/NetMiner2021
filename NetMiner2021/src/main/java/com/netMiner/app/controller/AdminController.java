@@ -438,9 +438,7 @@ public class AdminController {
 		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
 		String day = dayformat.format(date);
 		String hour = hourformat.format(date);
-		String fileName = "_" + day + "_" + hour + ".csv";
-		
-		logger.info("list - {}", list.toString());
+		String fileName = "_" + day + "_" + hour + ".xls";
 		
 		model.addObject("fileName", fileName);
 		model.addObject("list", list);

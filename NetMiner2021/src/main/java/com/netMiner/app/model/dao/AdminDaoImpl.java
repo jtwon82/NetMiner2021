@@ -82,7 +82,9 @@ public class AdminDaoImpl implements AdminDao{
 
 	@Override
 	public void deleteMemberInfo(Map<String, Object> map) {
-		sqlSession.update("deleteMemberInfo", map);
+		sqlSession.insert("insertMemberInfoDrop", map);
+		//sqlSession.update("deleteMemberInfo", map);
+		
 	}
 
 	

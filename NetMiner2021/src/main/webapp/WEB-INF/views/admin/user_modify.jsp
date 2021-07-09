@@ -46,7 +46,7 @@
 										<select id="LANGUAGE" name="LANGUAGE">
 											<option value="">선택</option>
 											<option value="en">English</option>
-											<option value="kr">Korean</option>
+											<option value="ko">Korean</option>
 										</select><script type="text/javascript">LANGUAGE.value='${item.LANGUAGE}';</script>
 									</td>
 								</tr>
@@ -111,6 +111,7 @@
 <script type="text/javascript">
 $(function(){
 	$('form').submit(function(event){
+		
 		var f= document.Form;
 		switch(f.MODE.value){
 		case "cancel":
@@ -120,6 +121,10 @@ $(function(){
 			$(f).find('input[name="USE_CODE"]').val( $(f).find('input[name="r1"]:checked').val() );
 			return true;
 			break;
+		case "delete":
+			return true;
+			break;
+			
 		}
 		
 		event.preventDefault();
@@ -139,6 +144,11 @@ $(function(){
                 if( form.find('input[name="MARKET_YN"]').val()=='' ){	alert('이메일 수신동의를 선택해주세요.'); return false; }
                 
         		break;
+            case "delete" :
+            	if (window.confirm('해당 유저의 정보를 휴면으로 전환하시겠습니까?')) {
+            		alert('삭제 완료 되었습니다.');
+            	}
+            	; break;
             }
 
             return true;
@@ -159,6 +169,31 @@ $(function(){
         }                               
     });
 	$('input[name="id"]').focus();
+	
+	
+	$(function (){
+		$.ajax({
+			url :"./../getNationCode",
+				type:"GET",
+				success: function (data){
+					 var nation = data.NationVo;
+					 var html ="";
+					$.each(nation , function (i){
+						var nationCode = nation[i].NATION_CODE;
+						var nationNameKr = nation[i].NATION_NAME_KR;
+						if (nationCode==data.userNationCode) {
+							html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameKr+"</option>\n"
+						} else {
+						html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 						
+						}
+					});
+					$("#NATION").empty();
+					$("#NATION").append(html);
+				} 
+		
+		});
+
+	})
 });
 </script>
 </html>

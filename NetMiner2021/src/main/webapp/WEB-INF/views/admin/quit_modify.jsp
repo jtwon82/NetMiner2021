@@ -23,7 +23,7 @@
 							<tbody>
 								<tr>
 									<th>가입일시</td>
-									<td>${item.REG_DATE }</td>
+									<td>${item.REG_DATES }</td>
 								</tr>
 								<tr>
 									<th>USER_CODE</td>
@@ -34,9 +34,10 @@
 								<tr>
 									<th>구분</td>
 									<td>
-										<label><input type="radio" name="r1"><span>Academic</span></label>
-										<label><input type="radio" name="r1"><span>Commercial</span></label>
-									</td>
+										<input type="hidden" id="USE_CODE" name="USE_CODE" value="${item.USE_CODE }"/>
+										<label><input type="radio" name="r1" value='01' selected><span>Academic</span></label>
+										<label><input type="radio" name="r1" value='02'><span>Commercial</span></label>
+									</td><script>$('input:radio[name=r1]:input[value="${item.USE_CODE }"]').attr("checked", true);</script>
 								</tr>
 								<tr>
 									<th>이메일</td>
@@ -52,7 +53,7 @@
 										<select id="LANGUAGE" name="LANGUAGE">
 											<option value="">선택</option>
 											<option value="en">English</option>
-											<option value="kr">Korean</option>
+											<option value="ko">Korean</option>
 										</select><script type="text/javascript">LANGUAGE.value='${item.LANGUAGE}';</script>
 									</td>
 								</tr>
@@ -82,24 +83,25 @@
 								</tr>
 								<tr>
 									<th>최근 수신 동의  </td>
-									<td>${item.MARKET_DATE }</td>
+									<td>${item.MARKET_DATES }</td>
 								</tr>
 								<tr>
 									<th>최근 로그인</td>
-									<td>${item.LAST_LOGIN_DATE }</td>
+									<td>${item.LAST_LOGIN_DATES }</td>
 								</tr>
 								<tr>
 									<th>휴면/탈퇴</td>
 									<td>
-										<select id="" name="">
-											<option value=""  selected="" >휴면</option>
-											<option value="">탈퇴</option>
-										</select>
+									<input type="hidden" id="USER_STATS_YN" name="USER_STATS_YN" value="${item.USER_STATS_YN }"/>
+										<select id="USER_STATS_YN" name="USER_STATS_YN">											
+											<option value="N"  selected="" >휴면</option>
+											<option value="Y">탈퇴</option>
+										</select><script>$('input:radio[name=r1]:input[value="${item.USER_STATS_YN }"]').attr("checked", true);</script>
 									</td>
 								</tr>
 								<tr>
 									<th>삭제일</td>
-									<td>YYYY-MM-DD   HH:MM:SS</td>
+									<td>${item.USER_OUT_DATES }</td>
 								</tr>
 							</tbody>
 						</table>
@@ -121,10 +123,12 @@
 <script type="text/javascript">
 $(function(){
 	$('form').submit(function(event){
+	
 		var f= document.Form;
 		switch(f.MODE.value){
 		case "recover":
 			$(f).find('input[name="USER_CODE"]').val("02");
+			return true;
 			break;
 		case "cancel":
 			history.go(-1);
@@ -172,6 +176,31 @@ $(function(){
         }                               
     });
 	$('input[name="id"]').focus();
+	
+	
+	$(function (){
+		$.ajax({
+			url :"./../getNationCode",
+				type:"GET",
+				success: function (data){
+					 var nation = data.NationVo;
+					 var html ="";
+					$.each(nation , function (i){
+						var nationCode = nation[i].NATION_CODE;
+						var nationNameKr = nation[i].NATION_NAME_KR;
+						if (nationCode==data.userNationCode) {
+							html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameKr+"</option>\n"
+						} else {
+						html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 						
+						}
+					});
+					$("#NATION").empty();
+					$("#NATION").append(html);
+				} 
+		
+		});
+
+	})
 });
 </script>
 
