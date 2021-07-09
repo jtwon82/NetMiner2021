@@ -12,8 +12,8 @@
 							<h2>홈페이지 관리자 시스템</h2>
 						</div>
 						<ul class="input">
-							<li><input placeholder="아이디" type="text" name="id" value='test'/></li>
-							<li><input placeholder="비밀번호" type="password" name="pwd" value='aa'/></li>
+							<li><input placeholder="아이디" type="text" name="ADMIN_ID" value=''/></li>
+							<li><input placeholder="비밀번호" type="password" name="pwd" value=''/></li>
 						</ul>
 						<button class="login trs">로그인</button>
 					</form>
@@ -30,7 +30,7 @@ $(function(){
 		dataType: 'json',
         beforeSubmit: function (data,form,option) {
             //validation체크 
-            input_value = form.find('input[name="id"]').val();
+            input_value = form.find('input[name="ADMIN_ID"]').val();
             if(input_value == ''){
             	alert("아이디를 입력해주세요.");
             	return false;

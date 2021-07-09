@@ -81,7 +81,7 @@
 			<if test="ADMIN_PWD!=''">, password(#{pwd}) pwd</if>
 		FROM NetMiner.ADMIN_INFO A
 		WHERE 1=1
-			<if test="ADMIN_ID!=null and !ADMIN_ID.equals('')">AND ADMIN_ID = #{ADMIN_ID}</if>
+			AND ADMIN_ID = #{ADMIN_ID}
 			<if test="NO!=null and !NO.equals('')">AND NO = #{NO}</if>
 	</select>
 	

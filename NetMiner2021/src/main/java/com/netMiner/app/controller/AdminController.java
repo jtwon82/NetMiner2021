@@ -80,7 +80,7 @@ public class AdminController {
 	public @ResponseBody String check(HttpSession session
 			, @RequestParam HashMap<String, Object> json) throws Exception{
 		try{
-			if(StringUtils.isEmpty(json.get("id").toString()) || StringUtils.isEmpty(json.get("pwd").toString()))
+			if(StringUtils.isEmpty(json.get("ADMIN_ID").toString()) || StringUtils.isEmpty(json.get("pwd").toString()))
 				return Constant.ResultJson(ServiceResult.INVALID_PARAM.name(),"","");
 
 			AdminVo admin= AdminVo.fromMap(adminService.getAdminInfo(json));
@@ -103,7 +103,7 @@ public class AdminController {
 
 		}catch(Exception e){
 			logger.error("err ", e);
-			return Constant.ResultJson(ServiceResult.FAIL.name(),"","");
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"",e.toString());
 		}
 	}
 	@RequestMapping(value = "/login/disconnect")
