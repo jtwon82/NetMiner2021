@@ -242,4 +242,10 @@ public class AdminServiceImpl implements AdminService{
 		adminDao.modifyDropMemberInfo(map);
 	}
 
+
+	@Override
+	public void recoverMemberQuitInfo(HashMap<String, Object> json) {
+		adminDao.recoverMemberQuitInfo(json);		
+	}
+
 }

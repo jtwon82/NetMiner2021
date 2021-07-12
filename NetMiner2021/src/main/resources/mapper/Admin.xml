@@ -242,7 +242,7 @@
 		WHERE 1=1
 			<if test="NO!=null and !NO.equals('')">AND NO = #{NO}</if>
 	</select>
-<!-- 	
+ 	
 	<update id="modifyMemberQuitInfo" parameterType="map">
 		/* modifyMemberQuitInfo */
 		UPDATE NetMiner.MEMBER_INFO_DROP
@@ -254,10 +254,11 @@
 			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
 			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN}</if>
+			<if test="USER_STATS_YN!=null and !USER_STATS_YN.equals('')">, USER_STATS_YN= #{USER_STATS_YN}</if>
 			WHERE NO=#{NO}
-	</update> -->
+	</update> 
 	
-	<update id="modifyMemberQuitInfo" parameterType="map">
+	<update id="recoverMemberQuitInfo" parameterType="map">
 		/* insertMemberQuitInfo */
 		INSERT INTO NetMiner.MEMBER_INFO(USER_CODE, USER_ID, USER_PWD
 				, COMPANY, NATION, LANGUAGE, USE_CODE , LAST_LOGIN_DATE
@@ -270,7 +271,7 @@
 				WHERE NO = #{NO};
 			DELETE FROM NetMiner.MEMBER_INFO_DROP
 			WHERE NO = #{NO};
-	</update>
+	</update> 
 	
 	<delete id="deleteMemberQuitInfo" parameterType="map">
 		/* deleteMemberQuitInfo */

@@ -124,7 +124,7 @@ public class MemberController {
 					url = "member"+language+"/activate";
 				} else {
 					session.setAttribute("memberVo", memberVo);
-					session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+					session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
 					url  = "homePage"+language+"/main";
 				}
 			}
@@ -178,7 +178,7 @@ public class MemberController {
 			sendEmail.sendRegisterMail(userId, "", language);
 			
 			session.setAttribute("memberVo", memberVo);
-			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
 			
 			mv.setViewName("jsonView");
 		} catch (UnsupportedEncodingException e) {
@@ -282,7 +282,7 @@ public class MemberController {
 		
 		session.setAttribute("memberVo", memberVo);
 		
-			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -558,12 +558,13 @@ public class MemberController {
 		MemberVo outMemberVo = (MemberVo) session.getAttribute("outMemberVo");
 		
 		//휴면 계정 일반회원으로 변환
-		memberService.turnToGeneral(outMemberVo);
+		int no =memberService.turnToGeneral(outMemberVo);
 		//일반회원 계정으로 확인 
+		outMemberVo.setNo(no);
 		outMemberVo.setUserCode("02");
 		
 		session.setAttribute("memberVo", outMemberVo);
-		session.setAttribute("memberId", cu.encryptLoginfo(outMemberVo.getUserId(), "02"));
+		session.setAttribute("memberId", cu.encryptLoginfo(outMemberVo.getUserId(), "02", no));
 		
 		if ("_EN".equals(language)) {
 			response.setContentType("text/html; charset=UTF-8"); 

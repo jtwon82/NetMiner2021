@@ -77,4 +77,7 @@ public interface AdminService {
 	void modifyDropMemberInfo(HashMap<String, Object> json);
 
 
+	void recoverMemberQuitInfo(HashMap<String, Object> json);
+
+
 }

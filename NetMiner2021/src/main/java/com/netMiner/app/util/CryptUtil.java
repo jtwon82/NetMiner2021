@@ -36,15 +36,15 @@ public class CryptUtil {
 		return encrypted;
 	}
 
-	public String encryptLoginfo(String userid, String usercode) throws Exception {
+	public String encryptLoginfo(String userid, String usercode, Integer userNo ) throws Exception {
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
-		String idAndCode = "netminer:" + userid + ":" + usercode + ":" + instant.toEpochMilli() + ":365";
+		String idAndCode = "netminer:" + userid + ":" + userNo.toString() + ":" + usercode + ":" + instant.toEpochMilli() + ":365";
 		return encryptText(idAndCode, key);
 	}
 
 	public static void main(String[] args) throws Exception {
 		CryptUtil cu = new CryptUtil();
-		System.out.println(cu.encryptLoginfo("sslee@cyram.com", "03"));
+		System.out.println(cu.encryptLoginfo("limdh93@naver.com", "02", 46));
 	}
 }

@@ -150,10 +150,14 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public void turnToGeneral(MemberVo outMemberVo) {
+	public Integer turnToGeneral(MemberVo outMemberVo) {
 		sqlSession.insert("returnUserInfo" , outMemberVo);
 		sqlSession.delete("deletDropMember", outMemberVo);
 		sqlSession.flushStatements();
+
+		int no =  sqlSession.selectOne("returnNo", outMemberVo);
+		
+		return no;
 	}
 
 	@Override

@@ -165,4 +165,10 @@ public class AdminDaoImpl implements AdminDao{
 	public void modifyDropMemberInfo(HashMap<String, Object> map) {
 		sqlSession.update("modifyDropMemberInfo", map);
 	}
+
+
+	@Override
+	public void recoverMemberQuitInfo(HashMap<String, Object> json) {
+		sqlSession.update("recoverMemberQuitInfo", json);
+	}
 }

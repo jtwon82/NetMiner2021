@@ -45,7 +45,7 @@ public interface MemberDao {
 
 	List<Map<String, Object>> getMarketYnUser();
 
-	void turnToGeneral(MemberVo outMemberVo);
+	Integer turnToGeneral(MemberVo outMemberVo);
 
 	int selectUserCount(Map<String, Object> param);
 

@@ -174,7 +174,7 @@ public class GoogleController  {
 				}
 			} else {
 				session.setAttribute("memberVo", member);
-				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
 				if (language.equals("_EN")) {
 					url = "homePage"+language+"/main";
 				} else {

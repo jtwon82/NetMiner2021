@@ -5,7 +5,8 @@
 
  <mapper namespace="member">
 	<resultMap type="com.netMiner.app.model.vo.MemberVo" id="MemberVo">
- 		<id property="userId" column="USER_ID"/>
+		<id property="no" column="NO"/>
+ 		<result property="userId" column="USER_ID"/>
  		<result property="userCode" column="USER_CODE"/>
  		<result property="userPwd" column="USER_PWD"/>
  		<result property="company" column="COMPANY"/>
@@ -20,7 +21,7 @@
  	</select>
  
  	<select id="getUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+ 	SELECT `NO`, USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO
 	WHERE USER_ID =  #{userId}
 	<if test='googleYn.equals("N")'>
@@ -30,7 +31,7 @@
 	AND USER_STATS_YN = 'N' ;
  	</select>
  	<select id="getLoginUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+ 	SELECT `NO`, USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO
 	WHERE USER_ID =  #{userId}
 	AND USER_PWD  = password(#{userPwd})
@@ -38,7 +39,7 @@
 	; 	
  	</select>
  	<select id="getDormantUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT USER_CODE,USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+ 	SELECT `NO`, USER_CODE,USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
 	FROM NetMiner.MEMBER_INFO_DROP
 	WHERE USER_ID =  #{userId}
 	AND USER_PWD  = password(#{userPwd})
@@ -53,6 +54,9 @@
 		FROM NetMiner.MEMBER_INFO_DROP WHERE USER_ID =  #{userId}
 	) A;
  	</insert>
+	<select id="returnNo" resultType="Integer"  parameterType="MemberVo">
+		SELECT `NO` FROM NetMiner.MEMBER_INFO WHERE USER_ID = #{userId};
+	</select>
  	
  	<delete id="deletDropMember" parameterType="MemberVo">
 	DELETE FROM NetMiner.MEMBER_INFO_DROP WHERE USER_ID =  #{userId};

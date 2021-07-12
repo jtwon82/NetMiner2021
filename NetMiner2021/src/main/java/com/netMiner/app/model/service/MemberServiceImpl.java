@@ -91,8 +91,10 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	@Override
-	public void turnToGeneral(MemberVo outMemberVo) {
-		memberDao.turnToGeneral(outMemberVo);
+	public Integer turnToGeneral(MemberVo outMemberVo) {
+		int no = memberDao.turnToGeneral(outMemberVo);
+		
+		return no;
 	}
 	@Override
 	public int selectUserCount(Map<String, Object> param) {

@@ -67,4 +67,7 @@ public interface AdminDao {
 
 
 	void modifyDropMemberInfo(HashMap<String, Object> map);
+
+
+	void recoverMemberQuitInfo(HashMap<String, Object> json);
 }
