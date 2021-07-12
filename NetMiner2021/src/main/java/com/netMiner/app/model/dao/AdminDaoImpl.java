@@ -159,4 +159,10 @@ public class AdminDaoImpl implements AdminDao{
 		sqlSession.update("modifyEmailInfo", map);
 		
 	}
+
+
+	@Override
+	public void modifyDropMemberInfo(HashMap<String, Object> map) {
+		sqlSession.update("modifyDropMemberInfo", map);
+	}
 }

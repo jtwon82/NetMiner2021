@@ -64,4 +64,7 @@ public interface AdminDao {
 
 
 	void modifyEmailInfo(HashMap<String, Object> map);
+
+
+	void modifyDropMemberInfo(HashMap<String, Object> map);
 }

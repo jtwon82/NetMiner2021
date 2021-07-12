@@ -105,7 +105,7 @@ public class MemberController {
 			memberVo = memberService.getUserInfo(memberVo);
 			
 			if (memberVo == null) {
-				if ("_EN".equals(language)) {
+				if (! "_EN".equals(language)) {
 					response.setContentType("text/html; charset=UTF-8"); 
 					PrintWriter out = response.getWriter(); 
 					out.println("<script>alert('해당 아이디가 없거나 비밀번호가 틀립니다.'); location.href='./login';</script>"); 
@@ -119,9 +119,14 @@ public class MemberController {
 					url  = "member"+language+"/login";		
 				}
 			} else {
-				session.setAttribute("memberVo", memberVo);
-				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
-				url  = "homePage"+language+"/main";
+				if ("03".equals(memberVo.getUserCode())) {
+					session.setAttribute("outMemberVo", memberVo);
+					url = "member"+language+"/activate";
+				} else {
+					session.setAttribute("memberVo", memberVo);
+					session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+					url  = "homePage"+language+"/main";
+				}
 			}
 			
 		} catch (UnsupportedEncodingException e) {
@@ -412,8 +417,14 @@ public class MemberController {
 		Map<String , Object> param = new HashMap<String, Object>();
 		param.put("userId", vo.getUserId());
 		param.put("newUserId", newUserId);
-		
-		memberService.updateNewUserId(param);
+		int count  = memberService.selectUserCount(param);
+		if (count == 0) {
+			memberService.updateNewUserId(param);
+
+			mv.addObject("state","success");
+		}  else {
+			mv.addObject("state","fail");
+		}
 		
 		mv.setViewName("jsonView");
 		
@@ -468,9 +479,9 @@ public class MemberController {
 		
 		memberService.updateNewUserInfo(oldMemberVo, memberVo);
 		
-		if ("Y".equals(memberVo.getMarketYn())) {
-			sendEmail.sendMarketEmail(memberVo.getUserId(), language);
-		}
+//		if ("Y".equals(memberVo.getMarketYn())) {
+//			sendEmail.sendMarketEmail(memberVo.getUserId(), language);
+//		}
 		
 		memberVo = memberService.getUserInfo(memberVo);
 		session.setAttribute("memberVo", memberVo);
@@ -535,4 +546,43 @@ public class MemberController {
 		mv.setViewName("jsonView");
 		return mv;
 	}
+	@RequestMapping(value="turnToGeneral", method=RequestMethod.GET)
+	public String turnToGeneral(HttpSession session, HttpServletResponse response) {
+		CryptUtil cu = new CryptUtil();
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String url = "";
+		try {
+		MemberVo outMemberVo = (MemberVo) session.getAttribute("outMemberVo");
+		
+		//휴면 계정 일반회원으로 변환
+		memberService.turnToGeneral(outMemberVo);
+		//일반회원 계정으로 확인 
+		outMemberVo.setUserCode("02");
+		
+		session.setAttribute("memberVo", outMemberVo);
+		session.setAttribute("memberId", cu.encryptLoginfo(outMemberVo.getUserId(), "02"));
+		
+		if ("_EN".equals(language)) {
+			response.setContentType("text/html; charset=UTF-8"); 
+			PrintWriter out;
+			out = response.getWriter();
+			out.println("<script>alert(Account conversion is complete.); location.href='./';</script>");
+		} else {
+			response.setContentType("text/html; charset=UTF-8"); 
+			PrintWriter out;
+			out = response.getWriter();
+			out.println("<script>alert('계정 전환이 완료 되었습니다.'); location.href='./';</script>");
+		}
+		url = "homePage"+language+"/main";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return url;
+	}
+	
+	
 }

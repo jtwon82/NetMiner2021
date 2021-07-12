@@ -31,6 +31,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		getMemberVo = memberDao.getUserInfo(vo);
 		
+		
 		return getMemberVo;
 	}
 	@Override
@@ -88,6 +89,15 @@ public class MemberServiceImpl implements MemberService{
 	public void deleteMember(MemberVo vo) {
 		memberDao.deleteMember(vo);
 		
+	}
+	@Override
+	public void turnToGeneral(MemberVo outMemberVo) {
+		memberDao.turnToGeneral(outMemberVo);
+	}
+	@Override
+	public int selectUserCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return memberDao.selectUserCount(param);
 	}
 
 }

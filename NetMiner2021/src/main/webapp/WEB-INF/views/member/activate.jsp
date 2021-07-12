@@ -7,7 +7,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-		<title></title>
+		<link rel="shortcut icon" type="image/x-icon" href="https://www.netminer365.com/resources/images/favicon.ico" />
+		<title>Dormate | NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -40,7 +41,7 @@
 서비스를 다시 이용하고 싶은 경우에는
 아래 ‘휴먼 계정 해제하고 로그인’을 클릭해 주세요.</p>
 					
-						<button class="actiAccount trs active" onClick="window.location.href='./login'">휴면 계정 해제하고 로그인</button>
+						<button class="actiAccount trs active" onClick="window.location.href='./turnToGeneral'">휴면 계정 해제하고 로그인</button>
 						<a class="back" href="./login" >로그인으로 돌아가기 </a>
 					</div>
 					

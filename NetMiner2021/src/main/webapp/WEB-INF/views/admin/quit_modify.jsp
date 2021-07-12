@@ -92,11 +92,10 @@
 								<tr>
 									<th>휴면/탈퇴</td>
 									<td>
-									<input type="hidden" id="USER_STATS_YN" name="USER_STATS_YN" value="${item.USER_STATS_YN }"/>
 										<select id="USER_STATS_YN" name="USER_STATS_YN">											
 											<option value="N"  selected="" >휴면</option>
 											<option value="Y">탈퇴</option>
-										</select><script>$('input:radio[name=r1]:input[value="${item.USER_STATS_YN }"]').attr("checked", true);</script>
+										</select><script>USER_STATS_YN.value='${item.USER_STATS_YN }';</script>
 									</td>
 								</tr>
 								<tr>

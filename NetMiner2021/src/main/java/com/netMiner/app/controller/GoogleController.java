@@ -164,12 +164,22 @@ public class GoogleController  {
 		//	mv.addObject("checkUserCount", checkUserCount);
 		} else {
 			//mv.addObject("memberVo", member);
-			session.setAttribute("memberVo", member);
-			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
-			if (language.equals("_EN")) {
-				url = "homePage"+language+"/main";
+			if ("03".equals(member.getUserCode())) {
+				// 휴면 계정인 경우 휴면 계정 페이지로 이동 후 재 로그인 
+				session.setAttribute("outMemberVo", memberVo);
+				if (language.equals("_EN")) {
+					url = "member"+language+"/activate";
+				} else {
+					url = "member/activate";				
+				}
 			} else {
-				url = "homePage/main";				
+				session.setAttribute("memberVo", member);
+				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02"));
+				if (language.equals("_EN")) {
+					url = "homePage"+language+"/main";
+				} else {
+					url = "homePage/main";				
+				}				
 			}
 		}
 		} catch (IOException e) {

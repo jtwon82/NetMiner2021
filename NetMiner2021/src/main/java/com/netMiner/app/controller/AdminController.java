@@ -274,7 +274,7 @@ public class AdminController {
 				adminService.insertMemberInfo(json);
 
 			} else if(json.get("MODE").equals("modify")) {
-				adminService.modifyMemberInfo(json);
+				adminService.modifyDropMemberInfo(json);
 			}
 
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
@@ -431,8 +431,9 @@ public class AdminController {
 	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.GET)
 	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
 
+		logger.info("json-{}", json.toString());
+		
 		List<HashMap<String, Object>> list= adminService.getMemberList(json);
-
 		Date date = new Date();
 		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
 		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);

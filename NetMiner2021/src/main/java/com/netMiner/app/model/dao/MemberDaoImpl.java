@@ -32,17 +32,12 @@ public class MemberDaoImpl implements MemberDao{
 		} else {
 			memberVo = sqlSession.selectOne("getLoginUserInfo", vo);
 		}
-		if (memberVo == null) {
-			memberVo = sqlSession.selectOne("getDormantUserInfo", vo);
-			if (memberVo != null) {
-				sqlSession.insert("returnUserInfo", vo);
-				sqlSession.flushStatements();
-			}
-		}
 		
 		if (memberVo != null) {			
 			sqlSession.update("updateLastLoginDate", vo);			
 			sqlSession.flushStatements();
+		} else {
+			memberVo = sqlSession.selectOne("getDormantUserInfo", vo);
 		}
 		return memberVo;
 	}
@@ -152,6 +147,19 @@ public class MemberDaoImpl implements MemberDao{
 	public List<Map<String, Object>> getMarketYnUser() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("getMarketYnUser");
+	}
+
+	@Override
+	public void turnToGeneral(MemberVo outMemberVo) {
+		sqlSession.insert("returnUserInfo" , outMemberVo);
+		sqlSession.delete("deletDropMember", outMemberVo);
+		sqlSession.flushStatements();
+	}
+
+	@Override
+	public int selectUserCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("selectUserCount", param);
 	}
 
 }

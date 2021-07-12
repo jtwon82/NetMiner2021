@@ -413,7 +413,14 @@ function chageUserId(){
 				data : {'email' : email},
 				success : function(data) {
 					sessionStorage.clear();
-					alert("Email change done");
+					if (data.state == 'success') {
+						emailBtn.style.background = "#bbb8b8";
+						$("#chageUserId").attr('disabled', true);
+						$("#email").attr('readOnly', true);
+						alert("Email change done");					
+					} else {
+						alert("This Email already exist");
+					}
 				}
 			})
 		});

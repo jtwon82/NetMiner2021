@@ -145,8 +145,8 @@ $(function(){
                 
         		break;
             case "delete" :
-            	if (window.confirm('해당 유저의 정보를 휴면으로 전환하시겠습니까?')) {
-            		alert('삭제 완료 되었습니다.');
+            	if (window.confirm('해당 유저의 정보를 탈퇴 하시겠습니까?')) {
+            		alert('탈퇴 완료 되었습니다.');
             	}
             	; break;
             }
@@ -181,7 +181,7 @@ $(function(){
 					$.each(nation , function (i){
 						var nationCode = nation[i].NATION_CODE;
 						var nationNameKr = nation[i].NATION_NAME_KR;
-						if (nationCode==data.userNationCode) {
+						if (nationCode=='${item.NATION }') {
 							html += "<option value='"+nationCode+"\' selected=\'selected\'>"+nationNameKr+"</option>\n"
 						} else {
 						html += "<option value='"+nationCode+"\'>"+nationNameKr+"</option>\n"; 						

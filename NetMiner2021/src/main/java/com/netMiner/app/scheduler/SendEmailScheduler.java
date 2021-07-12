@@ -1,5 +1,6 @@
 package com.netMiner.app.scheduler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,9 @@ public class SendEmailScheduler {
 			Map<String , Object> userInfo = member.get(i);
 			String userId = (String) userInfo.get("USER_ID");
 			String language = (String) userInfo.get("LANGUAGE");
-			sendEmail.sendMarketEmail(userId, language);
+			Date marketDate = (Date) userInfo.get("MAKET_DATE");
+			
+			sendEmail.sendMarketEmail(userId, language, marketDate);
 		}
 	}
 }

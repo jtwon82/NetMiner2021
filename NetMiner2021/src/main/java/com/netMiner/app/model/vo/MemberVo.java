@@ -14,6 +14,7 @@ public class MemberVo implements Serializable{
 	 */
 
 	private static final long serialVersionUID = 1L;
+	private String userCode;
 	private String userId;
 	private String userPwd;
 	private String nation = "";
@@ -28,6 +29,7 @@ public class MemberVo implements Serializable{
 	public Map<String,Object> getMemberInfoMap(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("userId", this.userId);
+		result.put("userCode", this.userCode);
 		result.put("userPwd", this.userPwd);
 		result.put("nation", this.nation);
 		result.put("company", this.company);

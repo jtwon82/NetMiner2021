@@ -34,5 +34,9 @@ public interface MemberService {
 
 	void deleteMember(MemberVo vo);
 
+	void turnToGeneral(MemberVo outMemberVo);
+
+	int selectUserCount(Map<String, Object> param);
+
 	
 }

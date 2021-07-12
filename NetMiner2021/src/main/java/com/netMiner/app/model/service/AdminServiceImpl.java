@@ -235,4 +235,11 @@ public class AdminServiceImpl implements AdminService{
 	        return workbook;
 	}
 
+
+	@Override
+	public void modifyDropMemberInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		adminDao.modifyDropMemberInfo(map);
+	}
+
 }

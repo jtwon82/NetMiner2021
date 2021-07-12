@@ -125,9 +125,11 @@
 			SELECT A.*
 				, CASE WHEN USE_CODE='01' THEN 'Academic'
 					WHEN USE_CODE='02' THEN 'Commercial' END USE_CODE_STR
-				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+				, DATE_FORMAT(A.REG_DATE,'%Y-%m-%d')REG_DATES
 				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
+				, B.NATION_NAME_KR AS NATION_NAME_KR
 			FROM NetMiner.MEMBER_INFO A
+			INNER JOIN NATION_CODE B ON A.NATION = B.NATION_CODE 
 			<include refid="listPagedWhere"/>
 			AND USER_CODE='02'
 		) NO
@@ -158,10 +160,23 @@
 			<if test="LANGUAGE!=null and !LANGUAGE.equals('')">, LANGUAGE= #{LANGUAGE}</if>
 			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
-			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN}</if>
+			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN} , MARKET_DATE = now()</if>
 			WHERE NO=#{NO}
 	</update>
-	
+		<update id="modifyDropMemberInfo" parameterType="map">
+		/* modifyMemberInfo */
+		UPDATE NetMiner.MEMBER_INFO_DROP
+			SET UPDATE_DATE = NOW()
+			<if test="USER_CODE!=null and !USER_CODE.equals('')">, USER_CODE= #{USER_CODE}</if>
+			<if test="USE_CODE!=null and !USE_CODE.equals('')">, USE_CODE= #{USE_CODE}</if>
+			<if test="USER_ID!=null and !USER_ID.equals('')">, USER_ID= #{USER_ID}</if>
+			<if test="USER_PWD!=null and !USER_PWD.equals('')">, USER_PWD= PASSWORD(#{USER_PWD})</if>
+			<if test="LANGUAGE!=null and !LANGUAGE.equals('')">, LANGUAGE= #{LANGUAGE}</if>
+			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
+			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
+			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN} , MARKET_DATE = now()</if>
+			WHERE NO=#{NO}
+	</update>
 	<update id="insertMemberInfo" parameterType="map">
 		/* insertMemberInfo */
 		INSERT INTO NetMiner.MEMBER_INFO(USER_CODE, USER_ID, USER_PWD
@@ -176,9 +191,9 @@
 	<insert id="insertMemberInfoDrop" parameterType="map">
 	INSERT INTO NetMiner.MEMBER_INFO_DROP(USER_CODE, USER_ID, USER_PWD
 				, COMPANY, NATION, LANGUAGE, USE_CODE
-				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE , USER_OUT_DATE)
+				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE , USER_OUT_DATE, USER_STATS_YN)
 		SELECT '03' AS USER_CODE , USER_ID ,USER_PWD ,COMPANY,NATION,LANGUAGE, USE_CODE
-				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE, NOW() USER_OUT_DATE
+				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE, NOW() USER_OUT_DATE ,'Y' AS USER_STATS_YN
 				FROM NetMiner.MEMBER_INFO
 				WHERE NO = #{NO};
 	DELETE FROM NetMiner.MEMBER_INFO
@@ -187,7 +202,8 @@
 	
 
 	<sql id="getMemberQuit">
-		SELECT * FROM NetMiner.MEMBER_INFO_DROP 
+		SELECT A.*, B.NATION_NAME_KR FROM NetMiner.MEMBER_INFO_DROP A
+		INNER JOIN NetMiner.NATION_CODE  B ON A.NATION = B.NATION_CODE 
 			WHERE USER_CODE='03' OR LAST_LOGIN_DATE &lt; DATE_ADD(NOW(), INTERVAL -365 DAY)
 	</sql>
 	<select id="getMemberQuitCount" parameterType="map" resultType="int">
@@ -207,7 +223,7 @@
 				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
 				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
 				, @RNUM:=@RNUM+1 as ROWNUM2, CEIL(@RNUM / 3) as page
-			FROM ( <include refid="getMemberQuit"/> ) A, (SELECT @RNUM:=0) R
+			FROM ( <include refid="getMemberQuit"/> ) AS A, (SELECT @RNUM:=0) R			
 			<include refid="listPagedWhere"/>
 		) NO
 		<include refid="listPagedWhere3"/>

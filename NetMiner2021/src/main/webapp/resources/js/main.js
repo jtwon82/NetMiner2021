@@ -402,6 +402,7 @@ function changeEmail(userId) {
 function chageUserId(){
 	var email = $("#email").val();
 	var checkRegx = CheckEmailRegx(email);
+	var emailBtn = document.getElementById("chageUserId");
 	if (checkRegx) {
 		$(function (){
 			$.ajax({
@@ -410,7 +411,14 @@ function chageUserId(){
 				data : {'email' : email},
 				success : function(data) {
 					sessionStorage.clear();
-					alert("이메일 변경 완료");
+					if (data.state == 'success') {
+						emailBtn.style.background = "#bbb8b8";
+						$("#chageUserId").attr('disabled', true);
+						$("#email").attr('readOnly', true);
+						alert("이메일 변경 완료");						
+					} else {
+						alert("해당 아이디는 이미 존재 합니다");
+					}
 				}
 			})
 		});

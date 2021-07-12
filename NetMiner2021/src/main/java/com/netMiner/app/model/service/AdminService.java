@@ -74,4 +74,7 @@ public interface AdminService {
 	SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list);
 
 
+	void modifyDropMemberInfo(HashMap<String, Object> json);
+
+
 }

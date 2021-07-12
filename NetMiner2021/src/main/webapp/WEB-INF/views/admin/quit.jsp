@@ -83,7 +83,7 @@
 											<td>${item.USE_CODE }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
-											<td>${item.NATION }</td>
+											<td>${item.NATION_NAME_KR }</td>
 											<td>${item.COMPANY }</td>
 											<td>${item.MARKET_YN }</td>
 										</tr>

@@ -100,7 +100,7 @@
 											<td>${item.USE_CODE_STR }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
-											<td>${item.NATION }</td>
+											<td>${item.NATION_NAME_KR }</td>
 											<td>${item.COMPANY }</td>
 											<td>${item.MARKET_YN }</td>
 										</tr>
@@ -123,7 +123,8 @@
 <script type="text/javascript">
 
 function downLoad() {
-	location.href = "user/downLoadExcel"	
+	var para = document.location.href.split("?");
+	location.href = "user/downLoadExcel?"+para;	
 }
 // $(function(){
 // 	$('form').ajaxForm({

@@ -28,10 +28,14 @@ public class SendEmail {
 	private SelectDao selectDao;
 	
 	//마켓팅 수신 정보동의
-	public void sendMarketEmail(String userId, String language) {
+	public void sendMarketEmail(String userId, String language , Date marketDate) {
 		MailVo vo =  new MailVo();
 		String title = "";
 		String comment = "";
+		SimpleDateFormat form = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(marketDate);
+		String date = form.format(cal.getTime());
 		if ("_EN".equals(language)) {
 			vo = selectDao.getRandomMail("06");
 		} else {
@@ -39,6 +43,7 @@ public class SendEmail {
 		}
 		title = vo.getTitle();
 		comment = vo.getComment();
+		comment = comment.replace("{YYYY/MM/DD}", date);
 		boolean result = this.sendMailSender(userId , comment, title);
 		
 	}
