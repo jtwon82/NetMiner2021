@@ -1,6 +1,7 @@
 package com.netMiner.app.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
@@ -42,7 +43,7 @@ public class PageMoveController extends HttpServlet {
 		return path+"/register";		
 	}
 	
-	@RequestMapping(value="login", method = RequestMethod.GET)
+	@RequestMapping(value= {"login","login_dev"}, method = RequestMethod.GET)
 	public String login(HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
@@ -210,9 +211,13 @@ public class PageMoveController extends HttpServlet {
 	}
 	@RequestMapping(value="check", method= {RequestMethod.GET, RequestMethod.POST})
 	public String goCheck (ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
-		Map<String , Object> param = (Map<String, Object>) request.getAttribute("checkData");
-		
-		String language = (String) param.get("language");
+		Map<String , Object> param =  selectDao.getCheckData();		
+		Locale local = request.getLocale();
+		String location = local.toString();
+		String language = "";
+		if (!location.contains("KR")) {
+			language = "_EN";
+		}
 		mv.addObject("checkData", param);
 		return "homePage"+language+"/check";
 	}

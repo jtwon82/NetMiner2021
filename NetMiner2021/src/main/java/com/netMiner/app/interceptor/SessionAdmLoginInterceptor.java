@@ -48,20 +48,10 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		for (String path : urlPath) {
 			if (url.contains(path)) {
 				Map<String, Object> checkData = selectDao.getCheckData();
-				System.out.println("checkData" + checkData.toString());
-				Locale local = request.getLocale();
-				String location = local.toString();
-				String language = "";
-				if (!location.contains("KR")) {
-					language = "_EN";
-				}
-				checkData.put("language", language);
 				
 				if (checkData != null) {
-					if ("Y".equals(checkData.get("STATS_YN"))) {
-						RequestDispatcher dispatcher = request.getRequestDispatcher("check");
-						request.setAttribute("checkData", checkData);
-						dispatcher.forward(request, response);
+					if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {
+						response.sendRedirect("/check");
 						return false;
 					}			
 				}				

@@ -32,7 +32,7 @@
 				<div class="wrap">
 					<div class="title">
 						<h2>Welcome to NetMiner 365</h2>
-						<p>아직 계정이 없습니까?<a href="javascript:;" onclick="alert('현재 NetMiner 365 는 서비스 안정화 및 보완을 위해 비공개 클로즈 베타 테스트를 진행 중입니다.\n빠른 시일 내에 오픈 베타 서비스를 공개할 예정이니, 조금만 기다려주시면 감사하겠습니다.')">등록</a></p>
+						<p>아직 계정이 없습니까?<a href="javascript:;" id="register" onclick="alert('현재 NetMiner 365 는 서비스 안정화 및 보완을 위해 비공개 클로즈 베타 테스트를 진행 중입니다.\n빠른 시일 내에 오픈 베타 서비스를 공개할 예정이니, 조금만 기다려주시면 감사하겠습니다.')">등록</a></p>
 					</div>
 					<div class="content">
 						<form action="./loginUser" method="POST">

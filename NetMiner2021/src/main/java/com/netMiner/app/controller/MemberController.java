@@ -162,7 +162,7 @@ public class MemberController {
 		return "home"+language;
 	}
 	
-	@RequestMapping(value="registerStep", method = RequestMethod.POST)
+	@RequestMapping(value= "registerStep", method = RequestMethod.POST)
 	public ModelAndView registerStep(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();

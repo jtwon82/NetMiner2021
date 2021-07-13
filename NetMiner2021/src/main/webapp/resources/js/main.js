@@ -98,6 +98,13 @@ $(document).ready(function() {
 		openPoup("leave_popup");
 	})
 	
+	if (location.pathname == '/login_dev') {
+		$("#register").remove("onclick");
+		$("#register").attr("onclick","window.location.href='./register'");
+		$(".google").remove("onclick");
+		$(".google").attr("onclick","googleLogin()");
+	} 
+	
 	history.replaceState({}, null, location.pathname);	
 })
 var emailNumber = "";
