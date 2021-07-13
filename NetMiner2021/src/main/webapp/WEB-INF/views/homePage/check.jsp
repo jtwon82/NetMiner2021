@@ -23,7 +23,7 @@
 	<body>
 		<div id="wrap" class="sub check">
 			<div class="checkContainer">
-				<h1><img src="images/main_logo2.png" alt="NetMiner365"></h1>
+				<h1><img src="resources/images/main_logo2.png" alt="NetMiner365"></h1>
 				<p class="txt1"><span>서비스 점검 중 입니다.</span></p>
 				<p class="pc">
 					보다 안정적인 서비스를 제공하기 위해 서비스 점검을 진행하고 있습니다.<br><br>
@@ -37,8 +37,8 @@
 				</p>
 				<div class="box">
 					<ul>
-						<li><span>점검 시간</span><b>YYYY. MM. DD HH시 ~ MM. DD HH시</b></li>
-						<li><span>점검 내용</span><b>(관리자에서 입력한 점검 내용 표시)</b></li>
+						<li><span>점검 시간</span><b>${checkData.START_DATE } ~ ${checkData.END_DATE}</b></li>
+						<li><span>점검 내용</span><b>${checkData.COMMENT_KR}</b></li>
 					</ul>
 				</div>
 				<p class="txt2">

@@ -23,7 +23,7 @@
 	<body>
 		<div id="wrap" class="sub check">
 			<div class="checkContainer">
-				<h1><img src="images/main_logo2.png" alt="NetMiner365"></h1>
+				<h1><img src="resources/images/main_logo2.png" alt="NetMiner365"></h1>
 				<p class="txt1"><span>Server Maintenance</span></p>
 				<p class="pc">
 					We're currently performing system maintenance in order to improve service quality.<br>
@@ -37,8 +37,8 @@
 				</p>
 				<div class="box">
 					<ul>
-						<li><span>Schedule</span><b>YYYY.MM.DD HH ~ MM.DD HH (GMT+9)</b></li>
-						<li><span>Details</span><b>(관리자에서 입력한 점검 내용 표시)</b></li>
+						<li><span>Schedule</span><b>${checkData.START_DATE } ~ ${checkData.END_DATE} (GMT+9)</b></li>
+						<li><span>Details</span><b>${checkData.COMMENT_EN}</b></li>
 					</ul>
 				</div>
 				<p class="txt2">

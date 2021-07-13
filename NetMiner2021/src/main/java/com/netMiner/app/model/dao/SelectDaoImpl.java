@@ -2,6 +2,7 @@ package com.netMiner.app.model.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,11 @@ public class SelectDaoImpl implements SelectDao {
 	public MailVo getRandomMail(String mailCode) {
 		MailVo vo = sqlSession.selectOne("selectEmail", mailCode);
 		return vo;
+	}
+
+	@Override
+	public Map<String, Object> getCheckData() {
+		
+		return sqlSession.selectOne("getCheckData");
 	}
 }

@@ -18,4 +18,11 @@
 	FROM NetMiner.EMAIL_INFO
 	WHERE EMAIL_CODE = #{mailCode};
   	</select>
+  	
+  	<select id="getCheckData" resultType="Map">
+  	SELECT  DATE_FORMAT(A.START_DATE,'%Y-%m-%d %H') as START_DATE,  DATE_FORMAT(A.END_DATE,'%m-%d %H') AS END_DATE, A.STATS_YN, A.END_DATE_YN, A.COMMENT_KR, A.COMMENT_EN 
+	 FROM NetMiner.CHECK_START_END_TIME A
+	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME)
+	AND NOW() BETWEEN START_DATE AND END_DATE;
+  	</select>
   </mapper>

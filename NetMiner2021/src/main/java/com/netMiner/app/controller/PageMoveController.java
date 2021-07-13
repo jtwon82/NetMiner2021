@@ -1,6 +1,7 @@
 package com.netMiner.app.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class PageMoveController extends HttpServlet {
 	private SelectDao selectDao;
 	
 	@RequestMapping(value="register" ,method =  RequestMethod.GET)
-	public String goRegister(HttpSession session) {
+	public String register(HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
 			language = "";
@@ -42,7 +43,7 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.GET)
-	public String goLogin(HttpSession session) {
+	public String login(HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
 			language = "";
@@ -51,7 +52,7 @@ public class PageMoveController extends HttpServlet {
 		return path+"/login";
 	}
 	@RequestMapping(value="findPwd", method = RequestMethod.GET)
-	public String goFindPwd(HttpSession session) {
+	public String findPwd(HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
 			language = "";
@@ -70,7 +71,7 @@ public class PageMoveController extends HttpServlet {
 		return  path+"/authentic";
 	}
 	@RequestMapping(value="activate", method = RequestMethod.GET)
-	public String moveactivate(HttpSession session, HttpServletRequest request) {
+	public String activate(HttpSession session, HttpServletRequest request) {
 		String language = (String) request.getAttribute("language");
 		if (language == null) {
 			language = "";
@@ -206,5 +207,13 @@ public class PageMoveController extends HttpServlet {
 		mv.setViewName("jsonView");
 		
 		return mv;
+	}
+	@RequestMapping(value="check", method= {RequestMethod.GET, RequestMethod.POST})
+	public String goCheck (ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+		Map<String , Object> param = (Map<String, Object>) request.getAttribute("checkData");
+		
+		String language = (String) param.get("language");
+		mv.addObject("checkData", param);
+		return "homePage"+language+"/check";
 	}
 }

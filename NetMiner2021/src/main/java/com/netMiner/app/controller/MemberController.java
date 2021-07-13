@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import com.netMiner.app.config.SendEmail;
+import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.util.CryptUtil;
@@ -44,6 +45,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SelectDao selectDao;
 	
 	@Autowired
 	private SendEmail sendEmail;
@@ -62,25 +66,30 @@ public class MemberController {
 
 		model.addAttribute("serverTime", formattedDate );
 		String url = "home";
-
+		String location = locale.toString();
+		String language = "";
+		//언어 설정 
 		if (session.getAttribute("language") != null) {
 			url = url + session.getAttribute("language");
+			language = (String) session.getAttribute("language");
 		} else {
-			String location = locale.toString();
 			if (!location.contains("KR")) {
 				session.setAttribute("language", "_EN");
+				language = "_EN";
 				url = url + "_EN";
 			} else {
 				session.setAttribute("language", "");
 				
-			}
-			
+			}			
 		}
 		
-//		String location = locale.toString();
-//		if (!location.contains("KR")) {
-//			url = url+"_EN";
-//		}
+		Map<String, Object> checkData = selectDao.getCheckData();
+		if (checkData != null) {
+			if ("Y".equals(checkData.get("STATS_YN"))) {
+				model.addAttribute("checkData", checkData);
+				url = "homePage"+language+"/check";
+			}
+		}
 		
 		return url;
 	}
@@ -154,7 +163,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="registerStep", method = RequestMethod.POST)
-	public ModelAndView goCheckEmail(HttpServletRequest request,HttpSession session) {
+	public ModelAndView registerStep(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
 		String language = (String) session.getAttribute("language");
@@ -195,7 +204,7 @@ public class MemberController {
 	
 	//email 재인증 또는 추후 회원정보 변경시 사용 
 	@RequestMapping(value="emailSender" , method=RequestMethod.POST)
-	public ModelAndView sendEmail(HttpSession session, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView emailSender(HttpSession session, ModelAndView mv, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
 			language = "";
@@ -293,7 +302,7 @@ public class MemberController {
 	}
 		 
 	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
-	public ModelAndView resetPwd (ModelAndView mv,HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+	public ModelAndView findUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
 		String language = (String) session.getAttribute("language");
 		
 		if (language == null) {
@@ -338,7 +347,7 @@ public class MemberController {
 		return mv;
 	}
 	@RequestMapping(value="changeNewPwd" , method=RequestMethod.POST)
-	public ModelAndView chageNewPwd(ModelAndView mv,HttpServletRequest request) {
+	public ModelAndView changeNewPwds(ModelAndView mv,HttpServletRequest request) {
 		String userId = request.getParameter("email");
 		String userPwd = request.getParameter("pwd");
 		Decoder decoder = Base64.getDecoder();
