@@ -24,6 +24,12 @@
 								<li><a href="email">자동 이메일</a></li>
 							</ul>
 						</div>
+						<div class="menu menu2">
+							<span class="on">서비스 관리</span>
+							<ul class="on">
+								<li><a href="check">점검 설정</a></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>

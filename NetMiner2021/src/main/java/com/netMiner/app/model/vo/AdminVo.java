@@ -51,6 +51,18 @@ public class AdminVo implements Serializable{
 	@JsonAlias("EXPLAIN") private String EXPLAIN = "";
 	@JsonAlias("COMMENT") private String COMMENT = "";
 	
+	//CHECK
+	@JsonAlias("START_DATE") private String  START_DATE = "";
+	@JsonAlias("START_DATES") private String  START_DATES = "";
+	@JsonAlias("START_HH") private String START_HH = "";
+	@JsonAlias("END_DATE") private String END_DATE = "";
+	@JsonAlias("END_DATES") private String END_DATES = "";
+	@JsonAlias("END_HH") private String END_HH = "";
+	@JsonAlias("COMMENT_KR") private String COMMENT_KR = "";
+	@JsonAlias("COMMENT_EN") private String COMMENT_EN = "";
+	@JsonAlias("STATS_YN") private String STATS_YN= "";
+	@JsonAlias("END_DATE_YN") private String END_DATE_YN = "";
+	
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}

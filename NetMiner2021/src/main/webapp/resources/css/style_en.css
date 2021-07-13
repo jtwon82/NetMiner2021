@@ -527,6 +527,16 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.sub.terms #section .wrap dd table th, #wrap.sub.terms #section .wrap dd table td {font-size:18px; padding: 10px; border: 1px solid #d3d3d3; font-weight: 400;}
 #wrap.sub.terms #section .wrap dd table th{font-weight:500; background-color: #fafafa;}
 
+/*점검중-----------------------------------------------------------*/
+#wrap.sub.check .checkContainer{width:700px; margin:0px auto; text-align: center;}
+#wrap.sub.check h1{margin:50px 0px;}
+#wrap.sub.check p.txt1{margin:50px 0px;}
+#wrap.sub.check p.txt1 span{font-size:48px; font-weight:600; padding-left:60px; background-position-y:center; background-image: url('/resources/images/ico_obj1.png'); background-repeat: no-repeat; display: inline-block;}
+#wrap.sub.check .box{ padding:30px 80px; margin:35px 0px; background-color: #ffffff; border:1px solid #d3d3d3;}
+#wrap.sub.check .box li{position: relative; margin:5px 0px; padding-left:100px; text-align: left;}
+#wrap.sub.check .box li span{position: absolute; top:0px; left:0px;}
+#wrap.sub.check p.txt2{color:#555555;}
+
 @media (min-width: 0px) and (max-width: 1000px){
    .pc{display: none}
     .mobile{display: block;}     
@@ -635,8 +645,8 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 	#wrap.whyNetminer .section .content .text{font-size:14px; width: 100%; padding:20px 0;}
 	#wrap.whyNetminer .section .content .bg{width: 100%; background-size: cover;height: 49vw;}
 	
-	#wrap.whyNetminer #section2{height: 540px;}
-	#wrap.whyNetminer #section2 .content .text{position:absolute; top: 165%; left: 0; }
+	#wrap.whyNetminer #section2{height: 600px;}
+	#wrap.whyNetminer #section2 .content .text{position:absolute; top: 165%; left: 0; padding-top:0;}
 	#wrap.whyNetminer #section2 .content .bg{position:absolute; top: 77%;  left: 0;}
 	
 /*feature-----------------------------------------------------------*/
@@ -652,7 +662,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 	#wrap.feature #section2 .content li .bg{background-size: cover; height: 52vw;}
 	#wrap.feature #section2 .content li .text{padding: 10px; }
 	#wrap.feature #section2 .content li h4{font-size:16px; padding-bottom: 15px;}
-	#wrap.feature #section2 .content li p{font-size:14px;}
+	#wrap.feature #section2 .content li p{font-size:14px; height: auto;}
 	#wrap.feature #section2 .content li:nth-child(2){margin:3% 0;}
 	
 /*function-----------------------------------------------------------*/
@@ -827,5 +837,17 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 	#leave_popup .wrap p span{font-size: 11px;}
 	#leave_popup .wrap button{width: 100px; height: 35px; font-size: 15px; margin: 15px 10px 0;}
 	#leave_popup .wrap button.leave{ font-size: 15px;}
+	
+	/*점검중-----------------------------------------------------------*/
+	#wrap.sub.check .checkContainer{width:90%;}
+    #wrap.sub.check h1{margin:20px 0px;}
+    #wrap.sub.check h1 img{width:200px;}
+    #wrap.sub.check p{font-size:12px;}
+    #wrap.sub.check p.txt1{margin:20px 0px; font-size:12px;}
+    #wrap.sub.check p.txt1 span{font-size:25px; font-weight:600; padding-left:30px; background-size:25px; background-position-y:center; background-image: url('/resources/images/ico_obj1.png'); background-repeat: no-repeat; display: inline-block;}
+    #wrap.sub.check .box{font-size:13px; padding:10px 30px; margin:20px 0px;}
+    #wrap.sub.check .box li{margin:3px 0px; padding-left:70px; text-align: left;}
+    #wrap.sub.check .box li span{position: absolute; top:0px; left:0px;}
+    #wrap.sub.check p.txt2{font-size:11px;}
 
 }

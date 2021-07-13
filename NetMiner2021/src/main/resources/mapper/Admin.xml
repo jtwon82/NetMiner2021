@@ -328,4 +328,29 @@
 	WHERE `NO` = ${NO}
 	
 	</update>
+	
+	<select id="getCheck" resultType="Map">
+	SELECT A.*, 
+	 DATE_FORMAT(START_DATE,'%Y-%m-%d')START_DATES,
+	 DATE_FORMAT(END_DATE,'%Y-%m-%d')END_DATES,
+	 DATE_FORMAT(START_DATE, '%H')START_HH,
+	 DATE_FORMAT(END_DATE , '%H') END_HH
+	 FROM NetMiner.CHECK_START_END_TIME A
+	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME)
+	</select>
+	
+	<update id="modifyCheck" parameterType="map">
+	INSERT INTO NetMiner.CHECK_START_END_TIME
+	(START_DATE, END_DATE, COMMENT_KR, COMMENT_EN, STATS_YN, END_DATE_YN, REG_DATE)
+	SELECT 
+	STR_TO_DATE(CONCAT(#{START_DATE}, #{START_HH}),'%Y-%m-%d %H') AS START_DATE 
+	<if test="END_DATE != null and ! END_DATE.equals('')">, STR_TO_DATE(CONCAT(#{END_DATE}, #{END_HH}),'%Y-%m-%d %H')  </if>
+	<if test="END_DATE == null or END_DATE.equals('')">, ''</if>AS END_DATE 
+	, #{COMMENT_KR} AS COMMENT_KR
+	, #{COMMENT_EN} AS COMMENT_EN
+	, #{STATS_YN} AS STATS_YN
+	<if test="END_DATE_YN != null and ! END_DATE_YN.equals('')">, 'Y'</if>
+	<if test="END_DATE_YN == null or END_DATE_YN.equals('')">, 'N' </if> AS END_DATE_YN
+	, NOW() AS REG_DATE;
+	</update>
 </mapper>

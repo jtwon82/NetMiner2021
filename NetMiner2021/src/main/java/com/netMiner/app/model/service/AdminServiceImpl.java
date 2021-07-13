@@ -248,4 +248,18 @@ public class AdminServiceImpl implements AdminService{
 		adminDao.recoverMemberQuitInfo(json);		
 	}
 
+
+	@Override
+	public Map getCheck(HashMap<String, Object> json) {
+		// TODO Auto-generated method stub
+		return adminDao.getCheck(json);
+	}
+
+
+	@Override
+	public void modifyCheck(HashMap<String, Object> json) {
+		adminDao.modifyCheck(json);
+		
+	}
+
 }

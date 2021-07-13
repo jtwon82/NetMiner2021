@@ -80,4 +80,10 @@ public interface AdminService {
 	void recoverMemberQuitInfo(HashMap<String, Object> json);
 
 
+	Map getCheck(HashMap<String, Object> json);
+
+
+	void modifyCheck(HashMap<String, Object> json);
+
+
 }

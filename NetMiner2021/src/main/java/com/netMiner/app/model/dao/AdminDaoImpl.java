@@ -171,4 +171,18 @@ public class AdminDaoImpl implements AdminDao{
 	public void recoverMemberQuitInfo(HashMap<String, Object> json) {
 		sqlSession.update("recoverMemberQuitInfo", json);
 	}
+
+
+	@Override
+	public Map getCheck(HashMap<String, Object> json) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getCheck");
+	}
+
+
+	@Override
+	public void modifyCheck(HashMap<String, Object> json) {
+		sqlSession.update("modifyCheck", json);
+		
+	}
 }

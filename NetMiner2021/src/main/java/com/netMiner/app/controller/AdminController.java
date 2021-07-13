@@ -448,6 +448,28 @@ public class AdminController {
 		
 		return model;
 	}
+	@RequestMapping(value="/check" , method =  {RequestMethod.GET, RequestMethod.POST})
+	public String check(Model model, HttpServletRequest request
+			, @RequestParam HashMap<String, Object> json) {
 	
+		Map list= adminService.getCheck(json);		
+		model.addAttribute("list", list);
+		return "admin/check";
+	}
+	@RequestMapping(value="/check_modify", method = RequestMethod.POST)
+	public @ResponseBody String check_modify(HttpSession session
+			, @RequestParam HashMap<String, Object> json) {
+		
+	try {
+		if(json.get("MODE").equals("modify")) {
+			adminService.modifyCheck(json);
+		}
+			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", "");
+		} catch (Exception e) {
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"", e.toString());
+		}
+	}
+
+		
 	
 }
