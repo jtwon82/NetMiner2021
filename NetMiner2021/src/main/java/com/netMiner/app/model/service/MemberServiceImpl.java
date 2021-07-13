@@ -101,5 +101,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDao.selectUserCount(param);
 	}
+	@Override
+	public void deleteEmailSendLog(String userId) {
+		
+		memberDao.deleteEmailSendLog(userId);
+	}
 
 }

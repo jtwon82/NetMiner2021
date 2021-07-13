@@ -34,4 +34,11 @@ public class SelectDaoImpl implements SelectDao {
 		
 		return sqlSession.selectOne("getCheckData");
 	}
+
+	@Override
+	public void insertEmailSendLog(Map<String, Object> param) {
+		
+		sqlSession.insert("insertEmailSendLog", param);
+		
+	}
 }

@@ -166,4 +166,10 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("selectUserCount", param);
 	}
 
+	@Override
+	public void deleteEmailSendLog(String userId) {
+		
+		sqlSession.delete("deleteEmailSendLog", userId);
+	}
+
 }

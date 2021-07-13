@@ -49,4 +49,6 @@ public interface MemberDao {
 
 	int selectUserCount(Map<String, Object> param);
 
+	void deleteEmailSendLog(String userId);
+
 }

@@ -228,7 +228,6 @@ public class MemberController {
 		memberVo.setCompany(company);
 		memberVo.setNation(nation);
 		memberVo.setUseCode(useCode);
-		
 		if (nation.equals("KR")) {
 			memberVo.setLanguage("ko");
 		} else {
@@ -524,6 +523,8 @@ public class MemberController {
 		if (language == null) {
 			language = "";
 		}
+		memberService.deleteEmailSendLog(userId);
+		
 		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");

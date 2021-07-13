@@ -14,4 +14,6 @@ public interface SelectDao {
 
 	Map<String, Object> getCheckData();
 
+	void insertEmailSendLog(Map<String, Object> param);
+
 }

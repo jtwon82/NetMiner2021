@@ -25,4 +25,16 @@
 	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME)
 	AND NOW() BETWEEN START_DATE AND END_DATE;
   	</select>
+  	
+  	<insert id="insertEmailSendLog" parameterType="Map">
+  	INSERT INTO NetMiner.CHECK_SEND_AUTH_MAIL_LOG (
+  	EMAIL_CODE, USER_ID , SEND_DATE, END_DATE, AUTH_CODE, REG_DATE
+  	)
+ 	SELECT #{emailCode} AS EMAIL_CODE
+ 	, #{userId} AS USER_ID 
+ 	, NOW() AS SEND_DATE
+ 	, DATE_ADD(NOW(), INTERVAL 30 MINUTE)
+ 	, #{randomNumber} AS AUTH_CODE
+ 	, NOW()  AS REG_DATE ;  	
+  	</insert>
   </mapper>

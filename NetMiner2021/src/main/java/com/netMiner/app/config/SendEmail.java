@@ -4,6 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -51,12 +53,18 @@ public class SendEmail {
 	//비밀번호재설정을 위한 인증 
 	public boolean sendReSetPwd(String url, String userId, String language) {
 		MailVo vo = new MailVo();
-		
+		String emailCode = "";
 		if ("_EN".equals(language)) {
-			vo = selectDao.getRandomMail("07");
+			emailCode= "07";
 		} else {
-			vo = selectDao.getRandomMail("02");
+			emailCode ="02";
 		}
+		vo = selectDao.getRandomMail(emailCode);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("userId", userId);
+		param.put("emailCode", emailCode);
+		param.put("randomNmber", "");
+		selectDao.insertEmailSendLog(param);
 		
 		String title = vo.getTitle();
 		String comment = vo.getComment();
@@ -71,17 +79,23 @@ public class SendEmail {
 	public String sendCheckEmail(String userId, String language) {
 		// TODO Auto-generated method stub
 		MailVo vo = new MailVo();
-		
+		String emailCode = "";
 		if ("_EN".equals(language)) {
-			vo = selectDao.getRandomMail("08");
+			emailCode = "08";
 		} else {
-			vo = selectDao.getRandomMail("03");
+			emailCode = "03";
 		}
+		vo = selectDao.getRandomMail(emailCode);
 		String randomNumber = String.valueOf(this.getRandomNumber());
 		String comment = vo.getComment();
 		comment = comment.replace("{randomNumber}", randomNumber);
 		String title = vo.getTitle();
 		boolean result = this.sendMailSender(userId , comment, title);
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("userId", userId);
+		param.put("emailCode", emailCode);
+		param.put("randomNmber", randomNumber);
 		
 		if (!result) {
 			randomNumber = "";
