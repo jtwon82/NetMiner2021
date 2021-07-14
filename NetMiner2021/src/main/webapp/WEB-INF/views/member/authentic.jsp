@@ -39,7 +39,6 @@
 인증코드는 30 분간 유효합니다.</p>
 						<div class="input">
 							<p>인증코드</p>
-							<input type="hidden" id="auth_code" value="${randomNumber}">
 							<input placeholder="" type="text" id="code"/>
 							<p class="sum">메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.<br>또는 <a href="#" class="blue" onClick="newRandomNumber();">인증코드 발송</a></p>
 						</div>
@@ -59,7 +58,6 @@
 						</c:if>
 						<a class="back">전 단계로 돌아가기</a>
 					</div>
-					
 				</div>
 			</div>
 			<%@include file = "../common/footer.jsp" %>

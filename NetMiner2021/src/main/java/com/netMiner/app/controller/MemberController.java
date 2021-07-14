@@ -412,6 +412,7 @@ public class MemberController {
 			session.setAttribute("userId", userId);
 			session.setAttribute("randomNumber", randomNumber);			
 		}
+		
 		return mv;
 	}
 	

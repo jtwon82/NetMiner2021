@@ -29,7 +29,7 @@ $(document).ready(function() {
 	});
 	
 	$(".content .input #code").on('input',function(){
-		var randomNumber = $("#auth_code").val();
+		var randomNumber = '${authData.AUTH_CODE}';
 		var inputNumber = $("#code").val();
 		if (inputNumber==randomNumber) {
 			checkRandomNumber = true;
