@@ -33,8 +33,21 @@
  	SELECT #{emailCode} AS EMAIL_CODE
  	, #{userId} AS USER_ID 
  	, NOW() AS SEND_DATE
- 	, DATE_ADD(NOW(), INTERVAL 30 MINUTE)
+ 	, DATE_ADD(NOW(), INTERVAL 30 MINUTE) AS END_DATE
  	, #{randomNumber} AS AUTH_CODE
  	, NOW()  AS REG_DATE ;  	
   	</insert>
+  	<select id="getauthData" parameterType="String" resultType="String">
+  	<![CDATA[
+  	SELECT AUTH_CODE , END_DATE
+  	FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG
+  	WHERE USER_ID = #{userId}
+  	AND END_DATE < NOW()
+  	AND EMAIL_CODE IN (
+  	'03', '08'
+  	)
+  	AND NO = (SELECT MAX(NO) FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG WHERE USER_ID = #{userId});
+  	]]>
+  	</select>
+  	
   </mapper>

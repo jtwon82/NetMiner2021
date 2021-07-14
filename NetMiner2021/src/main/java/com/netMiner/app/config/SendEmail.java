@@ -92,13 +92,14 @@ public class SendEmail {
 		String title = vo.getTitle();
 		boolean result = this.sendMailSender(userId , comment, title);
 		
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("userId", userId);
-		param.put("emailCode", emailCode);
-		param.put("randomNmber", randomNumber);
-		
 		if (!result) {
 			randomNumber = "";
+		} else {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("userId", userId);
+			param.put("emailCode", emailCode);
+			param.put("randomNmber", randomNumber);
+			selectDao.insertEmailSendLog(param);
 		}
 		
 		return randomNumber;

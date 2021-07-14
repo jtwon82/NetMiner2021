@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,10 +45,10 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value= {"login","login_dev"}, method = RequestMethod.GET)
-	public String login(HttpSession session) {
+	public String login(HttpSession session, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
-			language = "";
+			language = request.getParameter("language") == null ? "" : request.getParameter("language");
 		}
 		String path = "member"+ language;
 		return path+"/login";
@@ -63,11 +64,15 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="moveCheckEmail", method = RequestMethod.GET)
-	public String moveCheckEmail(HttpSession session) {
+	public String moveCheckEmail(Model model ,HttpSession session, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
+		String userId = request.getParameter("userId");
 		if (language == null) {
 			language = "";
 		}
+		Map<String,Object> authData = selectDao.getauthData(userId);
+		model.addAttribute("authData", authData);
+		model.addAttribute("userId", userId);
 		String path = "member"+ language;
 		return  path+"/authentic";
 	}
@@ -120,11 +125,15 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
-	public String goCheckEmail (HttpSession session) {
+	public String goCheckEmail (Model model,  HttpServletRequest request, HttpSession session) {
 		String language = (String) session.getAttribute("language");
+		String userId = request.getParameter("userId");
 		if (language == null) {
 			language = "";
 		}
+		Map<String,Object> authData = selectDao.getauthData(userId);
+		model.addAttribute("authData", authData);
+		model.addAttribute("userId", userId);
 		String path = "member"+ language;
 		return path+"/authentic";
 	}

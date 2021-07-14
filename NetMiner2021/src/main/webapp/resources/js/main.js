@@ -29,7 +29,7 @@ $(document).ready(function() {
 	});
 	
 	$(".content .input #code").on('input',function(){
-		var randomNumber = sessionStorage.getItem("randomNumber");
+		var randomNumber = $("#auth_code").val();
 		var inputNumber = $("#code").val();
 		if (inputNumber==randomNumber) {
 			checkRandomNumber = true;
@@ -82,8 +82,8 @@ $(document).ready(function() {
 		window.location.href="./logOut";
 	});
 
-	$(".content .input li #email").on('input',function(){
-		var emailValue = $("#email").val();
+	$(".content .input li #userId").on('input',function(){
+		var emailValue = $("#userId").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
 		if (CheckEmailRegx(emailValue)) {
 			emailStyle.style.background = "#203864";
@@ -182,10 +182,8 @@ function checkEmail(){
 													alert("이메일 전송 실패");
 													window.location.href = "./register";
 												} else{
-													sessionStorage.setItem("randomNumber", data.randomNumber);
-													sessionStorage.setItem("email", userId);
 													alert(userId + "로 발송완료 했습니다.");
-													window.location.href= "./moveCheckEmail";					
+													window.location.href= "./moveCheckEmail?userId="+userId;					
 												}
 											} 
 											
@@ -213,6 +211,13 @@ function register() {
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
+	var endDate = '${authData.END_DATE}';
+	var now = new Date();
+	if (now > endDate) {
+		alert("인증 번호의 시간이 지났습니다. 인증번호를 다시 재발급해주세요");
+		return;
+	}
+	
 	if (checkRandomNumber) {
 		if (check1 != true || check2 != true) {
 			alert("필수약관에 동의 해주세요");
@@ -221,7 +226,7 @@ function register() {
 				marketYn = "Y";
 			}
 			
-			var email = sessionStorage.getItem("email");
+			var email = '${userId}';
 			var con = document.getElementById("dimmed");
 				con.style.removeProperty("display");
 			$(function(){
@@ -396,8 +401,7 @@ function changeEmail(userId) {
 			data:{'email':email},
 			success : function (data) {
 				if (data.randomNumber != "") {
-					sessionStorage.setItem("randomNumber", data.randomNumber);
-					window.location.href="./goCheckEmail";					
+					window.location.href="./goCheckEmail?userId="+email;					
 				} else {
 					alert("이메일 전송 실패");
 				}
@@ -436,8 +440,15 @@ function chageUserId(){
 }
 
 function registerCheckEmail(){
-	sessionStorage.clear();
-	window.location.href="./registerCheckEmail";
+	var now = new Date();
+	var endDate = '${authData.END_DATE}';
+	
+	if (now > endDate) {
+		alert("인증 시간이 만료 되었습니다.");
+	} else {
+		window.location.href="./registerCheckEmail";		
+	}
+	
 }
 
 function updateUserInfo(googleYn){
@@ -524,7 +535,7 @@ function updateUserInfo(googleYn){
 };
 
 function newRandomNumber() {
-	var userId = sessionStorage.getItem("email");
+	var userId = '${userId}';
 	var con = document.getElementById("dimmed");
 			con.style.removeProperty("display");
 	$(function (){
@@ -536,10 +547,9 @@ function newRandomNumber() {
 			}, 
 			success : function(data) {
 				if (data.randomNumber != "") {
-					sessionStorage.setItem("randomNumber", data.randomNumber);
+					$("#auth_code").val(data.randomNumber);
 					alert("인증번호 재전송 되었습니다.");
 					con.style.display = 'none';
-					location.reload();
 				}
 			}
 			

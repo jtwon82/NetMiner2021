@@ -3,7 +3,7 @@
 				<div class="wrap">
 					<div class="content">
 						<div>
-							<h4>NM 365 무료로 시작</h4>
+							<h4>NetMiner 365 무료로 시작</h4>
 							<c:if test="${empty memberVo}">
 							<a href="./login">Start for free</a>
 							</c:if>

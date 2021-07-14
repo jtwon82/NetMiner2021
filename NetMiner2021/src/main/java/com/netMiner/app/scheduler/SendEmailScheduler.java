@@ -39,9 +39,9 @@ public class SendEmailScheduler {
 			String language = (String) userInfo.get("LANGUAGE");
 			String url = "";
 			if ("en".equals(language)) {
-				url = "https://www.netminer365.com/activate?language='_EN'";
+				url = "https://www.netminer365.com/login?language='_EN'";
 			} else {
-				url = "https://www.netminer365.com/activate";
+				url = "https://www.netminer365.com/login";
 			}
 			boolean result= sendEmail.sendDormantUser(userId, url, language);
 			if (result) {

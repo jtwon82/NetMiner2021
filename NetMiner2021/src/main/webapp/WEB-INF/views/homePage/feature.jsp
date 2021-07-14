@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 		<link rel="shortcut icon" type="image/x-icon" href="https://www.netminer365.com/resources/images/favicon.ico" />
-		<title>Feature|NetMiner 365</title>
+		<title>Feature | NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -73,7 +73,7 @@ NetMiner 365는 당신이 필요한 모든 것을 갖춘 플랫폼 입니다.</p
 							<li>
 								<div class="bg"></div>
 								<div class="text">
-									<h4>머시러닝 & 딥러닝</h4>
+									<h4>머신러닝 & 딥러닝</h4>
 									<p>NetMiner 365는 널리 사용되는 머신러닝 및 딥러닝 알고리즘과
 	그래프 자체를 학습할 수 있는 그래프 머신러닝을 모두 제공합니다.
 	또한 그래프에서 얻은 관계적 특성을 머신러닝에 활용할 수

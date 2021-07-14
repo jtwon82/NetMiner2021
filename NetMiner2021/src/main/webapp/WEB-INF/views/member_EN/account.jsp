@@ -41,7 +41,7 @@
 							<ul class="input">
 								<li>
 									<c:if test="${empty userId}">
-									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
+									<input name="email" value="${memberVo.userId}" type="text" id="userId"/>
 									<c:if test="${memberVo.googleYn eq 'N'}">
 									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false">Verify</button>
 									</c:if>
@@ -64,7 +64,7 @@
 								<option value=""></option>
 							</select>
 							<div class="checkBox">
-								<p>Acount Type</p>
+								<p>Account Type</p>
 								<ul>
 									<li><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
 									<li ><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="01"><em></em>Commercial</label></li>

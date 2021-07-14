@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.netMiner.app">
+	<logger name="com.netMiner.app.*">
 		<level value="info" />
 	</logger>
 	

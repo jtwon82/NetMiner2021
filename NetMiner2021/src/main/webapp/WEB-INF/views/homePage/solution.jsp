@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 		<link rel="shortcut icon" type="image/x-icon" href="https://www.netminer365.com/resources/images/favicon.ico" />
-		<title>Solution|NetMiner 365</title>
+		<title>Solution | NetMiner 365</title>
 		<meta name="title" content="" />
 		<meta name="description" content="" />
 		<meta property="og:title" content="">
@@ -93,7 +93,7 @@
 					<div class="content">
 						<div class="bg"></div>
 						<div class="text">
-							<h4>컴플라이언스 범죄</h4>
+							<h4>컴플라이언스 / 범죄</h4>
 							<p>사회 시스템 고도화로 인해, 사기, 공모, 부정행위의
 패턴도 점차 복잡해지면서 추적에 많은 시간과 비용이
 듭니다. 그래프 분석과 머신러닝을 활용하면 빠르게 이상

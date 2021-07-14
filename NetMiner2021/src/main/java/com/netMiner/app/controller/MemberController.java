@@ -33,6 +33,7 @@ import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.MemberVo;
+import com.netMiner.app.util.Base64Util;
 import com.netMiner.app.util.CryptUtil;
 
 /**
@@ -175,7 +176,7 @@ public class MemberController {
 		try {
 			request.setCharacterEncoding("UTF-8");
 
-			String userId = request.getParameter("email");
+			String userId = request.getParameter("email");			
 			memberVo.setUserId(userId);
 			memberVo = memberService.getUserInfoTmp(memberVo);
 			String marketYn = request.getParameter("marketYn");
@@ -303,7 +304,7 @@ public class MemberController {
 	@RequestMapping( value="findUserInfo", method=RequestMethod.POST)
 	public ModelAndView findUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
 		String language = (String) session.getAttribute("language");
-		
+		Base64Util base64 = new Base64Util();
 		if (language == null) {
 			language = "";
 		}
@@ -326,15 +327,12 @@ public class MemberController {
 		if (checkResult != null && checkResult.getGoogleYn().equals("N")) {
 			String[] urlSp = request.getRequestURL().toString().split("/");
 			//2. 메일로 보내기  <a href="">비밀번호 재설정</a> 해당 href 뒤에 이메일 정보 
-			byte[] userIdEncoding = userId.getBytes();
-			byte[] languageEncoding = language.getBytes();
-			Encoder encoder = Base64.getEncoder();
 			StringBuffer sb;
 				sb = new StringBuffer()
 						.append(urlSp[0]).append("//").append(urlSp[2])
 						.append("/").append("goChangePwd?")
-						.append("userId=").append(encoder.encode(userIdEncoding))
-						.append("&language=").append(encoder.encode(languageEncoding));
+						.append("userId=").append(base64.enCodingBase64(userId))
+						.append("&language=").append(base64.enCodingBase64(language));
 			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId, language);
 		} else {
@@ -347,13 +345,12 @@ public class MemberController {
 	}
 	@RequestMapping(value="changeNewPwd" , method=RequestMethod.POST)
 	public ModelAndView changeNewPwds(ModelAndView mv,HttpServletRequest request) {
-		String userId = request.getParameter("email");
+		Base64Util base64 = new Base64Util();
+		String userId = base64.deCodingBase64(request.getParameter("email"));
 		String userPwd = request.getParameter("pwd");
-		Decoder decoder = Base64.getDecoder();
-		byte[] userIdDecode = decoder.decode(userId);
 		
 		MemberVo vo = new MemberVo();
-		vo.setUserId(new String(userIdDecode));
+		vo.setUserId(userId);
 		vo.setUserPwd(userPwd);
 		
 		memberService.updateNewPwd(vo);

@@ -85,8 +85,8 @@ $(document).ready(function() {
 		window.location.href="./logOut";
 	});
 
-	$(".content .input li #email").on('input',function(){
-		var emailValue = $("#email").val();
+	$(".content .input li #userId").on('input',function(){
+		var emailValue = $("#userId").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
 		if (CheckEmailRegx(emailValue)) {
 			emailStyle.style.background = "#203864";

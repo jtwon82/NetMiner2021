@@ -41,4 +41,10 @@ public class SelectDaoImpl implements SelectDao {
 		sqlSession.insert("insertEmailSendLog", param);
 		
 	}
+
+	@Override
+	public Map<String,Object> getauthData(String userId) {
+		
+		return sqlSession.selectOne("getauthData", userId);
+	}
 }

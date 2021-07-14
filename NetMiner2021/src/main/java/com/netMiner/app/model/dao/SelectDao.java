@@ -16,4 +16,7 @@ public interface SelectDao {
 
 	void insertEmailSendLog(Map<String, Object> param);
 
+	Map<String,Object> getauthData(String userId);
+
+
 }

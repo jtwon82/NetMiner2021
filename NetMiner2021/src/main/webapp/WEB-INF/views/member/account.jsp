@@ -42,14 +42,14 @@
 							<ul class="input">
 								<li>
 									<c:if test="${empty userId}">
-									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
+									<input name="email" value="${memberVo.userId}" type="text" id="userId"/>
 									<c:if test="${memberVo.googleYn eq 'N'}">
 									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false" >이메일 인증</button>
 									</c:if>
 									</c:if>
 									<c:if test="${!empty userId}">
 									<input name="email" value="${userId}" type="text" id="email"/>
-									<button class="trans trs email active" id="chageUserId" onClick="chageUserId();">변경</button>
+									<button class="trans trs email active" id="chageUserId" onClick="chageUserId();">저장</button>
 									</c:if>
 								</li>
 								<c:if test="${memberVo.googleYn eq 'N'}">
