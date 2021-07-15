@@ -54,4 +54,10 @@ public class SelectDaoImpl implements SelectDao {
 		sqlSession.delete("deleteCheckSendAuthData", userId);
 		
 	}
+
+	@Override
+	public String getNowDate() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getNowDate");
+	}
 }

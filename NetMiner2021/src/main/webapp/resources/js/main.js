@@ -1,5 +1,15 @@
 var checkRandomNumber = false;
+var now = new Date();
 $(document).ready(function() {
+	
+	$.ajax({
+		url :"./getNow",
+		type : "GET",
+		success : function (data) {
+			now = data.nowDateTime;
+		}
+	})
+	
 	if (location.pathname == '/login_dev') {
 		$("#register").remove("onclick");
 		$("#register").attr("onclick","window.location.href='./register'");
@@ -8,7 +18,7 @@ $(document).ready(function() {
 	} 
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
-		    $(this).parents(".content").find('input').prop("checked", $(this).is(":checked"));
+		    $(this).parents(".content").find('.agree input').prop("checked", $(this).is(":checked"));
 		});
 		
 		// 체크박스 개별 선택
@@ -51,17 +61,9 @@ $(document).ready(function() {
 			openPoup("refuse_popup");
 		}
 	});
-	$(".back").click(function(){		
-		$(function(){
-			$.ajax({
-				url : "./goBack",
-				type : "GET",
-				success : function (data) {
-					sessionStorage.clear();
-					window.history.back();
-				}
-			})
-		})
+	$("#authentic").click(function(){		
+		sessionStorage.clear();
+		window.history.back();
 	})
 	$(".cancel").click(function (){
 		sessionStorage.clear();
@@ -90,12 +92,14 @@ $(document).ready(function() {
 	$(".content .input li #email").on('input',function(){
 		var emailValue = $("#email").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
-		if (CheckEmailRegx(emailValue)) {
-			emailStyle.style.background = "#203864";
-			$("#checkEmailBtn").attr('disabled', false);
-		} else {
-			emailStyle.style.background = "#bbb8b8";
-			$("#checkEmailBtn").attr('disabled', true);
+		if (emailStyle != '' && emailStyle != null) {			
+			if (CheckEmailRegx(emailValue)) {
+				emailStyle.style.background = "#203864";
+				$("#checkEmailBtn").attr('disabled', false);
+			} else {
+				emailStyle.style.background = "#bbb8b8";
+				$("#checkEmailBtn").attr('disabled', true);
+			}
 		}
 	})
 	
@@ -121,10 +125,10 @@ function CheckEmailRegx(emailVal)
 
 }
 function CheckPwd(pwdVal) {
-		var regExp= /^[0-9a-zA-Z]{4,20}$/i;
+		var regExp= /^[0-9a-zA-Z]{8,20}$/i;
 		if (pwdVal.match(regExp)!= null) {
-			var numberExp = /^[0-9]{4,20}$/i
-			var strExp = /^[a-zA-Z]{4,20}$/i
+			var numberExp = /^[0-9]{8,20}$/i
+			var strExp = /^[a-zA-Z]{8,20}$/i
 			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
 				alert("하나또는 두개이상의 문자혹은 숫자로 이루어져야합니다.");
 				return false;
@@ -211,7 +215,7 @@ function register() {
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
-	var now = new Date();
+	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
 	if (now > EndDate) {
 		alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
@@ -255,7 +259,7 @@ function googleLogin(){
 	var redirectPrd="https://www.netminer365.com/auth";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 	
 	
 }
@@ -312,7 +316,7 @@ function googleRegister() {
 	var redirectPrd="https://www.netminer365.com/socialRegister";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
 function requestSetPwd() {
@@ -362,7 +366,7 @@ function changePwd(userId){
 	var newPwd = $("#newPwd").val();
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
-	var now = new Date();
+	//var now = new Date();
 	var endDate = $("#END_DATE").val();
 	if(now > endDate) {
 		alert("비밀번호 재설정 페이지의 시간이 만료되었습니다. 다시 진행 해주세요");
@@ -409,7 +413,7 @@ function changeEmail(userId) {
 			success : function (data) {
 				if (data.randomNumber != "") {
 					sessionStorage.setItem("randomNumber", data.randomNumber);
-					window.location.href="./goCheckEmail";					
+					window.location.href="./goCheckEmail?userId="+email;					
 				} else {
 					alert("이메일 전송 실패");
 				}
@@ -448,7 +452,7 @@ function chageUserId(){
 }
 
 function registerCheckEmail(){
-	var now = new Date();
+	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
 	if (now > EndDate) {
 		alert("현재 인증번호가 만료 되었습니다. 다시 발급해주세요")

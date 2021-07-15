@@ -20,5 +20,7 @@ public interface SelectDao {
 
 	void deleteCheckSendAuthData(String userId);
 
+	String getNowDate();
+
 
 }

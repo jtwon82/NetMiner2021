@@ -39,6 +39,9 @@
 							</tbody>
 						</table>
 						<div class="finish">
+							<c:if test="${item.NO!='' }">
+							<button class="red" onclick="this.form.MODE.value='delete';" style="float: left">삭제 </button>	
+							</c:if>					
 							<button onclick="this.form.MODE.value='cancel';">취소</button>
 							<c:choose>
 								<c:when test="${item.NO!='' }">
@@ -64,7 +67,7 @@ $(function(){
 			history.go(-1);
 			break;
 			
-		case "insert": case "modify":
+		case "insert": case "modify" : case "delete":
 			return true;
 			break;
 		}

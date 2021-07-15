@@ -32,7 +32,7 @@
 				<div class="wrap">
 					<div class="title">
 						<h2>Welcome to NetMiner 365</h2>
-						<p>Don’t have an account?<a href="javascript:;" onclick="alert('Currently, a closed beta of NetMiner 365 has been released since 1st July. NetMiner 365 open beta will be available soon, please look forward to the next !')">Register</a></p>
+						<p>Don’t have an account?<a href="javascript:;" id="register" onclick="alert('Currently, a closed beta of NetMiner 365 has been released since 1st July. NetMiner 365 open beta will be available soon, please look forward to the next !')">Register</a></p>
 					</div>
 					<div class="content">
 						<form action="./loginUser" method="POST">

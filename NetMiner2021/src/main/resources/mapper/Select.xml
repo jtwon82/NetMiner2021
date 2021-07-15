@@ -20,10 +20,12 @@
   	</select>
   	
   	<select id="getCheckData" resultType="Map">
+  	<![CDATA[
   	SELECT  DATE_FORMAT(A.START_DATE,'%Y-%m-%d %H') as START_DATE,  DATE_FORMAT(A.END_DATE,'%m-%d %H') AS END_DATE, A.STATS_YN, A.END_DATE_YN, A.COMMENT_KR, A.COMMENT_EN 
 	 FROM NetMiner.CHECK_START_END_TIME A
 	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME)
-	AND NOW() BETWEEN START_DATE AND END_DATE;
+	AND  DATE_ADD(NOW(), interval 9 hour) BETWEEN START_DATE AND  END_DATE;
+	]]>
   	</select>
   	
   	<insert id="insertEmailSendLog" parameterType="Map">
@@ -49,4 +51,7 @@
   	<delete id="deleteCheckSendAuthData" parameterType="String">
   	DELETE FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG WHERE USER_ID = #{userId}
   	</delete>
+  	<select id="getNowDate" resultType="String">
+  	SELECT NOW();
+  	</select>
   </mapper>

@@ -274,7 +274,7 @@ public class AdminController {
 				adminService.insertMemberInfo(json);
 
 			} else if(json.get("MODE").equals("modify")) {
-				adminService.modifyDropMemberInfo(json);
+				adminService.modifyMemberInfo(json);
 			}
 
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());

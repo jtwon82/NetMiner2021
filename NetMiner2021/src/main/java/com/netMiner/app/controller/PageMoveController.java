@@ -35,6 +35,14 @@ public class PageMoveController extends HttpServlet {
 	@Autowired
 	private SelectDao selectDao;
 	
+	@RequestMapping(value="getNow" , method= RequestMethod.GET)
+	public ModelAndView getNow(ModelAndView mv) {
+		String dateTime = selectDao.getNowDate();
+		mv.addObject("nowDateTime", dateTime);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
 	@RequestMapping(value="register" ,method =  RequestMethod.GET)
 	public String register(HttpSession session) {
 		String language = (String) session.getAttribute("language");

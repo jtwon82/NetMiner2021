@@ -118,11 +118,13 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public void deleteMemberInfoTmp(MemberVo memberVo) {
+		
 		sqlSession.delete("deleteMemberInfoTmp", memberVo);		
 	}
 
 	@Override
 	public void deleteMember(MemberVo vo) {
+
 		sqlSession.delete("deleteMemberInfo", vo);		
 	}
 
@@ -169,6 +171,12 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void deleteDropMember() {
 		sqlSession.delete("deleteDropMember");
+	}
+
+	@Override
+	public int checkDropUser(String userId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("checkDropUser",userId);
 	}
 
 

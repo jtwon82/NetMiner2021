@@ -48,11 +48,11 @@ public class GoogleController  {
 	final static String GOOGLE_AUTH_BASE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 	final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
 	final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
-	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
-	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
@@ -143,34 +143,31 @@ public class GoogleController  {
 		
 		MemberVo member = memberService.getUserInfo(memberVo);
 		if (member == null) {
-			if (!checkUserCount) {
-				if (language.equals("_EN")) {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('ID exists'); location.href='./login';</script>"); 				
-					out.flush();
-					url = "member"+language+"/login";
-				} else {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 				
-					out.flush();
-					url = "member/login";					
-				}
-			} else {
-				
-					url = "member"+language+"/register_sns_fail";									
-			}
-		//	mv.addObject("checkUserCount", checkUserCount);
+			url = "member"+language+"/register_sns_fail";									
 		} else {
-			//mv.addObject("memberVo", member);
-			if ("03".equals(member.getUserCode())) {
+			if ("03".equals(member.getUserCode()) && "N".equals(member.getUserStatsYn())) {
+				
 				// 휴면 계정인 경우 휴면 계정 페이지로 이동 후 재 로그인 
 				session.setAttribute("outMemberVo", memberVo);
 				if (language.equals("_EN")) {
 					url = "member"+language+"/activate";
 				} else {
 					url = "member/activate";				
+				}
+			} else if ("Y".equals(member.getUserStatsYn())) {
+				
+				if (language.equals("_EN")) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('The ID has been withdrawn.'); location.href='./login';</script>"); 				
+					out.flush();
+					url = "member"+language+"/login";
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out = response.getWriter(); 
+					out.println("<script>alert('해당 아이디는 탈퇴 되었습니다.'); location.href='./login';</script>"); 				
+					out.flush();
+					url = "member/login";				
 				}
 			} else {
 				session.setAttribute("memberVo", member);

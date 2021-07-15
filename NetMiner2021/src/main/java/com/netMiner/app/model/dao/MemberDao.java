@@ -51,5 +51,7 @@ public interface MemberDao {
 
 	void deleteDropMember();
 
+	int checkDropUser(String userId);
+
 
 }

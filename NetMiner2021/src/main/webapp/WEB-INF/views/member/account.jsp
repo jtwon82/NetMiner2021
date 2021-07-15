@@ -42,7 +42,7 @@
 							<ul class="input">
 								<li>
 									<c:if test="${empty userId}">
-									<input name="email" value="${memberVo.userId}" type="text" id="userId"/>
+									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
 									<c:if test="${memberVo.googleYn eq 'N'}">
 									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false" >이메일 인증</button>
 									</c:if>

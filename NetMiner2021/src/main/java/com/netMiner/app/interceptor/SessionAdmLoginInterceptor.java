@@ -34,7 +34,6 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 			// 세션체크
 			HttpSession session= request.getSession();
 			AdminVo admin= (AdminVo)session.getAttribute(Constant.ADMIN_SESSION);
-			logger.info("admin {}", admin);
 			if(admin== null){
 				response.sendRedirect("/admin/login");
 				return false;
@@ -44,16 +43,12 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 				"function","feature","whyNetMiner","registerCheckEmail",
 				"goCheckEmail","goChangePwd","register","findPwd",
 				"moveCheckEmail","activate","account"};
-		
 		for (String path : urlPath) {
 			if (url.contains(path)) {
 				Map<String, Object> checkData = selectDao.getCheckData();
-				
-				if (checkData != null) {
-					if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {
-						response.sendRedirect("/check");
-						return false;
-					}			
+				if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {
+					response.sendRedirect("./check");
+					return false;
 				}				
 			}
 		}

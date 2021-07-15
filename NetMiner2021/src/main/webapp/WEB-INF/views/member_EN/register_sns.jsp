@@ -33,7 +33,7 @@
 				<div class="wrap">
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
-						<p>Already have your account? <a href="#">Sign in</a></p>
+						<p>Already have your account? <a href="./login">Sign in</a></p>
 					</div>
 					<div class="content">
 						<div>

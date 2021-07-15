@@ -15,6 +15,7 @@
  		<result property="language" column = "LANGUAGE"/>
  		<result property="marketYn" column="MARKET_YN"/>
  		<result property="googleYn" column="GOOGLE_YN"/>
+ 		<result property="userStatsYn" column = "USER_STATS_YN"/>
  	</resultMap> 
  	<select id="selectDate" resultType="String">
  	select now();
@@ -39,11 +40,10 @@
 	; 	
  	</select>
  	<select id="getDormantUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT `NO`, USER_CODE,USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
+ 	SELECT `NO`, USER_CODE,USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN, USER_STATS_YN
 	FROM NetMiner.MEMBER_INFO_DROP
 	WHERE USER_ID =  #{userId}
 	AND USER_PWD  = password(#{userPwd})
-	AND USER_STATS_YN = 'N'
  	</select>
  	
  	<insert id="returnUserInfo" parameterType="MemberVo">
@@ -159,8 +159,7 @@
  	</select>
  	
  	<delete id="deleteMemberInfo" parameterType="MemberVo">
- 	UPDATE NetMiner.MEMBER_INFO 
- 	SET USER_STATS_YN = 'Y'
+ 	DELETE FROM NetMiner.MEMBER_INFO 
  	WHERE USER_ID = #{userId};
  	</delete>
  	
@@ -176,13 +175,12 @@
  	<update id="changeMemberInfo" parameterType="String">
  	INSERT INTO NetMiner.MEMBER_INFO_DROP
 	(USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, USER_OUT_DATE, USER_STATS_YN, UPDATE_DATE)
-	SELECT * FROM (
-	SELECT '03' AS `USER_CODE`, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, USER_OUT_DATE, USER_STATS_YN, UPDATE_DATE 
+	SELECT A.* FROM (
+	SELECT '03' AS 'USER_CODE', USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, NOW() AS 'USER_OUT_DATE', 'N' AS 'USER_STATS_YN', UPDATE_DATE 
 	FROM NetMiner.MEMBER_INFO 
-	WHERER USER_ID = #{userId}
-	)
+	WHERE USER_ID = #{userId}
+	) AS A
 	; 	
- 	DELETE NetMiner.MEMBER_INFO WHERE USER_ID = #{userId};
  	</update>
  	<update id="getPassByDormant">
  	UPDATE NetMiner.MEMBER_INFO 
@@ -219,4 +217,9 @@
  	WHERE USE_STATS_YN  = 'Y'
  	AND TIMESTAMPDIFF(DAY,USER_OUT_DATE,NOW()) = 730; 
  	</delete>
+ 	
+ 	<select id="checkDropUser" parameterType="String" resultType="Integer">
+ 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO_DROP
+ 	WHERE USER_ID = #{userId};
+ 	</select>
  </mapper>

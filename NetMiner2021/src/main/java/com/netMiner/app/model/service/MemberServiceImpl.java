@@ -101,5 +101,15 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDao.selectUserCount(param);
 	}
+	@Override
+	public void changeMemberState(MemberVo vo) {
+		memberDao.changeMemberState(vo.getUserId());
+		
+	}
+	@Override
+	public int checkDropUser(String userId) {
+		// TODO Auto-generated method stub
+		return memberDao.checkDropUser(userId);
+	}
 
 }

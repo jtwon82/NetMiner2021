@@ -1,11 +1,24 @@
 var checkRandomNumber = false;
+var now = new Date();
 $(document).ready(function() {
 	
-
+	$.ajax({
+		url :"./getNow",
+		type : "GET",
+		success : function (data) {
+			now = data.nowDateTime;
+		}
+	})
 	
+	if (location.pathname == '/login_dev') {
+		$("#register").remove("onclick");
+		$("#register").attr("onclick","window.location.href='./register'");
+		$(".google").remove("onclick");
+		$(".google").attr("onclick","googleLogin()");
+	} 
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
-		    $(this).parents(".content").find('input').prop("checked", $(this).is(":checked"));
+		    $(this).parents(".content").find('.agree input').prop("checked", $(this).is(":checked"));
 		});
 		
 		// 체크박스 개별 선택
@@ -85,15 +98,17 @@ $(document).ready(function() {
 		window.location.href="./logOut";
 	});
 
-	$(".content .input li #userId").on('input',function(){
+	$(".content .input li #email").on('input',function(){
 		var emailValue = $("#userId").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
-		if (CheckEmailRegx(emailValue)) {
-			emailStyle.style.background = "#203864";
-			$("#checkEmailBtn").attr('disabled', false);
-		} else {
-			emailStyle.style.background = "#bbb8b8";
-			$("#checkEmailBtn").attr('disabled', true);
+		if (emailStyle != '' && emailStyle != null) {		
+			if (CheckEmailRegx(emailValue)) {
+				emailStyle.style.background = "#203864";
+				$("#checkEmailBtn").attr('disabled', false);
+			} else {
+				emailStyle.style.background = "#bbb8b8";
+				$("#checkEmailBtn").attr('disabled', true);
+			}			
 		}
 	})
 	
@@ -216,7 +231,7 @@ function register() {
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
-	var now = new Date();
+	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
 	if (now > EndDate) {
 		alert("The verification code has expired. please reissue");
@@ -368,7 +383,7 @@ function changePwd(userId){
 	var newPwd = $("#newPwd").val();
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
-	var now = new Date();
+	//var now = new Date();
 	var endDate = $("#END_DATE").val();
 	if(now > endDate) {
 		alert("The password reset page has timed out. please proceed again");
@@ -453,7 +468,7 @@ function chageUserId(){
 }
 
 function registerCheckEmail(){
-	var now = new Date();
+	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
 	if (now > EndDate) {
 		alert("The current authentication number has expired. please reissue")

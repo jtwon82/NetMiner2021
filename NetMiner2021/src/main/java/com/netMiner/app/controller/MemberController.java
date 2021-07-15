@@ -499,6 +499,11 @@ public class MemberController {
 		boolean result = true ; 
 		if (count > 0) {
 			result = false;
+		} else {
+			count = memberService.checkDropUser(userId);
+			if (count > 0) {
+				result = false;
+			}
 		}
 		
 		mv.addObject("result", result);
@@ -527,6 +532,7 @@ public class MemberController {
 	@RequestMapping(value="goBack", method=RequestMethod.GET)
 	public ModelAndView goBack(HttpSession session, ModelAndView mv, HttpServletRequest request) {
 		if (session.getAttribute("userId")!= null) {
+			
 			session.removeAttribute("userId");			
 		}
 		String form = request.getParameter("form");
@@ -541,6 +547,7 @@ public class MemberController {
 	@RequestMapping(value="delteMember", method=RequestMethod.POST)
 	public ModelAndView delteMember(ModelAndView mv, HttpSession session) {
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+		memberService.changeMemberState(vo);
 		
 		memberService.deleteMember(vo);
 		

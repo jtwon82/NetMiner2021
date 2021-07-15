@@ -25,6 +25,7 @@ public class MemberVo implements Serializable{
 	private String marketYn;
 	private String authKey;
 	private String googleYn;
+	private String userStatsYn;
 	
 	
 	public Map<String,Object> getMemberInfoMap(){
@@ -39,6 +40,7 @@ public class MemberVo implements Serializable{
 		result.put("language", this.language);
 		result.put("marketYn", this.marketYn);
 		result.put("googleYn", this.googleYn);
+		result.put("userStatsYn", this.userStatsYn);
 		return result;
 	}
 }

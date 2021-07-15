@@ -32,9 +32,11 @@
 		
 		<if test="USER_CODE_STATS!=null and USER_CODE_STATS=='QUIT' ">
 			AND USER_CODE = '03'
+			AND USER_STATS_YN = 'Y'
 		</if>
 		<if test="USER_CODE_STATS!=null and USER_CODE_STATS=='REST'">
-			AND LAST_LOGIN_DATE &lt; DATE_ADD(NOW(), INTERVAL -365 DAY)
+			AND USER_CODE = '03'
+			AND USER_STATS_YN = 'N'
 		</if>
 	</sql>
 	<sql id="listPagedWhere2">
