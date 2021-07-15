@@ -70,4 +70,12 @@ public class SendEmailScheduler {
 			sendEmail.sendMarketEmail(userId, language, marketDate);
 		}
 	}
+	//탈퇴회원 1년 경과후 삭제 
+	@Scheduled(cron="0 20 9 * * *")
+	public void deleteDropMember() {
+		logger.info("deleteDropMember Start");
+		memberDao.deleteDropMember();
+		logger.info("deleteDropMember End");
+
+	}
 }

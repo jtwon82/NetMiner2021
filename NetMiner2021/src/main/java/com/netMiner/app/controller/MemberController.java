@@ -185,6 +185,7 @@ public class MemberController {
 			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
+			selectDao.deleteCheckSendAuthData(userId);
 			sendEmail.sendRegisterMail(userId, "", language);
 			
 			session.setAttribute("memberVo", memberVo);
@@ -333,7 +334,6 @@ public class MemberController {
 						.append("/").append("goChangePwd?")
 						.append("userId=").append(base64.enCodingBase64(userId))
 						.append("&language=").append(base64.enCodingBase64(language));
-			logger.info(sb.toString());
 			sendMail = sendEmail.sendReSetPwd(sb.toString(), userId, language);
 		} else {
 			userId="";
@@ -345,8 +345,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="changeNewPwd" , method=RequestMethod.POST)
 	public ModelAndView changeNewPwds(ModelAndView mv,HttpServletRequest request) {
-		Base64Util base64 = new Base64Util();
-		String userId = base64.deCodingBase64(request.getParameter("email"));
+		String userId = request.getParameter("email");
 		String userPwd = request.getParameter("pwd");
 		
 		MemberVo vo = new MemberVo();
@@ -354,6 +353,7 @@ public class MemberController {
 		vo.setUserPwd(userPwd);
 		
 		memberService.updateNewPwd(vo);
+		selectDao.deleteCheckSendAuthData(userId);
 		
 		mv.setViewName("jsonView");
 		return mv;
@@ -407,12 +407,6 @@ public class MemberController {
 		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");
-		
-		if (!"".equals(randomNumber)) {
-			session.setAttribute("userId", userId);
-			session.setAttribute("randomNumber", randomNumber);			
-		}
-		
 		return mv;
 	}
 	
@@ -521,7 +515,7 @@ public class MemberController {
 		if (language == null) {
 			language = "";
 		}
-		memberService.deleteEmailSendLog(userId);
+		selectDao.deleteCheckSendAuthData(userId);
 		
 		String randomNumber = sendEmail.sendCheckEmail(userId, language);
 		mv.addObject("randomNumber", randomNumber);

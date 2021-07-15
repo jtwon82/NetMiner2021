@@ -213,4 +213,10 @@
  	DELETE FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG
  	WHERE USER_ID = #{userId};
  	</delete>
+ 	
+ 	<delete id="deleteDropMember">
+ 	DELETE FROM NetMiner.MEMBER_INFO_DROP
+ 	WHERE USE_STATS_YN  = 'Y'
+ 	AND TIMESTAMPDIFF(DAY,USER_OUT_DATE,NOW()) = 730; 
+ 	</delete>
  </mapper>

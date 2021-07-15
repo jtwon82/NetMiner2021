@@ -216,6 +216,15 @@ function register() {
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
+	var now = new Date();
+	var EndDate = $("#END_DATE").val();
+	if (now > EndDate) {
+		alert("The verification code has expired. please reissue");
+		sessionStorage.removeItem("randomNumber");
+		checkRandomNumber = false;
+		return;
+	}
+	
 	if (checkRandomNumber) {
 		if (check1 != true || check2 != true) {
 			alert("Please agree to the mandatory terms and conditions");
@@ -359,6 +368,12 @@ function changePwd(userId){
 	var newPwd = $("#newPwd").val();
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
+	var now = new Date();
+	var endDate = $("#END_DATE").val();
+	if(now > endDate) {
+		alert("The password reset page has timed out. please proceed again");
+		return;
+	}
 	if (checkRegx) {
 		if (newPwd == newPwd2) {	
 			$(function (){
@@ -438,8 +453,16 @@ function chageUserId(){
 }
 
 function registerCheckEmail(){
+	var now = new Date();
+	var EndDate = $("#END_DATE").val();
+	if (now > EndDate) {
+		alert("The current authentication number has expired. please reissue")
+		sessionStorage.clear();
+		return ;		
+	} else {
 	sessionStorage.clear();
-	window.location.href="./registerCheckEmail";
+	window.location.href="./registerCheckEmail";		
+	}
 }
 
 function updateUserInfo(googleYn){

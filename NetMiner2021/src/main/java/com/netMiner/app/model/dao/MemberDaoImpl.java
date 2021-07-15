@@ -167,9 +167,9 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public void deleteEmailSendLog(String userId) {
-		
-		sqlSession.delete("deleteEmailSendLog", userId);
+	public void deleteDropMember() {
+		sqlSession.delete("deleteDropMember");
 	}
+
 
 }

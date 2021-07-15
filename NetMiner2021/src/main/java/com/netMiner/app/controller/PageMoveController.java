@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.model.vo.NationVo;
+import com.netMiner.app.util.Base64Util;
 
 /**
  * Servlet implementation class PageMoveController
@@ -110,15 +111,17 @@ public class PageMoveController extends HttpServlet {
 	
 	@RequestMapping(value="goChangePwd", method=RequestMethod.GET) 
 	public ModelAndView goChangePwd (ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-		String userId = request.getParameter("userId");
-		String language = request.getParameter("language");
-		
+		Base64Util base64 = new Base64Util();
+		String userId = base64.deCodingBase64(request.getParameter("userId"));
+		String language = base64.deCodingBase64(request.getParameter("language"));
 		if (language == null) {
 			language = "";
 		}
-		
-		logger.info("userid -{}", userId);
-		mv.addObject("userId", userId);
+		Map<String,Object> authData = selectDao.getauthData(userId);
+		if (authData != null) {			
+			mv.addObject("userId", userId);
+			mv.addObject("authData",authData);
+		}
 		mv.setViewName("member"+language+"/searchPw");
 		
 		return mv;
@@ -139,11 +142,13 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
-	public String registerCheckEmail (HttpSession session) {
+	public String registerCheckEmail (HttpSession session, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
+		String userId = request.getParameter("userId");
 		if (language == null) {
 			language = "";
 		}
+		selectDao.deleteCheckSendAuthData(userId);
 		String path = "member"+ language;
 		return path+"/account";
 	}

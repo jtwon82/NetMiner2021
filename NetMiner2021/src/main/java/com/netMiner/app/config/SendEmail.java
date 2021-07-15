@@ -63,7 +63,7 @@ public class SendEmail {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("userId", userId);
 		param.put("emailCode", emailCode);
-		param.put("randomNmber", "");
+		param.put("randomNumber", "");
 		selectDao.insertEmailSendLog(param);
 		
 		String title = vo.getTitle();
@@ -98,7 +98,7 @@ public class SendEmail {
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("userId", userId);
 			param.put("emailCode", emailCode);
-			param.put("randomNmber", randomNumber);
+			param.put("randomNumber", randomNumber);
 			selectDao.insertEmailSendLog(param);
 		}
 		

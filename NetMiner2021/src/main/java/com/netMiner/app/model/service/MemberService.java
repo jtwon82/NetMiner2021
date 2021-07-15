@@ -38,7 +38,7 @@ public interface MemberService {
 
 	int selectUserCount(Map<String, Object> param);
 
-	void deleteEmailSendLog(String userId);
+	
 
 	
 }

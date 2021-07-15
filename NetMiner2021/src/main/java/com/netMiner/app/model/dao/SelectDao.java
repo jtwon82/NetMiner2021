@@ -18,5 +18,7 @@ public interface SelectDao {
 
 	Map<String,Object> getauthData(String userId);
 
+	void deleteCheckSendAuthData(String userId);
+
 
 }

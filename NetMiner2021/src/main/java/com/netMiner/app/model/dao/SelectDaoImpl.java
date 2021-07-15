@@ -47,4 +47,11 @@ public class SelectDaoImpl implements SelectDao {
 		
 		return sqlSession.selectOne("getauthData", userId);
 	}
+
+	@Override
+	public void deleteCheckSendAuthData(String userId) {
+		
+		sqlSession.delete("deleteCheckSendAuthData", userId);
+		
+	}
 }
