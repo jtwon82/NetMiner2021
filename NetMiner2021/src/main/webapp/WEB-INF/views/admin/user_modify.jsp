@@ -76,7 +76,12 @@
 								</tr>
 								<tr>
 									<th>최근 수신 동의  </td>
+									<c:if test="${item.MARKET_YN eq 'Y'}">
 									<td>${item.MARKET_DATES }</td>
+									</c:if>
+									<c:if test="${item.MARKET_YN eq 'N'}">
+									<td> - </td>
+									</c:if>
 								</tr>
 								<tr>
 									<th>최근 로그인</td>

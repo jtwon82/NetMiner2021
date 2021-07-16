@@ -42,7 +42,7 @@
 											
 							<ul class="input">
 								<li><input placeholder="이메일" type="text" name="email" id ="email"/></li>
-								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd"/><span class="sum">영문, 숫자 조합 6~20 글자</span></li>
+								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd"/><span class="sum">영문, 숫자 조합 8~20 글자</span></li>
 								<li><input placeholder="소속기관" type="text" name="company" id="company"/></li>
 							</ul>
 							<select name="nation" id="nation">
@@ -59,7 +59,7 @@
 									<li ><label><input type="radio" checked="checked" name="useCode" value="02"><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<button class="authentic trs" onClick="checkEmail();">이메일 인증</button>							
+							<button class="authentic trs" id="emailChecker" onClick="checkEmail();">이메일 인증</button>							
 							<span class="line">또는</span>
 							<button class="google trs" onClick="googleRegister();">Continue in with Google</button>
 						</div>

@@ -35,11 +35,11 @@
 						<p>계정이 휴면 상태입니다</p>
 					</div>
 					<div class="content">
-						<p>1년 이상 NetMiner 365 를 이용하지 않아서
+						<p>1년 이상 NetMiner 365 를 이용하지 않아서<br> 
 계정이 휴면 상태로 전환되었습니다.
 <br><br>
-서비스를 다시 이용하고 싶은 경우에는
-아래 ‘휴먼 계정 해제하고 로그인’을 클릭해 주세요.</p>
+서비스를 다시 이용하고 싶은 경우에는 <br> 
+아래 ‘휴면 계정 해제하고 로그인’을 클릭해 주세요.</p>
 					
 						<button class="actiAccount trs active" onClick="window.location.href='./turnToGeneral'">휴면 계정 해제하고 로그인</button>
 						<a class="back" href="./login" >로그인으로 돌아가기 </a>
@@ -49,6 +49,9 @@
 			</div>
 			<%@include file = "../common/footer.jsp" %>
 		</div>
-	
 	</body>
+	<c:if test="${empty outMemberVo}"> 
+		<script> $(function (){ window.location.href="./login";})</script>
+	</c:if>
+	<script> window.onpopstate= function (event){ window.location.replace("./login");}</script>
 </html>

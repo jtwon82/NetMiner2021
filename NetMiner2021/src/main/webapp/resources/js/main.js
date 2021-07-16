@@ -2,14 +2,7 @@ var checkRandomNumber = false;
 var now = new Date();
 $(document).ready(function() {
 	
-	$.ajax({
-		url :"./getNow",
-		type : "GET",
-		success : function (data) {
-			now = data.nowDateTime;
-		}
-	})
-	
+		
 	if (location.pathname == '/login_dev') {
 		$("#register").remove("onclick");
 		$("#register").attr("onclick","window.location.href='./register'");
@@ -63,7 +56,7 @@ $(document).ready(function() {
 	});
 	$("#authentic").click(function(){		
 		sessionStorage.clear();
-		window.history.back();
+		location.href = document.referrer;
 	})
 	$(".cancel").click(function (){
 		sessionStorage.clear();
@@ -217,6 +210,7 @@ function register() {
 	var check3 = $("#check3").prop("checked");
 	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
+	setNowDate();
 	if (now > EndDate) {
 		alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
 		sessionStorage.removeItem("randomNumber");
@@ -259,7 +253,7 @@ function googleLogin(){
 	var redirectPrd="https://www.netminer365.com/auth";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 	
 	
 }
@@ -316,7 +310,7 @@ function googleRegister() {
 	var redirectPrd="https://www.netminer365.com/socialRegister";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectLocal+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
 function requestSetPwd() {
@@ -367,8 +361,9 @@ function changePwd(userId){
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
 	//var now = new Date();
-	var endDate = $("#END_DATE").val();
-	if(now > endDate) {
+	var EndDate = $("#END_DATE").val();
+	setNowDate();
+	if(now > EndDate) {
 		alert("비밀번호 재설정 페이지의 시간이 만료되었습니다. 다시 진행 해주세요");
 		return;
 	}
@@ -454,6 +449,7 @@ function chageUserId(){
 function registerCheckEmail(){
 	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
+	setNowDate();
 	if (now > EndDate) {
 		alert("현재 인증번호가 만료 되었습니다. 다시 발급해주세요")
 		sessionStorage.clear();
@@ -602,3 +598,12 @@ function changeLanguage(language) {
 	})
 }
 
+function setNowDate(){
+	$.ajax({
+		url :"./getNow",
+		type : "GET",
+		success : function (data) {
+			now = data.nowDateTime;
+		}
+	})
+}

@@ -59,6 +59,7 @@ public class PageMoveController extends HttpServlet {
 		if (language == null) {
 			language = request.getParameter("language") == null ? "" : request.getParameter("language");
 		}
+		
 		String path = "member"+ language;
 		return path+"/login";
 	}
@@ -128,7 +129,7 @@ public class PageMoveController extends HttpServlet {
 		Map<String,Object> authData = selectDao.getauthData(userId);
 		if (authData != null) {			
 			mv.addObject("userId", userId);
-			mv.addObject("authData",authData);
+			mv.addObject("authData", authData);
 		}
 		mv.setViewName("member"+language+"/searchPw");
 		

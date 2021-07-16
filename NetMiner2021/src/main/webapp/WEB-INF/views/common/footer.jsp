@@ -33,8 +33,8 @@
 								<p>패밀리사이트<span></span></p>
 								<ul>
 									<li><a href="http://www.netminer.com/" target="_blank">NetMiner</a></li>
-									<li><a href="http://www.cyram.com/" target="_blank">Cyram</a></li>
-									<li><a href="http://edu.cyram.com" target="_blank">사이람 교육센터</a></li>
+									<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank">Cyram</a></li>
+									<li><a href="http://edu.cyram.com" target="_blank" style="color:gray; cursor: default; pointer-events:none ">사이람 교육센터</a></li>
 								</ul>
 							</div>
 							<ul class="sns kr obj">

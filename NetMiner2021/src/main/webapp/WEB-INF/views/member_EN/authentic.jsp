@@ -57,7 +57,7 @@ This code will be valid for 30 minites.</p>
 						<c:if test="${!empty memberVo}">
 						<button class="create trs active" onClick="registerCheckEmail()">Email Authentication</button>
 						</c:if>
-						<a class="back" href="#" >Back to Register</a>
+						<a class="back" id="authentic" style="cursor:pointer; ">Back to Register</a>
 					</div>
 					
 				</div>

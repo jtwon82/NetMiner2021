@@ -2,14 +2,6 @@ var checkRandomNumber = false;
 var now = new Date();
 $(document).ready(function() {
 	
-	$.ajax({
-		url :"./getNow",
-		type : "GET",
-		success : function (data) {
-			now = data.nowDateTime;
-		}
-	})
-	
 	if (location.pathname == '/login_dev') {
 		$("#register").remove("onclick");
 		$("#register").attr("onclick","window.location.href='./register'");
@@ -61,17 +53,9 @@ $(document).ready(function() {
 			openPoup("refuse_popup");
 		}
 	});
-	$(".back").click(function(){		
-		$(function(){
-			$.ajax({
-				url : "./goBack",
-				type : "GET",
-				success : function (data) {
-					sessionStorage.clear();
-					window.history.back();
-				}
-			})
-		})
+	$("#authentic").click(function(){		
+		sessionStorage.clear();
+		location.href = document.referrer;
 	})
 	$(".cancel").click(function (){
 		sessionStorage.clear();
@@ -141,10 +125,10 @@ function CheckEmailRegx(emailVal)
 
 }
 function CheckPwd(pwdVal) {
-		var regExp= /^[0-9a-zA-Z]{4,20}$/i;
+		var regExp= /^[0-9a-zA-Z]{8,20}$/i;
 		if (pwdVal.match(regExp)!= null) {
-			var numberExp = /^[0-9]{4,20}$/i
-			var strExp = /^[a-zA-Z]{4,20}$/i
+			var numberExp = /^[0-9]{8,20}$/i
+			var strExp = /^[a-zA-Z]{8,20}$/i
 			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
 				alert("It must consist of one or more letters or numbers.");
 				return false;
@@ -233,6 +217,7 @@ function register() {
 	var check3 = $("#check3").prop("checked");
 	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
+	setNowDate();
 	if (now > EndDate) {
 		alert("The verification code has expired. please reissue");
 		sessionStorage.removeItem("randomNumber");
@@ -385,6 +370,7 @@ function changePwd(userId){
 	var checkRegx = CheckPwd(newPwd);
 	//var now = new Date();
 	var endDate = $("#END_DATE").val();
+	setNowDate();
 	if(now > endDate) {
 		alert("The password reset page has timed out. please proceed again");
 		return;
@@ -470,6 +456,7 @@ function chageUserId(){
 function registerCheckEmail(){
 	//var now = new Date();
 	var EndDate = $("#END_DATE").val();
+	setNowDate();
 	if (now > EndDate) {
 		alert("The current authentication number has expired. please reissue")
 		sessionStorage.clear();
@@ -616,3 +603,12 @@ function changeLanguage(language) {
 	})
 }
 
+function setNowDate(){
+	$.ajax({
+		url :"./getNow",
+		type : "GET",
+		success : function (data) {
+			now = data.nowDateTime;
+		}
+	})
+}

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.netMiner.app.config.Constant;
 import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.vo.AdminVo;
+import com.netMiner.app.model.vo.MemberVo;
 
 public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 	private static final Logger logger= LoggerFactory.getLogger(SessionAdmLoginInterceptor.class);
@@ -49,9 +50,19 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 				if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {
 					response.sendRedirect("./check");
 					return false;
-				}				
+				}
 			}
 		}
+		if ("account".contains(url)) {
+			HttpSession session= request.getSession();
+			MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+			if (vo == null) {
+				response.sendRedirect("/");
+				return false;
+			}
+			
+		}
+		
 		return true;
 	}
 	

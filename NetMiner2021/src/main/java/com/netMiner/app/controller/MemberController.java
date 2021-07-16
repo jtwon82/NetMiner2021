@@ -95,7 +95,7 @@ public class MemberController {
 		return url;
 	}
 	
-	@RequestMapping(value="loginUser", method = RequestMethod.POST) 
+	@RequestMapping(value="loginUser", method = {RequestMethod.POST,RequestMethod.GET}) 
 	public String loginUser(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
 		CryptUtil cu = new CryptUtil();
 		MemberVo memberVo = new MemberVo();
@@ -103,6 +103,10 @@ public class MemberController {
 		String language = (String) session.getAttribute("language");
 		if (language == null) {
 			language = "";
+		}
+		if (session.getAttribute("outMemberVo") != null) {
+			session.removeAttribute("outMemberVo");
+			return "member"+language+"/login";
 		}
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -114,7 +118,7 @@ public class MemberController {
 			
 			memberVo = memberService.getUserInfo(memberVo);
 			
-			if (memberVo == null) {
+			if (memberVo == null || "Y".equals(memberVo.getUserStatsYn())) {
 				if (! "_EN".equals(language)) {
 					response.setContentType("text/html; charset=UTF-8"); 
 					PrintWriter out = response.getWriter(); 
@@ -129,7 +133,7 @@ public class MemberController {
 					url  = "member"+language+"/login";		
 				}
 			} else {
-				if ("03".equals(memberVo.getUserCode())) {
+				if ("03".equals(memberVo.getUserCode())&& "N".equals(memberVo.getUserStatsYn())) {
 					session.setAttribute("outMemberVo", memberVo);
 					url = "member"+language+"/activate";
 				} else {

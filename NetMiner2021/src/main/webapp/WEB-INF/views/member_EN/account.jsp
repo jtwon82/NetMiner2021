@@ -52,7 +52,7 @@
 									</c:if>
 								</li>
 								<c:if test="${memberVo.googleYn eq 'N'}">
-								<li><input placeholder="" type="password" id ="pwd" onchange="showUpdate()"/></li>
+								<li><input placeholder="Please enter your password in order to save changes." type="password" id ="pwd" onchange="showUpdate()"/></li>
 								</c:if>
 								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onchange="showUpdate()"/></li>
 							</ul>

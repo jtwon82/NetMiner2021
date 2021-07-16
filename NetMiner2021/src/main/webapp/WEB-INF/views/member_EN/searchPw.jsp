@@ -37,7 +37,7 @@
 					<c:if test="${empty userId}">
 					<div class="step1">
 						<div class="title">
-							<h2>Do you forgot your password?</h2>
+							<h2>Do you forget your password?</h2>
 							<p>Reset your password</p>
 						</div>
 						<div class="content">
@@ -57,7 +57,7 @@
 					<c:if test="${!empty userId}">
 					<div class="step2" >
 						<div class="title">
-							<h2>Reset you password</h2>
+							<h2>Reset your password</h2>
 							<p>Reset your password</p>
 						</div>
 						<div class="content">
@@ -75,7 +75,7 @@
 								</ul>
 							</div>
 							<button class="changePw trs active" onClick="changePwd('${userId}')">Reset password and sign-in</button>
-							<a class="back" href="./login" >Back to Sign-in </a>
+							<a class="back" href="./login" style="cursor:pointer; ">Back to Sign-in </a>
 						</div>
 					</div>
 					</c:if>

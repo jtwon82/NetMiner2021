@@ -77,18 +77,10 @@ public class GoogleController  {
 		try {			
 			if (authCode == null || authCode.equals("")) {
 				if (language.equals("_EN")) {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('Please try again when reloading');</script>"); 				
-					out.flush();
 					
 					mv.setViewName("member"+language+"/login");
 					return mv;			
 				} else {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('새로고침시 다시 시도해주세요');</script>"); 				
-					out.flush();
 					mv.setViewName("member/login");
 					return mv;					
 				}
@@ -202,17 +194,9 @@ public class GoogleController  {
 		}
 		try {
 			if (authCode == null || authCode.equals("")) {
-				if (language.equals("_EN")) {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('Please try again when reloading'); window.location.href='./register';</script>"); 				
-					out.flush();					
+				if (language.equals("_EN")) {		
 					mv.setViewName("member"+language+"/login");
 				} else {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('새로고침시 다시 시도해주세요'); window.location.href='./register';</script>"); 				
-					out.flush();
 					mv.setViewName("member/login");				
 				}
 				return mv;

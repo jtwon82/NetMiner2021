@@ -53,7 +53,7 @@
 									</c:if>
 								</li>
 								<c:if test="${memberVo.googleYn eq 'N'}">
-								<li><input placeholder="비밀번호" type="password" id ="pwd" onchange="showUpdate()"/></li>
+								<li><input placeholder="안전한 프로필 수정을 위해 비밀번호를 입력해주세요" type="password" id ="pwd"  onchange="showUpdate()"/></li>
 								</c:if>
 								<li><input value="${memberVo.company}" type="text" id ="company" onchange="showUpdate()"/></li>
 							</ul>

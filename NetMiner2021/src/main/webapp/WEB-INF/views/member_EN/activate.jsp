@@ -49,6 +49,9 @@ click 'Restore and sign-in'.</p>
 			</div>
 			<%@include file = "../common_EN/memberFooter.jsp" %>
 		</div>
-	
+		<c:if test="${empty outMemberVo}"> 
+		<script> $(function (){ window.location.href="./login";})</script>
+	</c:if>
+	<script> window.onpopstate= function (event){ window.location.replace("./login");}</script>
 	</body>
 </html>

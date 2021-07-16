@@ -39,3 +39,17 @@ $(function (){
 	});
 
 })
+
+/*function showEmailRegister(){
+	var email = $("#email").val();
+	var pwd = $("#pwd").val();
+	var company = $("#commpany").val();
+	var nation = $("#nation").val();
+	var useCode = $(".useCode").val();
+	
+	if (email != null && email != '' && pwd != null && pwd != '' &&
+	 company != null && company != '' &&nation != null && nation != '' && useCode != null && useCode != '' ) {
+		
+	}
+	
+}*/

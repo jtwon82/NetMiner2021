@@ -34,7 +34,7 @@
 								<ul>
 									<li><a href="http://www.netminer.com/" target="_blank">NetMiner</a></li>
 									<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank" style="">Cyram</a></li>
-									<li style="display:none;"><a href="http://edu.cyram.com" target="_blank">Cyram Education </a></li>
+									<li><a href="http://edu.cyram.com" target="_blank" style="color:gray; cursor: default; pointer-events:none ">Cyram Education </a></li>
 								</ul>
 							</div>
 							<ul class="sns kr obj" style="display:none;">
