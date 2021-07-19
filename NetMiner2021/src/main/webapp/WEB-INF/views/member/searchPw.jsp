@@ -35,7 +35,7 @@
 					<c:if test="${empty userId}">
 					<div class="step1">
 						<div class="title">
-							<h2>Do you forgot your password?</h2>
+							<h2>Do you forget your password?</h2>
 							<p>비밀번호를 재설정 하시겠습니까?</p>
 						</div>
 						<div class="content">

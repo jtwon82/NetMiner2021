@@ -350,7 +350,7 @@
 	SELECT 
 	STR_TO_DATE(CONCAT(#{START_DATE}, #{START_HH}),'%Y-%m-%d %H') AS START_DATE 
 	<if test="END_DATE != null and ! END_DATE.equals('')">, STR_TO_DATE(CONCAT(#{END_DATE}, #{END_HH}),'%Y-%m-%d %H')  </if>
-	<if test="END_DATE == null or END_DATE.equals('')">, ''</if>AS END_DATE 
+	<if test="END_DATE == null or END_DATE.equals('')">, NULL</if>AS END_DATE 
 	, #{COMMENT_KR} AS COMMENT_KR
 	, #{COMMENT_EN} AS COMMENT_EN
 	, #{STATS_YN} AS STATS_YN

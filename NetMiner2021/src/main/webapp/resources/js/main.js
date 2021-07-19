@@ -549,7 +549,6 @@ function updateUserInfo(googleYn){
 };
 
 function newRandomNumber(uesrId) {
-	var userId = sessionStorage.getItem("email");
 	var con = document.getElementById("dimmed");
 			con.style.removeProperty("display");
 	$(function (){
@@ -561,10 +560,8 @@ function newRandomNumber(uesrId) {
 			}, 
 			success : function(data) {
 				if (data.randomNumber != "") {
-					sessionStorage.setItem("randomNumber", data.randomNumber);
 					alert("인증번호 재전송 되었습니다.");
 					con.style.display = 'none';
-					location.reload();
 				}
 			}
 			

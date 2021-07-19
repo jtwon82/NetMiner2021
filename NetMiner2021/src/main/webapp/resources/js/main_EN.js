@@ -34,16 +34,7 @@ $(document).ready(function() {
 		$(".popup").fadeOut();
 		$("body").css("overflow-y","auto");
 	});
-	
-	$(".content .input #code").on('input',function(){
-		var randomNumber = sessionStorage.getItem("randomNumber");
-		var inputNumber = $("#code").val();
-		if (inputNumber==randomNumber) {
-			checkRandomNumber = true;
-			document.getElementById('code').readOnly = true
-			alert("Authentication has been completed.");
-		}
-	});
+
 	$("#check").change(function (){
 		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
 			openPoup("agree_popup");
@@ -83,7 +74,7 @@ $(document).ready(function() {
 	});
 
 	$(".content .input li #email").on('input',function(){
-		var emailValue = $("#userId").val();
+		var emailValue = $("#email").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
 		if (emailStyle != '' && emailStyle != null) {		
 			if (CheckEmailRegx(emailValue)) {
@@ -184,8 +175,6 @@ function checkEmail(){
 													alert("Email sending failed");
 													window.location.href = "./register";
 												} else{
-													sessionStorage.setItem("randomNumber", data.randomNumber);
-													sessionStorage.setItem("email", userId);
 													alert("It has been sent to " + userId);
 													window.location.href= "./moveCheckEmail";					
 												}
@@ -212,49 +201,47 @@ function checkEmail(){
 
 function register() {
 	var marketYn = "N";
+	var code = $("#code").val();
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
-	var check3 = $("#check3").prop("checked");
-	//var now = new Date();
-	var EndDate = $("#END_DATE").val();
-	setNowDate();
-	if (now > EndDate) {
-		alert("The verification code has expired. please reissue");
-		sessionStorage.removeItem("randomNumber");
-		checkRandomNumber = false;
-		return;
-	}
-	
-	if (checkRandomNumber) {
-		if (check1 != true || check2 != true) {
-			alert("Please agree to the mandatory terms and conditions");
-		} else {
-			if (check3 == true) {
-				marketYn = "Y";
+	var check3 = $("#check3").prop("checked");	
+	$(function(){		
+		$.ajax({
+			url : "./checkRandomNumber",
+			data : {"email": userId , "randomNumber" : code},
+			type : "POST" ,
+			success : function (data) {
+				if (data.result == 'codeFail') {
+					alert("Please enter the verification code.");
+				} else if (data.result == 'timeOver'){
+					alert("The verification code has expired. please reissue.");
+				} else {
+					if (check1 != true || check2 != true) {
+						alert("Please agree to the mandatory terms and conditions");
+					} else {
+						if (check3 == true) {
+							marketYn = "Y";
+						}			
+				var email = userId;
+				var con = document.getElementById("dimmed");
+					con.style.removeProperty("display");
+					$.ajax({
+						url :"./registerStep",
+						type:"POST",
+						data:{
+							'email':email, 'marketYn': marketYn 
+						},
+						success: function (data){
+							alert("Membership completed");
+							sessionStorage.clear();
+							window.location.href= "./registerComplete";
+						} 					
+					})
+				}
+				}
 			}
-			
-			var email = sessionStorage.getItem("email");
-			var con = document.getElementById("dimmed");
-				con.style.removeProperty("display");
-			$(function(){
-				$.ajax({
-					url :"./registerStep",
-					type:"POST",
-					data:{
-						'email':email, 'marketYn': marketYn 
-					},
-					success: function (data){
-						alert("Membership completed");
-						sessionStorage.clear();
-						window.location.href= "./registerComplete";
-					} 
-					
-				})
-			});	
-		}
-	} else {
-		alert("Please enter the verification code");
-	}
+			})
+		})
 }
 function googleLogin(){
 	var redirectLocal = "http://localhost:8080/auth";
@@ -408,21 +395,33 @@ function changeEmail(userId) {
 	}
 	 var con = document.getElementById("dimmed");
 		 con.style.removeProperty("display");
-	$(function (){
-		$.ajax({
-			url:"./changeEmail",
-			type:"POST",
-			data:{'email':email},
-			success : function (data) {
-				if (data.randomNumber != "") {
-					sessionStorage.setItem("randomNumber", data.randomNumber);
-					window.location.href="./goCheckEmail?userId="+email;					
-				} else {
-					alert("Email sending failed");
-				}
-			}
-		});
-	});
+		 $(function (){		
+				$.ajax({
+					url:"./checkUser",
+					type :"POST",
+					data : {
+								'email' : userId
+					},
+					success : function (data) {
+						if (!data.result) {
+							alert("This Member already Exits");
+						} else {
+							$.ajax({
+								url:"./changeEmail",
+								type:"POST",
+								data:{'email':email},
+								success : function (data) {
+									if (data.randomNumber != "") {
+										window.location.href="./goCheckEmail?userId="+email;					
+									} else {
+										alert("Email sending failed");
+									}
+								}
+							});
+						}
+					}
+				})	
+			})	
 }
 
 function chageUserId(){
@@ -454,17 +453,23 @@ function chageUserId(){
 }
 
 function registerCheckEmail(){
-	//var now = new Date();
-	var EndDate = $("#END_DATE").val();
-	setNowDate();
-	if (now > EndDate) {
-		alert("The current authentication number has expired. please reissue")
-		sessionStorage.clear();
-		return ;		
-	} else {
-	sessionStorage.clear();
-	window.location.href="./registerCheckEmail";		
-	}
+	var code = $("#code").val();
+	$(function(){	
+		$.ajax({
+		url : "./checkRandomNumber",
+		data : {"email": userId , "randomNumber" : code},
+		type : "POST" ,
+		success : function(data) {
+				if (data.result == 'codeFail') {
+					alert("Please enter a valid code.");
+				} else if (data.result == 'timeOver'){
+					alert("The current authentication number has expired. please reissue");
+				} else {
+					window.location.href="./registerCheckEmail?userId="+userId;			
+				}
+			}
+		})
+	})	
 }
 
 function updateUserInfo(googleYn){
@@ -550,8 +555,7 @@ function updateUserInfo(googleYn){
 	}
 };
 
-function newRandomNumber() {
-	var userId = sessionStorage.getItem("email");
+function newRandomNumber(uesrId) {
 	var con = document.getElementById("dimmed");
 			con.style.removeProperty("display");
 	$(function (){
@@ -563,10 +567,8 @@ function newRandomNumber() {
 			}, 
 			success : function(data) {
 				if (data.randomNumber != "") {
-					sessionStorage.setItem("randomNumber", data.randomNumber);
 					alert("The verification code has been retransmitted.");
 					con.style.display = 'none';
-					location.reload();
 				}
 			}
 			

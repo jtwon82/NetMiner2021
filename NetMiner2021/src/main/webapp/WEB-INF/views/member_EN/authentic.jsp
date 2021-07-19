@@ -36,26 +36,26 @@
 						<h2>You're almost there..</h2>
 					</div>
 					<div class="content">
-						<p>We've sent a 7 digit code to <span>(입력한 이메일 주소)</span><br>
+						<p>We've sent a 7 digit code to <span>${userId}</span><br>
 This code will be valid for 30 minites.</p>
 						<div class="input">
 							<p>Verification Code</p>
 							<input placeholder="" type="text" id="code"/>
-							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="#" class="blue" onClick="newRandomNumber();">Resend Code</a></p>
+							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="#" class="blue"  onClick="newRandomNumber('${userId}');">Resend Code</a></p>
 						</div>
 						<c:if test="${empty memberVo}">
 						<div class="agree">
 								<label><input id="check_all" type="checkbox" name=""><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a href="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a href="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name="marketYn"  value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 						</div>
 						</c:if>
 						<c:if test="${empty memberVo}">
-						<button class="create trs active" onClick="register()">Create Account</button>
+						<button class="create trs active" onClick="register('${userId}')">Create Account</button>
 						</c:if>
 						<c:if test="${!empty memberVo}">
-						<button class="create trs active" onClick="registerCheckEmail()">Email Authentication</button>
+						<button class="create trs active" onClick="registerCheckEmail('${userId}')">Email Authentication</button>
 						</c:if>
 						<a class="back" id="authentic" style="cursor:pointer; ">Back to Register</a>
 					</div>

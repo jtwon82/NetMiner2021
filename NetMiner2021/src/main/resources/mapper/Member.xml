@@ -228,7 +228,8 @@
  	SELECT CASE WHEN NOW() < END_DATE THEN 'Y'
 	   ELSE 'N' END DATE_CHECK , AUTH_CODE 
  	FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG
- 	WHERE USER_ID = #{userId};
+ 	WHERE USER_ID = #{userId}
+ 	AND NO = (SELECT MAX(NO) FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG WHERE USER_ID = #{userId});
  	]]>
  	</select>
  </mapper>
