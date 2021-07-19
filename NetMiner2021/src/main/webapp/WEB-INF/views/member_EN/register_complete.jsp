@@ -44,7 +44,7 @@
 	data from inside big data and
 	performing analysis combining
 	Graph Analytics and machine learning</p>
-									<a href="#">Learn more</a>
+									<a href="./features">Learn more</a>
 								</li>
 								<li>
 									<h3>Support</h3>
@@ -52,7 +52,7 @@
 	about NetMiner 365?
 	<br><br>
 	Don't hesitate to contact us.</p>
-									<a href="#">Contact us</a>
+									<a href="./">Contact us</a>
 								</li>
 								<li>
 									<h3>Start NetMiner 365</h3>
@@ -61,7 +61,7 @@
 	<br><br>
 	Let's get started with NetMiner 365<br>
 	for Free !</p>
-									<a href="#">Start now</a>
+									<a href="./">Start now</a>
 								</li>
 							</ul>
 							

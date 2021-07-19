@@ -37,7 +37,7 @@
 				</p>
 				<div class="box">
 					<ul>
-						<li><span>점검 시간</span><b>${checkData.START_DATE } ~ ${checkData.END_DATE}</b></li>
+						<li><span>점검 시간</span><b>${checkData.START_DATE} ~ ${checkData.END_DATE}</b></li>
 						<li><span>점검 내용</span><b>${checkData.COMMENT_KR}</b></li>
 					</ul>
 				</div>

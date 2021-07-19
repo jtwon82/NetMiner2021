@@ -111,5 +111,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDao.checkDropUser(userId);
 	}
+	@Override
+	public Map<String, Object> checkRandomNumber(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return memberDao.checkRandomNumber(param);
+	}
 
 }

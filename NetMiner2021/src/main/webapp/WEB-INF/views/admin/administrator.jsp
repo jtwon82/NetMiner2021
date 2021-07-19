@@ -38,7 +38,7 @@
 					</table>
 					 <%@ include file="paging.jsp"%>
 					<div class="register">
-						<button class="navy"><a href="administrator_modify">등록</a></button>
+						<button class="navy"><a href="./administrator_modify">등록</a></button>
 					</div>
 					</div>
 					

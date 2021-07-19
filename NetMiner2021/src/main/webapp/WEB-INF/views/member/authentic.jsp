@@ -28,7 +28,6 @@
 	<body>
 	<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub authentic">
-		<input type="hidden" id="END_DATE" value="${authData.END_DATE}">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
@@ -36,26 +35,26 @@
 						<h2>You're almost there..</h2>
 					</div>
 					<div class="content">
-						<p>7글자의 인증 코드를 (입력한 이메일 주소)로 발송했습니다.<br>
+						<p>7글자의 인증 코드를 ${userId} 로 발송했습니다.<br>
 인증코드는 30 분간 유효합니다.</p>
 						<div class="input">
 							<p>인증코드</p>
 							<input placeholder="" type="text" id="code"/>
-							<p class="sum">메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.<br>또는 <a href="#" class="blue" onClick="newRandomNumber();">인증코드 재발송</a></p>
+							<p class="sum">메일을 찾을 수 없다면, 스팸 폴더를 확인해 보십시오.<br>또는 <a href="#" class="blue" onClick="newRandomNumber('${userId}');">인증코드 재발송</a></p>
 						</div>
 						<c:if test="${empty memberVo}">
 						<div class="agree">
 							<label><input id="check_all" type="checkbox"><em></em>모두 동의합니다.</label>
 							<label><input id="check1" class="check" type="checkbox" name="age"><em></em>만 16 세 이상입니다 <span>(필수)</span></label>
-							<label><input id="check2" class="check" type="checkbox" name="using"><em></em><a href="window.open('./TermsOfService')" class="blue">이용약관</a>과 <a href="window.open(./Privacy)" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
+							<label><input id="check2" class="check" type="checkbox" name="using"><em></em><a onClick="window.open('./TermsOfService')" class="blue">이용약관</a>과 <a onClick="window.open(./Privacy)" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
 							<label><input id="check2" class="check" type="checkbox" name="marketYn" value="Y"><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(선택)</span></label>
 						</div>
 						</c:if>
 						<c:if test="${empty memberVo}">
-						<button class="create trs active" onClick="register()">계정 생성</button>
+						<button class="create trs active" onClick="register('${userId}')">계정 생성</button>
 						</c:if>
 						<c:if test="${!empty memberVo}">
-						<button class="create trs active" onClick="registerCheckEmail()">이메일 인증</button>
+						<button class="create trs active" onClick="registerCheckEmail('${userId}')">이메일 인증</button>
 						</c:if>
 						<a class="back" id="authentic" style="cursor:pointer; ">전 단계로 돌아가기</a>
 					</div>

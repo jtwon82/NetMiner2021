@@ -1,5 +1,6 @@
 package com.netMiner.app.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -119,21 +120,44 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goChangePwd", method=RequestMethod.GET) 
-	public ModelAndView goChangePwd (ModelAndView mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	public String goChangePwd (Model mv, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		Base64Util base64 = new Base64Util();
 		String userId = base64.deCodingBase64(request.getParameter("userId"));
 		String language = base64.deCodingBase64(request.getParameter("language"));
+		
+		String url = "";
+		
 		if (language == null) {
 			language = "";
 		}
-		Map<String,Object> authData = selectDao.getauthData(userId);
-		if (authData != null) {			
-			mv.addObject("userId", userId);
-			mv.addObject("authData", authData);
+		try {
+			Map<String,Object> result = selectDao.getauthData(userId);
+			String DATE_CHECK = (String) result.get("DATE_CHECK");
+			if ( "Y".equals(DATE_CHECK)) {
+				mv.addAttribute("userId",userId);
+				url = "member"+language+"/searchPw";
+			} else {
+				if ("EN_".equals(language)) {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out;
+					out = response.getWriter();
+					out.println("<script>alert('url has expired.'); location.href='./';</script>");
+				} else {
+					response.setContentType("text/html; charset=UTF-8"); 
+					PrintWriter out;
+					out = response.getWriter();
+					out.println("<script>alert('URL이 만료되었습니다. '); location.href='./';</script>");
+				}
+				
+				url= "homePage"+language+"/main";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		mv.setViewName("member"+language+"/searchPw");
 		
-		return mv;
+		
+		return url;
 	}
 	
 	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
@@ -143,21 +167,19 @@ public class PageMoveController extends HttpServlet {
 		if (language == null) {
 			language = "";
 		}
-		Map<String,Object> authData = selectDao.getauthData(userId);
-		model.addAttribute("authData", authData);
 		model.addAttribute("userId", userId);
 		String path = "member"+ language;
 		return path+"/authentic";
 	}
 	
 	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
-	public String registerCheckEmail (HttpSession session, HttpServletRequest request) {
+	public String registerCheckEmail (Model model,HttpSession session, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
 		String userId = request.getParameter("userId");
 		if (language == null) {
 			language = "";
 		}
-		selectDao.deleteCheckSendAuthData(userId);
+		model.addAttribute("userId", userId);
 		String path = "member"+ language;
 		return path+"/account";
 	}
@@ -243,5 +265,14 @@ public class PageMoveController extends HttpServlet {
 		}
 		mv.addObject("checkData", param);
 		return "homePage"+language+"/check";
+	}
+	@RequestMapping(value="registerComplete", method=RequestMethod.GET)
+	public String registerComplete (HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		String path = "member"+ language;
+		return path + "/register_complete";
 	}
 }

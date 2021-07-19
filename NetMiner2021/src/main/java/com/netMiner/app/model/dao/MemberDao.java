@@ -53,5 +53,7 @@ public interface MemberDao {
 
 	int checkDropUser(String userId);
 
+	Map<String, Object> checkRandomNumber(Map<String, Object> param);
+
 
 }

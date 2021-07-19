@@ -189,7 +189,6 @@ public class MemberController {
 			memberVo.setGoogleYn(googleYn);
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
-			selectDao.deleteCheckSendAuthData(userId);
 			sendEmail.sendRegisterMail(userId, "", language);
 			
 			session.setAttribute("memberVo", memberVo);
@@ -598,5 +597,31 @@ public class MemberController {
 		return url;
 	}
 	
-	
+	@RequestMapping(value="checkRandomNumber" ,method=RequestMethod.POST)
+	public ModelAndView checkRandomNumber(ModelAndView mv ,HttpServletRequest request) {
+		String randomNumber = request.getParameter("randomNumber");
+		String userId = request.getParameter("email");
+		
+		Map<String ,Object> param = new HashMap<String ,Object>();
+		param.put("randomNumber", randomNumber);
+		param.put("userId", userId);
+		
+		Map<String, Object> result = memberService.checkRandomNumber(param); 
+		
+		String DATE_CHECK = (String) result.get("DATE_CHECK");
+		String AUTH_CODE = (String) result.get("AUTH_CODE");
+		
+		if ( "Y".equals(DATE_CHECK)) {
+			if (randomNumber.equals(AUTH_CODE)) {
+				mv.addObject("result", "SUCCESS");				
+			} else {
+				mv.addObject("result", "codeFail");
+			}
+		} else {
+			mv.addObject("result", "timeOver");
+			selectDao.deleteCheckSendAuthData(userId);
+		}
+		mv.setViewName("jsonView");
+		return mv;
+	}
 }

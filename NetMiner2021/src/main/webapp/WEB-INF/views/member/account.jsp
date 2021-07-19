@@ -73,7 +73,7 @@
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()"  name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
 							<div class="update" id="update" style="display: none;">
-								<button class="cancel trs">취소</button>
+								<button class="cancel trs" onClick="clear();">취소</button>
 								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">저장</button>
 							</div>
 						</div>

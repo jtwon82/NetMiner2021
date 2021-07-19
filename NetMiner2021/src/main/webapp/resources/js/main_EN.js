@@ -246,7 +246,7 @@ function register() {
 					success: function (data){
 						alert("Membership completed");
 						sessionStorage.clear();
-						window.location.href= "./";
+						window.location.href= "./registerComplete";
 					} 
 					
 				})
@@ -302,7 +302,7 @@ function registerSns(pwd) {
 					},
 					success: function (data){
 						alert("Membership completed");
-						window.location.href= "./";
+						window.location.href= "./registerComplete";
 					} 
 					
 				})
@@ -416,7 +416,7 @@ function changeEmail(userId) {
 			success : function (data) {
 				if (data.randomNumber != "") {
 					sessionStorage.setItem("randomNumber", data.randomNumber);
-					window.location.href="./goCheckEmail";					
+					window.location.href="./goCheckEmail?userId="+email;					
 				} else {
 					alert("Email sending failed");
 				}

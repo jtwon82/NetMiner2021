@@ -42,6 +42,8 @@ public interface MemberService {
 
 	int checkDropUser(String userId);
 
+	Map<String, Object> checkRandomNumber(Map<String, Object> param);
+
 	
 
 	
