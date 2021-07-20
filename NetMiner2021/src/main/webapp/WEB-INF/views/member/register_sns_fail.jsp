@@ -60,10 +60,10 @@
 								</ul>
 							</div>
 							<div class="agree">
-								<label><input id="check_all" type="checkbox" name="marketYn" value="Y"><em></em>모두 동의합니다.</label>
-								<label><input id="check1" class="check" type="checkbox" name=""><em></em>만 16 세 이상입니다 <span>(필수)</span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em><a onClick="window.open('./TermsOfService')" class="blue">이용약관</a>과 <a onClick="window.open('./Privacy')" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(선택)</span></label>
+								<label><input id="check_all" type="checkbox"><em></em>모두 동의합니다.</label>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em>만 16 세 이상입니다 <span>(필수)</span></label>
+								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><a onClick="window.open('./TermsOfService')" class="blue">이용약관</a>과 <a onClick="window.open('./Privacy')" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
+								<label><input id="check3" class="check" type="checkbox" name="marketYn" value="Y"><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(선택)</span></label>
 							</div>
 							<button class="create trs" onClick="registerSns('${userInfo.kid}')">계정생성</button>
 						</div>

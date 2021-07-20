@@ -58,10 +58,10 @@ Do you want to try again with other account?<a href="./login">Sign in</a></p>
 								</ul>
 							</div>
 							<div class="agree">
-								<label><input id="check_all" type="checkbox" name="marketYn" value="Y"><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name=""><em></em><span class="text">I agree to the <a onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
-								<label><input id="check2" class="check" type="checkbox" name=""><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
+								<label><input id="check_all" type="checkbox"><em></em>Agree to all</label>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check2" class="check" type="checkbox"  name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
+								<label><input id="check3" class="check" type="checkbox" name="marketYn" value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 							</div>
 							<button class="create trs" onClick="registerSns('${userInfo.kid}')">Create Account</button>
 						</div>
