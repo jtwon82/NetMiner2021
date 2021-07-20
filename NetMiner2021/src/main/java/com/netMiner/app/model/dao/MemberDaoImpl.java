@@ -137,6 +137,9 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void changeMemberState(String userId) {
 		sqlSession.update("changeMemberInfo", userId);
+		MemberVo vo = new MemberVo();
+		vo.setUserId(userId);
+		sqlSession.delete("deleteMemberInfo", vo);
 	}
 
 	@Override

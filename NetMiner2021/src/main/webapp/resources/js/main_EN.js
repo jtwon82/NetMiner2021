@@ -108,17 +108,12 @@ function CheckEmailRegx(emailVal)
 
 }
 function CheckPwd(pwdVal) {
-		var regExp= /^[0-9a-zA-Z]{8,20}$/i;
-		if (pwdVal.match(regExp)!= null) {
-			var numberExp = /^[0-9]{8,20}$/i
-			var strExp = /^[a-zA-Z]{8,20}$/i
-			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
+		var regExp= /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+		if (pwdVal.match(regExp) == null) {
 				alert("Your password must have 8~20 characters, including at least 1 number and 1 letter");
 				return false;
-			}			
-			return true;
 		} else {
-			return false;
+			return true;
 		}
 }
 
@@ -137,7 +132,6 @@ function checkEmail(){
 		if (checkRegx) {
 		checkRegx = CheckPwd(userpwd);
 			if (!checkRegx) {
-				alert("The password format is incorrect.");
 				$("#pwd").focus();
 			} else {
 				$ (function (){
@@ -167,7 +161,7 @@ function checkEmail(){
 													alert("Email sending failed");
 													window.location.href = "./register";
 												} else{
-													alert("It has been sent to " + userId);
+													alert("We've sent you an email to " + userId + ".");
 													window.location.href= "./moveCheckEmail?userId="+userId;					
 												}
 											} 
@@ -256,7 +250,7 @@ function registerSns(pwd) {
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
 	if (check1 != true || check2 != true) {
-		alert("Please agree to the mandatory terms and conditions");
+		alert("Please agree to the terms and condition.");
 	} else {
 		if (""== company || ""== nation) {
 			alert("Please enter all member information");
@@ -536,7 +530,7 @@ function updateUserInfo(googleYn){
 							if (data.state == 'fail') {
 								alert("The password is incorrect.");
 							} else {
-							 	alert("Your member information has been changed successfully.");
+							 	alert("Your profile has been saved successfully.");
 								window.location.href="./";								
 							}
 						}
@@ -565,7 +559,7 @@ function newRandomNumber(userId) {
 			}, 
 			success : function(data) {
 				if (data.randomNumber != "") {
-					alert("The verification code has been retransmitted.");
+					alert("We've sent you an email to "+ userId + ".");
 					con.style.display = 'none';
 				}
 			}

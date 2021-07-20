@@ -107,17 +107,12 @@ function CheckEmailRegx(emailVal)
 
 }
 function CheckPwd(pwdVal) {
-		var regExp= /^[0-9a-zA-Z]{8,20}$/i;
-		if (pwdVal.match(regExp)!= null) {
-			var numberExp = /^[0-9]{8,20}$/i
-			var strExp = /^[a-zA-Z]{8,20}$/i
-			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
-				alert("비밀번호는 영문 대소문자/숫자 조합, 8~20자로 설정해야 합니다.");
-				return false;
-			}			
-			return true;
+		var regExp= /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+		if (pwdVal.match(regExp)== null) {
+			alert("비밀번호는 영문 대소문자/숫자 조합, 8~20자로 설정해야 합니다.");
+			return false;			 		
 		} else {
-			return false;
+			return true;
 		}
 }
 
@@ -165,7 +160,7 @@ function checkEmail(){
 													alert("이메일 전송 실패");
 													window.location.href = "./register";
 												} else{
-													alert("이메일 인증 해주세요");
+													alert(userId+"으로 이메일을 발송하였습니다.");
 													window.location.href= "./moveCheckEmail?userId="+userId;					
 												}
 											} 
@@ -514,7 +509,6 @@ function updateUserInfo(googleYn){
 			if (checkRegx) {
 			checkRegx = CheckPwd(userpwd);
 				if ( ! checkRegx) {
-					alert("비밀번호 형식이 맞지 않습니다.");
 					$("#pwd").focus();
 				} else {
 					
@@ -564,7 +558,7 @@ function newRandomNumber(userId) {
 			}, 
 			success : function(data) {
 				if (data.randomNumber != "") {
-					alert("인증번호 재전송 되었습니다.");
+					alert(userId+"으로 이메일을 발송하였습니다.");
 					con.style.display = 'none';
 				}
 			}

@@ -27,18 +27,19 @@ public class SendEmailScheduler {
 	
 	// 매일 9시 마지막 로그인 시간이 1년이 된 사용자에게 메일을 전송한다. 
 	@Scheduled(cron="0 0 9 * * *")
+	//@Scheduled(cron="0 40 19 * * *")
 	public void sendEmail() {
 		logger.info("Dormant User ");
 		// 휴면 유저 이메일 전송 
 		List<Map<String , Object>> member = memberDao.getLastLoginFerYear();
-		
+		logger.info("Dormant User size -{} ", member.size());
 		for(int i = 0 ; i < member.size() ;  i ++) {
 			Map<String , Object> userInfo = member.get(i);
 			String userId = (String) userInfo.get("USER_ID");
 			String language = (String) userInfo.get("LANGUAGE");
 			String url = "";
 			if ("en".equals(language)) {
-				url = "https://www.netminer365.com/login?language='_EN'";
+				url = "https://www.netminer365.com/login?language="+"_EN";
 			} else {
 				url = "https://www.netminer365.com/login";
 			}
@@ -49,25 +50,26 @@ public class SendEmailScheduler {
 				logger.info("SendMail Fail");
 			}
 		}
-		// 휴면유저 30일 이후 해당 유저 탈퇴 여부 변경 
+		// 휴면유저 30일 이후 해당 유저 탈퇴 변경 
 		memberDao.getPassByDormant();
 	}
 	
 	//광고 동의 2년 주기로 메일 보내기 
 	@Scheduled(cron="0 10 9 * * *")
-	//@Scheduled(cron="0 37 20 * * *")
+	//@Scheduled(cron="0 26 19 * * *")
 	public void sendMarketYnUser() {
 		
 		List<Map<String , Object>> member = memberDao.getMarketYnUser();
-		
+		logger.info("sendMarketYnUser size - {}", member.size());
 		for(int i = 0 ; i < member.size() ;  i ++) {
 			Map<String , Object> userInfo = member.get(i);
 			String userId = (String) userInfo.get("USER_ID");
 			String language = (String) userInfo.get("LANGUAGE");
-			Date marketDate = (Date) userInfo.get("MAKET_DATE");
+			Date marketDate = (Date) userInfo.get("MARKET_DATE");
 			
 			sendEmail.sendMarketEmail(userId, language, marketDate);
 		}
+		logger.info("END sendMarketYnUser");
 	}
 	//탈퇴회원 1년 경과후 삭제 
 	@Scheduled(cron="0 20 9 * * *")
