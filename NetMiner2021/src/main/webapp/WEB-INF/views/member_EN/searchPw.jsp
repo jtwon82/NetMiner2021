@@ -55,7 +55,7 @@
 					<!-- step2 비밀번호 재설정 -->
 					<c:if test="${!empty userId}">
 						<c:if test="${'N' eq DATE_CHECK}">
-							<script>alert('url has expired.'); location.href='./';</script>
+							<script>alert("This link is no longer vaild. Please try resetting your password again."); location.href='./';</script>
 						</c:if>
 					<div class="step2" >
 						<div class="title">

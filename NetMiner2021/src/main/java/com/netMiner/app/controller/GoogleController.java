@@ -242,10 +242,10 @@ public class GoogleController  {
 			response.setContentType("text/html; charset=UTF-8"); 
 			PrintWriter out = response.getWriter(); 
 			if (language.equals("_EN")) {
-				out.println("<script>alert('ID exists'); location.href='./login';</script>"); 
+				out.println("<script>alert('This email address already exists.'); location.href='./login';</script>"); 
 				out.flush();
 			} else {
-				out.println("<script>alert('해당 아이디가 있습니다.'); location.href='./login';</script>"); 
+				out.println("<script>alert('이미 가입한 이메일입니다. '); location.href='./login';</script>"); 
 			}
 			out.flush();
 			url = "member"+language+"/login";

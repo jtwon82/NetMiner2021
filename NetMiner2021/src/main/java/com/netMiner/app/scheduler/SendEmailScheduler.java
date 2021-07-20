@@ -26,7 +26,6 @@ public class SendEmailScheduler {
 	private SendEmail sendEmail;
 	
 	// 매일 9시 마지막 로그인 시간이 1년이 된 사용자에게 메일을 전송한다. 
-	//@Scheduled(cron="0 37 20 * * *")
 	@Scheduled(cron="0 0 9 * * *")
 	public void sendEmail() {
 		logger.info("Dormant User ");

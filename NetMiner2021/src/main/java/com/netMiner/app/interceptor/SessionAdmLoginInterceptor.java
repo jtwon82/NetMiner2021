@@ -47,7 +47,7 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		for (String path : urlPath) {
 			if (url.contains(path)) {
 				Map<String, Object> checkData = selectDao.getCheckData();
-				if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {
+				if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {				
 					response.sendRedirect("./check");
 					return false;
 				}

@@ -163,7 +163,7 @@
 			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
 			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN}</if>
-			<if test="MARKET_YN.equals('Y')">, MARKET_DATE = NOW()</if>
+			<if test='MARKET_YN.equals("Y")'>, MARKET_DATE = NOW()</if>
 			WHERE NO=#{NO}
 	</update>
 		<update id="modifyDropMemberInfo" parameterType="map">
@@ -178,7 +178,7 @@
 			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
 			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN} </if>
-			<if test="MARKET_YN.equals('Y')">, MARKET_DATE = NOW()</if>
+			<if test='MARKET_YN.equals("Y")'>, MARKET_DATE = NOW()</if>
 			WHERE NO=#{NO}
 	</update>
 	<update id="insertMemberInfo" parameterType="map">
@@ -258,7 +258,7 @@
 			<if test="NATION!=null and !NATION.equals('')">, NATION= #{NATION}</if>
 			<if test="COMPANY!=null and !COMPANY.equals('')">, COMPANY= #{COMPANY}</if>
 			<if test="MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_YN= #{MARKET_YN}</if>
-			<if test="MARKET_YN.equals('Y') and MARKET_YN!=null and !MARKET_YN.equals('')">, MARKET_DATE = now()</if>
+			<if test='MARKET_YN.equals("Y")'>, MARKET_DATE = now()</if>
 			<if test="USER_STATS_YN!=null and !USER_STATS_YN.equals('')">, USER_STATS_YN= #{USER_STATS_YN}</if>
 			WHERE NO=#{NO}
 	</update> 

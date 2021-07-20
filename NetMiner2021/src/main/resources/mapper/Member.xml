@@ -137,6 +137,7 @@
  	<update id="updateUserInfo" parameterType="Map">
  	UPDATE NetMiner.MEMBER_INFO
 	SET  UPDATE_DATE = NOW()
+	
 	<if test='googleYn.equals("N")'>
 	,USER_ID = #{userId}
 	, USER_PWD = password(#{userPwd})
@@ -146,7 +147,7 @@
 	<if test="nation!=null and !nation.equals('')">, NATION= #{nation}</if>
 	<if test="company!=null and !company.equals('')">, COMPANY= #{company}</if>
 	<if test="marketYn!=null and !marketYn.equals('')">, MARKET_YN= #{marketYn}</if>
-	<if test="marketYn.equals('Y')">, MARKET_DATE = NOW()</if>
+	<if test='marketYn.equals("Y")'>,MARKET_DATE = NOW()</if>
 	WHERE  USER_ID = #{oldUserId};
  	</update>
  	<delete id="deleteTempUser">

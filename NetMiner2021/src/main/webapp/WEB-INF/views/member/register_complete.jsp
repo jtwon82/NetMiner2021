@@ -52,7 +52,8 @@ NetMiner 365를 통해 무한한 가능성을 탐색해보세요.</p>
 자세한 상담이 필요하십니까?
 <br><br>
 그렇다면 도움을 요청하세요.</p>
-								<a href="./">문의하기</a>
+								<a href="mailto:netminer@cyram.com">문의하기</a>
+								
 							</li>
 							<li>
 								<h3>Start NetMiner 365</h3>
@@ -61,7 +62,7 @@ NetMiner 365를 통해 무한한 가능성을 탐색해보세요.</p>
 해결할 수 있습니다.
 <br><br>
 NetMiner 365를 시작해보세요.</p>
-								<a href="./">시작하기</a>
+								<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">시작하기</a>
 							</li>
 						</ul>
 						

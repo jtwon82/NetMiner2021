@@ -113,7 +113,7 @@ function CheckPwd(pwdVal) {
 			var numberExp = /^[0-9]{8,20}$/i
 			var strExp = /^[a-zA-Z]{8,20}$/i
 			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
-				alert("It must consist of one or more letters or numbers.");
+				alert("Your password must have 8~20 characters, including at least 1 number and 1 letter");
 				return false;
 			}			
 			return true;
@@ -132,7 +132,7 @@ function checkEmail(){
 	var checkRegx = CheckEmailRegx(userId);	
 	
 	if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
-		alert("Please enter member information");
+		alert("Please fill out all the fields.");
 	} else {
 		if (checkRegx) {
 		checkRegx = CheckPwd(userpwd);
@@ -175,7 +175,7 @@ function checkEmail(){
 										})
 									});
 						} else {
-							alert ("This is an already registered email address.");
+							alert ("This email address already exists.");
 						}
 					}
 				});
@@ -191,7 +191,7 @@ function checkEmail(){
 	
 }
 
-function register() {
+function register(userId) {
 	var marketYn = "N";
 	var code = $("#code").val();
 	var check1 = $("#check1").prop("checked");
@@ -204,12 +204,12 @@ function register() {
 			type : "POST" ,
 			success : function (data) {
 				if (data.result == 'codeFail') {
-					alert("Please enter the verification code.");
+					alert("Please enter a valid code.");
 				} else if (data.result == 'timeOver'){
-					alert("The verification code has expired. please reissue.");
+					alert("Your validation code is currently invalid. Please request a new validation code.");
 				} else {
 					if (check1 != true || check2 != true) {
-						alert("Please agree to the mandatory terms and conditions");
+						alert("Please agree to the terms and condition.");
 					} else {
 						if (check3 == true) {
 							marketYn = "Y";
@@ -224,8 +224,7 @@ function register() {
 							'email':email, 'marketYn': marketYn 
 						},
 						success: function (data){
-							alert("Membership completed");
-							sessionStorage.clear();
+							alert("You've successfully verified your email address.");
 							window.location.href= "./registerComplete";
 						} 					
 					})
@@ -280,7 +279,6 @@ function registerSns(pwd) {
 						'marketYn': marketYn 
 					},
 					success: function (data){
-						alert("Membership completed");
 						window.location.href= "./registerComplete";
 					} 
 					
@@ -320,14 +318,14 @@ function requestSetPwd() {
 						/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
 						//console.log(data);
 						if (data.googleYn == 'Y') {
-							alert("The user is a Google user and cannot change the password.");
+							alert("If you signed up with google, you cannot change your password. Please sign-in with google account.");
 							window.history.back();
 						} else {
 							if (data.userId == "") {
-								alert("There is no history of registering as that user.");
+								alert("This email address is not registered.");
 								window.location.href="./register";
 							} else {
-								alert("Email sending is complete.");
+								alert("We've sent you an email to "+ userId);
 								window.location.href="./login";
 							}							
 						}
@@ -347,13 +345,7 @@ function changePwd(userId){
 	var newPwd = $("#newPwd").val();
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
-	//var now = new Date();
-	var endDate = $("#END_DATE").val();
-	setNowDate();
-	if(now > endDate) {
-		alert("The password reset page has timed out. please proceed again");
-		return;
-	}
+
 	if (checkRegx) {
 		if (newPwd == newPwd2) {	
 			$(function (){
@@ -396,7 +388,7 @@ function changeEmail(userId) {
 					},
 					success : function (data) {
 						if (!data.result) {
-							alert("This Member already Exits");
+							alert("This email address already exists.");
 							window.location.reload();
 						} else {
 							$.ajax({
@@ -405,6 +397,7 @@ function changeEmail(userId) {
 								data:{'email':email},
 								success : function (data) {
 									if (data.randomNumber != "") {
+										alert("We've sent you an email to "+email+".");
 										window.location.href="./goCheckEmail?userId="+email;					
 									} else {
 										alert("Email sending failed");
@@ -434,7 +427,7 @@ function chageUserId(){
 						alert("Email change done");
 						window.location.reload();	
 					} else {
-						alert("This Email already exist");
+						alert("This email address already exists.");
 					}
 				}
 			})
@@ -498,7 +491,7 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("Your member information has been changed successfully.");
+						 	alert("Your profile has been saved successfully.");
 							window.location.href="./";
 						}
 						
@@ -511,7 +504,7 @@ function updateUserInfo(googleYn){
 		
 		if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
 			if (userpwd =="") {
-				alert("Please enter your password for secure member information modification.");
+				alert("Please enter your password in order to save changes.");
 			}else {
 				alert("Please enter member information");		
 			}
@@ -519,7 +512,6 @@ function updateUserInfo(googleYn){
 			if (checkRegx) {
 			checkRegx = CheckPwd(userpwd);
 				if ( ! checkRegx) {
-					alert("The password format is incorrect.");
 					$("#pwd").focus();
 				} else {
 					
@@ -553,7 +545,7 @@ function updateUserInfo(googleYn){
 	}
 };
 
-function newRandomNumber(uesrId) {
+function newRandomNumber(userId) {
 	var con = document.getElementById("dimmed");
 			con.style.removeProperty("display");
 	$(function (){

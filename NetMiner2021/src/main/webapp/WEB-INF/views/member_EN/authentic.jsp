@@ -37,7 +37,7 @@
 					</div>
 					<div class="content">
 						<p>We've sent a 7 digit code to <span>${userId}</span><br>
-This code will be valid for 30 minites.</p>
+This code will be valid for 30 minutes.</p>
 						<div class="input">
 							<p>Verification Code</p>
 							<input placeholder="" type="text" id="code"/>

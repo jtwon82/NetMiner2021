@@ -122,13 +122,13 @@ public class MemberController {
 				if (! "_EN".equals(language)) {
 					response.setContentType("text/html; charset=UTF-8"); 
 					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('해당 아이디가 없거나 비밀번호가 틀립니다.'); location.href='./login';</script>"); 
+					out.println("<script>alert('입력하신 이메일 또는 비밀번호가 올바르지 않습니다.'); location.href='./login';</script>"); 
 					out.flush();
 					url  = "member/login";					
 				} else {
 					response.setContentType("text/html; charset=UTF-8"); 
 					PrintWriter out = response.getWriter(); 
-					out.println("<script>alert('The ID does not exist or the password is incorrect.'); location.href='./login';</script>"); 
+					out.println("<script>alert('The email address or password is incorrect.'); location.href='./login';</script>"); 
 					out.flush();
 					url  = "member"+language+"/login";		
 				}

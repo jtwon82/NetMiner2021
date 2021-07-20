@@ -112,7 +112,7 @@ function CheckPwd(pwdVal) {
 			var numberExp = /^[0-9]{8,20}$/i
 			var strExp = /^[a-zA-Z]{8,20}$/i
 			if (pwdVal.match(numberExp)!= null || pwdVal.match(strExp)) {
-				alert("하나또는 두개이상의 문자혹은 숫자로 이루어져야합니다.");
+				alert("비밀번호는 영문 대소문자/숫자 조합, 8~20자로 설정해야 합니다.");
 				return false;
 			}			
 			return true;
@@ -131,12 +131,11 @@ function checkEmail(){
 	var checkRegx = CheckEmailRegx(userId);	
 	
 	if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
-		alert("회원정보를 입력해주세요");
+		alert("회원 가입을 위해 모든 필드를 입력해 주세요. ");
 	} else {
 		if (checkRegx) {
 		checkRegx = CheckPwd(userpwd);
 			if (!checkRegx) {
-				alert("비밀번호 형식이 맞지 않습니다.");
 				$("#pwd").focus();
 			} else {
 				$ (function (){
@@ -174,7 +173,7 @@ function checkEmail(){
 										})
 									});
 						} else {
-							alert ("이미 가입된 이메일 주소입니다.");
+							alert ("이미 가입한 이메일입니다. ");
 						}
 					}
 				});
@@ -203,12 +202,12 @@ function register(userId) {
 		type : "POST" ,
 		success : function (data) {
 			if (data.result == 'codeFail') {
-				alert("인증번호가 일치하지 않습니다.");
+				alert("유효한 인증코드를 입력해 주세요.");
 			} else if (data.result == 'timeOver'){
-				alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
+				alert("인증코드가 만료되었습니다. 새 인증코드를 요청하세요.");
 			} else {
 				if (check1 != true || check2 != true) {
-					alert("필수약관에 동의 해주세요");
+					alert("필수 약관에 동의해 주세요.");
 				} else {
 					if (check3 == true) {
 						marketYn = "Y";
@@ -223,8 +222,7 @@ function register(userId) {
 						'email':email, 'marketYn': marketYn 
 					},
 					success: function (data){
-						alert("회원가입 완료");
-						sessionStorage.clear();
+						alert("이메일 인증이 완료되었습니다.");
 						window.location.href= "./registerComplete";
 					} 					
 				})
@@ -279,7 +277,6 @@ function registerSns(pwd) {
 						'marketYn': marketYn 
 					},
 					success: function (data){
-						alert("회원가입 완료");
 						window.location.href= "./registerComplete";
 					} 
 					
@@ -319,14 +316,14 @@ function requestSetPwd() {
 						/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
 						//console.log(data);
 						if (data.googleYn == 'Y') {
-							alert("해당 유저는 구글 유저로 비밀번호변경이 불가능합니다.");
+							alert("구글로 가입한 경우에는 비밀번호 변경이 불가능합니다. 구글 계정으로 로그인 하세요.");
 							window.history.back();
 						} else {
 							if (data.userId == "") {
-								alert("해당 유저로 가입된 이력이 없습니다.");
+								alert("가입하지 않은 이메일입니다.");
 								window.location.href="./register";
 							} else {
-								alert("이메일 발송이 완료 되었습니다.");
+								alert(userId + "으로 이메일을 발송하였습니다.");
 								window.location.href="./login";
 							}							
 						}
@@ -346,13 +343,7 @@ function changePwd(userId){
 	var newPwd = $("#newPwd").val();
 	var newPwd2 = $("#newPwd2").val();
 	var checkRegx = CheckPwd(newPwd);
-	//var now = new Date();
-	var EndDate = $("#END_DATE").val();
-	setNowDate();
-	if(now > EndDate) {
-		alert("비밀번호 재설정 페이지의 시간이 만료되었습니다. 다시 진행 해주세요");
-		return;
-	}
+
 	if (checkRegx) {
 		if (newPwd == newPwd2) {	
 			$(function (){
@@ -362,7 +353,7 @@ function changePwd(userId){
 					data:{'email': userId , 'pwd':newPwd},
 					success : function (data){
 						sessionStorage.clear();
-						alert("비밀번호가 성공적으로 변경 되었습니다.");
+						alert("비밀번호가 변경되었습니다.");
 						window.location.href= "./login";
 					}
 						
@@ -395,7 +386,7 @@ function changeEmail(userId) {
 			},
 			success : function (data) {
 				if (!data.result) {
-					alert("이미 가입된 회원정보 입니다.");
+					alert("이미 가입한 이메일입니다. ");
 					window.location.reload();
 				} else {
 					$.ajax({
@@ -404,6 +395,7 @@ function changeEmail(userId) {
 						data:{'email':email},
 						success : function (data) {
 							if (data.randomNumber != "") {
+								alert(email+" 으로 이메일을 발송하였습니다.");
 								window.location.href="./goCheckEmail?userId="+email;					
 							} else {
 								alert("이메일 전송 실패");
@@ -433,7 +425,7 @@ function chageUserId(){
 						alert("이메일 변경 완료");
 						window.location.reload();
 					} else {
-						alert("해당 아이디는 이미 존재 합니다");
+						alert("이미 가입한 이메일입니다. ");
 					}
 				}
 			})
@@ -497,7 +489,7 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("회원정보가 성공적으로 변경 되었습니다.");
+						 	alert("프로필이 수정되었습니다. ");
 							window.location.href="./";
 						}
 						
@@ -510,7 +502,7 @@ function updateUserInfo(googleYn){
 		
 		if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
 			if (userpwd =="") {
-				alert("안전한 회원정보 수정을 위해 비밀번호를 입력해주세요");
+				alert("안전한 프로필 수정을 위해 비밀번호를 입력해 주세요.");
 			}else {
 				alert("회원정보를 입력해주세요");		
 			}
@@ -552,7 +544,7 @@ function updateUserInfo(googleYn){
 	}
 };
 
-function newRandomNumber(uesrId) {
+function newRandomNumber(userId) {
 	var con = document.getElementById("dimmed");
 			con.style.removeProperty("display");
 	$(function (){

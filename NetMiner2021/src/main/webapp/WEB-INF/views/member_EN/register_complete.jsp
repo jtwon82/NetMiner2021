@@ -52,7 +52,7 @@
 	about NetMiner 365?
 	<br><br>
 	Don't hesitate to contact us.</p>
-									<a href="./">Contact us</a>
+									<a href="mailto:netminer@cyram.com">Contact us</a>
 								</li>
 								<li>
 									<h3>Start NetMiner 365</h3>
@@ -61,7 +61,7 @@
 	<br><br>
 	Let's get started with NetMiner 365<br>
 	for Free !</p>
-									<a href="./">Start now</a>
+									<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start now</a>
 								</li>
 							</ul>
 							

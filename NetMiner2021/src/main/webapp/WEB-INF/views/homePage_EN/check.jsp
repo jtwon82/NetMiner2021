@@ -37,7 +37,7 @@
 				</p>
 				<div class="box">
 					<ul>
-						<li><span>Schedule</span><b>${checkData.START_DATE } ~ ${checkData.END_DATE} (UTC)</b></li>
+						<li><span>Schedule</span><b>${checkData.START_DATE } ~ <c:if test="${'Y' eq checkData.END_DATE_YN}">End time & data undecided</c:if>${checkData.END_DATE} (UTC)</b></li>
 						<li><span>Details</span><b>${checkData.COMMENT_EN}</b></li>
 					</ul>
 				</div>
