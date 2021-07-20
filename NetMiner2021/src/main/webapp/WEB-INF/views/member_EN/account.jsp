@@ -66,8 +66,8 @@
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
-									<li ><label><input type="radio" checked="checked" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="01"><em></em>Commercial</label></li>
+									<li><label><input type="radio" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio"  onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="02"><em></em>Commercial</label></li>
 								</ul>
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>

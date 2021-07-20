@@ -53,8 +53,8 @@
 								<dd>
 									<input type="date" name="END_DATE" value="${list.END_DATES}"/>
 									<div class="time">
-										<input placeholder="HH" type="number" name="END_HH" value="${list.END_HH}"/>시<label
-											class="unsettled"><input type="checkbox" name="END_DATE_YN" value="${list.END_DATE_YN}" onchange=" changeInput();"/>미정</label>
+										<input placeholder="HH" type="number" name="END_HH" value="${list.END_HH}"/>시<label class="unsettled">
+											<input type="checkbox" name="END_DATE_YN" value="${list.END_DATE_YN}" <c:if test="${list.END_DATE_YN eq 'Y'}"> checked="checked"</c:if> onchange=" changeInput();"/>미정</label>
 									</div>
 								</dd>
 							</dl>

@@ -27,7 +27,7 @@
 							<tbody>
 							<c:if test="${not empty list }">
 								<c:forEach items="${list }" var="item" varStatus="status">
-									<tr onclick="location.href=('administrator_modify?NO=${item.NO}')">
+									<tr onclick="location.href=('administrator_modify?NO=${item.NO}&ADMIN_ID=${item.ADMIN_ID}')">
 										<td class="bl0">${item.REG_DATES }</td>
 										<td>${item.ADMIN_ID }</td>
 										<td class="br0">${item.DESCRIPTION }</td>

@@ -136,16 +136,17 @@
  	
  	<update id="updateUserInfo" parameterType="Map">
  	UPDATE NetMiner.MEMBER_INFO
-	SET 
+	SET  UPDATE_DATE = NOW()
 	<if test='googleYn.equals("N")'>
-	USER_ID = #{userId},
-	 USER_PWD = password(#{userPwd}),
+	,USER_ID = #{userId}
+	, USER_PWD = password(#{userPwd})
 	 </if>
-	 COMPANY = #{company},
-	 NATION = #{nation},
-	 `LANGUAGE` = #{language},
-	 USE_CODE = #{useCode},
-	 MARKET_YN = #{marketYn}
+	<if test="useCode!=null and !useCode.equals('')">, USE_CODE= #{useCode}</if>
+	<if test="language!=null and !language.equals('')">, LANGUAGE= #{language}</if>
+	<if test="nation!=null and !nation.equals('')">, NATION= #{nation}</if>
+	<if test="company!=null and !company.equals('')">, COMPANY= #{company}</if>
+	<if test="marketYn!=null and !marketYn.equals('')">, MARKET_YN= #{marketYn}</if>
+	<if test="marketYn.equals('Y')">, MARKET_DATE = NOW()</if>
 	WHERE  USER_ID = #{oldUserId};
  	</update>
  	<delete id="deleteTempUser">

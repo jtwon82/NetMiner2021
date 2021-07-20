@@ -54,6 +54,9 @@
 					
 					<!-- step2 비밀번호 재설정 -->
 					<c:if test="${!empty userId}">
+						<c:if test="${'N' eq DATE_CHECK}">
+							<script>alert('URL이 만료되었습니다. '); location.href='./';</script>
+						</c:if>
 					<div class="step2">
 						<div class="title">
 							<h2>Reset you password</h2>
@@ -73,7 +76,7 @@
 									</li>
 								</ul>
 							</div>
-							<button class="changePw trs active" onClick=" '${userId}')">비밀번호 재설정 및 로그인</button>
+							<button class="changePw trs active" onClick="changePwd('${userId}')">비밀번호 재설정 및 로그인</button>
 							<a class="back" href="./login" >로그인으로 돌아가기 </a>
 						</div>
 					</div>

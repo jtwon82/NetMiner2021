@@ -45,7 +45,6 @@ $(document).ready(function() {
 		}
 	});
 	$("#authentic").click(function(){		
-		sessionStorage.clear();
 		location.href = document.referrer;
 	})
 	$(".cancel").click(function (){
@@ -90,13 +89,6 @@ $(document).ready(function() {
 	$("#leaveBtn").click(function(){
 		openPoup("leave_popup");
 	})
-	
-	if (location.pathname == 'login_dev') {
-		$("#register").remove("onclick");
-		$("#register").attr("onclick","window.location.href='./register'");
-		$(".google").remove("onclick");
-		$(".google").attr("onclick","googleLogin()");
-	} 	
 	
 	history.replaceState({}, null, location.pathname);	
 })
@@ -176,7 +168,7 @@ function checkEmail(){
 													window.location.href = "./register";
 												} else{
 													alert("It has been sent to " + userId);
-													window.location.href= "./moveCheckEmail";					
+													window.location.href= "./moveCheckEmail?userId="+userId;					
 												}
 											} 
 											
@@ -400,11 +392,12 @@ function changeEmail(userId) {
 					url:"./checkUser",
 					type :"POST",
 					data : {
-								'email' : userId
+								'email' : email
 					},
 					success : function (data) {
 						if (!data.result) {
 							alert("This Member already Exits");
+							window.location.reload();
 						} else {
 							$.ajax({
 								url:"./changeEmail",
@@ -434,12 +427,12 @@ function chageUserId(){
 				type : "POST",
 				data : {'email' : email},
 				success : function(data) {
-					sessionStorage.clear();
 					if (data.state == 'success') {
-						emailBtn.style.background = "#bbb8b8";
+						$("#checkEmailBtn").css({"background": "bbb8b8"});
 						$("#chageUserId").attr('disabled', true);
 						$("#email").attr('readOnly', true);
-						alert("Email change done");					
+						alert("Email change done");
+						window.location.reload();	
 					} else {
 						alert("This Email already exist");
 					}
@@ -452,8 +445,11 @@ function chageUserId(){
 	}
 }
 
-function registerCheckEmail(){
+function registerCheckEmail(userId){
 	var code = $("#code").val();
+	if (code == '') {
+		alert("Please Enter Verity Code");
+	} else {
 	$(function(){	
 		$.ajax({
 		url : "./checkRandomNumber",
@@ -470,6 +466,8 @@ function registerCheckEmail(){
 			}
 		})
 	})	
+}
+	
 }
 
 function updateUserInfo(googleYn){
@@ -598,10 +596,10 @@ function changeLanguage(language) {
 			type : "POST",
 			data : {"language" : language},
 			success : function(data) {
+			var path = $(location).attr('pathname');
+			window.location.href = path;
 			}
 		})
-		var path = $(location).attr('pathname');
-		window.location.href = path;
 	})
 }
 

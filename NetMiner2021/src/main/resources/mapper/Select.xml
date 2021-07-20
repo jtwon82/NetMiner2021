@@ -28,8 +28,7 @@
   	 A.COMMENT_KR, 
   	 A.COMMENT_EN 
 	 FROM NetMiner.CHECK_START_END_TIME A
-	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME)
-	AND  DATE_ADD(NOW(), interval 9 hour) BETWEEN START_DATE AND  END_DATE;
+	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_START_END_TIME);
 	]]>
   	</select>
   	
@@ -49,9 +48,7 @@
   	SELECT AUTH_CODE , CASE WHEN NOW() < END_DATE THEN 'Y'
 	   ELSE 'N' END DATE_CHECK
   	FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG
-  	WHERE USER_ID = #{userId}
-  	AND NOW() BETWEEN SEND_DATE AND END_DATE  
-  	AND NO = (SELECT MAX(NO) FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG WHERE USER_ID = #{userId});
+  	WHERE NO = (SELECT MAX(NO) FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG WHERE USER_ID = #{userId});
   	]]>
   	</select>
   	<delete id="deleteCheckSendAuthData" parameterType="String">

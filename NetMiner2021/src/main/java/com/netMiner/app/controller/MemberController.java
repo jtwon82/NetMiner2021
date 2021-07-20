@@ -423,7 +423,10 @@ public class MemberController {
 		int count  = memberService.selectUserCount(param);
 		if (count == 0) {
 			memberService.updateNewUserId(param);
-
+			session.removeAttribute("memberVo");
+			vo.setUserId(newUserId);
+			vo = memberService.checkJoin(vo);
+			session.setAttribute("memberVo", vo);
 			mv.addObject("state","success");
 		}  else {
 			mv.addObject("state","fail");
@@ -554,7 +557,7 @@ public class MemberController {
 		
 		memberService.deleteMember(vo);
 		
-		session.invalidate();
+		session.removeAttribute("memberVo");
 		mv.setViewName("jsonView");
 		return mv;
 	}

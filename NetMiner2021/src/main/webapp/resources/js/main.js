@@ -45,7 +45,6 @@ $(document).ready(function() {
 		}
 	});
 	$("#authentic").click(function(){		
-		sessionStorage.clear();
 		location.href = document.referrer;
 	})
 	$(".cancel").click(function (){
@@ -392,11 +391,12 @@ function changeEmail(userId) {
 			url:"./checkUser",
 			type :"POST",
 			data : {
-						'email' : userId
+						'email' : email
 			},
 			success : function (data) {
 				if (!data.result) {
 					alert("이미 가입된 회원정보 입니다.");
+					window.location.reload();
 				} else {
 					$.ajax({
 						url:"./changeEmail",
@@ -419,7 +419,6 @@ function changeEmail(userId) {
 function chageUserId(){
 	var email = $("#email").val();
 	var checkRegx = CheckEmailRegx(email);
-	var emailBtn = document.getElementById("chageUserId");
 	if (checkRegx) {
 		$(function (){
 			$.ajax({
@@ -427,12 +426,12 @@ function chageUserId(){
 				type : "POST",
 				data : {'email' : email},
 				success : function(data) {
-					sessionStorage.clear();
 					if (data.state == 'success') {
-						emailBtn.style.background = "#bbb8b8";
+						$("#checkEmailBtn").css({"background": "bbb8b8"});
 						$("#chageUserId").attr('disabled', true);
 						$("#email").attr('readOnly', true);
-						alert("이메일 변경 완료");						
+						alert("이메일 변경 완료");
+						window.location.reload();
 					} else {
 						alert("해당 아이디는 이미 존재 합니다");
 					}
@@ -447,6 +446,10 @@ function chageUserId(){
 
 function registerCheckEmail(userId){
 	var code = $("#code").val();
+	if (code == '') {
+		alert("인증번호를 입력해 주세요");
+	} else {	
+	
 	$(function(){	
 		$.ajax({
 		url : "./checkRandomNumber",
@@ -462,7 +465,8 @@ function registerCheckEmail(userId){
 				}
 			}
 		})
-	})	
+	})
+	}	
 }
 
 function updateUserInfo(googleYn){
@@ -608,3 +612,4 @@ function setNowDate(){
 		}
 	})
 }
+

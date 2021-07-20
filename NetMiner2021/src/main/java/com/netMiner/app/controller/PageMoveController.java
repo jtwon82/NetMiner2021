@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,32 +131,13 @@ public class PageMoveController extends HttpServlet {
 		if (language == null) {
 			language = "";
 		}
-		try {
-			Map<String,Object> result = selectDao.getauthData(userId);
-			String DATE_CHECK = (String) result.get("DATE_CHECK");
-			if ( "Y".equals(DATE_CHECK)) {
-				mv.addAttribute("userId",userId);
-				url = "member"+language+"/searchPw";
-			} else {
-				if ("EN_".equals(language)) {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out;
-					out = response.getWriter();
-					out.println("<script>alert('url has expired.'); location.href='./';</script>");
-				} else {
-					response.setContentType("text/html; charset=UTF-8"); 
-					PrintWriter out;
-					out = response.getWriter();
-					out.println("<script>alert('URL이 만료되었습니다. '); location.href='./';</script>");
-				}
-				
-				url= "homePage"+language+"/main";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+
+		Map<String,Object> result = selectDao.getauthData(userId);
+		String DATE_CHECK = StringUtils.defaultIfEmpty((String) result.get("DATE_CHECK"), "N");
+		mv.addAttribute("userId",userId);
+		mv.addAttribute("DATE_CHECK", DATE_CHECK);
+
+		url = "member"+language+"/searchPw";
 		
 		return url;
 	}
