@@ -491,8 +491,12 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("Your profile has been saved successfully.");
-							window.location.href="./";
+							if (data.state == 'fail') {
+								alert("The password is incorrect.");
+							} else {
+							 	alert("Your profile has been saved successfully.");
+								window.location.href="./";						
+							}
 						}
 						
 					})
@@ -529,8 +533,12 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("Your member information has been changed successfully.");
-							window.location.href="./";
+							if (data.state == 'fail') {
+								alert("The password is incorrect.");
+							} else {
+							 	alert("Your member information has been changed successfully.");
+								window.location.href="./";								
+							}
 						}
 						
 					})

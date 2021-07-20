@@ -480,17 +480,21 @@ public class MemberController {
 		} else {
 			memberVo.setLanguage("en");
 		}
+		MemberVo getUserInfo = memberService.getUserInfo(memberVo);
+		if (getUserInfo == null) {
+			mv.addObject("state", "fail");
+			logger.info("hellow");
+		} else {
+			MemberVo oldMemberVo = (MemberVo) session.getAttribute("memberVo");
+			
+			memberService.updateNewUserInfo(oldMemberVo, memberVo);
+			
+			memberVo = memberService.getUserInfo(memberVo);
+			session.setAttribute("memberVo", memberVo);
+			mv.addObject("state", "success");
+			logger.info("hellow2");
+		}
 		
-		MemberVo oldMemberVo = (MemberVo) session.getAttribute("memberVo");
-		
-		memberService.updateNewUserInfo(oldMemberVo, memberVo);
-		
-//		if ("Y".equals(memberVo.getMarketYn())) {
-//			sendEmail.sendMarketEmail(memberVo.getUserId(), language);
-//		}
-		
-		memberVo = memberService.getUserInfo(memberVo);
-		session.setAttribute("memberVo", memberVo);
 		
 		mv.setViewName("jsonView");
 		

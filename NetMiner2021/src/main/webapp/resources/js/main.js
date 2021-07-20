@@ -489,8 +489,12 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("프로필이 수정되었습니다. ");
-							window.location.href="./";
+							if (data.state == "fail") {
+								alert("비밀번호가 올바르지 않습니다.");
+							} else {
+							 	alert("프로필이 수정되었습니다. ");
+								window.location.href="./";								
+							}
 						}
 						
 					})
@@ -528,8 +532,12 @@ function updateUserInfo(googleYn){
 							'googleYn' : googleYn 				
 						},
 						success : function (data) {
-						 	alert("회원정보가 성공적으로 변경 되었습니다.");
-							window.location.href="./";
+						 	if (data.state == "fail") {
+								alert("비밀번호가 올바르지 않습니다.");
+							} else {
+							 	alert("프로필이 수정되었습니다. ");
+								window.location.href="./";								
+							}
 						}
 						
 					})

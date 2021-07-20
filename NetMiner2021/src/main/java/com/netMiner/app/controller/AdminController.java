@@ -449,7 +449,7 @@ public class AdminController {
 		return model;
 	}
 	@RequestMapping(value="/check" , method =  {RequestMethod.GET, RequestMethod.POST})
-	public String check(Model model, HttpServletRequest request
+	public String enterCheck(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json) {
 	
 		Map list= adminService.getCheck(json);		
@@ -457,7 +457,7 @@ public class AdminController {
 		return "admin/check";
 	}
 	@RequestMapping(value="/check_modify", method = RequestMethod.POST)
-	public @ResponseBody String check_modify(HttpSession session
+	public @ResponseBody String enterCheck_modify(HttpSession session
 			, @RequestParam HashMap<String, Object> json) {
 		
 	try {

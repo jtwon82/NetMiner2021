@@ -140,7 +140,6 @@
 	
 	<if test='googleYn.equals("N")'>
 	,USER_ID = #{userId}
-	, USER_PWD = password(#{userPwd})
 	 </if>
 	<if test="useCode!=null and !useCode.equals('')">, USE_CODE= #{useCode}</if>
 	<if test="language!=null and !language.equals('')">, LANGUAGE= #{language}</if>

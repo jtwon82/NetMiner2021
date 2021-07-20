@@ -44,7 +44,7 @@
 	data from inside big data and
 	performing analysis combining
 	Graph Analytics and machine learning</p>
-									<a href="./features">Learn more</a>
+									<a href="./feature">Learn more</a>
 								</li>
 								<li>
 									<h3>Support</h3>
