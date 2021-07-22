@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,8 @@ import com.netMiner.app.util.CryptUtil;
  * Servlet implementation class GoogleController
  */
 @Controller
+@Configuration
+@PropertySource("classpath:google.properties")
 public class GoogleController  {
 	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(GoogleController.class);
 	
@@ -51,9 +56,14 @@ public class GoogleController  {
 	//final static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8080/auth";	
 	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
+//	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	//	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	
+	@Value("${GOOGLE_CALL_BACK_LOGIN_URL}")
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "";
+	@Value("${GOOGLE_CALL_BACK_REGISTER_URL}")
+	final static String GOOGLE_CALL_BACK_REGISTER_URL ="";
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
 	private String clientSecret = "Xuvy3VghnbUWj0Y6racOHwCD";

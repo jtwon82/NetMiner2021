@@ -10,17 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.netMiner.app.config.Constant;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.dao.MemberDao;
+import com.netMiner.app.model.dao.SelectDao;
 
 @Component
-public class SendEmailScheduler {
-	private static final Logger logger = LoggerFactory.getLogger(SendEmailScheduler.class);
+public class CommonScheduler {
+	private static final Logger logger = LoggerFactory.getLogger(CommonScheduler.class);
 	
 	
 	@Autowired
 	private MemberDao memberDao;
 	
+	@Autowired
+	private SelectDao selectDao;
 	
 	@Autowired
 	private SendEmail sendEmail;
@@ -78,5 +82,16 @@ public class SendEmailScheduler {
 		memberDao.deleteDropMember();
 		logger.info("deleteDropMember End");
 
+	}
+	
+	@Scheduled(cron = "* * 1 * * *")
+	public void changeDBError() {
+		try {
+			Constant.checkDBError= false;
+			String now = selectDao.getNowDate();
+		} catch (Exception e) {
+			Constant.checkDBError= true;
+			logger.error("DB Exception TimeOut");
+		}
 	}
 }

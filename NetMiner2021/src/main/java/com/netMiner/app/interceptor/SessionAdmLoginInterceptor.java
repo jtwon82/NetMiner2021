@@ -40,29 +40,34 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 				return false;
 			}
 		}
-		String [] urlPath = {"login","feature","Privacy","solution",
-				"function","feature","whyNetMiner","registerCheckEmail",
-				"goCheckEmail","goChangePwd","register","findPwd",
-				"moveCheckEmail","activate","account"};
-		for (String path : urlPath) {
-			if (url.contains(path)) {
-				Map<String, Object> checkData = selectDao.getCheckData();
-				if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {				
-					response.sendRedirect("./check");
-					return false;
+		
+		if (Constant.checkDBError) {
+			response.sendRedirect("./check");
+			return false;
+		} else {
+			String [] urlPath = {"login","feature","Privacy","solution",
+					"function","feature","whyNetMiner","registerCheckEmail",
+					"goCheckEmail","goChangePwd","register","findPwd",
+					"moveCheckEmail","activate","account"};
+			for (String path : urlPath) {
+				if (url.contains(path)) {
+					Map<String, Object> checkData = selectDao.getCheckData();
+					if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {				
+						response.sendRedirect("./check");
+						return false;
+					}
 				}
 			}
-		}
-		if ("account".contains(url)) {
-			HttpSession session= request.getSession();
-			MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-			if (vo == null) {
-				response.sendRedirect("/");
-				return false;
+			if ("account".contains(url)) {
+				HttpSession session= request.getSession();
+				MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+				if (vo == null) {
+					response.sendRedirect("/");
+					return false;
+				}
+				
 			}
-			
-		}
-		
+		}		
 		return true;
 	}
 	

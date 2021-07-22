@@ -1,6 +1,7 @@
 package com.netMiner.app.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.netMiner.app.config.Constant;
 import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.model.vo.NationVo;
@@ -238,14 +240,24 @@ public class PageMoveController extends HttpServlet {
 	}
 	@RequestMapping(value="check", method= {RequestMethod.GET, RequestMethod.POST})
 	public String goCheck (ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
-		Map<String , Object> param =  selectDao.getCheckData();		
 		Locale local = request.getLocale();
 		String location = local.toString();
 		String language = "";
 		if (!location.contains("KR")) {
 			language = "_EN";
 		}
-		mv.addObject("checkData", param);
+		Map<String , Object> param = new HashMap<String ,Object>();
+		
+		if (!Constant.checkDBError) {
+			param =  selectDao.getCheckData();		
+			mv.addObject("checkData", param);						
+		} else {
+			param.put("END_DATE_YN","Y");
+			param.put("COMMENT_KR","긴급 시스템 점검");
+			param.put("COMMENT_EN","Temporary System Maintenance");
+			mv.addObject("checkData",param);
+		}
+		
 		return "homePage"+language+"/check";
 	}
 	@RequestMapping(value="registerComplete", method=RequestMethod.GET)

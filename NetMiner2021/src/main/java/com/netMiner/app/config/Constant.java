@@ -11,6 +11,8 @@ public class Constant {
 	public static int PER_ONE_PAGE=10;
 	public static int PER_PAGE_GROUP=3;
 	
+	public static boolean checkDBError = false;
+	
 	public static String ServiceResultJsonValue= "{\"result\" : \"%s\", \"value\" : \"%s\", \"value2\" : \"%s\"}";
 	
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
