@@ -190,9 +190,11 @@ public class MemberController {
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
 			sendEmail.sendRegisterMail(userId, "", language);
-			
-			session.setAttribute("memberVo", memberVo);
-			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
+			//해당 유저의 password 가 없으므로 쿼리상으로 google yn 을 강제로 Y로 변경후 데이터 가지고옴 
+			memberVo.setGoogleYn("Y");
+			MemberVo loginMemberVo = memberService.getUserInfo(memberVo);
+			session.setAttribute("memberVo", loginMemberVo);
+			session.setAttribute("memberId", cu.encryptLoginfo(loginMemberVo.getUserId(), "02", loginMemberVo.getNo()));
 			
 			mv.setViewName("jsonView");
 		} catch (UnsupportedEncodingException e) {
@@ -292,10 +294,10 @@ public class MemberController {
 
 		sendEmail.sendRegisterMail(userId, "", language);
 		
-		
-		session.setAttribute("memberVo", memberVo);
-		
-			session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
+		MemberVo loginMember = memberService.getUserInfo(memberVo);
+		session.setAttribute("memberVo", loginMember);
+		logger.info("로그인 유저 정보 - {}",loginMember.toString());
+			session.setAttribute("memberId", cu.encryptLoginfo(loginMember.getUserId(), "02", loginMember.getNo()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

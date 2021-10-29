@@ -1,13 +1,14 @@
 var checkRandomNumber = false;
 var now = new Date();
 $(document).ready(function() {
-	
+	/*
 	if (location.pathname == '/login_dev') {
 		$("#register").remove("onclick");
 		$("#register").attr("onclick","window.location.href='./register'");
 		$(".google").remove("onclick");
 		$(".google").attr("onclick","googleLogin()");
 	} 
+	*/
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
 		    $(this).parents(".content").find('.agree input').prop("checked", $(this).is(":checked"));

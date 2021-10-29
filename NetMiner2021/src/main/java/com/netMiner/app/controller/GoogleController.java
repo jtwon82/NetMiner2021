@@ -57,13 +57,13 @@ public class GoogleController  {
 	//final static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8080/socialRegister";
 	
 	
-//	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	//	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	final static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	final static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 	
-	@Value("${GOOGLE_CALL_BACK_LOGIN_URL}")
-	final static String GOOGLE_CALL_BACK_LOGIN_URL = "";
-	@Value("${GOOGLE_CALL_BACK_REGISTER_URL}")
-	final static String GOOGLE_CALL_BACK_REGISTER_URL ="";
+//	@Value("${GOOGLE_CALL_BACK_LOGIN_URL}")
+//	final static String GOOGLE_CALL_BACK_LOGIN_URL = "";
+//	@Value("${GOOGLE_CALL_BACK_REGISTER_URL}")
+//	final static String GOOGLE_CALL_BACK_REGISTER_URL ="";
 	
 	private String clientId = "370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com";
 	private String clientSecret = "Xuvy3VghnbUWj0Y6racOHwCD";
@@ -133,6 +133,7 @@ public class GoogleController  {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
+		memberVo.setGoogleYn("Y");
 
 		int count = memberService.checkUser( (String) userInfo.get("email"));
 		
@@ -144,8 +145,8 @@ public class GoogleController  {
 		mv.addObject("userInfo",userInfo);
 		
 		MemberVo member = memberService.getUserInfo(memberVo);
-		if (member == null) {
-			url = "member"+language+"/register_sns_fail";									
+		if (member == null && checkUserCount) {							
+				url = "member"+language+"/register_sns_fail";
 		} else {
 			if ("03".equals(member.getUserCode()) && "N".equals(member.getUserStatsYn())) {
 				
@@ -166,7 +167,7 @@ public class GoogleController  {
 				url = "member"+language+"/login";
 			} else {
 				session.setAttribute("memberVo", member);
-				session.setAttribute("memberId", cu.encryptLoginfo(memberVo.getUserId(), "02", memberVo.getNo()));
+				session.setAttribute("memberId", cu.encryptLoginfo(member.getUserId(), "02", member.getNo()));
 				url = "homePage"+language+"/main";
 			}
 		}

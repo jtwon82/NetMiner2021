@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService{
 		MemberVo getMemberVo = null;
 		
 		getMemberVo = memberDao.getUserInfo(vo);
-		
+
 		
 		return getMemberVo;
 	}
