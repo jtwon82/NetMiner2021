@@ -39,24 +39,23 @@
 					</div>
 					<div class="content">
 						<div>	
-											
 							<ul class="input">
-								<li><input placeholder="이메일" type="text" name="email" id ="email" onChange="changeRegister()"/></li>
-								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd" onChange="changeRegister()"/><span class="sum">영문, 숫자 조합 8~20 글자</span></li>
-								<li><input placeholder="소속기관" type="text" name="company" id="company" onChange="changeRegister()"/></li>
+								<li><input placeholder="이메일" type="text" name="email" id ="email" onChange=""/></li>
+								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd" onChange=""/><span class="sum">영문, 숫자 조합 8~20 글자</span></li>
+								<li><input placeholder="소속기관" type="text" name="company" id="company" onChange=""/></li>
 							</ul>
-							<select name="nation" id="nation" onChange="changeRegister()">
+							<select name="nation" id="nation" onChange="">
 								<option value="" disabled selected hidden >국가</option>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
-							</select>
+							</select><script>$("select").select2();</script>
 							<div class="checkBox">
 								<p>이용용도</p>
 								<ul>
-									<li><label><input type="radio" checked="checked" name="useCode" value="01" onChange="changeRegister()"><em></em>학술용</label></li>
-									<li ><label><input type="radio" checked="checked" name="useCode" value="02" onChange="changeRegister()"><em></em>일반/기업용</label></li>
+									<li><label><input type="radio" checked="checked" name="useCode" value="01" onChange=""><em></em>학술용</label></li>
+									<li ><label><input type="radio" checked="checked" name="useCode" value="02" onChange=""><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
 							<button class="authentic trs" id="emailChecker" onClick="checkEmail();">이메일 인증</button>							

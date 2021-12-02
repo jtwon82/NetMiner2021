@@ -36,7 +36,12 @@
 							</c:if>
 						</tbody>
 					</table>
-					 <%@ include file="paging.jsp"%>
+<%-- 					 <%@ include file="paging.jsp"%> --%>
+						<div class="pagingContainer">
+							<div class="paging">
+								<c:if test="${not empty paging2 }">${paging2 }</c:if>
+							</div>
+						</div>
 					<div class="register">
 						<button class="navy"><a href="./administrator_modify">등록</a></button>
 					</div>

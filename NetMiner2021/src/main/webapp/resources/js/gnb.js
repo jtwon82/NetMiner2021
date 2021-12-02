@@ -60,6 +60,10 @@ $(document).ready(function() {
 			$("#wrap #footer .lang").toggleClass("active");
 		}
 	);
+	$("#wrap #footer .lang, #wrap #footer .family").mouseleave(function(e){
+		$(this).removeClass("active");
+	});
+	
 	//패밀리사이트
 	$("#wrap #footer .family p").click(
 		function(){
@@ -74,4 +78,5 @@ $(document).ready(function() {
 	});
 	
 
+	// 
 })

@@ -51,7 +51,7 @@ img::selection {background-color: transparent; color: #000;}
 .btn{position: absolute; z-index: 2; cursor:pointer;}
 .pc{display: block;}
 .mobile{display: none }
-.obj{position: absolute; z-index: 100;}
+.obj{position: absolute; z-index: 99;}
 .trs{-webkit-transition: all .4s ease-out; -moz-transition: all .4s ease-out; -ms-transition: all .4s ease-out; -o-transition: all .4s ease-out; transition: all .4s ease-out;}
 .tCenter{text-align: center;}
 .tLeft{text-align: left;}

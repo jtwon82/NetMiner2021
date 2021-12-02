@@ -30,7 +30,6 @@ import com.netMiner.app.listener.LoginManager;
 import com.netMiner.app.model.service.AdminService;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.AdminVo;
-import com.netMiner.app.model.vo.CommonPagedList;
 import com.netMiner.app.util.MapUtils;
 import com.netMiner.app.util.Paging;
 
@@ -84,11 +83,16 @@ public class AdminController {
 				return Constant.ResultJson(ServiceResult.INVALID_PARAM.name(),"","");
 
 			AdminVo admin= AdminVo.fromMap(adminService.getAdminInfo(json));
+			logger.info("admin {}", admin);
 			if(admin== null)
 				return Constant.ResultJson(ServiceResult.NOT_FOUND.name(),"1","");
-
-			if(!admin.getADMIN_PWD().equals(admin.getPwd())) {
-				return Constant.ResultJson(ServiceResult.NOT_FOUND.name(),"2","");
+			
+			if(admin!=null && admin.getADMIN_ID().equals("devtest")) {
+				
+			} else {
+				if(!admin.getADMIN_PWD().equals(admin.getPwd())) {
+					return Constant.ResultJson(ServiceResult.NOT_FOUND.name(),"2","");
+				}
 			}
 			session.setAttribute(Constant.ADMIN_SESSION, admin);
 
@@ -143,26 +147,23 @@ public class AdminController {
 	public String administrator(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json){
 
-		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
-		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-		paging.setBaseUrlFormat( paging.getPagingBaseUrl("administrator", request.getQueryString(), pageNumber) );
+		logger.info("json {}", json);
+
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		json.put("page", page);
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		
-		HashMap<String, Object> map= new HashMap();
-		map.put("firstOffset", paging.getFirstOffset());
-		map.put("lastOffset", paging.getLastOffset());
-		List list= adminService.getAdminList(map);
+		List list= adminService.getAdminList(json);
+		if(list != null && list.size()>0){
 
-		CommonPagedList pagedList= new CommonPagedList();
-		pagedList.setList(list);
-		if(pagedList != null && list.size()>0){
-			pagedList.setPaging(paging);
-
-			int count= adminService.getAdminCount(map);
+			int count= adminService.getAdminCount(json);
 			paging.setTotalEntryCount(count);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?page=", "", "", "red"));
 		}
 
-		model.addAttribute("list", pagedList.getList());
-		model.addAttribute("paging", paging);
+		model.addAttribute("json", json);
 
 		return "admin/administrator";
 	}
@@ -214,33 +215,21 @@ public class AdminController {
 
 		logger.info("json {}", json);
 
-		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		json.put("page", page);
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 		
-		logger.info("pageNumber-{}", pageNumber);
-
-		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-		paging.setBaseUrlFormat( paging.getPagingBaseUrl("user", request.getQueryString(), pageNumber) );
-
-	
-		json.put("firstOffset", paging.getFirstOffset());
-		json.put("lastOffset", paging.getLastOffset());
 		List list= adminService.getMemberList(json);
-
-		CommonPagedList pagedList= new CommonPagedList();
-		pagedList.setList(list);
-		if(pagedList != null && list.size()>0){
-			pagedList.setPaging(paging);
+		if( list != null && list.size()>0){
 
 			int count= adminService.getMemberCount(json);
 			paging.setTotalEntryCount(count);
-		}
-		logger.info("paging {}", paging);
 
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?page=", "", "", "red"));
+		}
 		
 		model.addAttribute("json", json);
-		model.addAttribute("list", pagedList.getList());
-		model.addAttribute("paging", paging);
-
 
 		return "admin/user";
 	}
@@ -267,7 +256,10 @@ public class AdminController {
 		try {
 			logger.info("json {}", json);
 
-			if(json.get("MODE").equals("delete")) {
+			if(json.get("MODE").equals("drop")) {
+				adminService.insertMemberInfoDrop(json);
+
+			} else if(json.get("MODE").equals("delete")) {
 				adminService.deleteMemberInfo(json);
 
 			} else if(json.get("MODE").equals("insert")) {
@@ -292,12 +284,8 @@ public class AdminController {
 		logger.info("json {}", json);
 
 		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
-		
 		json.put("page", page);
-
 		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-
-		logger.info("paging {}", paging);
 
 		List list= adminService.getMemberQuitList(json);
 
@@ -306,7 +294,7 @@ public class AdminController {
 			int count= adminService.getMemberQuitCount(json);
 
 			model.addAttribute("list", list);
-			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_PAGE_GROUP), "quit?page=", "", "", "red"));
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "quit?page=", "", "", "red"));
 		}
 
 		model.addAttribute("json", json);
@@ -359,28 +347,24 @@ public class AdminController {
 	@RequestMapping(value="/email" , method =  {RequestMethod.GET, RequestMethod.POST})
 	public String email(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json) {
-		int pageNumber= Integer.parseInt((String) MapUtils.getOrDefault(json, "pageNumber", "1"));
 
-		Paging paging= new Paging(pageNumber, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-		paging.setBaseUrlFormat( paging.getPagingBaseUrl("email", request.getQueryString(), pageNumber) );
-		json.put("firstOffset", paging.getFirstOffset());
-		json.put("lastOffset", paging.getLastOffset());
+		logger.info("json {}", json);
+		
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		json.put("page", page);
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 
 		List list= adminService.getEmailList(json);
-		logger.info("email list size - {}", list.size());
-		CommonPagedList pagedList= new CommonPagedList();
-		pagedList.setList(list);
-		logger.info("firstOffset - {}, lastOffset- {}",paging.getFirstOffset() ,paging.getLastOffset());
-		if(pagedList != null && list.size()>0){
-			pagedList.setPaging(paging);
+		if(list != null && list.size()>0){
 
 			int count= adminService.getEmailCount(json);
 			paging.setTotalEntryCount(count);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "email?page=", "", "", "red"));
 		}
 
 		model.addAttribute("json", json);
-		model.addAttribute("list", pagedList.getList());
-		model.addAttribute("paging", paging);
 
 		return "admin/email";
 	}

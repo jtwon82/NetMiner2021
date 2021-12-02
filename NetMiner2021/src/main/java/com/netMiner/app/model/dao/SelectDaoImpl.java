@@ -30,34 +30,29 @@ public class SelectDaoImpl implements SelectDao {
 	}
 
 	@Override
-	public Map<String, Object> getCheckData() {
-		
+	public Map<String, Object> getCheckData() throws Exception {
 		return sqlSession.selectOne("getCheckData");
 	}
 
 	@Override
 	public void insertEmailSendLog(Map<String, Object> param) {
-		
 		sqlSession.insert("insertEmailSendLog", param);
 		
 	}
 
 	@Override
 	public Map<String,Object> getauthData(String userId) {
-		
 		return sqlSession.selectOne("getauthData", userId);
 	}
 
 	@Override
 	public void deleteCheckSendAuthData(String userId) {
-		
 		sqlSession.delete("deleteCheckSendAuthData", userId);
 		
 	}
 
 	@Override
-	public String getNowDate() {
-		// TODO Auto-generated method stub
+	public String getNowDate() throws Exception {
 		return sqlSession.selectOne("getNowDate");
 	}
 }

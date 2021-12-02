@@ -36,6 +36,8 @@ public interface AdminService {
 
 	void insertMemberInfo(Map<String, Object> map);
 	
+	void insertMemberInfoDrop(Map<String, Object> map);
+	
 	void deleteMemberInfo(Map<String, Object> map);
 
 
@@ -51,37 +53,28 @@ public interface AdminService {
 	void insertMemberQuitInfo(Map<String, Object> map);
 	
 	void deleteMemberQuitInfo(Map<String, Object> map);
-
+	
+	
 
 	List getEmailList(Map<String, Object> json);
 
-
 	int getEmailCount(Map<String, Object> json);
-
 
 	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
 
-
 	void deleteEmailInfo(HashMap<String, Object> json);
-
 
 	void insertEmailInfo(HashMap<String, Object> json);
 
-
 	void modifyEmailInfo(HashMap<String, Object> json);
-
 
 	SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list);
 
-
 	void modifyDropMemberInfo(HashMap<String, Object> json);
-
 
 	void recoverMemberQuitInfo(HashMap<String, Object> json);
 
-
 	Map getCheck(HashMap<String, Object> json);
-
 
 	void modifyCheck(HashMap<String, Object> json);
 

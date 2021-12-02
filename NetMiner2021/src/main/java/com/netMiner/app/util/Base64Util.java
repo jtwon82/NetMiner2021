@@ -18,9 +18,13 @@ public class Base64Util {
 	public String deCodingBase64(String param) {
 		String result = "";
 		
-		byte[] binary = Base64.getDecoder().decode(param);
-		
-		result = new String(binary);
+		try {
+			byte[] binary = Base64.getDecoder().decode(param);
+			
+			result = new String(binary);
+		}catch(Exception e) {
+			
+		}
 		
 		return result;
 	}

@@ -26,6 +26,7 @@
 		<script src="resources/js/gnb.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 		<script src="resources/js/event.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>  
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 	</head>
 	<body>
 		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
@@ -40,22 +41,36 @@
 						<div>
 							<p class="profile">프로필</p>
 							<ul class="input">
-								<li>
-									<c:if test="${empty userId}">
-									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
-									<c:if test="${memberVo.googleYn eq 'N'}">
-									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false" >이메일 인증</button>
-									</c:if>
-									</c:if>
-									<c:if test="${!empty userId}">
-									<input name="email" value="${userId}" type="text" id="email"/>
-									<button class="trans trs email active" id="chageUserId" onClick="chageUserId();">저장</button>
-									</c:if>
-								</li>
+								<c:choose>
+								<c:when test="${memberVo.googleYn eq 'Y'}">
+									<li>
+										<input name="email" value="${memberVo.userId}" disabled="disabled" type="text" id="email" /></li>
+								</c:when>
+								<c:otherwise>
+									<li class="email old">
+										<input name="email" value="${memberVo.userId}" disabled="disabled" type="text" id="email"/>
+										<button class="authentic trs email emailChangeBtn" style="width: 138px; background-color:#203864;right: -150px;">Change</button>
+									</li>
+									<li class="email new h">
+										<input type="text" id="newemail" onkeyup="changeBtnColor()"/>
+										<button class="authentic trs email emailVerifyBtn" id="emailVerifyBtn" onClick="changeEmail()">이메일 인증</button>
+										<button class="authentic trs email emailCancelBtn" onclick="" style="right: -285px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray;">취소</button>
+									</li>
+								</c:otherwise>
+								</c:choose>
 								<c:if test="${memberVo.googleYn eq 'N'}">
-								<li><input placeholder="안전한 프로필 수정을 위해 비밀번호를 입력해주세요" type="password" id ="pwd"  onchange="showUpdate()"/></li>
+									<li class="pwd old"><input placeholder="안전한 프로필 수정을 위해 비밀번호를 입력해주세요" type="password" id="pwd" onkeypress="showUpdate()"/>
+										<button class="authentic trs email" style="width: 138px; background-color:#203864;" onclick="changePwd2BtnChange('${memberVo.userId}');">변경</button>
+										<button class="authentic trs email h" style="width: 138px;" onclick="changePwd2BtnChangeCancel();">취소</button>
+									</li>
+									
+									<li class="pwd new h"><input placeholder="새 비밀번호" type="password" />
+									</li>
+									<li class="pwd new h"><input placeholder="새 비밀번호" type="password" />
+										<button class="authentic trs email" style="width: 138px; background-color:#203864;" onclick="changePwd2BtnChangeAct('${memberVo.userId}');">저장</button>
+									</li>
 								</c:if>
-								<li><input value="${memberVo.company}" type="text" id ="company" onchange="showUpdate()"/></li>
+								<li><input value="${memberVo.company}" type="text" id ="company" onkeyup="showUpdate()"/></li>
 							</ul>
 							<select id="nation" onchange="showUpdate()">
 								<option value="" disabled selected hidden>국가</option>
@@ -63,7 +78,7 @@
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
-							</select>
+							</select><script>$("select").select2();</script>
 							<div class="checkBox">
 								<p>이용용도</p>
 								<ul>
@@ -72,7 +87,7 @@
 								</ul>
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()"  name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em>NetMiner 365 에 대한 정보 , 혜택 안내 등을 위한 뉴스레터를 받고 싶습니다.</label>
-							<div class="update" id="update" style="display: none;">
+							<div class="update h" id="update">
 								<button class="cancel trs" onClick="clear();">취소</button>
 								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">저장</button>
 							</div>

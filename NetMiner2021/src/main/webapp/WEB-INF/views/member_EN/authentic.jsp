@@ -41,12 +41,12 @@ This code will be valid for 30 minutes.</p>
 						<div class="input">
 							<p>Verification Code</p>
 							<input placeholder="" type="text" id="code"/>
-							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="#" class="blue"  onClick="newRandomNumber('${userId}');">Resend Code</a></p>
+							<p class="sum">Can't find your code? Check your spam folder.<br>Or  <a href="javascript:;" class="blue"  onClick="newRandomNumber('${userId}');">Resend Code</a></p>
 						</div>
 						<c:if test="${empty memberVo}">
 						<div class="agree">
 								<label><input id="check_all" type="checkbox" name=""><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a href='javascript:;' onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a href='javascript:;' onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
 								<label><input id="check3" class="check" type="checkbox" name="marketYn"  value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 						</div>

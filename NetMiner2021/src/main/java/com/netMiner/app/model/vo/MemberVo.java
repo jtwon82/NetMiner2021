@@ -15,7 +15,9 @@ public class MemberVo implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private int no; 
+	private String typeCode;
 	private String userCode;
+	private String oldUserId;
 	private String userId;
 	private String userPwd;
 	private String nation = "";
@@ -26,12 +28,16 @@ public class MemberVo implements Serializable{
 	private String authKey;
 	private String googleYn;
 	private String userStatsYn;
+	private String lastLoginDate;
+	private String chk;
 	
 	
 	public Map<String,Object> getMemberInfoMap(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("no", this.no);
+		result.put("oldUserId", this.oldUserId);
 		result.put("userId", this.userId);
+		result.put("typeCode", this.typeCode);
 		result.put("userCode", this.userCode);
 		result.put("userPwd", this.userPwd);
 		result.put("nation", this.nation);
@@ -41,6 +47,7 @@ public class MemberVo implements Serializable{
 		result.put("marketYn", this.marketYn);
 		result.put("googleYn", this.googleYn);
 		result.put("userStatsYn", this.userStatsYn);
+		result.put("lastLoginDate", this.lastLoginDate);
 		return result;
 	}
 }

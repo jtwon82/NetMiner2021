@@ -25,7 +25,15 @@
 									<td>${item.REG_DATES }</td>
 								</tr>
 								<tr>
-									<th>구분</td>
+									<th>타입구분</td>
+									<td>
+										<input type="hidden" id="TYPE_CODE" name="TYPE_CODE" value="${item.TYPE_CODE }"/>
+										<label><input type="radio" name="r0" value='01' selected><span>Normal</span></label>
+										<label><input type="radio" name="r0" value='99'><span>Super</span></label>
+									</td><script>$('input:radio[name=r0]:input[value="${item.TYPE_CODE }"]').attr("checked", true);</script>
+								</tr>
+								<tr>
+									<th>용도</td>
 									<td>
 										<input type="hidden" id="USE_CODE" name="USE_CODE" value="${item.USE_CODE }"/>
 										<label><input type="radio" name="r1" value='01' selected><span>Academic</span></label>
@@ -92,6 +100,7 @@
 						<div class="delete">
 							<c:if test="${item.NO!='' }">
 							<button class="red" onclick="this.form.MODE.value='delete';">삭제</button>
+							<button class="red" onclick="this.form.MODE.value='drop';">탈퇴</button>
 							</c:if>
 						</div>
 						<div class="finish">
@@ -118,15 +127,23 @@ $(function(){
 	$('form').submit(function(event){
 		
 		var f= document.Form;
+		console.log( f );
+		
 		switch(f.MODE.value){
 		case "cancel":
 			history.go(-1);
 			break;
 		case "insert": case "modify":
+			$(f).find('input[name="TYPE_CODE"]').val( $(f).find('input[name="r0"]:checked').val() );
 			$(f).find('input[name="USE_CODE"]').val( $(f).find('input[name="r1"]:checked').val() );
 			return true;
 			break;
+			
 		case "delete":
+			return true;
+			break;
+
+		case "drop":
 			return true;
 			break;
 			
@@ -150,8 +167,8 @@ $(function(){
                 
         		break;
             case "delete" :
-            	if (window.confirm('해당 유저의 정보를 탈퇴 하시겠습니까?')) {
-            		alert('탈퇴 완료 되었습니다.');
+            	if (window.confirm('해당 유저의 정보를 삭제 하시겠습니까?')) {
+            		alert('삭제 완료 되었습니다.');
             	}
             	; break;
             }

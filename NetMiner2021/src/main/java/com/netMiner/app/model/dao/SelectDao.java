@@ -12,7 +12,7 @@ public interface SelectDao {
 
 	MailVo getRandomMail(String mailCode);
 
-	Map<String, Object> getCheckData();
+	Map<String, Object> getCheckData() throws Exception ;
 
 	void insertEmailSendLog(Map<String, Object> param);
 
@@ -20,7 +20,7 @@ public interface SelectDao {
 
 	void deleteCheckSendAuthData(String userId);
 
-	String getNowDate();
+	String getNowDate() throws Exception ;
 
 
 }

@@ -25,15 +25,23 @@
 							<div class="lang obj">
 								<p>ENGLISH<span></span></p>
 								<ul>
-									<li><a href="#" onClick="changeLanguage('KR');">KOREAN</a></li>
-									<li style="display:none;"><a href="#">ENGLISH</a></li>
+									<li><a href="javascript:;" onClick="changeLanguage('KR');">KOREAN</a></li>
+									<li style="display:none;"><a href="javascript:;">ENGLISH</a></li>
 								</ul>
 							</div>
 							<div class="family obj">
 								<p>Family Site<span></span></p>
 								<ul>
 									<li><a href="http://www.netminer.com/" target="_blank">NetMiner</a></li>
-									<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank" style="">Cyram</a></li>
+<!-- 									<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank" style="">Cyram</a></li> -->
+									<c:choose>
+									<c:when test="${language eq '_EN'}">
+										<li><a href="http://www.cyram.com/en/index/index_body.php" target="_blank">Cyram</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="http://www.cyram.com" target="_blank">Cyram</a></li>
+									</c:otherwise>
+									</c:choose>
 									<li><a href="http://edu.cyram.com" target="_blank" style="color:gray; cursor: default; pointer-events:none ">Cyram Education </a></li>
 								</ul>
 							</div>

@@ -15,7 +15,6 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDao memberDao;
 	@Override
 	public String getTestDate() {
-		// TODO Auto-generated method stub
 		String dbDate = memberDao.selectDate();
 		return dbDate;
 	}
@@ -27,12 +26,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 	@Override
 	public MemberVo getUserInfo(MemberVo vo) {
-		MemberVo getMemberVo = null;
-		
-		getMemberVo = memberDao.getUserInfo(vo);
-
-		
-		return getMemberVo;
+		return memberDao.getUserInfo(vo);
+	}
+	@Override
+	public MemberVo getUserInfoLastlogin(MemberVo vo) {
+		return memberDao.getUserInfoLastlogin(vo);
 	}
 	@Override
 	public void signUp(MemberVo memberVo) {
@@ -71,7 +69,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void updateNewUserInfo(MemberVo oldMemberVo, MemberVo memberVo) {
 		Map<String,Object> param = memberVo.getMemberInfoMap();
-		param.put("oldUserId", oldMemberVo.getUserId());
+		//param.put("oldUserId", oldMemberVo.getUserId());
 		
 		memberDao.updateNewUserInfo(param);
 		

@@ -26,20 +26,19 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public MemberVo getUserInfo(MemberVo vo) {
-		MemberVo memberVo = new MemberVo();
-		if (vo.getGoogleYn()!=null) {
-			memberVo = sqlSession.selectOne("getUserInfo", vo);	
-		} else {
-			memberVo = sqlSession.selectOne("getLoginUserInfo", vo);
+		return sqlSession.selectOne("getUserInfo", vo);	
+	}
+	
+	@Override
+	public MemberVo getUserInfoLastlogin(MemberVo vo) {
+		sqlSession.update("updateLastLoginDate", vo);			
+		sqlSession.flushStatements();
+		try {
+			return sqlSession.selectOne("getUserInfo", vo);
+		}catch(Exception e) {
+			List list= sqlSession.selectList("getUserInfo", vo);
+			return (MemberVo) list.get(0);
 		}
-		
-		if (memberVo != null) {			
-			sqlSession.update("updateLastLoginDate", vo);			
-			sqlSession.flushStatements();
-		} else {
-			memberVo = sqlSession.selectOne("getDormantUserInfo", vo);
-		}
-		return memberVo;
 	}
 
 	@Override
@@ -80,7 +79,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public MemberVo checkJoin(MemberVo vo) {
 		
-		MemberVo result = sqlSession.selectOne("selectJoin", vo);
+		MemberVo result = sqlSession.selectOne("checkJoin", vo);
 		
 		return result;
 	}
@@ -99,7 +98,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public void updateNewUserInfo(Map<String, Object> param) {
 		
-		sqlSession.update("updateUserInfo", param);
+		sqlSession.update("updateNewUserInfo", param);
 	}
 
 	@Override

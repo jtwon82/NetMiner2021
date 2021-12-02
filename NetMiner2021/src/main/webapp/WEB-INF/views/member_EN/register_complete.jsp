@@ -32,7 +32,7 @@
 					<div class="wrap">
 						<div class="title">
 							<h2>Hello!</h2>
-							<p>Let's get started with NetMner 365.<br>
+							<p>Let's get started with NetMiner 365.<br>
 	NetMiner 365 gives you a lot of insights and findings from graph.</p>
 						</div>
 						<div class="content">

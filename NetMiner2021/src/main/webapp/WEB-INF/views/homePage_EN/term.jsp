@@ -174,7 +174,7 @@ or regularly acknowledge Feedback we receive and do not have any obligation rela
 						<dt>Collecting and protecting your personal information </dt>
 						<dd>
 							<ul>
-								<li>To provide more convenient services to users, we collect and use your personal information only to the extent of purposes and scope
+								<li>To provide more convenient services to users, we collect and use your personal information (such as IP address, email address and cookies) and logs of your activity only to the extent of purposes and scope
 agreed by you and safely manages such personal information according to applicable laws and regulations related to the protection of
 personal information. Our efforts or other details related to safely processing relevant personal information.</li>
 								<li>If you do not have a log-in or access record for a certain period, we may destroy or separately store your information after providing prior

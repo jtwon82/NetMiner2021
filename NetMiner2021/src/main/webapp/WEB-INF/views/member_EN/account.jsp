@@ -39,22 +39,36 @@
 						<div>
 							<p class="profile">Profile</p>
 							<ul class="input">
-								<li>
-									<c:if test="${empty userId}">
-									<input name="email" value="${memberVo.userId}" type="text" id="email"/>
-									<c:if test="${memberVo.googleYn eq 'N'}">
-									<button class="authentic trs email" onClick="changeEmail('${memberVo.userId}')" id="checkEmailBtn" disabled="false">Verify</button>
-									</c:if>
-									</c:if>
-									<c:if test="${!empty userId}">
-									<input name="email" value="${userId}" type="text" id="email"/>
-									<button class="trans trs email active"  onClick="chageUserId();">Change</button>
-									</c:if>
-								</li>
+								<c:choose>
+								<c:when test="${memberVo.googleYn eq 'Y'}">
+									<li>
+										<input name="email" value="${memberVo.userId}" disabled="disabled" type="text" id="email" /></li>
+								</c:when>
+								<c:otherwise>
+									<li class="email old">
+										<input name="email" value="${memberVo.userId}" disabled="disabled" type="text" id="email"/>
+										<button class="authentic trs email emailChangeBtn" style="width: 138px; background-color:#203864;right: -150px;">Change</button>
+									</li>
+									<li class="email new h">
+										<input type="text" id="newemail" onkeyup="changeBtnColor()"/>
+										<button class="authentic trs email emailVerifyBtn" style="right: -125px;" id="emailVerifyBtn" onClick="changeEmail()">Verify</button>
+										<button class="authentic trs email emailCancelBtn" style="right: -296px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray; top: 2px;width: 158px;">Cancel</button>
+									</li>
+								</c:otherwise>
+								</c:choose>
 								<c:if test="${memberVo.googleYn eq 'N'}">
-								<li><input placeholder="Please enter your password in order to save changes." type="password" id ="pwd" onchange="showUpdate()"/></li>
+									<li class="pwd old"><input placeholder="Please enter your password in order to save changes." type="password" id="pwd" onkeypress="showUpdate()"/>
+										<button class="authentic trs email" style="width: 138px; background-color:#203864;right: -150px;" onclick="changePwd2BtnChange('${memberVo.userId}');">Change</button>
+										<button class="authentic trs email h" style="width: 138px;right: -150px;" onclick="changePwd2BtnChangeCancel();">Cancel</button>
+									</li>
+									
+									<li class="pwd new h"><input placeholder="New Password" type="password" />
+									</li>
+									<li class="pwd new h"><input placeholder="New Password" type="password" />
+										<button class="authentic trs email" style="width: 138px;right: -150px;" onclick="changePwd2BtnChangeAct('${memberVo.userId}');">Save</button>
+									</li>
 								</c:if>
-								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onchange="showUpdate()"/></li>
+								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onkeyup="showUpdate()"/></li>
 							</ul>
 							<select id="nation" onchange="showUpdate()">
 								<option value="" disabled selected hidden>Country</option>
@@ -62,7 +76,7 @@
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
-							</select>
+							</select><script>$("select").select2();</script>
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>
@@ -71,7 +85,7 @@
 								</ul>
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>
-							<div class="update"  id="update" style="display:none;">
+							<div class="update h"  id="update">
 								<button class="cancel trs" onClick="clear();">Cancel</button>
 								<button class="save trs active" onClick="updateUserInfo('${memberVo.googleYn}');">Save</button>
 							</div>

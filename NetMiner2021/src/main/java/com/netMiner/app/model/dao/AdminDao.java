@@ -22,6 +22,7 @@ public interface AdminDao {
 	void deleteAdminInfo(Map<String, Object> map);
 
 
+	
 	int getMemberCount(Map<String, Object> map);
 	
 	List<HashMap<String, Object>> getMemberList(Map<String, Object> map);
@@ -32,7 +33,10 @@ public interface AdminDao {
 
 	void insertMemberInfo(Map<String, Object> map);
 
+	void insertMemberInfoDrop(Map<String, Object> map);
+
 	void deleteMemberInfo(Map<String, Object> map);
+
 	
 
 	int getMemberQuitCount(Map<String, Object> map);
@@ -48,32 +52,24 @@ public interface AdminDao {
 	void deleteMemberQuitInfo(Map<String, Object> map);
 
 
+	
 	List<HashMap<String, Object>> getEmailList(Map<String, Object> map);
-
 
 	int getEmailCount(Map<String, Object> map);
 
-
 	HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map);
-
 
 	void deleteEmailInfo(HashMap<String, Object> map);
 
-
 	void insertEmailInfo(HashMap<String, Object> map);
-
 
 	void modifyEmailInfo(HashMap<String, Object> map);
 
-
 	void modifyDropMemberInfo(HashMap<String, Object> map);
-
 
 	void recoverMemberQuitInfo(HashMap<String, Object> json);
 
-
 	Map getCheck(HashMap<String, Object> json);
-
 
 	void modifyCheck(HashMap<String, Object> json);
 }

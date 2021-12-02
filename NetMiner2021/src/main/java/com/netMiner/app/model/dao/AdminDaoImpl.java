@@ -81,10 +81,13 @@ public class AdminDaoImpl implements AdminDao{
 	}
 
 	@Override
-	public void deleteMemberInfo(Map<String, Object> map) {
+	public void insertMemberInfoDrop(Map<String, Object> map) {
 		sqlSession.insert("insertMemberInfoDrop", map);
-		//sqlSession.update("deleteMemberInfo", map);
-		
+	}
+	
+	@Override
+	public void deleteMemberInfo(Map<String, Object> map) {
+		sqlSession.update("deleteMemberInfo", map);
 	}
 
 	
@@ -116,73 +119,65 @@ public class AdminDaoImpl implements AdminDao{
 
 	@Override
 	public void deleteMemberQuitInfo(Map<String, Object> map) {
-		sqlSession.update("deleteMemberInfo", map);
+		sqlSession.update("deleteMemberQuitInfo", map);
 	}
 
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public List<HashMap<String, Object>> getEmailList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("getEmailList", map);
 	}
 
-
 	@Override
 	public int getEmailCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getEmailCount", map);
 	}
 
-
 	@Override
 	public HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getEmailDetailInfo", map);
 	}
 
-
 	@Override
 	public void deleteEmailInfo(HashMap<String, Object> map) {
-		sqlSession.delete("delteEmailInfo" , map);
+		sqlSession.delete("deleteEmailInfo" , map);
 	}
-
 
 	@Override
 	public void insertEmailInfo(HashMap<String, Object> map) {
 		sqlSession.update("insertEmailInfo", map);
-		
 	}
-
 
 	@Override
 	public void modifyEmailInfo(HashMap<String, Object> map) {
 		sqlSession.update("modifyEmailInfo", map);
-		
 	}
-
 
 	@Override
 	public void modifyDropMemberInfo(HashMap<String, Object> map) {
 		sqlSession.update("modifyDropMemberInfo", map);
 	}
 
-
 	@Override
 	public void recoverMemberQuitInfo(HashMap<String, Object> json) {
 		sqlSession.update("recoverMemberQuitInfo", json);
 	}
 
-
 	@Override
 	public Map getCheck(HashMap<String, Object> json) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getCheck");
 	}
-
 
 	@Override
 	public void modifyCheck(HashMap<String, Object> json) {
 		sqlSession.update("modifyCheck", json);
-		
 	}
+
+
 }

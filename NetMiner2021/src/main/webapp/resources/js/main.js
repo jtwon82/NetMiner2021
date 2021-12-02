@@ -94,27 +94,36 @@ $(document).ready(function() {
 })
 var emailNumber = "";
 
+function changeBtnColor(){
+	if ($("#newemail").val() == '') {
+		$("#emailVerifyBtn").css("background","#bbb8b8");
+	} else {
+		$("#emailVerifyBtn").css("background","#203864");		
+	}
+}
 function CheckEmailRegx(emailVal)
-{                                                 
-
-     var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
-
-     if (emailVal.match(regExp) != null) { 
-	return true;
+{
+    var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (emailVal.match(regExp) != null) { 
+    	return true;
 	} else { 
-	return false;
+		return false;
 	}         
 
 }
+
 function CheckPwd(pwdVal) {
-		var regExp= /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
-		if (pwdVal.match(regExp)== null) {
-			alert("비밀번호는 영문 대소문자/숫자 조합, 8~20자로 설정해야 합니다.");
-			return false;			 		
-		} else {
-			return true;
-		}
+	var pat1= /[0-9]/;
+	var pat2= /[a-zA-Z]/;
+	var pat3= /[~!@#$%^&*()_+|<>?:{}]/;
+	var regExp= /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+	var ergExp2= /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$/;
+	if (pwdVal.match(ergExp2) != null) {
+		return true;
+	} else {
+		alert("비밀번호는 영문 대소문자/숫자 조합, 8~20자로 설정해야 합니다.");
+		return false;
+	}
 }
 
 
@@ -229,13 +238,19 @@ function register(userId) {
 	})
 }
 function googleLogin(){
-	var redirectLocal = "http://localhost:8080/auth";
-	var redirectPrd="https://www.netminer365.com/auth";
+//	var redirectLocal = "http://localhost:8080/auth";
+//	var redirectPrd="https://www.netminer365.com/auth";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
-	
-	
+	+"redirect_uri="+redirectAuth+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+}
+
+function googleRegister() {
+//	var redirectLocal = "http://localhost:8080/socialRegister";
+//	var redirectPrd="https://www.netminer365.com/socialRegister";
+
+	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectRegister+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
 }
 
 
@@ -284,95 +299,37 @@ function registerSns(pwd) {
 	}
 	
 }
-function googleRegister() {
-	var redirectLocal = "http://localhost:8080/socialRegister";
-	var redirectPrd="https://www.netminer365.com/socialRegister";
 
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectPrd+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
-}
-
-function requestSetPwd() {
-	var userId = $("#email").val();
-	var checkRegx = CheckEmailRegx(userId);
-
-	if (userId == "") {
-		alert("이메일을 입력해 주세요");
-	} else {
-		
-		if (checkRegx) {
-			 var con = document.getElementById("dimmed");
-			 con.style.removeProperty("display");
-			$(function (){
-				$.ajax({
-					url:"./findUserInfo",
-					type:"POST",
-					data:{'email': userId},
-					success : function (data){
-						/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
-						//console.log(data);
-						if (data.googleYn == 'Y') {
-							alert("구글로 가입한 경우에는 비밀번호 변경이 불가능합니다. 구글 계정으로 로그인 하세요.");
-							window.history.back();
-						} else {
-							if (data.userId == "") {
-								alert("가입하지 않은 이메일입니다.");
-								window.location.href="./register";
-							} else {
-								alert(userId + "으로 이메일을 발송하였습니다.");
-								window.location.href="./login";
-							}							
-						}
-					}
-						
-				})
-			});
-			
-		} else {
-			alert("이메일의 형식이 맞지 않습니다.");
-		}
-	}
+function changeRegister(){
 	
 }
 
-function changePwd(userId){
-	var newPwd = $("#newPwd").val();
-	var newPwd2 = $("#newPwd2").val();
-	var checkRegx = CheckPwd(newPwd);
 
-	if (checkRegx) {
-		if (newPwd == newPwd2) {	
-			$(function (){
-				$.ajax({
-					url:"./changeNewPwd",
-					type:"POST",
-					data:{'email': userId , 'pwd':newPwd},
-					success : function (data){
-						sessionStorage.clear();
-						alert("비밀번호가 변경되었습니다.");
-						window.location.href= "./login";
-					}
-						
-				})
-			});
-		} else {
-			alert("비밀번호가 틀립니다.");
-		}
-	} else {
-		alert("비밀번호 형식이 맞지 않습니다.")
-		$("#newPwd").focus();
+$(document).on('click', '.emailChangeBtn', function(e){
+	$("#section li.email").hide();
+	$("#section li.email.new").show();
+	$("#newemail").focus();
+});
+$(document).on('click', '.emailCancelBtn', function(e){
+	$("#section li.email").hide();
+	$("#section li.email.old").show();
+});
+function changeEmail() {
+	var email = $("#newemail").val();
+//	if (userId == email){
+//		email = userId;
+//	}
+	if(email==''){
+		alert("이메일 입력칸이 비어있습니다.");
+		$("#newemail").focus();
+		return;
+	} else if (!CheckEmailRegx(email)){
+		alert("올바른 이메일 형식이 아닙니다.");
+		$("#newemail").focus();
+		return;
 	}
-}
-
-
-function changeEmail(userId) {
-	
-	var email = $("#email").val();
-	if (userId == email){
-		email = userId;
-	}
-	 var con = document.getElementById("dimmed");
-		 con.style.removeProperty("display");
+	var con = document.getElementById("dimmed");
+		con.style.removeProperty("display");
 	$(function (){		
 		$.ajax({
 			url:"./checkUser",
@@ -395,6 +352,7 @@ function changeEmail(userId) {
 								window.location.href="./goCheckEmail?userId="+email;					
 							} else {
 								alert("이메일 전송 실패");
+								window.location.reload();
 							}
 						}
 					});
@@ -404,56 +362,28 @@ function changeEmail(userId) {
 	})
 }
 
-function chageUserId(){
-	var email = $("#email").val();
-	var checkRegx = CheckEmailRegx(email);
-	if (checkRegx) {
-		$(function (){
-			$.ajax({
-				url : "./chageUserId",
-				type : "POST",
-				data : {'email' : email},
-				success : function(data) {
-					if (data.state == 'success') {
-						$("#checkEmailBtn").css({"background": "bbb8b8"});
-						$("#chageUserId").attr('disabled', true);
-						$("#email").attr('readOnly', true);
-						alert("이메일 변경 완료");
-						window.location.reload();
-					} else {
-						alert("이미 가입한 이메일입니다. ");
-					}
-				}
-			})
-		});
-	} else {
-		alert("이메일 형식이 맞지 않습니다.");
-		 $("#email").focus();
-	}
-}
-
 function registerCheckEmail(userId){
 	var code = $("#code").val();
 	if (code == '') {
 		alert("인증번호를 입력해 주세요");
 	} else {	
 	
-	$(function(){	
-		$.ajax({
-		url : "./checkRandomNumber",
-		data : {"email": userId , "randomNumber" : code},
-		type : "POST" ,
-		success : function(data) {
-				if (data.result == 'codeFail') {
-					alert("인증번호가 일치하지 않습니다.");
-				} else if (data.result == 'timeOver'){
-					alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
-				} else {
-					window.location.href="./registerCheckEmail?userId="+userId;			
+		$(function(){	
+			$.ajax({
+			url : "./checkRandomNumber",
+			data : {"email": userId , "randomNumber" : code},
+			type : "POST" ,
+			success : function(data) {
+					if (data.result == 'codeFail') {
+						alert("인증번호가 일치하지 않습니다.");
+					} else if (data.result == 'timeOver'){
+						alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
+					} else {
+						window.location.href="./registerCheckEmail?userId="+userId;			
+					}
 				}
-			}
+			})
 		})
-	})
 	}	
 }
 
@@ -465,6 +395,10 @@ function updateUserInfo(googleYn){
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="c1"]:checked').val();
 	var marketYn = "N";
+	
+	$(".emailCancelBtn").click();
+	changePwd2BtnChangeCancel()
+	
 	if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
 		marketYn = "Y";
 	}
@@ -477,19 +411,20 @@ function updateUserInfo(googleYn){
 						url : "./updateUserInfo",
 						type : "POST",
 						data : {
-								'email': userId,
+							'userId': userId,
 							'company' : company,
 							'nation' : nation,
 							'useCode' : useCode,
 							'marketYn': marketYn,
-							'googleYn' : googleYn 				
+							'googleYn' : googleYn
 						},
 						success : function (data) {
 							if (data.state == "fail") {
 								alert("비밀번호가 올바르지 않습니다.");
 							} else {
 							 	alert("프로필이 수정되었습니다. ");
-								window.location.href="./";								
+								//window.location.href="./";
+							 	location.reload();
 							}
 						}
 						
@@ -518,8 +453,8 @@ function updateUserInfo(googleYn){
 						url : "./updateUserInfo",
 						type : "POST",
 						data : {
-								'email': userId,
-							'pwd' : userpwd,
+							'userId': userId,
+							'userpwd' : userpwd,
 							'company' : company,
 							'nation' : nation,
 							'useCode' : useCode,
@@ -531,7 +466,8 @@ function updateUserInfo(googleYn){
 								alert("비밀번호가 올바르지 않습니다.");
 							} else {
 							 	alert("프로필이 수정되었습니다. ");
-								window.location.href="./";								
+								//window.location.href="./";
+							 	location.reload();
 							}
 						}
 						
@@ -583,6 +519,28 @@ function delteUser () {
 	})
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function changeLanguage(language) {
 	$(function (){
 		$.ajax({
@@ -590,11 +548,11 @@ function changeLanguage(language) {
 			type : "POST",
 			data : {"language" : language},
 			success : function(data) {
+				var path = $(location).attr('pathname');
+				window.location.href = path;
 			}
 			
 		})
-		var path = $(location).attr('pathname');
-		window.location.href = path;
 	})
 }
 
@@ -607,4 +565,169 @@ function setNowDate(){
 		}
 	})
 }
+
+
+// findUserInfo
+function requestSetPwd() {
+	var userId = $("#email").val();
+	var checkRegx = CheckEmailRegx(userId);
+
+	if (userId == "") {
+		alert("이메일을 입력해 주세요");
+	} else {
+		
+		if (checkRegx) {
+			 var con = document.getElementById("dimmed");
+			 con.style.removeProperty("display");
+			$(function (){
+				$.ajax({
+					url:"./findUserInfo",
+					type:"POST",
+					data:{'email': userId},
+					success : function (data){
+						/*해당 유저의 아디 값이 있으면 메일 전송 없으면 alert 창으로 가입여부 후 확인시 가입창으로 */
+						//console.log(data);
+						if (data.googleYn == 'Y') {
+							alert("구글로 가입한 경우에는 비밀번호 변경이 불가능합니다. 구글 계정으로 로그인 하세요.");
+							window.history.back();
+						} else {
+							if (data.userId == "") {
+								alert("가입하지 않은 이메일입니다.");
+								window.location.href="./register";
+							} else {
+								alert(userId + "으로 이메일을 발송하였습니다.");
+								window.location.href="./login";
+							}							
+						}
+					}
+						
+				})
+			});
+			
+		} else {
+			alert("이메일의 형식이 맞지 않습니다.");
+		}
+	}
+}
+// findUserInfo
+function changePwd(userId){
+	var newPwd = $("#newPwd").val();
+	var newPwd2 = $("#newPwd2").val();
+	var checkRegx = CheckPwd(newPwd);
+
+	if (checkRegx) {
+		if (newPwd == newPwd2) {	
+			$(function (){
+				$.ajax({
+					url:"./changeNewPwd",
+					type:"POST",
+					data:{'email': userId , 'pwd':newPwd},
+					success : function (data){
+						sessionStorage.clear();
+						alert("비밀번호가 변경되었습니다.");
+						window.location.href= "./login";
+					}
+						
+				})
+			});
+		} else {
+			alert("비밀번호가 틀립니다.");
+		}
+	} else {
+		alert("비밀번호 형식이 맞지 않습니다.")
+		$("#newPwd").focus();
+	}
+}
+
+function changePwd2BtnChange(userid){
+	$("#section .pwd.new input").val('');
+	$("#section .pwd.new button").css("background-color", "#bbb8b8");
+	
+	if($("#pwd").val()==""){
+		alert("현재 비밀번호를 입력해주세요.");
+		$("#pwd").focus();
+		
+	} else {
+		$(".emailCancelBtn").click();
+		
+		$.ajax({
+			url:"./chkUserInfoPwdProc",
+			type:"POST",
+			data:{'email': userid
+				, 'pwd': $("#pwd").val()
+				}
+			,success : function (data){
+				if(data.result==0){
+					$("#section .pwd.new").removeClass('h');
+					$("#section .pwd.new:eq(0) input").focus();
+					
+					$("#section .pwd.old button:eq(0)").addClass('h');
+					$("#section .pwd.old button:eq(1)").removeClass('h');
+					
+					$(".update").addClass('h');
+					
+				} else {
+					alert("현재 비밀번호가 틀렸습니다.");
+				}
+			}
+		});
+	}
+	
+}
+
+function changePwd2BtnChangeCancel(){
+	$("#section .pwd.new").addClass('h');
+
+	$("#section .pwd.old button:eq(0)").removeClass('h');
+	$("#section .pwd.old button:eq(1)").addClass('h');
+
+	$("#pwd").val('');
+	$("#section .pwd.new:eq(0) input").val('');
+	$("#section .pwd.new:eq(1) input").val('');
+}
+
+$(document).on('keyup', '.pwd.new input:eq(1)', function(e){
+	var pwd= $('.pwd.new input:eq(0)').val();
+	var pwd2= $('.pwd.new input:eq(1)').val();
+	if( pwd==pwd2 ){
+		$(this).next().css("background-color", "blue");
+	} else {
+		$(this).next().css("background-color", "#bbb8b8");
+	}
+});
+
+
+function changePwd2BtnChangeAct(userId){
+	var newPwd = $("#section .pwd.new:eq(0) input").val();
+	var newPwd2 = $("#section .pwd.new:eq(1) input").val();
+	var checkRegx = CheckPwd(newPwd2);
+
+	if(newPwd!=newPwd2){
+		alert("비밀번호를 확인해주세요");
+		$("#section .pwd.new:eq(1) input").focus();
+		
+	} else if (checkRegx) {
+		$.ajax({
+			url:"./changeNewPwd2",
+			type:"POST",
+			data:{'email': userId , 'pwd':$("#pwd").val(), 'pwd2':newPwd2},
+			success : function (data){
+				if(data.result=='o'){
+					sessionStorage.clear();
+					alert("비밀번호가 변경되었습니다.");
+					location.reload();
+					
+				} else{
+					alert("현재 비밀번호가 틀립니다.");
+				}
+			}
+		})
+	} else {
+		//alert("비밀번호 형식이 맞지 않습니다.")
+		$("#newPwd").focus();
+	}
+}
+
+
+
 

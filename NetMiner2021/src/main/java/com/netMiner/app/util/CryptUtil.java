@@ -8,7 +8,14 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.netMiner.app.model.vo.MemberVo;
+
 public class CryptUtil {
+	private static final Logger logger = LoggerFactory.getLogger(CryptUtil.class);
+	
 	private Key generateKey(String key) throws UnsupportedEncodingException {
 		Key keySpec;
 
@@ -36,15 +43,22 @@ public class CryptUtil {
 		return encrypted;
 	}
 
-	public String encryptLoginfo(String userid, String usercode, Integer userNo ) throws Exception {
+	public String encryptLoginfo(MemberVo memberVo) throws Exception {
+		String userid= memberVo.getUserId();
+		String usercode= memberVo.getUserCode();
+		Integer userNo= memberVo.getNo();
+		String lastLoginDate= memberVo.getLastLoginDate();
+		
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
-		String idAndCode = "netminer:" + userid + ":" + userNo.toString() + ":" + usercode + ":" + instant.toEpochMilli() + ":365";
+		String idAndCode = String.format("netminer:%s|%s|%s|%s|%s|365", userid, userNo.toString(), usercode, instant.toEpochMilli(), lastLoginDate );
+		logger.info("idAndCode {}", idAndCode);
+		
 		return encryptText(idAndCode, key);
 	}
 
 	public static void main(String[] args) throws Exception {
 		CryptUtil cu = new CryptUtil();
-		System.out.println(cu.encryptLoginfo("limdh93@naver.com", "02", 46));
+//		System.out.println(cu.encryptLoginfo("limdh93@naver.com", "02", 46));
 	}
 }

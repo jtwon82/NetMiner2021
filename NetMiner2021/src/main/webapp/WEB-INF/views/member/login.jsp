@@ -25,7 +25,7 @@
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
-	<body>
+	<body onload="document.form.email.focus();">
 		<div id="wrap" class="sub login">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
@@ -35,7 +35,7 @@
 						<p>아직 계정이 없습니까?<a href="javascript:;" id="register" onclick="window.location.href='./register'">등록</a></p>
 					</div>
 					<div class="content">
-						<form action="./loginUser" method="POST">
+						<form name="form" action="./loginUser" method="POST">
 						<ul class="input">
 							<li><input placeholder="이메일" type="text"  name="email"/></li>
 							<li><input placeholder="비밀번호" type="password" name="pwd"/></li>

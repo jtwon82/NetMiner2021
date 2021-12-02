@@ -44,6 +44,7 @@ public class AdminVo implements Serializable{
 	@JsonAlias("USER_OUT_DATE") private String USER_OUT_DATE= "";
 	@JsonAlias("USER_OUT_DATES") private String USER_OUT_DATES= "";
 	@JsonAlias("USER_STATS_YN") private String USER_STATS_YN= "";
+	@JsonAlias("TYPE_CODE") private String TYPE_CODE= "";
 	
 	//EMAIL
 	@JsonAlias("EMAIL_CODE") private String EMAIL_CODE = "";

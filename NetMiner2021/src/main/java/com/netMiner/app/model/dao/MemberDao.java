@@ -11,6 +11,8 @@ public interface MemberDao {
 
 	MemberVo getUserInfo(MemberVo vo);
 
+	MemberVo getUserInfoLastlogin(MemberVo vo);
+
 	void signUp(MemberVo memberVo);
 
 	void updateAuthkey(MemberVo memberVo);

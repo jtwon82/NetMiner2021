@@ -12,8 +12,9 @@ function noEvent() {
 }
 
 function showUpdate() {
-	var updateDiv = document.getElementById("update");
-	updateDiv.style.removeProperty("display");
+//	var updateDiv = document.getElementById("update");
+//	updateDiv.style.removeProperty("display");
+	$(".update").removeClass('h');
 }
 
 $(function (){

@@ -12,6 +12,8 @@ public interface MemberService {
 
 	MemberVo getUserInfo(MemberVo memberVo);
 
+	MemberVo getUserInfoLastlogin(MemberVo memberVo);
+
 	void signUp(MemberVo memberVo);
 
 	void updateAuthkey(MemberVo memberVo);

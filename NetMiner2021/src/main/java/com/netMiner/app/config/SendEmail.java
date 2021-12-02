@@ -1,12 +1,13 @@
 package com.netMiner.app.config;
 
-import java.util.concurrent.ThreadLocalRandom;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -15,8 +16,9 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +27,8 @@ import com.netMiner.app.model.vo.MailVo;
 
 @Configuration
 public class SendEmail {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SendEmail.class);
 	
 	@Autowired
 	private SelectDao selectDao;
@@ -99,6 +103,8 @@ public class SendEmail {
 			param.put("userId", userId);
 			param.put("emailCode", emailCode);
 			param.put("randomNumber", randomNumber);
+			logger.info("param {}", param);
+			
 			selectDao.insertEmailSendLog(param);
 		}
 		

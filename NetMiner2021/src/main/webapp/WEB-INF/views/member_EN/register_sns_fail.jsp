@@ -49,7 +49,7 @@ Do you want to try again with other account?<a href="./login">Sign in</a></p>
 								<option value=""></option>
 								<option value=""></option>
 								<option value=""></option>
-							</select>
+							</select><script>$("select").select2();</script>
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>

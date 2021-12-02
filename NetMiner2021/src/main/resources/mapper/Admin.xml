@@ -68,12 +68,16 @@
 		/* getAdminList */
 		SELECT * FROM (
 			SELECT A.*
-				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
-				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
-			FROM NetMiner.ADMIN_INFO A
-			<include refid="listPagedWhere"/>
+				, CEIL(RNUM / 10) as page
+			FROM (
+				SELECT A.*
+					, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+				FROM NetMiner.ADMIN_INFO A
+				<include refid="listPagedWhere"/>
+			)A
 		) NO
-		<include refid="listPagedWhere2"/>
+		<include refid="listPagedWhere3"/>
 	</select>
 	
 	<select id="getAdminInfo" parameterType="map" resultType="map">
@@ -122,6 +126,30 @@
 	</select>
 	
 	<select id="getMemberList" parameterType="map" resultType="map">
+		/* getMemberList USER_CODE, 01:관리자, 02:일반, 03:휴면,탈퇴 */
+		SELECT * FROM (
+			SELECT A.*
+				, CEIL(RNUM / 10) as page
+			FROM (
+				SELECT A.*
+					, CASE WHEN TYPE_CODE='01' THEN 'Normal'
+						WHEN TYPE_CODE='99' THEN 'Super'
+						 END TYPE_CODE_STR
+					, CASE WHEN USE_CODE='01' THEN 'Academic'
+						WHEN USE_CODE='02' THEN 'Commercial'
+						 END USE_CODE_STR
+					, DATE_FORMAT(A.REG_DATE,'%Y-%m-%d')REG_DATES
+					, B.NATION_NAME_KR AS NATION_NAME_KR
+					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+				FROM NetMiner.MEMBER_INFO A
+					JOIN NATION_CODE B ON A.NATION = B.NATION_CODE
+				<include refid="listPagedWhere"/>
+				AND USER_CODE='02'
+			)A
+		) NO
+		<include refid="listPagedWhere3"/>
+	</select>
+	<select id="getMemberListXX" parameterType="map" resultType="map">
 		/* getMemberList */
 		SELECT * FROM (
 			SELECT A.*
@@ -155,6 +183,7 @@
 		/* modifyMemberInfo */
 		UPDATE NetMiner.MEMBER_INFO
 			SET UPDATE_DATE = NOW()
+			<if test="TYPE_CODE!=null and !TYPE_CODE.equals('')">, TYPE_CODE= #{TYPE_CODE}</if>
 			<if test="USER_CODE!=null and !USER_CODE.equals('')">, USER_CODE= #{USER_CODE}</if>
 			<if test="USE_CODE!=null and !USE_CODE.equals('')">, USE_CODE= #{USE_CODE}</if>
 			<if test="USER_ID!=null and !USER_ID.equals('')">, USER_ID= #{USER_ID}</if>
@@ -170,6 +199,7 @@
 		/* modifyMemberInfo */
 		UPDATE NetMiner.MEMBER_INFO_DROP
 			SET UPDATE_DATE = NOW()
+			<if test="TYPE_CODE!=null and !TYPE_CODE.equals('')">, TYPE_CODE= #{TYPE_CODE}</if>
 			<if test="USER_CODE!=null and !USER_CODE.equals('')">, USER_CODE= #{USER_CODE}</if>
 			<if test="USE_CODE!=null and !USE_CODE.equals('')">, USE_CODE= #{USE_CODE}</if>
 			<if test="USER_ID!=null and !USER_ID.equals('')">, USER_ID= #{USER_ID}</if>
@@ -200,9 +230,20 @@
 				, MARKET_YN, MARKET_DATE, REG_DATE, LAST_LOGIN_DATE, NOW() USER_OUT_DATE ,'Y' AS USER_STATS_YN
 				FROM NetMiner.MEMBER_INFO
 				WHERE NO = #{NO};
+				
 	DELETE FROM NetMiner.MEMBER_INFO
 			WHERE NO=#{NO};			
 	</insert>
+	
+	<delete id="deleteMemberInfo" parameterType="map">
+		/* deleteMemberInfo */
+		DELETE FROM NetMiner.MEMBER_INFO
+			WHERE NO=#{NO}
+	</delete>
+	
+	
+	
+	
 	
 
 	<sql id="getMemberQuit">
@@ -217,18 +258,20 @@
 			FROM ( <include refid="getMemberQuit"/> ) A
 			<include refid="listPagedWhere"/>
 		) NO
-		<include refid="listPagedWhere2"/>
 	</select>
 	
 	<select id="getMemberQuitList" parameterType="map" resultType="map">
 		/* getMemberQuitList */
 		SELECT * FROM (
 			SELECT A.*
-				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
-				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
-				, @RNUM:=@RNUM+1 as ROWNUM2, CEIL(@RNUM / 3) as page
-			FROM ( <include refid="getMemberQuit"/> ) AS A, (SELECT @RNUM:=0) R			
-			<include refid="listPagedWhere"/>
+				, CEIL(RNUM / 10) as page
+			FROM (
+				SELECT A.*
+					, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+				FROM ( <include refid="getMemberQuit"/> ) AS A			
+				<include refid="listPagedWhere"/>
+			)A
 		) NO
 		<include refid="listPagedWhere3"/>
 	</select>
@@ -284,15 +327,25 @@
 			WHERE NO=#{NO}
 	</delete>
 	
+<!--  	<delete id="deleteMemberQuitInfo" parameterType="MemberVo"> -->
+<!-- 		DELETE FROM NetMiner.MEMBER_INFO  -->
+<!-- 			WHERE USER_ID = #{userId}; -->
+<!--  	</delete> -->
+ 	
+	
 	<select id="getEmailList" parameterType="map" resultType="map">
 		SELECT * FROM (
 			SELECT A.*
-				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
-				, ROW_NUMBER() OVER (ORDER BY NO DESC) AS rownum
-			FROM NetMiner.EMAIL_INFO A
-			<include refid="listPagedWhere"/>
+				, CEIL(RNUM / 10) as page
+			FROM (
+				SELECT A.*
+					, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+				FROM NetMiner.EMAIL_INFO A
+				<include refid="listPagedWhere"/>
+			)A
 		) NO
-		<include refid="listPagedWhere2"/>
+		<include refid="listPagedWhere3"/>
 	</select>
 	<select id="getEmailCount" parameterType="map" resultType="int">
 	SELECT * FROM (
@@ -310,9 +363,9 @@
 		) NO
 	</select>
 	
-	<delete id="delteEmailInfo" parameterType="map">
-	DELETE FROM NetMiner.EMAIL_INFO
-	WHERE `NO` = #{NO}
+	<delete id="deleteEmailInfo" parameterType="map">
+		DELETE FROM NetMiner.EMAIL_INFO
+			WHERE `NO` = #{NO}
 	</delete>
 	<update id="insertEmailInfo"  parameterType="map">
 	INSERT INTO NetMiner.EMAIL_INFO
@@ -325,6 +378,7 @@
 	, NOW() AS REG_DATE
 	FROM EMAIL_INFO;
 	</update>
+	
 	<update id="modifyEmailInfo"  parameterType="map">
 	UPDATE NetMiner.EMAIL_INFO 
 		SET EMAIL_CODE = #{EMAIL_CODE}
@@ -346,7 +400,7 @@
 	
 	<update id="modifyCheck" parameterType="map">
 	INSERT INTO NetMiner.CHECK_START_END_TIME
-	(START_DATE, END_DATE, COMMENT_KR, COMMENT_EN, STATS_YN, END_DATE_YN, REG_DATE)
+	(START_DATE, END_DATE, COMMENT_KR, COMMENT_EN, STATS_YN, END_DATE_YN, REG_DATE, UPDATE_DATE)
 	SELECT 
 	STR_TO_DATE(CONCAT(#{START_DATE}, #{START_HH}),'%Y-%m-%d %H') AS START_DATE 
 	<if test="END_DATE != null and ! END_DATE.equals('')">, STR_TO_DATE(CONCAT(#{END_DATE}, #{END_HH}),'%Y-%m-%d %H')  </if>
@@ -356,6 +410,7 @@
 	, #{STATS_YN} AS STATS_YN
 	<if test="END_DATE_YN != null and ! END_DATE_YN.equals('')">, 'Y'</if>
 	<if test="END_DATE_YN == null or END_DATE_YN.equals('')">, 'N' </if> AS END_DATE_YN
-	, NOW() AS REG_DATE;
+	, NOW() AS REG_DATE
+	, NOW() AS UPDATE_DATE;
 	</update>
 </mapper>

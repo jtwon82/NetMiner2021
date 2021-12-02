@@ -16,36 +16,101 @@
  		<result property="marketYn" column="MARKET_YN"/>
  		<result property="googleYn" column="GOOGLE_YN"/>
  		<result property="userStatsYn" column = "USER_STATS_YN"/>
+ 		<result property="lastLoginDate" column = "LAST_LOGIN_DATE"/>
  	</resultMap> 
  	<select id="selectDate" resultType="String">
  	select now();
  	</select>
  
  	<select id="getUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT `NO`, USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
-	FROM NetMiner.MEMBER_INFO
-	WHERE USER_ID =  #{userId}
-	<if test='googleYn.equals("N")'>
-	AND USER_PWD  = password(#{userPwd})
-	</if>
-	AND USER_CODE = '02'
-	AND USER_STATS_YN = 'N' ;
+	 	SELECT a.*, password(#{userPwd}) chk
+		FROM NetMiner.MEMBER_INFO a
+		WHERE USER_ID =  #{userId}
+		UNION ALL
+	 	SELECT a.*, password(#{userPwd}) chk
+		FROM NetMiner.MEMBER_INFO_DROP a
+		WHERE USER_ID =  #{userId}
  	</select>
  	
- 	<select id="getLoginUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT `NO`, USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN
-	FROM NetMiner.MEMBER_INFO
-	WHERE USER_ID =  #{userId}
-	AND USER_PWD  = password(#{userPwd})
-	AND USER_STATS_YN = 'N'
-	; 	
+ 	<select id="getLoginUserInfoXXX" resultMap="MemberVo" parameterType="MemberVo">
+	 	SELECT *
+		FROM NetMiner.MEMBER_INFO
+		WHERE USER_ID =  #{userId}
+			AND USER_PWD  = password(#{userPwd})
+			AND USER_STATS_YN = 'N'
  	</select>
- 	<select id="getDormantUserInfo" resultMap="MemberVo" parameterType="MemberVo">
- 	SELECT `NO`, USER_CODE,USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, MARKET_YN, GOOGLE_YN, USER_STATS_YN
-	FROM NetMiner.MEMBER_INFO_DROP
-	WHERE USER_ID =  #{userId}
-	AND USER_PWD  = password(#{userPwd})
+ 	
+ 	<select id="getDormantUserInfoXXX" resultMap="MemberVo" parameterType="MemberVo">
+	 	SELECT a.*, password(#{userPwd}) chk
+		FROM NetMiner.MEMBER_INFO_DROP a
+		WHERE USER_ID =  #{userId}
  	</select>
+ 	
+ 	<update id="updateLastLoginDate" parameterType="MemberVo">
+	 	UPDATE NetMiner.MEMBER_INFO 
+	 	SET LAST_LOGIN_DATE = NOW()
+	 	WHERE USER_ID = #{userId}
+ 	</update>
+ 	
+ 	<select id="checkUser" parameterType="String" resultType="Integer">
+	 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
+	 	WHERE USER_ID = #{userId};
+ 	</select>
+ 	
+ 	<update id="updateNewUserInfo" parameterType="Map">
+	 	UPDATE NetMiner.MEMBER_INFO
+		SET  UPDATE_DATE = NOW()
+			<if test='googleYn.equals("N")'>,USER_ID = #{userId}</if>
+			<if test="useCode!=null and !useCode.equals('')">, USE_CODE= #{useCode}</if>
+			<if test="language!=null and !language.equals('')">, LANGUAGE= #{language}</if>
+			<if test="nation!=null and !nation.equals('')">, NATION= #{nation}</if>
+			<if test="company!=null and !company.equals('')">, COMPANY= #{company}</if>
+			<if test="marketYn!=null and !marketYn.equals('')">, MARKET_YN= #{marketYn}</if>
+			<if test='marketYn.equals("Y")'>,MARKET_DATE = NOW()</if>
+		WHERE  USER_ID = #{oldUserId};
+ 	</update>
+ 	
+ 	<update id="updateUserId" parameterType="Map">
+	 	UPDATE NetMiner.MEMBER_INFO
+	 	SET USER_ID = #{newUserId}
+	 	WHERE USER_ID = #{userId}; 	
+ 	</update>
+ 	
+ 	<select id="selectUserCount" parameterType="Map" resultType="Integer">
+	 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
+	 	WHERE USER_ID = #{newUserId};
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<delete id="deleteTempUser">
+ 	<![CDATA[
+	DELETE FROM NetMiner.MEMBER_INFO_TEMP WHERE REG_DATE <= DATE_ADD(NOW() , INTERVAL -30 MINUTE);
+ 	]]>
+ 	</delete>
  	
  	<insert id="returnUserInfo" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO
@@ -110,15 +175,8 @@
  	;
  	</insert>
  	
- 	<update id="updateLastLoginDate" parameterType="MemberVo">
- 	UPDATE NetMiner.MEMBER_INFO 
- 	SET LAST_LOGIN_DATE = NOW()
- 	, USER_CODE = '02' 
- 	WHERE USER_ID = #{userId}
-	and USER_PWD  = password(#{userPwd}); 
- 	</update>
  	
- 	<select id="selectJoin" resultMap="MemberVo" parameterType="MemberVo">
+ 	<select id="checkJoin" resultMap="MemberVo" parameterType="MemberVo">
  	select * from NetMiner.MEMBER_INFO mi 
 	where mi.USER_ID = #{userId};
  	</select>
@@ -129,41 +187,6 @@
  	WHERE USER_ID = #{userId}; 	
  	</update>
  	
- 	<update id="updateUserId" parameterType="Map">
- 	UPDATE NetMiner.MEMBER_INFO
- 	SET USER_ID = #{newUserId}
- 	WHERE USER_ID = #{userId}; 	
- 	</update>
- 	
- 	<update id="updateUserInfo" parameterType="Map">
- 	UPDATE NetMiner.MEMBER_INFO
-	SET  UPDATE_DATE = NOW()
-	
-	<if test='googleYn.equals("N")'>
-	,USER_ID = #{userId}
-	 </if>
-	<if test="useCode!=null and !useCode.equals('')">, USE_CODE= #{useCode}</if>
-	<if test="language!=null and !language.equals('')">, LANGUAGE= #{language}</if>
-	<if test="nation!=null and !nation.equals('')">, NATION= #{nation}</if>
-	<if test="company!=null and !company.equals('')">, COMPANY= #{company}</if>
-	<if test="marketYn!=null and !marketYn.equals('')">, MARKET_YN= #{marketYn}</if>
-	<if test='marketYn.equals("Y")'>,MARKET_DATE = NOW()</if>
-	WHERE  USER_ID = #{oldUserId};
- 	</update>
- 	<delete id="deleteTempUser">
- 	<![CDATA[
-	DELETE FROM NetMiner.MEMBER_INFO_TEMP WHERE REG_DATE <= DATE_ADD(NOW() , INTERVAL -30 MINUTE);
- 	]]>
- 	</delete>
- 	<select id="checkUser" parameterType="String" resultType="Integer">
- 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
- 	WHERE USER_ID = #{userId};
- 	</select>
- 	
- 	<delete id="deleteMemberInfo" parameterType="MemberVo">
- 	DELETE FROM NetMiner.MEMBER_INFO 
- 	WHERE USER_ID = #{userId};
- 	</delete>
  	
  	<select id="getLastLoginFerYear"  resultType="Map">
  	<![CDATA[
@@ -204,11 +227,6 @@
  	]]>
  	</select>
  	
- 	<select id="selectUserCount" parameterType="Map" resultType="Integer">
- 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO 
- 	WHERE USER_ID = #{newUserId};
- 	</select>
- 	
  	<delete id="deleteEmailSendLog" parameterType="String">
  	DELETE FROM NetMiner.CHECK_SEND_AUTH_MAIL_LOG
  	WHERE USER_ID = #{userId};
@@ -216,7 +234,7 @@
  	
  	<delete id="deleteDropMember">
  	DELETE FROM NetMiner.MEMBER_INFO_DROP
- 	WHERE USE_STATS_YN  = 'Y'
+ 	WHERE USER_STATS_YN  = 'Y'
  	AND TIMESTAMPDIFF(DAY,USER_OUT_DATE,NOW()) = 365; 
  	</delete>
  	

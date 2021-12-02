@@ -61,7 +61,7 @@ However, how much do we understand about big data?</p>
 					<p>In 2019, the global research and advisory company Gartner<br>named graph analytics as one of the top 10 Data and Analytics Technology.
 					</p>
 					<div class="content">
-						<div class="text">Graph analytics and graph-native machine learning are the only ways to analyze graph data. It’s getting the spotlight and named by Gartner as the top 10 data and analytics technology in 2019. 
+						<div class="text">Graph analytics and graph-based machine learning are the only ways to analyze graph data. It’s getting the spotlight and named by Gartner as the top 10 data and analytics technology in 2019. 
 						<br><br>
 						NetMiner 365 features rich graph analytics algorithms and functions based on the network analysis software NetMiner. 
 						</div>

@@ -17,7 +17,7 @@
       p:minimumIdle="50"
       p:maximumPoolSize="50"
       p:maxLifetime="3600000 "
-      p:connectionTimeout="60000"
+      p:connectionTimeout="5000"
       />
 
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">

@@ -32,6 +32,7 @@
 										<option value="" >용도</option>
 										<option value="01">Academic</option>
 										<option value="02">Commercial</option>
+										<option value="99">Super</option>
 									</select>
 									<select id="LANGUAGE" name="LANGUAGE" disabled="disabled" class='filter filter1'>
 										<option value="" >언어</option>
@@ -74,17 +75,19 @@
 						<table class="main">
 							<colgroup>
 								<col width="12%">
-								<col width="14%">
+								<col width="12%">
+								<col width="12%">
 								<col width="*">
+								<col width="8%">
 								<col width="12%">
 								<col width="12%">
-								<col width="12%">
-								<col width="12%">
+								<col width="8%">
 							</colgroup>
 							<thead>
 								<tr>
 									<th>가입일시</th>
-									<th>용도</th>
+									<th>타입구분</th>
+									<th>용도구분</th>
 									<th>이메일</th>
 									<th>언어</th>
 									<th>국가</th>
@@ -97,6 +100,7 @@
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('user_modify?NO=${item.NO}')">
 											<td>${item.REG_DATES }</td>
+											<td>${item.TYPE_CODE_STR }</td>
 											<td>${item.USE_CODE_STR }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
@@ -108,7 +112,12 @@
 								</c:if>
 							</tbody>
 						</table>
-						<%@ include file="paging.jsp"%>
+						<%--@ include file="paging.jsp"--%>
+						<div class="pagingContainer">
+							<div class="paging">
+								<c:if test="${not empty paging2 }">${paging2 }</c:if>
+							</div>
+						</div>
 						<div class="register">
 							<button class="navy" onClick="downLoad();">다운로드</button>
 							<button class="navy" onclick="location.href='user_modify'">등록</button>
@@ -124,7 +133,7 @@
 
 function downLoad() {
 	var para = document.location.href.split("?");
-	location.href = "user/downLoadExcel?"+para;	
+	location.href = "user/downLoadExcel?"+para[1];	
 }
 // $(function(){
 // 	$('form').ajaxForm({

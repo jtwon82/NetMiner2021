@@ -85,11 +85,17 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
+	public void insertMemberInfoDrop(Map<String, Object> map) {
+		adminDao.insertMemberInfoDrop(map);
+	}
+
+	@Override
 	public void deleteMemberInfo(Map<String, Object> map) {
 		adminDao.deleteMemberInfo(map);
 	}
 
 
+	
 	
 
 	@Override
@@ -122,47 +128,46 @@ public class AdminServiceImpl implements AdminService{
 		adminDao.deleteMemberQuitInfo(map);
 	}
 
+	
+	
+	
+	
+	
 
 	@Override
 	public List<HashMap<String, Object>> getEmailList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return adminDao.getEmailList(map);
 	}
 
-
 	@Override
 	public int getEmailCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return adminDao.getEmailCount(map);
 	}
 
-
 	@Override
 	public HashMap<String, Object> getEmailDetailInfo(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return adminDao.getEmailDetailInfo(map);
 	}
 	
 	@Override
 	public void deleteEmailInfo(HashMap<String, Object> map) {
 		adminDao.deleteEmailInfo(map);
-		
 	}
-
 
 	@Override
 	public void insertEmailInfo(HashMap<String, Object> map) {
 		adminDao.insertEmailInfo(map);
-		
 	}
-
 
 	@Override
 	public void modifyEmailInfo(HashMap<String, Object> map) {
 		adminDao.modifyEmailInfo(map);
-		
 	}
 
+	
+	
+	
+	
 
 	@Override
 	public SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list) {
@@ -238,28 +243,22 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public void modifyDropMemberInfo(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		adminDao.modifyDropMemberInfo(map);
 	}
-
 
 	@Override
 	public void recoverMemberQuitInfo(HashMap<String, Object> json) {
 		adminDao.recoverMemberQuitInfo(json);		
 	}
 
-
 	@Override
 	public Map getCheck(HashMap<String, Object> json) {
-		// TODO Auto-generated method stub
 		return adminDao.getCheck(json);
 	}
-
 
 	@Override
 	public void modifyCheck(HashMap<String, Object> json) {
 		adminDao.modifyCheck(json);
-		
 	}
 
 }

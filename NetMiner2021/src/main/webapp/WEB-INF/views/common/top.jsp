@@ -1,5 +1,28 @@
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8"%>
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<style>
+.h {display:none;}
+.select2-container{margin-top:15px;}
+.select2-container .select2-selection--single{height: 60px;}
+.select2-container--default .select2-selection--single .select2-selection__rendered{line-height: 60px;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{top:15px;}
+.select2-dropdown{top: -16px;}
+@media (min-width: 0px) and (max-width: 1000px){
+   .select2-container .select2-selection--single{height:35px;}
+   .select2-container--default .select2-selection--single .select2-selection__rendered{line-height:35px;}
+   .select2-container--default .select2-selection--single .select2-selection__arrow{top:5px;}
+   .select2-results{font-size:12px;}
+}
+</style>
+<script type="text/javascript">
+<!--
+	var language= "${language}";
+	var redirectAuth= "${GOOGLE_CALL_BACK_LOGIN_URL}";
+	var redirectRegister= "${GOOGLE_CALL_BACK_REGISTER_URL}";
+//-->
+</script>
 	<div id="top">
 				<div class="content">
 					<div class="wrap">
@@ -7,7 +30,7 @@
 						<div class="pc">
 							<div class="menu obj">
 								<span class="select">Why NetMiner 365</span>
-								<ul class="menu">
+								<ul class="menu" style="display:none;">
 									<li><a href="./whyNetMiner">Why NetMiner 365</a></li>
 									<li><a href="./feature">Feature</a></li>
 									<li><a href="./function">Function</a>
@@ -26,12 +49,17 @@
 
 							<!-- 로그인 후-->
 							<c:if test="${!empty memberVo}">
+							<div class="mypage obj type1" style="right: 70px;">
+								<ul>
+									<li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>
+								</ul>
+							</div>
 							<div class="mypage obj type2">
 								<p class="me">
 									<img src="/resources/images/top_me.png" alt="mypage">
 								</p>
 								<ul>
-									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li>
+									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Start NetMiner 365</a></li>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
 								</ul>
