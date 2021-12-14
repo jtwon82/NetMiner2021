@@ -57,8 +57,8 @@ Do you want to try again with other account?<a href="./login">Sign in</a></p>
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>
-									<li><label><input type="radio" checked="checked"  name="useCode" value="01"><em></em>Academic</label></li>
-									<li ><label><input type="radio" checked="checked"  name="useCode" value="02"><em></em>Commercial</label></li>
+									<li><label><input type="radio" checked="checked" name="useCode" value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio" checked="checked" name="useCode" value="02"><em></em>Commercial</label></li>
 								</ul>
 							</div>
 							<div class="agree">
@@ -67,7 +67,7 @@ Do you want to try again with other account?<a href="./login">Sign in</a></p>
 								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
 								<label><input id="check3" class="check" type="checkbox" name="marketYn" value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 							</div>
-							<button class="create trs" onClick="registerSns('${userInfo.kid}')">Create Account</button>
+							<button class="create trs" onClick="registerSns('')">Create Account</button>
 						</div>
 						<dl>
 							<dt>Create NetMiner 365 account,</dt>

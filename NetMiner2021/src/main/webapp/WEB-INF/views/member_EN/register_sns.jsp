@@ -32,6 +32,10 @@
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
+				<form name="form">
+				<input type="hidden" name="userId" value="${userInfo.email}"/>
+				<input type="hidden" name="userPwd" value="${userInfo.kid}"/>
+				<input type="hidden" name="googleYn" value="Y"/>
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p>Already have your account? <a href="./login">Sign in</a></p>
@@ -40,9 +44,9 @@
 						<div>
 							<ul class="input">
 								<li><input placeholder="${userInfo.email}" type="text" id="email" value="${userInfo.email}" disabled="disabled"></li>
-								<li><input placeholder="Organization" id="company" type="text"></li>
+								<li><input placeholder="Organization" id="company" name="company" type="text"></li>
 							</ul>
-							<select id="nation">
+							<select id="nation" name="nation">
 								<option value="" disabled selected hidden>Country</option>
 								<option value=""></option>
 								<option value=""></option>
@@ -57,12 +61,12 @@
 								</ul>
 							</div>
 							<div class="agree">
-								<label><input id="check_all" type="checkbox" name=""><em></em>Agree to all</label>
-								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
+								<label><input id="check_all" type="checkbox"><em></em>Agree to all</label>
+								<label><input id="check1" class="check" type="checkbox" name="age"><em></em><span class="text">I agree to the <a href='javascript:;' onClick="window.open('./TermsOfService')" class="blue">terms and conditions</a> and the <a href='javascript:;' onClick="window.open('./Privacy')" class="blue">privacy policy</a> <span class="silver">(required)</span></span></label>
 								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><span class="text">I confirm that I'm 16 years or older <span class="silver">(required)</span></span></label>
 								<label><input id="check3" class="check" type="checkbox" name="marketYn" value="Y"><em></em><span class="text">I agree to receive informations and commercial offers by email <span class="silver">(option)</span></span></label>
 							</div>
-							<button class="create trs" onClick="registerSns('${userInfo.kid}')">Create Account</button>
+							<button class="create trs" onClick="registerSns('')">Create Account</button>
 						</div>
 						<dl>
 							<dt>Create NetMiner 365 account,</dt>
@@ -71,8 +75,7 @@
 							<dd>Get Newsletter about NetMiner 365</dd>
 						</dl>
 					</div>
-					
-					
+				</form>
 				</div>
 			</div>
 				<%@include file = "../common_EN/memberFooter.jsp" %>

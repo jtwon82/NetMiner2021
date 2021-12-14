@@ -32,6 +32,10 @@
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
+				<form name="form">
+				<input type="hidden" name="userId" value="${userInfo.email}"/>
+				<input type="hidden" name="userPwd" value="${userInfo.kid}"/>
+				<input type="hidden" name="googleYn" value="Y"/>
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p>이미 계정을 가지고 있습니까? <a href="./login">로그인</a></p>
@@ -40,9 +44,9 @@
 						<div>
 							<ul class="input">
 								<li><input placeholder="${userInfo.email}" type="text" id="email" value="${userInfo.email}" disabled="disabled"></li>
-								<li><input placeholder="소속기관" id="company" type="text" ></li>
+								<li><input placeholder="소속기관" id="company" name="company" type="text" ></li>
 							</ul>
-							<select id="nation">
+							<select id="nation" name="nation">
 								<option value="" disabled selected hidden>국가</option>
 								<option value="korea">한국</option>
 								<option value=""></option>
@@ -62,7 +66,7 @@
 								<label><input id="check2" class="check" type="checkbox" name="using"><em></em><a href='javascript:;' onClick="window.open('./TermsOfService')" class="blue">이용약관</a>과 <a href='javascript:;' onClick="window.open('./Privacy')" class="blue">개인정보처리방침</a> 에 동의합니다 <span>(필수)</span></label>
 								<label><input id="check3" class="check" type="checkbox" name="marketYn" value="Y"><em></em>유용한 정보 , 혜택 안내 등을 위한 이메일 수신에 동의합니다 <span>(선택)</span></label>
 							</div>
-							<button class="create trs" onClick="registerSns('${userInfo.kid}')">계정생성</button>
+							<button class="create trs" onClick="registerSns('')">계정생성</button>
 						</div>
 						<dl>
 							<dt>NetMiner 365에 회원으로 가입하면,</dt>
@@ -71,8 +75,7 @@
 							<dd>최신 소식 , 혜택을 뉴스레터로 수신</dd>
 						</dl>
 					</div>
-					
-					
+				</form>
 				</div>
 			</div>
 			<%@include file = "../common/memberFooter.jsp" %>

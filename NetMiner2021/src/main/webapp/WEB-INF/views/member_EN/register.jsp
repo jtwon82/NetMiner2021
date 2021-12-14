@@ -60,7 +60,7 @@
 							</div>
 							<button class="authentic trs" onClick="checkEmail();">Verify e-mail</button>
 							<span class="line">or</span>
-							<button class="google trs" onClick="googleRegister();">Continue in with Google</button>
+							<button class="google trs" onClick="googleLogin();">Continue in with Google</button>
 						</div>
 						<dl>
 							<dt>Create NetMiner 365 account,</dt>
