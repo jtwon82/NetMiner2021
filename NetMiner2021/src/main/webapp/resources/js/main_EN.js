@@ -181,9 +181,7 @@ function checkEmail(){
 			alert("Email format is incorrect.");
 			 $("#email").focus();
 		} 
-	
 	}
-	
 }
 
 function register(userId) {
@@ -234,6 +232,7 @@ function register(userId) {
 		})
 }
 function googleLogin(){
+	event.preventDefault();
 //	var redirectLocal = "http://localhost:8080/auth";
 //	var redirectPrd="https://www.netminer365.com/auth";
 
@@ -550,6 +549,7 @@ function changeLanguage(language) {
 				var path = $(location).attr('pathname');
 				window.location.href = path;
 			}
+			
 		})
 	})
 }
@@ -568,7 +568,7 @@ function setNowDate(){
 function requestSetPwd() {
 	var userId = $("#email").val();
 	var checkRegx = CheckEmailRegx(userId);
-	
+
 	if (userId == "") {
 		alert("Please enter your e-mail");
 	} else {
@@ -597,7 +597,6 @@ function requestSetPwd() {
 							}							
 						}
 					}
-						
 				})
 			});
 			
@@ -605,7 +604,6 @@ function requestSetPwd() {
 			alert("Email is not formatted properly.");
 		}
 	}
-	
 }
 // findUserInfo
 function changePwd(userId){

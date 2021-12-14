@@ -66,8 +66,8 @@ public class GoogleController  {
 		String authCode = request.getParameter("code");
 		String language = (String) session.getAttribute("language");
 		
-		GOOGLE_CALL_BACK_LOGIN_URL = Constant.GOOGLE_CALL_BACK_LOGIN_URL;
-		GOOGLE_CALL_BACK_REGISTER_URL = Constant.GOOGLE_CALL_BACK_REGISTER_URL;
+		GOOGLE_CALL_BACK_LOGIN_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL;
+		GOOGLE_CALL_BACK_REGISTER_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL;
 		
 		if (language == null) {
 			language = "";
@@ -164,7 +164,6 @@ public class GoogleController  {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			mv.setView(new RedirectView("/"));
 			return mv;
 		} 
@@ -176,79 +175,84 @@ public class GoogleController  {
 	
 	@RequestMapping(value = "socialRegister", method = RequestMethod.GET)
 	public ModelAndView googleRegister(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response)
-			throws JsonProcessingException {
+			throws Exception {
 		String url = "";
-		String authCode = request.getParameter("code");
-		String language = (String) session.getAttribute("language");
-		if (language == null) {
-			language = "";
-		}
 		try {
-			if (authCode == null || authCode.equals("")) {
-				if (language.equals("_EN")) {		
-					mv.setViewName("member"+language+"/login");
-				} else {
-					mv.setViewName("member/login");				
+			String authCode = request.getParameter("code");
+			String language = (String) session.getAttribute("language");
+			if (language == null) {
+				language = "";
+			}
+			try {
+				if (authCode == null || authCode.equals("")) {
+					if (language.equals("_EN")) {		
+						mv.setViewName("member"+language+"/login");
+					} else {
+						mv.setViewName("member/login");				
+					}
+					return mv;
 				}
-				return mv;
-			}
-			//HTTP Request를 위한 RestTemplate
-		RestTemplate restTemplate = new RestTemplate();
-		
-		//Google OAuth Access Token 요청을 위한 파라미터 세팅
-		GoogleOAuthRequest  googleOAuthRequestParam = GoogleOAuthRequest
-				.builder()
-				.clientId(clientId)
-				.clientSecret(clientSecret)
-				.code(authCode)
-				.redirectUri(GOOGLE_CALL_BACK_REGISTER_URL)
-				.grantType("authorization_code").build();
-
-		
-		//JSON 파싱을 위한 기본값 세팅
-		//요청시 파라미터는 스네이크 케이스로 세팅되므로 Object mapper에 미리 설정해준다.
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
-		mapper.setSerializationInclusion(Include.NON_NULL);
-
-		//AccessToken 발급 요청
-		ResponseEntity<String> resultEntity = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, googleOAuthRequestParam, String.class);
-
-		//Token Request
-		GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
-			});
+				//HTTP Request를 위한 RestTemplate
+			RestTemplate restTemplate = new RestTemplate();
 			
-		//ID Token만 추출 (사용자의 정보는 jwt로 인코딩 되어있다)
-		String jwtToken = result.getIdToken();
-		String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
-		.queryParam("id_token", jwtToken).encode().toUriString();
-		
-		String resultJson = restTemplate.getForObject(requestUrl, String.class);
-		
-		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
-		logger.info("userInfo {}", userInfo);
-		
-		//model.addAllAttributes(userInfo);
-		mv.addObject("userInfo", userInfo);
-		
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUserId(userInfo.get("email"));
-		memberVo.setUserPwd(userInfo.get("kid"));
-		int count= memberService.checkUser( (String) userInfo.get("email"));
-		if (count < 1) {			
-			url = "member"+language+"/register_sns";
+			//Google OAuth Access Token 요청을 위한 파라미터 세팅
+			GoogleOAuthRequest  googleOAuthRequestParam = GoogleOAuthRequest
+					.builder()
+					.clientId(clientId)
+					.clientSecret(clientSecret)
+					.code(authCode)
+					.redirectUri(GOOGLE_CALL_BACK_REGISTER_URL)
+					.grantType("authorization_code").build();
+
 			
-		} else {
-			if (language.equals("_EN")) {
-				StringUtils2.script(response, "This email address already exists.", "./login");
+			//JSON 파싱을 위한 기본값 세팅
+			//요청시 파라미터는 스네이크 케이스로 세팅되므로 Object mapper에 미리 설정해준다.
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+			mapper.setSerializationInclusion(Include.NON_NULL);
+
+			//AccessToken 발급 요청
+			ResponseEntity<String> resultEntity = restTemplate.postForEntity(GOOGLE_TOKEN_BASE_URL, googleOAuthRequestParam, String.class);
+
+			//Token Request
+			GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
+				});
+				
+			//ID Token만 추출 (사용자의 정보는 jwt로 인코딩 되어있다)
+			String jwtToken = result.getIdToken();
+			String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
+			.queryParam("id_token", jwtToken).encode().toUriString();
+			
+			String resultJson = restTemplate.getForObject(requestUrl, String.class);
+			
+			Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
+			logger.info("userInfo {}", userInfo);
+			
+			//model.addAllAttributes(userInfo);
+			mv.addObject("userInfo", userInfo);
+			
+			MemberVo memberVo = new MemberVo();
+			memberVo.setUserId(userInfo.get("email"));
+			memberVo.setUserPwd(userInfo.get("kid"));
+			int count= memberService.checkUser( (String) userInfo.get("email"));
+			if (count < 1) {			
+				url = "member"+language+"/register_sns";
+				
 			} else {
-				StringUtils2.script(response, "이미 가입한 이메일입니다.", "./login");
+				if (language.equals("_EN")) {
+					StringUtils2.script(response, "This email address already exists.", "./login");
+				} else {
+					StringUtils2.script(response, "이미 가입한 이메일입니다.", "./login");
+				}
+				url = "member"+language+"/login";
 			}
-			url = "member"+language+"/login";
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		} catch(Exception e) {
+			mv.setView(new RedirectView("/"));
+			return mv;
 		}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
 		mv.setViewName(url);
 		return mv;
 	}

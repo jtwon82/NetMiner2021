@@ -105,7 +105,7 @@ function CheckEmailRegx(emailVal)
 {
     var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     if (emailVal.match(regExp) != null) { 
-    	return true;
+		return true;
 	} else { 
 		return false;
 	}         
@@ -251,6 +251,7 @@ function register(userId) {
 		})
 }
 function googleLogin(){
+	event.preventDefault();
 //	var redirectLocal = "http://localhost:8080/auth";
 //	var redirectPrd="https://www.netminer365.com/auth";
 
@@ -271,7 +272,6 @@ function googleRegister() {
 function registerSns(pwd) {
 	event.preventDefault();
 	var userId = $("#email").val();
-	var userpwd = pwd;
 	var company = $("#company").val();
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="useCode"]:checked').val();
