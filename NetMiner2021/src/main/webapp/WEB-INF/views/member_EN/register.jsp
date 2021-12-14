@@ -32,6 +32,7 @@
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
+				<form name="form">
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p>Already have your account? <a href="./login">Sign in</a></p>
@@ -39,8 +40,8 @@
 					<div class="content">
 						<div>
 							<ul class="input">
-								<li><input placeholder="E-mail" type="text"   name="email" id ="email"/></li>
-								<li><input placeholder="Password" type="password" name="pwd" id="pwd" /><span class="sum">8~16 characters (A-Z, a-z), numbers</span></li>
+								<li><input placeholder="E-mail" type="text"   name="userId" id ="email"/></li>
+								<li><input placeholder="Password" type="password" name="userPwd" id="pwd" /><span class="sum">8~16 characters (A-Z, a-z), numbers</span></li>
 								<li><input placeholder="Organization" type="text" name="company" id="company"/></li>
 							</ul>
 							<select name="nation" id="nation">
@@ -68,8 +69,7 @@
 							<dd>Get Newsletter about NetMiner 365</dd>
 						</dl>
 					</div>
-					
-					
+				</form>
 				</div>
 			</div>
 		<%@include file = "../common_EN/memberFooter.jsp" %>

@@ -119,7 +119,7 @@ to create unique insights that fuse machine learning and graph analytics.</p>
 								<div class="text">
 									<h4>Network Analysis Experts</h4>
 									<p>NetMiner 365 has many graph/network analysis algorithms and features to help you understand graph structures and characteristics accurately.
-</p>
+</p><br>
 								</div>
 							</li>
 							<li>

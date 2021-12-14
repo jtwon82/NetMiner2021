@@ -16,6 +16,15 @@ import com.netMiner.app.model.vo.MemberVo;
 public class CryptUtil {
 	private static final Logger logger = LoggerFactory.getLogger(CryptUtil.class);
 	
+	private static CryptUtil ins= null;
+	
+	public static CryptUtil getInstance() {
+		if(ins==null) {
+			ins = new CryptUtil();
+		}
+		return ins;
+	}
+	
 	private Key generateKey(String key) throws UnsupportedEncodingException {
 		Key keySpec;
 
@@ -51,7 +60,7 @@ public class CryptUtil {
 		
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
-		String idAndCode = String.format("netminer:%s|%s|%s|%s|%s|365", userid, userNo.toString(), usercode, instant.toEpochMilli(), lastLoginDate );
+		String idAndCode = String.format("netminer|%s|%s|%s|%s|%s|365", userid, userNo.toString(), memberVo.getTypeCode(), instant.toEpochMilli(), lastLoginDate );
 		logger.info("idAndCode {}", idAndCode);
 		
 		return encryptText(idAndCode, key);

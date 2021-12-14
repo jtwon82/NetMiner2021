@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
-import com.netMiner.app.model.vo.AdminVo;
-
 public interface AdminService {
 
 	String selectDate();

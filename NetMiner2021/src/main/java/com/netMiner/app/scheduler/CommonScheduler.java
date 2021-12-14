@@ -84,7 +84,7 @@ public class CommonScheduler {
 
 	}
 	
-	@Scheduled(cron = "* * 1 * * *")
+	@Scheduled(cron = "*/30 * * * * *")
 	public void changeDBError() {
 		try {
 			Constant.checkDBError= false;

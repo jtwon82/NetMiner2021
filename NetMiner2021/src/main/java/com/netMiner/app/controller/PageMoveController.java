@@ -1,6 +1,6 @@
 package com.netMiner.app.controller;
 
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.netMiner.app.config.Constant;
+import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.dao.SelectDao;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.MemberVo;
@@ -36,7 +35,6 @@ import com.netMiner.app.util.StringUtils2;
  */
 @Controller
 public class PageMoveController extends HttpServlet {
-	
 	private static final Logger logger = LoggerFactory.getLogger(PageMoveController.class);
 	
 	@Autowired
@@ -45,35 +43,19 @@ public class PageMoveController extends HttpServlet {
 	@Autowired
 	private MemberService memberService;
 
-//	@ExceptionHandler(Exception.class)
-//	public Object exception(Exception e) {
-//		return "check";
-//	}
+	@Autowired
+	private SendEmail sendEmail;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpSession session) {
+	public String home(Locale locale, Model model, HttpSession session, HttpServletResponse response) throws IOException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
-		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
+		String formattedDate = dateFormat.format(new Date());
 		model.addAttribute("serverTime", formattedDate );
 		String language = (String) session.getAttribute("language");
 		String url = "home"+language;
 		
-		try {
-			Map<String, Object> checkData = selectDao.getCheckData();
-			if (checkData != null) {
-				if ("Y".equals(checkData.get("STATS_YN"))) {
-					model.addAttribute("checkData", checkData);
-					url = "homePage"+language+"/check";
-				}
-			}
-		}catch(Exception e) {
-			url = "homePage"+language+"/check";
-		}
 		logger.info("url {}", url);
 		return url;
 	}
@@ -100,7 +82,13 @@ public class PageMoveController extends HttpServlet {
 		String path = "member"+ language;
 		return path+"/login";
 	}
-	
+	@RequestMapping(value="logOut", method = RequestMethod.GET)
+	public String logOut(HttpSession session) {
+		String language = (String) session.getAttribute("language");
+		session.removeAttribute("memberVo");
+		session.setAttribute("language", language);		
+		return "redirect:/";
+	}
 	@RequestMapping(value="activate", method = RequestMethod.GET)
 	public String activate(HttpSession session, HttpServletRequest request) {
 		String language = (String) session.getAttribute("language");
@@ -144,34 +132,40 @@ public class PageMoveController extends HttpServlet {
 		return path+"/privacy";
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="check", method= {RequestMethod.GET, RequestMethod.POST})
-	public String goCheck (ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+	public String goCheck (ModelAndView mv, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Locale local = request.getLocale();
 		String location = local.toString();
 		String language = "";
 		if (!location.contains("KR")) {
 			language = "_EN";
 		}
-		Map<String , Object> param = new HashMap<String ,Object>();
 		
-		if (!Constant.checkDBError) {
-			try {
-				param =  selectDao.getCheckData();
-			}catch(Exception e) {
-			}
-			mv.addObject("checkData", param);						
-		} else {
-			param.put("END_DATE_YN","Y");
-			param.put("COMMENT_KR","긴급 시스템 점검");
-			param.put("COMMENT_EN","Temporary System Maintenance");
-			mv.addObject("checkData",param);
-		}
+//		if(!Constant.checkDBError)
+//			response.sendRedirect("./");
 		
 		return "homePage"+language+"/check";
 	}
 	@RequestMapping(value="turnToGeneral", method=RequestMethod.GET)
 	public String turnToGeneral(HttpSession session, HttpServletResponse response) {
-		CryptUtil cu = new CryptUtil();
 		String language = (String) session.getAttribute("language");
 		String url = "";
 		try {
@@ -192,18 +186,13 @@ public class PageMoveController extends HttpServlet {
 			t.setUserCode("02");
 			t.setNo(no);
 			t.setLastLoginDate(outMemberVo.getLastLoginDate());
-			session.setAttribute("memberId", cu.encryptLoginfo(t));
+			session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(t));
 			
 			if ("_EN".equals(language)) {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out;
-				out = response.getWriter();
-				out.println("<script>alert(Account conversion is complete.); location.href='./';</script>");
+				StringUtils2.script(response, "Account conversion is complete.", "./");
+				
 			} else {
-				response.setContentType("text/html; charset=UTF-8"); 
-				PrintWriter out;
-				out = response.getWriter();
-				out.println("<script>alert('계정 전환이 완료 되었습니다.'); location.href='./';</script>");
+				StringUtils2.script(response, "계정 전환이 완료 되었습니다.", "./");
 			}
 			url = "homePage"+language+"/main";
 		} catch (Exception e) {
@@ -211,20 +200,11 @@ public class PageMoveController extends HttpServlet {
 		}
 		return url;
 	}
-	@RequestMapping(value="logOut", method = RequestMethod.GET)
-	public String logOut(HttpSession session) {
-		String language = (String) session.getAttribute("language");
-		session.removeAttribute("memberVo");
-		session.setAttribute("language", language);		
-		return "redirect:/";
-	}
-	
 	@RequestMapping(value="loginUser", method = {RequestMethod.POST,RequestMethod.GET}) 
 	public String loginUser(HttpServletRequest request,HttpSession session, HttpServletResponse response) {
 		if(session.getAttribute("memberVo")!=null) {
 			return "redirect:/";
 		}
-		CryptUtil cu= new CryptUtil();
 		MemberVo memberVo= new MemberVo();
 		String url  = "";
 		String language = (String) session.getAttribute("language");
@@ -241,8 +221,9 @@ public class PageMoveController extends HttpServlet {
 			memberVo.setUserPwd(userPwd);
 			
 			memberVo = memberService.getUserInfoLastlogin(memberVo);
+			logger.info("memberVo {}", memberVo);
 			
-			if(memberVo!=null) {
+			if(memberVo!=null && memberVo.getUserPwd().equals(memberVo.getChk())) {
 				logger.info("memberVo {}", memberVo.getMemberInfoMap());
 				if ( "Y".equals(memberVo.getUserStatsYn())) {
 					if (! "_EN".equals(language)) {
@@ -258,7 +239,7 @@ public class PageMoveController extends HttpServlet {
 						url = "member"+language+"/activate";
 					} else {
 						session.setAttribute("memberVo", memberVo);
-						session.setAttribute("memberId", cu.encryptLoginfo(memberVo));
+						session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(memberVo));
 						url  = "redirect:/";
 					}
 				}
@@ -293,98 +274,34 @@ public class PageMoveController extends HttpServlet {
 	@RequestMapping(value="account" , method=RequestMethod.GET)
 	public String accountUser(HttpSession session, HttpServletResponse response) {
 		if(session.getAttribute("memberVo")==null) {
-			return "redirect:/";
+			StringUtils2.script(response, "로그인 정보가 없습니다.", "./login");
 		}
 		String language = (String) session.getAttribute("language");
 		if (session.getAttribute("userId") != null) {
 			session.removeAttribute("userId");
 		}
-		
-		try {
-//			MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-//			if (vo == null) {
-//				response.setContentType("text/html; charset=UTF-8"); 
-//				PrintWriter out;
-//				out = response.getWriter();
-//				out.println("<script>alert('로그인 정보가 없습니다.'); location.href='./login';</script>"); 
-//				return "redirect:/login";
-//			} else {
-//	
-//				return "member"+language+"/account";
-//			}
-			return "member"+language+"/account";
-		} catch (Exception e) {
-		} 
-		return "/";
-	}
-	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
-	public String registerCheckEmail (HttpSession session, HttpServletRequest request) {
-		if(session.getAttribute("chk")==null) {
-			return "redirect:/";
-		}
-		String language = (String) session.getAttribute("language");
-		String userId= request.getParameter("userId");
-		
-		MemberVo vo= (MemberVo) session.getAttribute("memberVo");
-		
-		Map<String , Object> param = new HashMap<String, Object>();
-		param.put("newUserId", userId);
-		int count  = memberService.selectUserCount(param);
-		if (count == 0) {
-			param.put("userId", vo.getUserId());
-			memberService.updateNewUserId(param);
-			
-			vo.setUserId(userId);
-			vo= memberService.getUserInfo(vo);
-			session.setAttribute("memberVo", vo);
-			
-		}  else {
-			return "redirect:/";
-		}
-
-		session.setAttribute("chk", null);
-		
 		return "member"+language+"/account";
-	}
-	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
-	public String goCheckEmail (Model model,  HttpServletRequest request, HttpSession session) {
-		if(session.getAttribute("chk")==null) {
-			return "redirect:/";
-		}
-		Base64Util base64= new Base64Util();
-		String language = (String) session.getAttribute("language");
-		String userId= request.getParameter("userId");
-		
-		String chk= (String) session.getAttribute("chk");
-		logger.info("chk:{}", chk);
-		if(chk==null){
-			return "redirect:/";
-		}
-		
-		if(userId==null ) {
-			String timestamp= new SimpleDateFormat("HHmm").format(new Date());
-			userId= base64.deCodingBase64(chk.split(",")[1]);
-			String oldTimestamp= chk.split(",")[0];
-			logger.info("goChangePwd : {}, {}, {}", chk, userId, timestamp);
-			
-			if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
-				return "redirect:/";
-			}
-		}
-		
-		model.addAttribute("userId", userId);
-		
-		String path = "member"+ language;
-		return path+"/authentic";
 	}
 	@RequestMapping(value="moveCheckEmail", method = RequestMethod.GET)
 	public String moveCheckEmail(Model model ,HttpSession session, HttpServletRequest request) {
 		if(session.getAttribute("chk")==null) {
-			return "redirect:/";
+			return "redirect:/login";
 		}
 		String language = (String) session.getAttribute("language");
-		String userId = request.getParameter("userId");
+		String chk= (String) session.getAttribute("chk");
+		logger.info("chk:{}", chk);
+		
+		String timestamp= new SimpleDateFormat("HHmm").format(new Date());
+		String userId= new Base64Util().deCodingBase64(chk.split(",")[1]);
+		String oldTimestamp= chk.split(",")[0];
+		logger.info("moveCheckEmail : {}, {}, {}", chk, userId, timestamp);
+
 		Map<String,Object> authData = selectDao.getauthData(userId);
+		
+		if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
+			return "redirect:/login";
+		}
+		
 		model.addAttribute("authData", authData);
 		model.addAttribute("userId", userId);
 		String path = "member"+ language;
@@ -403,7 +320,62 @@ public class PageMoveController extends HttpServlet {
 	}
 	
 	
-	
+
+	@RequestMapping(value="goCheckEmail", method=RequestMethod.GET)
+	public String goCheckEmail (Model model,  HttpServletRequest request, HttpSession session) {
+		if(session.getAttribute("chk")==null) {
+			return "redirect:/";
+		}
+		String language = (String) session.getAttribute("language");
+		String chk= (String) session.getAttribute("chk");
+		logger.info("chk:{}", chk);
+		
+		String timestamp= new SimpleDateFormat("HHmm").format(new Date());
+		String userId= new Base64Util().deCodingBase64(chk.split(",")[1]);
+		String oldTimestamp= chk.split(",")[0];
+		logger.info("goChangePwd : {}, {}, {}", chk, userId, timestamp);
+		
+		if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
+			return "redirect:/";
+		}
+		
+		model.addAttribute("userId", userId);
+		
+		String path = "member"+ language;
+		return path+"/authentic";
+	}
+	@RequestMapping(value="registerCheckEmail", method=RequestMethod.GET) 
+	public String registerCheckEmail (HttpSession session, HttpServletRequest request) {
+		if(session.getAttribute("chk")==null) {
+			return "redirect:/";
+		}
+		String language = (String) session.getAttribute("language");
+		String userId= request.getParameter("userId");
+		
+		MemberVo vo= (MemberVo) session.getAttribute("memberVo");
+		
+		Map<String , Object> param = new HashMap<String, Object>();
+		param.put("newUserId", userId);
+		int count  = memberService.selectUserCount(param);
+		if (count == 0) {
+			if(vo.getUserId()==null) {
+				return "redirect:/";
+			} else {
+				param.put("userId", vo.getUserId());
+				memberService.updateNewUserId(param);
+				
+				vo.setUserId(userId);
+				vo= memberService.getUserInfo(vo);
+				session.setAttribute("memberVo", vo);
+			}
+		}  else {
+			return "redirect:/";
+		}
+
+		session.setAttribute("chk", null);
+		
+		return "member"+language+"/account";
+	}
 	
 	
 	
@@ -419,20 +391,6 @@ public class PageMoveController extends HttpServlet {
 	
 	
 
-	@RequestMapping(value="changeLanguage", method=RequestMethod.POST)
-	public ModelAndView changeLanguage(ModelAndView mv, HttpSession session, HttpServletRequest request) {
-		String language = request.getParameter("language");
-		session.removeAttribute("language");
-		
-		if (language.equals("KR")) {
-			session.setAttribute("language", "");
-		} else {
-			session.setAttribute("language", "_EN");
-		}
-		mv.setViewName("jsonView");
-		
-		return mv;
-	}
 	@RequestMapping(value="findPwd", method = RequestMethod.GET)
 	public String findPwd(HttpSession session) {
 		if(session.getAttribute("memberVo")!=null) {
@@ -480,7 +438,7 @@ public class PageMoveController extends HttpServlet {
 		Map<String,Object> result = selectDao.getauthData(userid);
 		String DATE_CHECK= "N";
 		try {
-			DATE_CHECK= StringUtils.defaultIfEmpty((String) result.get("DATE_CHECK"), "N");
+			DATE_CHECK= StringUtils2.defaultIfEmpty((String) result.get("DATE_CHECK"), "N");
 		}catch(Exception e) {
 		}
 		mv.addAttribute("userId",userid);

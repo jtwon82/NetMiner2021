@@ -40,7 +40,7 @@
 						<div>
 							<ul class="input">
 								<li><input placeholder="${userInfo.email}" type="text" id="email" value="${userInfo.email}" disabled="disabled"></li>
-								<li><input placeholder="Organization" type="text" id="company"></li>
+								<li><input placeholder="Organization" id="company" type="text"></li>
 							</ul>
 							<select id="nation">
 								<option value="" disabled selected hidden>Country</option>

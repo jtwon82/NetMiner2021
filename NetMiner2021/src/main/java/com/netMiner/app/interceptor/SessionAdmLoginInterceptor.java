@@ -2,6 +2,7 @@ package com.netMiner.app.interceptor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -33,21 +34,29 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		StringBuffer sbUrl = request.getRequestURL();
 		String url = sbUrl.toString();
 		
-		request.setAttribute("GOOGLE_CALL_BACK_LOGIN_URL", Constant.GOOGLE_CALL_BACK_LOGIN_URL);
-		request.setAttribute("GOOGLE_CALL_BACK_REGISTER_URL", Constant.GOOGLE_CALL_BACK_REGISTER_URL);
+		logger.info("getRequestURL {}", request.getRequestURL());
+		
+		request.setAttribute("GOOGLE_CALL_BACK_LOGIN_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL);
+		request.setAttribute("GOOGLE_CALL_BACK_REGISTER_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL);
 		
 		if (url.contains("admin")) {
 			// 세션체크
 //			HttpSession session= request.getSession();
 			AdminVo admin= (AdminVo)session.getAttribute(Constant.ADMIN_SESSION);
 			if(admin== null){
+				logger.info("sendRedirect admin/login");
 				response.sendRedirect("/admin/login");
 				return false;
 			}
 		}
-		
 		if (Constant.checkDBError) {
+			Map<String, Object> checkData= new HashMap();
+			checkData.put("COMMENT_KR","긴급 시스템 점검");
+			checkData.put("COMMENT_EN","Temporary System Maintenance");
+			checkData.put("DBDOWN", "DBDOWN");
+			session.setAttribute("checkData", checkData);
 			response.sendRedirect("./check");
+			logger.info("sendRedirect check");
 			return false;
 		} else {
 			String [] urlPath = {"login","feature","Privacy","solution",
@@ -56,9 +65,26 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 					"moveCheckEmail","activate","account"};
 			for (String path : urlPath) {
 				if (url.contains(path)) {
-					Map<String, Object> checkData = selectDao.getCheckData();
-					if (checkData != null &&"Y".equals(checkData.get("STATS_YN"))) {				
+					try {
+						if(Constant.checkDBError) throw new Exception();
+						
+						Map<String, Object> checkData= selectDao.getCheckData();
+						if (checkData != null && "Y".equals(checkData.get("STATS_YN").toString())) {
+							checkData.put("DBDOWN", "");
+							session.setAttribute("checkData", checkData);
+							response.sendRedirect("./check");
+							logger.info("sendRedirect check");
+							return false;
+						}
+					}catch(Exception e) {
+						Constant.checkDBError=true;
+						Map<String, Object> checkData= new HashMap();
+						checkData.put("COMMENT_KR","긴급 시스템 점검");
+						checkData.put("COMMENT_EN","Temporary System Maintenance");
+						checkData.put("DBDOWN", "DBDOWN");
+						session.setAttribute("checkData", checkData);
 						response.sendRedirect("./check");
+						logger.info("sendRedirect check");
 						return false;
 					}
 				}
@@ -68,6 +94,7 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 				MemberVo vo = (MemberVo) session.getAttribute("memberVo");
 				if (vo == null) {
 					response.sendRedirect("/");
+					logger.info("sendRedirect /");
 					return false;
 				}
 				

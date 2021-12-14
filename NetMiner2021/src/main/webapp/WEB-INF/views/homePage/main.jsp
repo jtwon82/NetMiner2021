@@ -37,6 +37,21 @@
 빅데이터에 숨겨진 그래프 구조를 이해해야 더욱 정교한 예측과 분류가 가능합니다.</p>
 						</div>
 						
+							<c:if test="${empty memberVo}">
+							<div class="mypage obj type1" style="">
+								<ul>
+									<li class="join"><a href="./login" >Start for free</a></li>
+								</ul>
+							</div>
+							</c:if>
+							<c:if test="${!empty memberVo}">
+							<div class="mypage obj type1" style="">
+								<ul>
+									<li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>
+								</ul>
+							</div>
+							</c:if>
+							
 					</div>
 				</div>
 			</div>

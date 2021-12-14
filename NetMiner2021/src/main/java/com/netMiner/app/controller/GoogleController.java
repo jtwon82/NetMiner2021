@@ -2,7 +2,6 @@ package com.netMiner.app.controller;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +63,6 @@ public class GoogleController  {
 	public ModelAndView googleAuth(ModelAndView mv ,HttpServletRequest request ,HttpServletResponse response ,HttpSession session)
 			throws JsonProcessingException {
 		String url = "";
-		CryptUtil cu = new CryptUtil();
 		String authCode = request.getParameter("code");
 		String language = (String) session.getAttribute("language");
 		
@@ -161,7 +159,7 @@ public class GoogleController  {
 					t.setLastLoginDate(member.getLastLoginDate());
 					
 					session.setAttribute("memberVo", member);
-					session.setAttribute("memberId", cu.encryptLoginfo(t));
+					session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(t));
 					url = "homePage"+language+"/main";
 				}
 			}
@@ -170,6 +168,7 @@ public class GoogleController  {
 			mv.setView(new RedirectView("/"));
 			return mv;
 		} 
+		logger.info("url {}", url);
 		mv.setViewName(url);
 		return mv;
 	}
@@ -227,6 +226,8 @@ public class GoogleController  {
 		String resultJson = restTemplate.getForObject(requestUrl, String.class);
 		
 		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
+		logger.info("userInfo {}", userInfo);
+		
 		//model.addAllAttributes(userInfo);
 		mv.addObject("userInfo", userInfo);
 		
@@ -234,7 +235,7 @@ public class GoogleController  {
 		memberVo.setUserId(userInfo.get("email"));
 		memberVo.setUserPwd(userInfo.get("kid"));
 		int count= memberService.checkUser( (String) userInfo.get("email"));
-		if (count > 0) {			
+		if (count < 1) {			
 			url = "member"+language+"/register_sns";
 			
 		} else {

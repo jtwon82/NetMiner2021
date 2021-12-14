@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,157 +46,260 @@ public class MemberController {
 	@Autowired
 	private SendEmail sendEmail;
 	
+
+	@RequestMapping(value="checkUser", method=RequestMethod.POST)
+	public ModelAndView checkUser (ModelAndView mv, HttpServletRequest request, HttpSession session) {
+		Base64Util base64 = new Base64Util();
+		String userId = request.getParameter("email");
+		int count = memberService.checkUser(userId);
+			
+		boolean result = true ; 
+		if (count > 0) {
+			result = false;
+		} else {
+			count = memberService.checkDropUser(userId);
+			if (count > 0) {
+				result = false;
+			}
+		}
+		
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+		
+		if(result) {
+			String timestamp= new SimpleDateFormat("HHmm").format(new Date());
+			String chk= String.format("%s,%s", timestamp, base64.enCodingBase64(userId));
+			logger.info("chk {}", chk);
+			session.setAttribute("chk", String.format("%s,%s", timestamp, base64.enCodingBase64(userId)));
+		}
+		
+		return mv;
+	}
+	//email 재인증 또는 추후 회원정보 변경시 사용 
+	@RequestMapping(value="emailSender" , method=RequestMethod.POST)
+	public ModelAndView emailSender(HttpSession session, ModelAndView mv, HttpServletRequest request
+			, @RequestParam HashMap<String, Object> json) {
+		String language = (String) session.getAttribute("language");
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		logger.info("json {}", json);
+		
+		MemberVo memberVo = new MemberVo(json);
+		if(session.getAttribute("language").toString().contains("EN")) {
+			memberVo.setLanguage("en");
+		} else {
+			memberVo.setLanguage("ko");
+		}
+		
+		String randomNumber = sendEmail.sendCheckEmail(memberVo.getUserId(), language);
+		
+		//임시 유저 저장 
+		if (!"".equals(randomNumber)) {
+			memberService.insertMemberInfoTmp(memberVo);					
+		}
+		
+		mv.addObject("randomNumber", randomNumber);
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="checkRandomNumber" ,method=RequestMethod.POST)
+	public ModelAndView checkRandomNumber(ModelAndView mv ,HttpServletRequest request, HttpSession session) {
+		try {
+			String randomNumber = request.getParameter("randomNumber");
+			String chk= (String) session.getAttribute("chk");
+			logger.info("chk {}", chk);
+
+			String timestamp= new SimpleDateFormat("HHmm").format(new Date());
+			String userId= new Base64Util().deCodingBase64(chk.split(",")[1]);
+			String oldTimestamp= chk.split(",")[0];
+			logger.info("goChangePwd : {}, {}, {}", chk, userId, timestamp);
+			
+			if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
+				mv.addObject("result", "timeOver");
+				return mv;
+			}
+			
+			Map<String ,Object> param = new HashMap<String ,Object>();
+			param.put("randomNumber", randomNumber);
+			param.put("userId", userId);
+			
+			Map<String, Object> result = memberService.checkRandomNumber(param); 
+			
+			String DATE_CHECK = (String) result.get("DATE_CHECK");
+			String AUTH_CODE = (String) result.get("AUTH_CODE");
+			
+			if ( "Y".equals(DATE_CHECK)) {
+				if (randomNumber.equals(AUTH_CODE)) {
+					mv.addObject("result", "SUCCESS");		
+				} else {
+					mv.addObject("result", "codeFail");
+				}
+			} else {
+				mv.addObject("result", "timeOver");
+				selectDao.deleteCheckSendAuthData(userId);
+			}
+		}catch(Exception e) {
+			mv.addObject("result", "timeOver");
+		}
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="sendNewRandom", method=RequestMethod.POST)
+	public ModelAndView sendNewRandom (ModelAndView mv , HttpServletRequest request, HttpSession session) {
+		try {
+			String language = (String) session.getAttribute("language");
+			String chk= (String) session.getAttribute("chk");
+			logger.info("chk {}", chk);
+			
+			String timestamp= new SimpleDateFormat("HHmm").format(new Date());
+			String userId= new Base64Util().deCodingBase64(chk.split(",")[1]);
+			String oldTimestamp= chk.split(",")[0];
+			logger.info("goChangePwd : {}, {}, {}", chk, userId, timestamp);
+			
+			if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
+				mv.addObject("result", "timeOver");
+				return mv;
+			}
+			
+			selectDao.deleteCheckSendAuthData(userId);
+			
+			sendEmail.sendCheckEmail(userId, language);
+			//mv.addObject("randomNumber", randomNumber);
+			
+			mv.addObject("result", 0);
+			
+		}catch(Exception e) {
+			mv.addObject("result", "timeOver");
+		}
+		
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
 	@RequestMapping(value= "registerStep", method = RequestMethod.POST)
 	public ModelAndView registerStep(HttpServletRequest request,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		MemberVo memberVo = new MemberVo();
 		String language = (String) session.getAttribute("language");
-		CryptUtil cu = new CryptUtil();
 		
 		try {
 			request.setCharacterEncoding("UTF-8");
 
 			String userId = request.getParameter("email");			
+			String marketYn = request.getParameter("marketYn");
+			
+			logger.info("registerStep memberVo {}", memberVo);
 			memberVo.setUserId(userId);
 			memberVo = memberService.getUserInfoTmp(memberVo);
-			String marketYn = request.getParameter("marketYn");
 			memberVo.setMarketYn(marketYn);
-			String googleYn = "N";
-			memberVo.setGoogleYn(googleYn);
+			memberVo.setGoogleYn("N");
+			
+			logger.info("registerStep memberVo {}", memberVo);
+			
 			memberService.signUpGeneral(memberVo);			 
 			memberService.deleteMemberInfoTmp(memberVo);
 			sendEmail.sendRegisterMail(userId, "", language);
+			
 			//해당 유저의 password 가 없으므로 쿼리상으로 google yn 을 강제로 Y로 변경후 데이터 가지고옴 
 			memberVo.setGoogleYn("Y");
 			MemberVo loginMemberVo = memberService.getUserInfo(memberVo);
 			logger.info("loginMemberVo {}", loginMemberVo);
 			
 			session.setAttribute("memberVo", loginMemberVo);
-			session.setAttribute("memberId", cu.encryptLoginfo(loginMemberVo));
+			session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(loginMemberVo));
 			
 			mv.setViewName("jsonView");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("err ", e);
 		}
-
 
 		return mv;
 	}
 
 	@RequestMapping(value="registerSNS" , method=RequestMethod.POST)
-	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView registerSNS (HttpSession session, ModelAndView mv, HttpServletRequest request, MemberVo form) {
 		String language = (String) session.getAttribute("language");
-		CryptUtil cu = new CryptUtil();
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		MemberVo memberVo = new MemberVo();
-		
-		String userId = request.getParameter("email");
-		String userPwd = request.getParameter("pwd");
-		String company = request.getParameter("company");
-		String nation = request.getParameter("nation");
-		String useCode = request.getParameter("useCode");
-		String marketYn = request.getParameter("marketYn");
-		String googleYn = "Y";
 		try {
-			memberVo.setUserId(userId);
-			memberVo.setUserPwd(userPwd);
-			memberVo.setCompany(company);
-			memberVo.setNation(nation);
-			memberVo.setUseCode(useCode);
-			memberVo.setMarketYn(marketYn);
-			memberVo.setGoogleYn(googleYn);
-			if (nation.equals("KR")) {
-				memberVo.setLanguage("ko");
+			if(session.getAttribute("language").toString().contains("EN")) {
+				form.setLanguage("en");
 			} else {
-				memberVo.setLanguage("en");
+				form.setLanguage("ko");
 			}
-			logger.info("memberVo - {}", memberVo.toString());
-			memberService.signUp(memberVo);
+			memberService.signUp(form);
+			sendEmail.sendRegisterMail(form.getUserId(), "", language);
 			
-	
-			sendEmail.sendRegisterMail(userId, "", language);
-			
-			MemberVo loginMember= memberService.getUserInfoLastlogin(memberVo);
+			MemberVo loginMember= memberService.getUserInfoLastlogin(form);
 			session.setAttribute("memberVo", loginMember);
+			
 			logger.info("로그인 유저 정보 - {}",loginMember.toString());
-			session.setAttribute("memberId", cu.encryptLoginfo(loginMember));
+			session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(loginMember));
+			session.setAttribute("chk", "registorSNS");
+			
+			mv.addObject("state", "success");
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			mv.addObject("state", "fail");
 		}
-		mv.setViewName("homePage"+language+"/main");
+//		mv.setViewName("homePage"+language+"/register_complete");
 		
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	
 	@RequestMapping(value="updateUserInfo", method=RequestMethod.POST)
 	public ModelAndView updateUserInfo (ModelAndView mv,HttpServletRequest request, HttpSession session, MemberVo form) {
 		MemberVo memberVo= (MemberVo) session.getAttribute("memberVo");
-		MemberVo newMemberVo= (MemberVo) session.getAttribute("newMemberVo");
-		
-		String googleYn = memberVo.getGoogleYn();
-		if (googleYn.equals("N") ) {
-			memberVo.setUserPwd(form.getUserPwd());
-		}
 
-		if (form.getNation().equals("KR")) {
-			form.setLanguage("ko");
-		} else {
-			form.setLanguage("en");
-		}
-		MemberVo getUserInfo= memberService.getUserInfo(memberVo);
-		
-		logger.info("oldMemberVo -{}", memberVo.toString());
-		logger.info("memberVo - {}", form.toString());
-		
-		if (getUserInfo == null) {
-			mv.addObject("state", "fail");
-			
-		} else {
-			// 아이디변경
-			if(newMemberVo!=null) {
-				form.setOldUserId(newMemberVo.getOldUserId());
-				form.setUserId(newMemberVo.getUserId());
-				memberService.updateNewUserInfo(null, form);
-				session.removeAttribute("newMemberVo");
-				
-				mv.addObject("state", "success");
-				
+		try {
+			if (form.getNation().equals("KR")) {
+				form.setLanguage("ko");
 			} else {
-				form.setOldUserId(memberVo.getUserId());
+				form.setLanguage("en");
+			}
+			memberVo.setUserPwd(form.getUserPwd());
+			MemberVo getUserInfo= memberService.getUserInfo(memberVo);
+			logger.info("memberVo -{}", memberVo.toString());
+
+			if("Y".equals(memberVo.getGoogleYn())) {
+				form.setOldUserId(getUserInfo.getUserId());
 				memberService.updateNewUserInfo(null, form);
-				
+				logger.info("form {}", form);
+
 				form.setUserId(memberVo.getUserId());
 				form = memberService.getUserInfo(form);
-				
 				session.setAttribute("memberVo", form);
 				
 				mv.addObject("state", "success");
+				
+			}else if(getUserInfo != null && getUserInfo.getUserPwd().equals(getUserInfo.getChk())) {
+				logger.info("form - {}", form.toString());
+
+				form.setOldUserId(getUserInfo.getUserId());
+				memberService.updateNewUserInfo(null, form);
+				
+				form.setUserId(getUserInfo.getUserId());
+				form = memberService.getUserInfo(form);
+				session.setAttribute("memberVo", form);
+				
+				mv.addObject("state", "success");
+			} else {
+				mv.addObject("state", "fail");
 			}
+		}catch(Exception e) {
+			mv.addObject("state", "fail");
 		}
-		
+
 		mv.setViewName("jsonView");
 		
-		return mv;
-	}
-	
-	@RequestMapping(value="sendNewRandom", method=RequestMethod.POST)
-	public ModelAndView sendNewRandom (ModelAndView mv , HttpServletRequest request, HttpSession session) {
-		String userId = request.getParameter("email");
-		String language = (String) session.getAttribute("language");
-		
-		selectDao.deleteCheckSendAuthData(userId);
-		
-		String randomNumber = sendEmail.sendCheckEmail(userId, language);
-		mv.addObject("randomNumber", randomNumber);
-		mv.setViewName("jsonView");
 		return mv;
 	}
 	
@@ -223,34 +327,6 @@ public class MemberController {
 		memberService.deleteMember(vo);
 		
 		session.removeAttribute("memberVo");
-		mv.setViewName("jsonView");
-		return mv;
-	}
-	
-	@RequestMapping(value="checkRandomNumber" ,method=RequestMethod.POST)
-	public ModelAndView checkRandomNumber(ModelAndView mv ,HttpServletRequest request) {
-		String randomNumber = request.getParameter("randomNumber");
-		String userId = request.getParameter("email");
-		
-		Map<String ,Object> param = new HashMap<String ,Object>();
-		param.put("randomNumber", randomNumber);
-		param.put("userId", userId);
-		
-		Map<String, Object> result = memberService.checkRandomNumber(param); 
-		
-		String DATE_CHECK = (String) result.get("DATE_CHECK");
-		String AUTH_CODE = (String) result.get("AUTH_CODE");
-		
-		if ( "Y".equals(DATE_CHECK)) {
-			if (randomNumber.equals(AUTH_CODE)) {
-				mv.addObject("result", "SUCCESS");				
-			} else {
-				mv.addObject("result", "codeFail");
-			}
-		} else {
-			mv.addObject("result", "timeOver");
-			selectDao.deleteCheckSendAuthData(userId);
-		}
 		mv.setViewName("jsonView");
 		return mv;
 	}
@@ -296,78 +372,12 @@ public class MemberController {
 	
 	
 
-	@RequestMapping(value="checkUser", method=RequestMethod.POST)
-	public ModelAndView checkUser (ModelAndView mv, HttpServletRequest request, HttpSession session) {
-		Base64Util base64 = new Base64Util();
-		String userId = request.getParameter("email");
-		int count = memberService.checkUser(userId);
-			
-		boolean result = true ; 
-		if (count > 0) {
-			result = false;
-		} else {
-			count = memberService.checkDropUser(userId);
-			if (count > 0) {
-				result = false;
-			}
-		}
-		
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		
-		if(result) {
-			String timestamp= new SimpleDateFormat("HHmm").format(new Date());
-			session.setAttribute("chk", String.format("%s,%s", timestamp, base64.enCodingBase64(userId)));
-		}
-		
-		return mv;
-	}
 	@RequestMapping(value="changeEmail", method=RequestMethod.POST)
 	public ModelAndView changeEmail(ModelAndView mv , HttpServletRequest request, HttpSession session) {
 		String userId = request.getParameter("email");
 		String language = (String) session.getAttribute("language");
 		
 		String randomNumber = sendEmail.sendCheckEmail(userId, language);
-		mv.addObject("randomNumber", randomNumber);
-		mv.setViewName("jsonView");
-		return mv;
-	}
-	//email 재인증 또는 추후 회원정보 변경시 사용 
-	@RequestMapping(value="emailSender" , method=RequestMethod.POST)
-	public ModelAndView emailSender(HttpSession session, ModelAndView mv, HttpServletRequest request) {
-		String language = (String) session.getAttribute("language");
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		MemberVo memberVo = new MemberVo();
-		
-		String userId = request.getParameter("email");
-		String userPwd = request.getParameter("pwd");
-		String company = request.getParameter("company");
-		String nation = request.getParameter("nation");
-		String useCode = request.getParameter("useCode");
-		
-		memberVo.setUserId(userId);
-		memberVo.setUserPwd(userPwd);
-		memberVo.setCompany(company);
-		memberVo.setNation(nation);
-		memberVo.setUseCode(useCode);
-		if (nation.equals("KR")) {
-			memberVo.setLanguage("ko");
-		} else {
-			memberVo.setLanguage("en");
-		}
-		
-		String randomNumber = sendEmail.sendCheckEmail(userId, language);
-		
-		//임시 유저 저장 
-		if (!"".equals(randomNumber)) {
-			memberService.insertMemberInfoTmp(memberVo);					
-		}
-		
 		mv.addObject("randomNumber", randomNumber);
 		mv.setViewName("jsonView");
 		return mv;
@@ -403,6 +413,7 @@ public class MemberController {
 		vo.setUserPwd(userPwd);
 		vo.setGoogleYn("N");
 		MemberVo member= memberService.getUserInfo(vo);
+		logger.info("member {}", member);
 		
 		if(member!=null && member.getUserPwd().equals(member.getChk())) {
 			mv.addObject("result", 0);
@@ -483,16 +494,33 @@ public class MemberController {
 		logger.info("vo {}", vo);
 		
 		if(vo!=null) {
-			vo.setUserPwd(userPwd2);
-			memberService.updateNewPwd(vo);
-			
-			mv.addObject("result", "o");
+			if(vo.getUserPwd().equals(vo.getChk())) {
+				vo.setUserPwd(userPwd2);
+				memberService.updateNewPwd(vo);
+				
+				mv.addObject("result", "o");
+			} else {
+				mv.addObject("result", "x");
+			}
 		} else {
-			
 			mv.addObject("result", "x");
 		}
 		
 		mv.setViewName("jsonView");
+		return mv;
+	}
+	@RequestMapping(value="changeLanguage", method=RequestMethod.POST)
+	public ModelAndView changeLanguage(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		String language = request.getParameter("language");
+		session.removeAttribute("language");
+		
+		if (language.equals("KR")) {
+			session.setAttribute("language", "");
+		} else {
+			session.setAttribute("language", "_EN");
+		}
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 }

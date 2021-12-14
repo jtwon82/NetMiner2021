@@ -168,9 +168,9 @@ $(function(){
         		break;
             case "delete" :
             	if (window.confirm('해당 유저의 정보를 삭제 하시겠습니까?')) {
-            		alert('삭제 완료 되었습니다.');
+// 					alert('삭제 완료 되었습니다.');
             	}
-            	; break;
+            	break;
             }
 
             return true;
@@ -179,7 +179,7 @@ $(function(){
             //성공후 서버에서 받은 데이터 처리
             console.log(response);
             if('SUCCESS'==response.result){
-				alert("정상 처리되었습니다.");
+ 				alert("정상 처리되었습니다.");
 				location.href='user';
     			
             }else{

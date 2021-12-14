@@ -1,13 +1,15 @@
 package com.netMiner.app.config;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.netMiner.app.controller.AdminController;
 
 public class Constant {
 	private static final Logger logger= LoggerFactory.getLogger(Constant.class);
 
+	public static Constant ins=null;
+	
 	public static int PER_ONE_PAGE=10;
 	public static int PER_PAGE_GROUP=10;
 	
@@ -17,11 +19,21 @@ public class Constant {
 	
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
 
-	public static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8081/auth";	
-	public static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
-//	static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-//	static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+//	public static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8081/auth";	
+//	public static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
+	public static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	public static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 
+	public static Constant getInstance(HttpServletRequest request) {
+		if(ins==null) {
+			ins = new Constant();
+			if(request.getRequestURL().toString().contains("localhost")) {
+				ins.GOOGLE_CALL_BACK_LOGIN_URL= "http://localhost:8081/auth";
+				ins.GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
+			}
+		}
+		return ins;
+	}
 	
 	public static String ResultJson(String result, String value, String value2) {
 		String string= String.format(ServiceResultJsonValue, result, value, value2);

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.AdminVo;
 import com.netMiner.app.util.MapUtils;
 import com.netMiner.app.util.Paging;
+import com.netMiner.app.util.StringUtils2;
 
 @Controller
 @RequestMapping("/admin")
@@ -79,7 +79,7 @@ public class AdminController {
 	public @ResponseBody String check(HttpSession session
 			, @RequestParam HashMap<String, Object> json) throws Exception{
 		try{
-			if(StringUtils.isEmpty(json.get("ADMIN_ID").toString()) || StringUtils.isEmpty(json.get("pwd").toString()))
+			if(StringUtils2.isEmpty(json.get("ADMIN_ID").toString()) || StringUtils2.isEmpty(json.get("pwd").toString()))
 				return Constant.ResultJson(ServiceResult.INVALID_PARAM.name(),"","");
 
 			AdminVo admin= AdminVo.fromMap(adminService.getAdminInfo(json));
@@ -160,7 +160,7 @@ public class AdminController {
 			paging.setTotalEntryCount(count);
 			
 			model.addAttribute("list", list);
-			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?page=", "", "", "red"));
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?", "", "", "red", json));
 		}
 
 		model.addAttribute("json", json);
@@ -226,7 +226,7 @@ public class AdminController {
 			paging.setTotalEntryCount(count);
 
 			model.addAttribute("list", list);
-			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?page=", "", "", "red"));
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "user?", "", "", "red", json));
 		}
 		
 		model.addAttribute("json", json);
@@ -294,7 +294,7 @@ public class AdminController {
 			int count= adminService.getMemberQuitCount(json);
 
 			model.addAttribute("list", list);
-			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "quit?page=", "", "", "red"));
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "quit?", "", "", "red", json));
 		}
 
 		model.addAttribute("json", json);
@@ -361,7 +361,7 @@ public class AdminController {
 			paging.setTotalEntryCount(count);
 			
 			model.addAttribute("list", list);
-			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "email?page=", "", "", "red"));
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "email?", "", "", "red", json));
 		}
 
 		model.addAttribute("json", json);

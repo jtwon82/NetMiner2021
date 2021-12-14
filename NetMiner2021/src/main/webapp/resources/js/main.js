@@ -36,15 +36,15 @@ $(document).ready(function() {
 		$(".popup").fadeOut();
 		$("body").css("overflow-y","auto");
 	});
-	$("#check").change(function (){
-		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
-			openPoup("agree_popup");
-		}
-		
-		if ($('input:checkbox[name="marketYn"]').is(":checked") == false) {
-			openPoup("refuse_popup");
-		}
-	});
+//	$("#check").change(function (){
+//		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
+//			openPoup("agree_popup");
+//		}
+//		
+//		if ($('input:checkbox[name="marketYn"]').is(":checked") == false) {
+//			openPoup("refuse_popup");
+//		}
+//	});
 	$("#authentic").click(function(){		
 		location.href = document.referrer;
 	})
@@ -75,7 +75,7 @@ $(document).ready(function() {
 	$(".content .input li #email").on('input',function(){
 		var emailValue = $("#email").val();
 		var emailStyle = document.getElementById("checkEmailBtn");
-		if (emailStyle != '' && emailStyle != null) {			
+		if (emailStyle != '' && emailStyle != null) {
 			if (CheckEmailRegx(emailValue)) {
 				emailStyle.style.background = "#203864";
 				$("#checkEmailBtn").attr('disabled', false);
@@ -109,7 +109,6 @@ function CheckEmailRegx(emailVal)
 	} else { 
 		return false;
 	}         
-
 }
 
 function CheckPwd(pwdVal) {
@@ -127,23 +126,46 @@ function CheckPwd(pwdVal) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function checkEmail(){
+	event.preventDefault();
+	
 	var userId = $("#email").val();
 	var userpwd = $("#pwd").val();
 	var company = $("#company").val();
 	var nation = $("#nation").val();
 	var useCode = $('input:radio[name="useCode"]:checked').val();
+	
 	var checkRegx = CheckEmailRegx(userId);	
 	
 	if (userId=="" || userpwd =="" || company == "" || nation =="" || useCode=="") {
 		alert("회원 가입을 위해 모든 필드를 입력해 주세요. ");
 	} else {
 		if (checkRegx) {
-		checkRegx = CheckPwd(userpwd);
+			checkRegx = CheckPwd(userpwd);
+			var fd= (new FormData(document.form));
+			
 			if (!checkRegx) {
 				$("#pwd").focus();
 			} else {
-				$ (function (){
 				$.ajax ({
 					url:"./checkUser",
 					type: "POST",
@@ -152,46 +174,33 @@ function checkEmail(){
 					},
 					success : function (data) {
 						if (data.result) {
-							 var con = document.getElementById("dimmed");
-								con.style.removeProperty("display");
-								$(function(){
-										$.ajax({
-											url :"./emailSender",
-											type:"POST",
-											data:{
-												'email': userId,
-												'pwd' : userpwd,
-												'company' : company,
-												'nation' : nation,
-												'useCode' : useCode
-											},
-											success: function (data){
-												if ("" == data.randomNumber) {
-													alert("이메일 전송 실패");
-													window.location.href = "./register";
-												} else{
-													alert(userId+"으로 이메일을 발송하였습니다.");
-													window.location.href= "./moveCheckEmail?userId="+userId;					
-												}
-											} 
-											
-										})
-									});
+							var con = document.getElementById("dimmed");
+							con.style.removeProperty("display");
+							$.ajax({
+								url :"./emailSender",
+								type:"POST",
+								data: $(document.form).serialize(),
+								success: function (data){
+									if ("" == data.randomNumber) {
+										alert("이메일 전송 실패");
+										//window.location.href = "./register";
+									} else{
+										alert(userId+"으로 이메일을 발송하였습니다.");
+										window.location.href= "./moveCheckEmail?userId="+userId;					
+									}
+								} 
+							})
 						} else {
 							alert ("이미 가입한 이메일입니다. ");
 						}
 					}
 				});
-		
-			})
 			}
 		} else {
 			alert("이메일 형식이 맞지 않습니다.");
 			 $("#email").focus();
 		} 
-	
 	}
-	
 }
 
 function register(userId) {
@@ -200,7 +209,17 @@ function register(userId) {
 	var check1 = $("#check1").prop("checked");
 	var check2 = $("#check2").prop("checked");
 	var check3 = $("#check3").prop("checked");
-	$(function(){		
+	if (check3 == true)marketYn = "Y";
+	
+	if(code==""){
+		alert("유효한 인증코드를 입력해 주세요.");
+		return;
+	}
+	if (check1 != true || check2 != true) {
+		alert("필수 약관에 동의해 주세요.");
+		return;
+	}
+	
 	$.ajax({
 		url : "./checkRandomNumber",
 		data : {"email": userId , "randomNumber" : code},
@@ -208,34 +227,28 @@ function register(userId) {
 		success : function (data) {
 			if (data.result == 'codeFail') {
 				alert("유효한 인증코드를 입력해 주세요.");
+				
 			} else if (data.result == 'timeOver'){
 				alert("인증코드가 만료되었습니다. 새 인증코드를 요청하세요.");
+				
 			} else {
-				if (check1 != true || check2 != true) {
-					alert("필수 약관에 동의해 주세요.");
-				} else {
-					if (check3 == true) {
-						marketYn = "Y";
-					}			
-			var email = userId;
-			var con = document.getElementById("dimmed");
-				con.style.removeProperty("display");
-				$.ajax({
-					url :"./registerStep",
-					type:"POST",
-					data:{
-						'email':email, 'marketYn': marketYn 
-					},
-					success: function (data){
-						alert("이메일 인증이 완료되었습니다.");
-						window.location.href= "./registerComplete";
-					} 					
-				})
+				var email = userId;
+				var con = document.getElementById("dimmed");
+					con.style.removeProperty("display");
+					$.ajax({
+						url :"./registerStep",
+						type:"POST",
+						data:{
+							'email':email, 'marketYn': marketYn 
+						},
+						success: function (data){
+							alert("이메일 인증이 완료되었습니다.");
+							window.location.href= "./registerComplete";
+						}
+					})
+				}
 			}
-			}
-		}
 		})
-	})
 }
 function googleLogin(){
 //	var redirectLocal = "http://localhost:8080/auth";
@@ -246,6 +259,7 @@ function googleLogin(){
 }
 
 function googleRegister() {
+	event.preventDefault();
 //	var redirectLocal = "http://localhost:8080/socialRegister";
 //	var redirectPrd="https://www.netminer365.com/socialRegister";
 
@@ -255,6 +269,7 @@ function googleRegister() {
 
 
 function registerSns(pwd) {
+	event.preventDefault();
 	var userId = $("#email").val();
 	var userpwd = pwd;
 	var company = $("#company").val();
@@ -279,16 +294,13 @@ function registerSns(pwd) {
 				$.ajax({
 					url :"./registerSNS",
 					type:"POST",
-					data:{
-						'email': userId,
-						'pwd' : userpwd,
-						'company' : company,
-						'nation' : nation,
-						'useCode' : useCode,
-						'marketYn': marketYn 
-					},
+					data: $(document.form).serialize(),
 					success: function (data){
-						window.location.href= "./registerComplete";
+						if(data.state=='success'){
+							window.location.href= "./registerComplete";
+						} else {
+							alert("회원 정보를 모두 입력해주세요");
+						}
 					} 
 					
 				})
@@ -330,7 +342,6 @@ function changeEmail() {
 	}
 	var con = document.getElementById("dimmed");
 		con.style.removeProperty("display");
-	$(function (){		
 		$.ajax({
 			url:"./checkUser",
 			type :"POST",
@@ -358,15 +369,14 @@ function changeEmail() {
 					});
 				}
 			}
-		})	
-	})
+		})
 }
 
 function registerCheckEmail(userId){
 	var code = $("#code").val();
 	if (code == '') {
 		alert("인증번호를 입력해 주세요");
-	} else {	
+	} else {
 	
 		$(function(){	
 			$.ajax({
@@ -376,15 +386,18 @@ function registerCheckEmail(userId){
 			success : function(data) {
 					if (data.result == 'codeFail') {
 						alert("인증번호가 일치하지 않습니다.");
+						
 					} else if (data.result == 'timeOver'){
 						alert("인증번호가 만료 되었습니다. 다시 발급해주세요");
+						
 					} else {
-						window.location.href="./registerCheckEmail?userId="+userId;			
+						window.location.href="./registerCheckEmail?userId="+userId;
+						
 					}
 				}
 			})
 		})
-	}	
+	}
 }
 
 function updateUserInfo(googleYn){
@@ -411,12 +424,11 @@ function updateUserInfo(googleYn){
 						url : "./updateUserInfo",
 						type : "POST",
 						data : {
-							'userId': userId,
+//							'userId': userId,
 							'company' : company,
 							'nation' : nation,
 							'useCode' : useCode,
-							'marketYn': marketYn,
-							'googleYn' : googleYn
+							'marketYn': marketYn
 						},
 						success : function (data) {
 							if (data.state == "fail") {
@@ -453,16 +465,15 @@ function updateUserInfo(googleYn){
 						url : "./updateUserInfo",
 						type : "POST",
 						data : {
-							'userId': userId,
-							'userpwd' : userpwd,
+//							'userId': userId,
+							'userPwd' : userpwd,
 							'company' : company,
 							'nation' : nation,
 							'useCode' : useCode,
-							'marketYn': marketYn,
-							'googleYn' : googleYn 				
+							'marketYn': marketYn
 						},
 						success : function (data) {
-						 	if (data.state == "fail") {
+							if (data.state == "fail") {
 								alert("비밀번호가 올바르지 않습니다.");
 							} else {
 							 	alert("프로필이 수정되었습니다. ");
@@ -494,9 +505,13 @@ function newRandomNumber(userId) {
 				'email' : userId				
 			}, 
 			success : function(data) {
-				if (data.randomNumber != "") {
+				if (data.result==0) {
 					alert(userId+"으로 이메일을 발송하였습니다.");
 					con.style.display = 'none';
+					
+				} else if (data.result == 'timeOver'){
+					alert("인증코드가 만료되었습니다. 새 인증코드를 요청하세요.");
+					window.location.href="./";
 				}
 			}
 			
@@ -600,7 +615,6 @@ function requestSetPwd() {
 							}							
 						}
 					}
-						
 				})
 			});
 			
@@ -690,7 +704,7 @@ $(document).on('keyup', '.pwd.new input:eq(1)', function(e){
 	var pwd= $('.pwd.new input:eq(0)').val();
 	var pwd2= $('.pwd.new input:eq(1)').val();
 	if( pwd==pwd2 ){
-		$(this).next().css("background-color", "blue");
+		$(this).next().css("background-color", "#203864");
 	} else {
 		$(this).next().css("background-color", "#bbb8b8");
 	}
@@ -723,7 +737,6 @@ function changePwd2BtnChangeAct(userId){
 			}
 		})
 	} else {
-		//alert("비밀번호 형식이 맞지 않습니다.")
 		$("#newPwd").focus();
 	}
 }

@@ -39,6 +39,20 @@ It is important to understand the graph structure hidden in big data<br>
 to predict and classify more precisely.</p>
 						</div>
 						
+							<c:if test="${empty memberVo}">
+							<div class="mypage obj type1" style="">
+								<ul>
+									<li class="join"><a href="./login" >Start for free</a></li>
+								</ul>
+							</div>
+							</c:if>
+							<c:if test="${!empty memberVo}">
+							<div class="mypage obj type1" style="">
+								<ul>
+									<li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>
+								</ul>
+							</div>
+							</c:if>
 					</div>
 				</div>
 			</div>

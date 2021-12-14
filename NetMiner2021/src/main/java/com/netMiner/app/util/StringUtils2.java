@@ -17,4 +17,10 @@ public class StringUtils2 {
 		out.println("<script>alert('"+msg+"'); location.href='"+landing+"';</script>"); 
 		out.flush();
 	}
+	public static boolean isEmpty(String str) {
+        return str == null || str.length() == 0;
+    }
+	public static String defaultIfEmpty(String str, String defaultStr) {
+        return isEmpty(str) ? defaultStr : str;
+    }
 }

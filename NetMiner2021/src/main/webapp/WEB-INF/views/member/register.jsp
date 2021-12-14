@@ -27,12 +27,12 @@
 		<script src="resources/js/event.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
-	
 		<div id = "dimmed" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; opacity: 0.5; background-color: rgb(0, 0, 0); display: none;" ></div>
 		<div id="wrap" class="sub register">
 		<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
+				<form name="form">
 					<div class="title">
 						<h2>Register for NetMiner 365</h2>
 						<p>이미 계정을 가지고 있습니까? <a href="./login">로그인</a></p>
@@ -40,11 +40,11 @@
 					<div class="content">
 						<div>	
 							<ul class="input">
-								<li><input placeholder="이메일" type="text" name="email" id ="email" onChange=""/></li>
-								<li><input placeholder="비밀번호" type="password" name="pwd" id="pwd" onChange=""/><span class="sum">영문, 숫자 조합 8~20 글자</span></li>
-								<li><input placeholder="소속기관" type="text" name="company" id="company" onChange=""/></li>
+								<li><input placeholder="이메일" type="text" name="userId" id ="email" value=""/></li>
+								<li><input placeholder="비밀번호" type="password" name="userPwd" id="pwd" value=""/><span class="sum">영문, 숫자 조합 8~20 글자</span></li>
+								<li><input placeholder="소속기관" type="text" name="company" id="company" value=""/></li>
 							</ul>
-							<select name="nation" id="nation" onChange="">
+							<select name="nation" id="nation">
 								<option value="" disabled selected hidden >국가</option>
 								<option value=""></option>
 								<option value=""></option>
@@ -58,7 +58,7 @@
 									<li ><label><input type="radio" checked="checked" name="useCode" value="02" onChange=""><em></em>일반/기업용</label></li>
 								</ul>
 							</div>
-							<button class="authentic trs" id="emailChecker" onClick="checkEmail();">이메일 인증</button>							
+							<button class="authentic trs" onClick="checkEmail();">이메일 인증</button>							
 							<span class="line">또는</span>
 							<button class="google trs" onClick="googleRegister();">Continue in with Google</button>
 						</div>
@@ -69,8 +69,7 @@
 							<dd>최신 소식 , 혜택을 뉴스레터로 수신</dd>
 						</dl>
 					</div>
-					
-					
+				</form>
 				</div>
 			</div>
 			<%@include file = "../common/memberFooter.jsp" %>

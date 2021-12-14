@@ -37,7 +37,9 @@
 				</p>
 				<div class="box">
 					<ul>
-						<li><span>점검 시간</span><b>${checkData.START_DATE} ~ <c:if test="${'Y' eq checkData.END_DATE_YN}">미정</c:if>${checkData.END_DATE}</b></li>
+						<c:if test="${checkData.DBDOWN!='DBDOWN'}">
+							<li><span>점검 시간</span><b>${checkData.START_DATE} ~ <c:if test="${'Y' eq checkData.END_DATE_YN}">미정</c:if>${checkData.END_DATE}</b></li>
+						</c:if>
 						<li><span>점검 내용</span><b>${checkData.COMMENT_KR}</b></li>
 					</ul>
 				</div>

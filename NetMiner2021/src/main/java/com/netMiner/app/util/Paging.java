@@ -1,7 +1,7 @@
 package com.netMiner.app.util;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -13,10 +13,10 @@ public class Paging {
 	private int pageCountPerPageGroup; // 페이징 부분에서 보여질 페이지의 갯수
 	private String baseUrlFormat; // 페이징을 통한 페이지 이동 할 수 있는 url format
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+//	@Override
+//	public String toString() {
+//		return ToStringBuilder.reflectionToString(this);
+//	}
 
 	public int getTotalEntryCount() {
 		return totalEntryCount;
@@ -145,7 +145,7 @@ public class Paging {
 	 * @return String
 	 */
 	public String getPagingBaseUrl(String baseUrl, String queryString, int pageNumber) {
-		if (StringUtils.isEmpty(queryString)) {
+		if (StringUtils2.isEmpty(queryString)) {
 			queryString = "pageNumber=1";
 		} else if (queryString.indexOf("pageNumber") < 0) {
 			queryString = queryString + "&pageNumber=1";
@@ -155,12 +155,22 @@ public class Paging {
 		return baseUrl + "?" + queryString;
 	}
 
-	public String printPaging_S(int page, int page_size, int page_cnt, String url, String pImg, String nImg, String pColor) {
+	public String printPaging_S(int page, int page_size, int page_cnt, String url, String pImg, String nImg, String pColor, HashMap<String, Object> json) {
 		StringBuilder _html = new StringBuilder();
 
 		int n_page = (page - 1) / page_size + 1;
 		int s_page = (n_page - 1) * page_size + 1;
 		int e_page = n_page * page_size;
+		
+		StringBuffer addParam= new StringBuffer();
+		Iterator<String> keys= json.keySet().iterator();
+		while(keys.hasNext()){
+			String key= keys.next();
+			if(!key.equals("page"))
+				addParam.append(String.format("&%s=%s", key, json.get(key)));
+		}
+		addParam.append("&page=");
+		url+= addParam.toString().substring(1);
 
 		if (e_page > page_cnt) {
 			e_page = page_cnt;

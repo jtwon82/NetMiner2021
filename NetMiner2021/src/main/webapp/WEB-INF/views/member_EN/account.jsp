@@ -51,24 +51,24 @@
 									</li>
 									<li class="email new h">
 										<input type="text" id="newemail" onkeyup="changeBtnColor()"/>
-										<button class="authentic trs email emailVerifyBtn" style="right: -125px;" id="emailVerifyBtn" onClick="changeEmail()">Verify</button>
-										<button class="authentic trs email emailCancelBtn" style="right: -296px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray; top: 2px;width: 158px;">Cancel</button>
+										<button class="authentic trs email emailVerifyBtn" style="right: -150px; width:138px;" id="emailVerifyBtn" onClick="changeEmail()">Verify</button>
+										<button class="authentic trs email emailCancelBtn" style="right: -300px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray; ">Cancel</button>
 									</li>
 								</c:otherwise>
 								</c:choose>
 								<c:if test="${memberVo.googleYn eq 'N'}">
 									<li class="pwd old"><input placeholder="Please enter your password in order to save changes." type="password" id="pwd" onkeypress="showUpdate()"/>
-										<button class="authentic trs email" style="width: 138px; background-color:#203864;right: -150px;" onclick="changePwd2BtnChange('${memberVo.userId}');">Change</button>
-										<button class="authentic trs email h" style="width: 138px;right: -150px;" onclick="changePwd2BtnChangeCancel();">Cancel</button>
+										<button class="authentic trs email" style="right: -150px; width:138px; background-color:#203864;" onclick="changePwd2BtnChange('${memberVo.userId}');">Change</button>
+										<button class="authentic trs email h" style="right: -150px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray;" onclick="changePwd2BtnChangeCancel();">Cancel</button>
 									</li>
 									
 									<li class="pwd new h"><input placeholder="New Password" type="password" />
 									</li>
 									<li class="pwd new h"><input placeholder="New Password" type="password" />
-										<button class="authentic trs email" style="width: 138px;right: -150px;" onclick="changePwd2BtnChangeAct('${memberVo.userId}');">Save</button>
+										<button class="authentic trs email" style="right: -150px;width: 138px;" onclick="changePwd2BtnChangeAct('${memberVo.userId}');">Save</button>
 									</li>
 								</c:if>
-								<li><input placeholder="Organization" type="text" value="${memberVo.company}"  id ="company" onkeyup="showUpdate()"/></li>
+								<li><input value="${memberVo.company}" type="text"  id ="company" onkeyup="showUpdate()" placeholder="Organization"/></li>
 							</ul>
 							<select id="nation" onchange="showUpdate()">
 								<option value="" disabled selected hidden>Country</option>
@@ -80,8 +80,8 @@
 							<div class="checkBox">
 								<p>Account Type</p>
 								<ul>
-									<li><label><input type="radio" onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
-									<li ><label><input type="radio"  onchange="showUpdate()" name="c1" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="02"><em></em>Commercial</label></li>
+									<li><label><input type="radio" name="c1" onchange="showUpdate()" <c:if test="${memberVo.useCode eq '01'}"> checked="checked"</c:if> value="01"><em></em>Academic</label></li>
+									<li ><label><input type="radio" name="c1"  onchange="showUpdate()" <c:if test="${memberVo.useCode eq '02'}"> checked="checked"</c:if> value="02"><em></em>Commercial</label></li>
 								</ul>
 							</div>
 							<label class="newsLetter"><input id="check" type="checkbox" onchange="showUpdate()" name="marketYn" <c:if test="${memberVo.marketYn eq 'Y'}"> checked="checked"</c:if>><em></em><span>I agree to receive informations and commercial offers by e-mail</span></label>

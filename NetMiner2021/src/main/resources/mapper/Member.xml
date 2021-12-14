@@ -8,6 +8,7 @@
 		<id property="no" column="NO"/>
  		<result property="userId" column="USER_ID"/>
  		<result property="userCode" column="USER_CODE"/>
+ 		<result property="typeCode" column="TYPE_CODE"/>
  		<result property="userPwd" column="USER_PWD"/>
  		<result property="company" column="COMPANY"/>
  		<result property="nation" column="NATION"/>
@@ -57,10 +58,14 @@
 	 	WHERE USER_ID = #{userId};
  	</select>
  	
+ 	<select id="checkDropUser" parameterType="String" resultType="Integer">
+	 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO_DROP
+	 	WHERE USER_ID = #{userId};
+ 	</select>
+ 	
  	<update id="updateNewUserInfo" parameterType="Map">
 	 	UPDATE NetMiner.MEMBER_INFO
 		SET  UPDATE_DATE = NOW()
-			<if test='googleYn.equals("N")'>,USER_ID = #{userId}</if>
 			<if test="useCode!=null and !useCode.equals('')">, USE_CODE= #{useCode}</if>
 			<if test="language!=null and !language.equals('')">, LANGUAGE= #{language}</if>
 			<if test="nation!=null and !nation.equals('')">, NATION= #{nation}</if>
@@ -81,6 +86,16 @@
 	 	WHERE USER_ID = #{newUserId};
  	</select>
  	
+ 	<update id="updateNewPwd" parameterType="MemberVo">
+	 	UPDATE NetMiner.MEMBER_INFO
+	 	SET USER_PWD = password(#{userPwd})
+	 	WHERE USER_ID = #{userId}; 	
+ 	</update>
+ 	
+ 	<select id="checkJoin" resultMap="MemberVo" parameterType="MemberVo">
+	 	select * from NetMiner.MEMBER_INFO mi 
+		where mi.USER_ID = #{userId};
+ 	</select>
  	
  	
  	
@@ -176,16 +191,6 @@
  	</insert>
  	
  	
- 	<select id="checkJoin" resultMap="MemberVo" parameterType="MemberVo">
- 	select * from NetMiner.MEMBER_INFO mi 
-	where mi.USER_ID = #{userId};
- 	</select>
- 	
- 	<update id="updateNewPwd" parameterType="MemberVo">
- 	UPDATE NetMiner.MEMBER_INFO
- 	SET USER_PWD = password(#{userPwd})
- 	WHERE USER_ID = #{userId}; 	
- 	</update>
  	
  	
  	<select id="getLastLoginFerYear"  resultType="Map">
@@ -205,7 +210,6 @@
 	FROM NetMiner.MEMBER_INFO 
 	WHERE USER_ID = #{userId}
 	) AS A
-	;
  	</update>
  	<update id="getPassByDormant">
  	UPDATE NetMiner.MEMBER_INFO 
@@ -237,11 +241,6 @@
  	WHERE USER_STATS_YN  = 'Y'
  	AND TIMESTAMPDIFF(DAY,USER_OUT_DATE,NOW()) = 365; 
  	</delete>
- 	
- 	<select id="checkDropUser" parameterType="String" resultType="Integer">
- 	SELECT COUNT(1) FROM NetMiner.MEMBER_INFO_DROP
- 	WHERE USER_ID = #{userId};
- 	</select>
  	
  	<select id="checkRandomNumber" parameterType="Map" resultType="Map">
  	<![CDATA[

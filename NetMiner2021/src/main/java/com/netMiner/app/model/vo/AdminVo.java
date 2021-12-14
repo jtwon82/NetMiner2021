@@ -3,8 +3,6 @@ package com.netMiner.app.model.vo;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -64,9 +62,9 @@ public class AdminVo implements Serializable{
 	@JsonAlias("STATS_YN") private String STATS_YN= "";
 	@JsonAlias("END_DATE_YN") private String END_DATE_YN = "";
 	
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+//	public String toString() {
+//		return ToStringBuilder.reflectionToString(this);
+//	}
 	
 	public static AdminVo fromMap(HashMap<String, Object> map) {
 		AdminVo result= new ObjectMapper()

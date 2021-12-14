@@ -49,25 +49,25 @@
 								<c:otherwise>
 									<li class="email old">
 										<input name="email" value="${memberVo.userId}" disabled="disabled" type="text" id="email"/>
-										<button class="authentic trs email emailChangeBtn" style="width: 138px; background-color:#203864;right: -150px;">Change</button>
+										<button class="authentic trs email emailChangeBtn" style="width: 138px; background-color:#203864;right: -150px;">변경</button>
 									</li>
 									<li class="email new h">
 										<input type="text" id="newemail" onkeyup="changeBtnColor()"/>
-										<button class="authentic trs email emailVerifyBtn" id="emailVerifyBtn" onClick="changeEmail()">이메일 인증</button>
-										<button class="authentic trs email emailCancelBtn" onclick="" style="right: -285px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray;">취소</button>
+										<button class="authentic trs email emailVerifyBtn" style="right: -151px; width:138px;" id="emailVerifyBtn" onClick="changeEmail()">이메일 인증</button>
+										<button class="authentic trs email emailCancelBtn" style="right: -300px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray;">취소</button>
 									</li>
 								</c:otherwise>
 								</c:choose>
 								<c:if test="${memberVo.googleYn eq 'N'}">
 									<li class="pwd old"><input placeholder="안전한 프로필 수정을 위해 비밀번호를 입력해주세요" type="password" id="pwd" onkeypress="showUpdate()"/>
-										<button class="authentic trs email" style="width: 138px; background-color:#203864;" onclick="changePwd2BtnChange('${memberVo.userId}');">변경</button>
-										<button class="authentic trs email h" style="width: 138px;" onclick="changePwd2BtnChangeCancel();">취소</button>
+										<button class="authentic trs email" style="right: -150px;width:138px; background-color:#203864; " onclick="changePwd2BtnChange('${memberVo.userId}');">변경</button>
+										<button class="authentic trs email h" style="right: -150px; width:138px; padding:0 20px; background:white; outline : solid 1px #203864; color:gray;" onclick="changePwd2BtnChangeCancel();">취소</button>
 									</li>
 									
 									<li class="pwd new h"><input placeholder="새 비밀번호" type="password" />
 									</li>
 									<li class="pwd new h"><input placeholder="새 비밀번호" type="password" />
-										<button class="authentic trs email" style="width: 138px; background-color:#203864;" onclick="changePwd2BtnChangeAct('${memberVo.userId}');">저장</button>
+										<button class="authentic trs email" style="right: -150px;width: 138px; background-color:#203864; " onclick="changePwd2BtnChangeAct('${memberVo.userId}');">저장</button>
 									</li>
 								</c:if>
 								<li><input value="${memberVo.company}" type="text" id ="company" onkeyup="showUpdate()"/></li>
