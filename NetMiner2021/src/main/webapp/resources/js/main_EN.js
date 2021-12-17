@@ -302,6 +302,7 @@ $(document).on('click', '.emailChangeBtn', function(e){
 	$("#section li.email").hide();
 	$("#section li.email.new").show();
 	$("#newemail").focus();
+	changePwd2BtnChangeCancel();
 });
 $(document).on('click', '.emailCancelBtn', function(e){
 	$("#section li.email").hide();

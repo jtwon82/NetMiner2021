@@ -260,10 +260,10 @@ public class MemberController {
 		MemberVo memberVo= (MemberVo) session.getAttribute("memberVo");
 
 		try {
-			if (form.getNation().equals("KR")) {
-				form.setLanguage("ko");
-			} else {
+			if(session.getAttribute("language").toString().contains("EN")) {
 				form.setLanguage("en");
+			} else {
+				form.setLanguage("ko");
 			}
 			memberVo.setUserPwd(form.getUserPwd());
 			MemberVo getUserInfo= memberService.getUserInfo(memberVo);
@@ -322,9 +322,7 @@ public class MemberController {
 	@RequestMapping(value="delteMember", method=RequestMethod.POST)
 	public ModelAndView delteMember(ModelAndView mv, HttpSession session) {
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-		memberService.changeMemberState(vo);
-		
-		memberService.deleteMember(vo);
+		memberService.changeMemberInfo(vo);
 		
 		session.removeAttribute("memberVo");
 		mv.setViewName("jsonView");

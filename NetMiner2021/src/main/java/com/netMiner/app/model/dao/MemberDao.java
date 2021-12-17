@@ -41,7 +41,7 @@ public interface MemberDao {
 
 	List<Map<String, Object>> getLastLoginFerYear();
 
-	void changeMemberState(String userId);
+	void changeMemberInfo(MemberVo vo);
 
 	void getPassByDormant();
 

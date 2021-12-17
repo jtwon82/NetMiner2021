@@ -14,6 +14,7 @@ import com.netMiner.app.config.Constant;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.dao.MemberDao;
 import com.netMiner.app.model.dao.SelectDao;
+import com.netMiner.app.model.vo.MemberVo;
 
 @Component
 public class CommonScheduler {
@@ -31,7 +32,7 @@ public class CommonScheduler {
 	
 	// 매일 9시 마지막 로그인 시간이 1년이 된 사용자에게 메일을 전송한다. 
 	@Scheduled(cron="0 0 9 * * *")
-	//@Scheduled(cron="0 40 19 * * *")
+//	@Scheduled(cron="*/10 * * * * *")
 	public void sendEmail() {
 		logger.info("Dormant User ");
 		// 휴면 유저 이메일 전송 
@@ -49,7 +50,10 @@ public class CommonScheduler {
 			}
 			boolean result= sendEmail.sendDormantUser(userId, url, language);
 			if (result) {
-				memberDao.changeMemberState(userId);
+				MemberVo vo = new MemberVo();
+				vo.setUserId(userId);
+				vo= memberDao.getUserInfo(vo);
+				memberDao.changeMemberInfo(vo);
 			} else {
 				logger.info("SendMail Fail");
 			}

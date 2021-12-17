@@ -250,13 +250,16 @@ function register(userId) {
 			}
 		})
 }
+
+// 구글 로그인시 프롬프트 및 파라미터설명
+// https://developers.google.com/identity/protocols/oauth2/web-server#creatingclient
 function googleLogin(){
 	event.preventDefault();
 //	var redirectLocal = "http://localhost:8080/auth";
 //	var redirectPrd="https://www.netminer365.com/auth";
 
 	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectAuth+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	+"redirect_uri="+redirectAuth+"&response_type=code&prompt=select_account&access_type=offline&scope=https://www.googleapis.com/auth/userinfo.email";
 }
 
 function googleRegister() {
@@ -264,8 +267,10 @@ function googleRegister() {
 //	var redirectLocal = "http://localhost:8080/socialRegister";
 //	var redirectPrd="https://www.netminer365.com/socialRegister";
 
-	window.location.href="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
-	+"redirect_uri="+redirectRegister+"&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	var url="https://accounts.google.com/o/oauth2/v2/auth?client_id=370772071579-3fkr20hhlegikl89aggi9jfjrlos4h46.apps.googleusercontent.com&"
+	+"redirect_uri="+redirectAuth+"&response_type=code&prompt=select_account&access_type=offline&scope=https://www.googleapis.com/auth/userinfo.email";
+	window.location.href= url;
+	
 }
 
 
@@ -321,6 +326,7 @@ $(document).on('click', '.emailChangeBtn', function(e){
 	$("#section li.email").hide();
 	$("#section li.email.new").show();
 	$("#newemail").focus();
+	changePwd2BtnChangeCancel();
 });
 $(document).on('click', '.emailCancelBtn', function(e){
 	$("#section li.email").hide();

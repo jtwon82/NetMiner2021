@@ -1,5 +1,6 @@
 package com.netMiner.app.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,9 +79,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public MemberVo checkJoin(MemberVo vo) {
-		
 		MemberVo result = sqlSession.selectOne("checkJoin", vo);
-		
 		return result;
 	}
 
@@ -129,16 +128,17 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public List<Map<String, Object>> getLastLoginFerYear() {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("getLastLoginFerYear");
 	}
 
 	@Override
-	public void changeMemberState(String userId) {
-		sqlSession.update("changeMemberInfo", userId);
-		MemberVo vo = new MemberVo();
-		vo.setUserId(userId);
-		sqlSession.delete("deleteMemberInfo", vo);
+	public void changeMemberInfo(MemberVo vo) {
+		Map map = new HashMap();
+		map.put("NO", vo.getNo());
+		map.put("userId", vo.getUserId());
+		
+		sqlSession.update("changeMemberInfo", vo);
+		sqlSession.delete("deleteMemberInfo", map);
 	}
 
 	@Override

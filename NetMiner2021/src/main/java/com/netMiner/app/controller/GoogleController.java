@@ -65,13 +65,13 @@ public class GoogleController  {
 		String url = "";
 		String authCode = request.getParameter("code");
 		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
 		
 		GOOGLE_CALL_BACK_LOGIN_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL;
 		GOOGLE_CALL_BACK_REGISTER_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL;
 		
-		if (language == null) {
-			language = "";
-		}
 		try {
 			// 일반로그인
 			if (authCode == null || authCode.equals("")) {
@@ -157,6 +157,7 @@ public class GoogleController  {
 					t.setUserCode(member.getUserCode());
 					t.setNo(member.getNo());
 					t.setLastLoginDate(member.getLastLoginDate());
+					t.setTypeCode(member.getTypeCode());
 					
 					session.setAttribute("memberVo", member);
 					session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(t));
@@ -176,13 +177,19 @@ public class GoogleController  {
 	@RequestMapping(value = "socialRegister", method = RequestMethod.GET)
 	public ModelAndView googleRegister(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response)
 			throws Exception {
+		
 		String url = "";
+		String authCode = request.getParameter("code");
+		String language = (String) session.getAttribute("language");
+		if (language == null) {
+			language = "";
+		}
+		
+		GOOGLE_CALL_BACK_LOGIN_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL;
+		GOOGLE_CALL_BACK_REGISTER_URL = Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL;
+		
 		try {
-			String authCode = request.getParameter("code");
-			String language = (String) session.getAttribute("language");
-			if (language == null) {
-				language = "";
-			}
+			
 			try {
 				if (authCode == null || authCode.equals("")) {
 					if (language.equals("_EN")) {		
@@ -223,6 +230,8 @@ public class GoogleController  {
 			String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
 			.queryParam("id_token", jwtToken).encode().toUriString();
 			
+			logger.info("requestUrl {}", requestUrl);
+			
 			String resultJson = restTemplate.getForObject(requestUrl, String.class);
 			
 			Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
@@ -250,6 +259,7 @@ public class GoogleController  {
 				e.printStackTrace();
 			} 
 		} catch(Exception e) {
+			logger.error("err ", e);
 			mv.setView(new RedirectView("/"));
 			return mv;
 		}

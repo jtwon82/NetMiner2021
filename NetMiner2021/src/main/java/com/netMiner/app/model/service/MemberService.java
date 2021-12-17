@@ -40,7 +40,7 @@ public interface MemberService {
 
 	int selectUserCount(Map<String, Object> param);
 
-	void changeMemberState(MemberVo vo);
+	void changeMemberInfo(MemberVo vo);
 
 	int checkDropUser(String userId);
 

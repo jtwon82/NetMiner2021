@@ -96,22 +96,19 @@ public class MemberServiceImpl implements MemberService{
 	}
 	@Override
 	public int selectUserCount(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		return memberDao.selectUserCount(param);
 	}
 	@Override
-	public void changeMemberState(MemberVo vo) {
-		memberDao.changeMemberState(vo.getUserId());
+	public void changeMemberInfo(MemberVo vo) {
+		memberDao.changeMemberInfo(vo);
 		
 	}
 	@Override
 	public int checkDropUser(String userId) {
-		// TODO Auto-generated method stub
 		return memberDao.checkDropUser(userId);
 	}
 	@Override
 	public Map<String, Object> checkRandomNumber(Map<String, Object> param) {
-		// TODO Auto-generated method stub
 		return memberDao.checkRandomNumber(param);
 	}
 

@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file = "top.jsp" %>
 		
-	<body>
+	<body onload="modForm.ADMIN_ID.focus();">
 		<div id="wrap" class="login">
 			<div id="section">
 				<div class="wrap">
 					<div class="content">
-					<form id="modForm" method="post" action="/admin/login/check">
+					<form name="modForm" id="modForm" method="post" action="/admin/login/check">
 						<div class="title">
 							<h2>홈페이지 관리자 시스템</h2>
 						</div>
@@ -38,7 +38,7 @@ $(function(){
             
             input_value = form.find('input[name="pwd"]').val();
             if(input_value == ''){
-            	alert("비밀전호를 입력해주세요.");
+            	alert("비밀번호를 입력해주세요.");
             	return false;
             }
             

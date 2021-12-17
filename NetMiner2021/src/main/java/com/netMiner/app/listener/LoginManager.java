@@ -35,6 +35,7 @@ public class LoginManager implements HttpSessionBindingListener {
 	 * 이 메소드는 세션이 연결되을때 호출된다.(session.setAttribute("login", this)) Hashtable에 세션과
 	 * 접속자 아이디를 저장한다.
 	 */
+	@Override
 	public void valueBound(HttpSessionBindingEvent event) {
 		// session값을 put한다.
 		loginUsers.put(event.getSession(), event.getName());
@@ -46,6 +47,7 @@ public class LoginManager implements HttpSessionBindingListener {
 	/*
 	 * 이 메소드는 세션이 끊겼을때 호출된다.(invalidate) Hashtable에 저장된 로그인한 정보를 제거해 준다.
 	 */
+	@Override
 	public void valueUnbound(HttpSessionBindingEvent event) {
 		// session값을 찾아서 없애준다.
 		loginUsers.remove(event.getSession());

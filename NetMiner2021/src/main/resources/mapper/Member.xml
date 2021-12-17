@@ -202,7 +202,7 @@
  	]]>
  	</select>
  	
- 	<update id="changeMemberInfo" parameterType="String">
+ 	<update id="changeMemberInfo" parameterType="MemberVo">
  	INSERT INTO NetMiner.MEMBER_INFO_DROP
 	(USER_CODE, USER_ID, USER_PWD, COMPANY, NATION, `LANGUAGE`, USE_CODE, LAST_LOGIN_DATE, MARKET_YN, MARKET_DATE, GOOGLE_YN, REG_DATE, USER_OUT_DATE, USER_STATS_YN, UPDATE_DATE)
 	SELECT A.* FROM (
