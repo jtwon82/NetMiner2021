@@ -176,24 +176,19 @@ public class PageMoveController extends HttpServlet {
 			
 			//휴면 계정 일반회원으로 변환
 			int no =memberService.turnToGeneral(outMemberVo);
+			MemberVo member= memberService.getUserInfoLastlogin(outMemberVo);
+			
 			//일반회원 계정으로 확인 
-			outMemberVo.setNo(no);
-			outMemberVo.setUserCode("02");
+			session.setAttribute("memberVo", member);
+			session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(member));
 			
-			session.setAttribute("memberVo", outMemberVo);
-			MemberVo t= new MemberVo();
-			t.setUserId(outMemberVo.getUserId());
-			t.setUserCode("02");
-			t.setNo(no);
-			t.setLastLoginDate(outMemberVo.getLastLoginDate());
-			session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(t));
-			
-			if ("_EN".equals(language)) {
-				StringUtils2.script(response, "Account conversion is complete.", "./");
-				
-			} else {
-				StringUtils2.script(response, "계정 전환이 완료 되었습니다.", "./");
-			}
+//			if ("_EN".equals(language)) {
+//				StringUtils2.script(response, "Account conversion is complete.", "./");
+//				
+//			} else {
+//				StringUtils2.script(response, "계정 전환이 완료 되었습니다.", "./");
+//			}
+			StringUtils2.script(response, language, "계정 전환이 완료 되었습니다.", "Account conversion is complete.", "./");
 			url = "homePage"+language+"/main";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -225,26 +220,48 @@ public class PageMoveController extends HttpServlet {
 			
 			if(memberVo!=null && memberVo.getUserPwd().equals(memberVo.getChk())) {
 				logger.info("memberVo {}", memberVo.getMemberInfoMap());
-				if ( "Y".equals(memberVo.getUserStatsYn())) {
-					if (! "_EN".equals(language)) {
-						StringUtils2.script(response, "입력하신 이메일 또는 비밀번호가 올바르지 않습니다.", "./login");
-						url  = "member/login";
-					} else {
-						StringUtils2.script(response, "The email address or password is incorrect.", "./login");
-						url  = "member"+language+"/login";
-					}
+
+				if ("03".equals(memberVo.getUserCode()) && "N".equals(memberVo.getUserStatsYn())) {
+					session.setAttribute("outMemberVo", memberVo);
+					url = "member"+language+"/activate";
+					
+				} else if ("03".equals(memberVo.getUserCode()) && "Y".equals(memberVo.getUserStatsYn())) {
+					StringUtils2.script(response, language, "탈퇴한 회원입니다."
+							, "탈퇴한 회원입니다.", "./login");
+					url  = "member"+language+"/login";
+					
 				} else {
-					if ("03".equals(memberVo.getUserCode()) && "N".equals(memberVo.getUserStatsYn())) {
-						session.setAttribute("outMemberVo", memberVo);
-						url = "member"+language+"/activate";
-					} else {
-						session.setAttribute("memberVo", memberVo);
-						session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(memberVo));
-						url  = "redirect:/";
-					}
+					session.setAttribute("memberVo", memberVo);
+					session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(memberVo));
+					url  = "redirect:/";
 				}
+				
+//				if ( "Y".equals(memberVo.getUserStatsYn())) {
+//					if (! "_EN".equals(language)) {
+//						StringUtils2.script(response, "입력하신 이메일 또는 비밀번호가 올바르지 않습니다.", "./login");
+//						url  = "member/login";
+//					} else {
+//						StringUtils2.script(response, "The email address or password is incorrect.", "./login");
+//						url  = "member"+language+"/login";
+//					}
+//					
+//					StringUtils2.script(response, language, "입력하신 이메일 또는 비밀번호가 올바르지 않습니다."
+//							, "The email address or password is incorrect.", "./login");
+//					url  = "member"+language+"/login";
+//					
+//				} else {
+//					if ("03".equals(memberVo.getUserCode()) && "N".equals(memberVo.getUserStatsYn())) {
+//						session.setAttribute("outMemberVo", memberVo);
+//						url = "member"+language+"/activate";
+//					} else {
+//						session.setAttribute("memberVo", memberVo);
+//						session.setAttribute("memberId", CryptUtil.getInstance().encryptLoginfo(memberVo));
+//						url  = "redirect:/";
+//					}
+//				}
 			} else {
-				StringUtils2.script(response, "The email address or password is incorrect.", "./login");
+				StringUtils2.script(response, language, "입력하신 이메일 또는 비밀번호가 올바르지 않습니다."
+						, "The email address or password is incorrect.", "./login");
 				url  = "member"+language+"/login";
 			}
 			
@@ -273,10 +290,10 @@ public class PageMoveController extends HttpServlet {
 
 	@RequestMapping(value="account" , method=RequestMethod.GET)
 	public String accountUser(HttpSession session, HttpServletResponse response) {
-		if(session.getAttribute("memberVo")==null) {
-			StringUtils2.script(response, "로그인 정보가 없습니다.", "./login");
-		}
 		String language = (String) session.getAttribute("language");
+		if(session.getAttribute("memberVo")==null) {
+			StringUtils2.script(response, language, "로그인 정보가 없습니다.", "Nothing the login infomation.", "./login");
+		}
 		if (session.getAttribute("userId") != null) {
 			session.removeAttribute("userId");
 		}
@@ -410,11 +427,13 @@ public class PageMoveController extends HttpServlet {
 		String chk= (String) session.getAttribute("chk");
 		logger.info("chk:{}", chk);
 		if(chk==null){
-			if ("_EN".equals(language)) {
-				StringUtils2.script(response, "This link is no longer vaild. Please try resetting your password again.", "/");
-			} else {
-				StringUtils2.script(response, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요.", "/");
-			}
+//			if ("_EN".equals(language)) {
+//				StringUtils2.script(response, "This link is no longer vaild. Please try resetting your password again.", "/");
+//			} else {
+//				StringUtils2.script(response, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요.", "/");
+//			}
+			StringUtils2.script(response, language, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요."
+					, "This link is no longer vaild. Please try resetting your password again.", "/");
 			return "empty";
 //			return "redirect:/";
 		}
@@ -426,11 +445,13 @@ public class PageMoveController extends HttpServlet {
 			logger.info("goChangePwd : {}, {}, {}", chk, userid, timestamp);
 			
 			if(Integer.parseInt(timestamp) - Integer.parseInt(oldTimestamp)>30) {
-				if ("_EN".equals(language)) {
-					StringUtils2.script(response, "This link is no longer vaild. Please try resetting your password again.", "/");
-				} else {
-					StringUtils2.script(response, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요.", "/");
-				}
+//				if ("_EN".equals(language)) {
+//					StringUtils2.script(response, "This link is no longer vaild. Please try resetting your password again.", "/");
+//				} else {
+//					StringUtils2.script(response, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요.", "/");
+//				}
+				StringUtils2.script(response, language, "이 URL은 더 이상 유효하지 않습니다. 다시 비밀번호 재설정을 요청하세요."
+						, "This link is no longer vaild. Please try resetting your password again.", "/");
 				return "empty";
 			}
 		}

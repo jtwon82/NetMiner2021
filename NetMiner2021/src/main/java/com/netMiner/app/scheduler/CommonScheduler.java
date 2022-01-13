@@ -53,6 +53,7 @@ public class CommonScheduler {
 				MemberVo vo = new MemberVo();
 				vo.setUserId(userId);
 				vo= memberDao.getUserInfo(vo);
+				vo.setUserStatsYn("N");
 				memberDao.changeMemberInfo(vo);
 			} else {
 				logger.info("SendMail Fail");

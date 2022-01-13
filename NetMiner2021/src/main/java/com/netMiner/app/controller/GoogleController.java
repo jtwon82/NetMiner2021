@@ -134,6 +134,7 @@ public class GoogleController  {
 	//		mv.addObject("GOOGLE_CALL_BACK_REGISTER_URL", GOOGLE_CALL_BACK_REGISTER_URL);
 			
 			MemberVo member= memberService.getUserInfoLastlogin(memberVo);
+			logger.info("member {}", member);
 			if ( member == null ) {
 					url = "member"+language+"/register_sns_fail";
 			} else {
@@ -143,11 +144,12 @@ public class GoogleController  {
 					url = "member"+language+"/activate";
 					
 				} else if ("Y".equals(member.getUserStatsYn())) {
-					if (language.equals("_EN")) {
-						StringUtils2.script(response, "The ID has been withdrawn.", "./login");
-					} else {
-						StringUtils2.script(response, "해당 아이디는 탈퇴 되었습니다", "./login");
-					}
+//					if (language.equals("_EN")) {
+//						StringUtils2.script(response, "The ID has been withdrawn.", "./login");
+//					} else {
+//						StringUtils2.script(response, "해당 아이디는 탈퇴 되었습니다", "./login");
+//					}
+					StringUtils2.script(response, language, "해당 아이디는 탈퇴 되었습니다", "The ID has been withdrawn.", "./login");
 	
 					url = "member"+language+"/login";
 					
@@ -248,11 +250,12 @@ public class GoogleController  {
 				url = "member"+language+"/register_sns";
 				
 			} else {
-				if (language.equals("_EN")) {
-					StringUtils2.script(response, "This email address already exists.", "./login");
-				} else {
-					StringUtils2.script(response, "이미 가입한 이메일입니다.", "./login");
-				}
+//				if (language.equals("_EN")) {
+//					StringUtils2.script(response, "This email address already exists.", "./login");
+//				} else {
+//					StringUtils2.script(response, "이미 가입한 이메일입니다.", "./login");
+//				}
+				StringUtils2.script(response, language, "이미 가입한 이메일입니다.", "This email address already exists.", "./login");
 				url = "member"+language+"/login";
 			}
 			} catch (IOException e) {

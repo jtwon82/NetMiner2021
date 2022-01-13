@@ -322,6 +322,8 @@ public class MemberController {
 	@RequestMapping(value="delteMember", method=RequestMethod.POST)
 	public ModelAndView delteMember(ModelAndView mv, HttpSession session) {
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
+
+		vo.setUserStatsYn("Y");
 		memberService.changeMemberInfo(vo);
 		
 		session.removeAttribute("memberVo");
