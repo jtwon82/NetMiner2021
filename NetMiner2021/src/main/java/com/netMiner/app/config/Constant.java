@@ -13,16 +13,18 @@ public class Constant {
 	public static int PER_ONE_PAGE=10;
 	public static int PER_PAGE_GROUP=10;
 	
+	public static String PLAN_CODE = "01";
+	
 	public static boolean checkDBError = false;
 	
 	public static String ServiceResultJsonValue= "{\"result\" : \"%s\", \"value\" : \"%s\", \"value2\" : \"%s\"}";
 	
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
 
-//	public static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8081/auth";	
-//	public static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
-	public static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	public static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	public static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8081/auth";	
+	public static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
+	//	public static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+	//	public static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 
 	public static Constant getInstance(HttpServletRequest request) {
 		if(ins==null) {

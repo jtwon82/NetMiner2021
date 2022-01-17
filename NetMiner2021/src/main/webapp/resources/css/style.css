@@ -73,6 +73,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top h1 .logo2{display: none;}
 #wrap #top.sticky h1 .logo1{display: none;}
 #wrap #top.sticky h1 .logo2{display: block;}
+#wrap #top .price{color:#fff;font-size:22px;font-weight:500;left: 555px;}
 
 #wrap.sub #top h1 .logo1{display: none;}
 #wrap.sub #top h1 .logo2{display: block;}
@@ -99,16 +100,19 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top .content .mypage.type2{right:0; top: -5px;}
 #wrap #top .content .mypage.type2 ul{display:none; margin-top: 63px; border-radius: 10px; padding:20px; background-color:#fff; box-shadow: 0px 0px 11px #424242;}
 #wrap #top .content .mypage.type2 li{font-size:18px;}
+#wrap #top .content .mypage.type2 li.active a{color:#d10000;}
+#wrap #top .content .mypage.type2 li.active:first-child::after{color:#d10000;}
 #wrap #top .content .mypage.type2 li a{padding:5px;}
 #wrap #top .content .mypage.type2 li:first-child a{display:inline-block;}
 #wrap #top .content .mypage.type2 li:first-child::after{content:"↗"; display: inline-block;}
-#wrap #top.sticky { position: fixed; top: 0; background-color:#fff; z-index:10;}
-#wrap #top.sticky li:hover{color:#3462c7;}
+#wrap #top.sticky { position: fixed; top: 0; background-color:#fff; z-index:9999;}
+#wrap #top.sticky .menu li:hover{color:#3462c7;}
 #wrap #top.sticky .menu span{color:#090909;}
 #wrap #top.sticky .content .mypage.type1 li.join{background-color:#203864;}
 #wrap #top.sticky .content .mypage.type1 li.login a{color:#090909;}
 #wrap #top.sticky .menu span::after{background:url(/resources/images/top_arrow2.png); }
 #wrap #top.sticky .menu ul{box-shadow:none; border-radius:0; margin-top: 39px;}
+#wrap #top.sticky .price{color:#090909;}
 #wrap #top.sticky .menu{}
 #wrap #top.sticky .menu ul::before{width:100px; height:4px; background:#3462c7; display:block; content:""; position: absolute; left: calc(50% - 50px); top: 26%;}
 #wrap #top.sticky .content{padding: 27px 90px 0;}
@@ -160,6 +164,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("/resources/images/select_arrow.png") no-repeat 98% 50%/15px auto;}
 #wrap.sub .blue{color:#114fbf; font-size:18px; }
 #wrap.sub #top .menu{display:none;}
+#wrap.sub #top .price{display:none;}
 #wrap.sub #top .content .mypage.type1 li.join{background-color:#203864;}
 #wrap.sub #top .content .mypage.type1 li.login a{color:#090909;}
 
@@ -299,6 +304,119 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.solution #section4 .content .text{float: left; padding: 50px 0 0 50px;}
 
 #wrap.solution #section5 .wrap{padding-bottom:200px;}
+
+/*pricing-----------------------------------------------------------*/
+#wrap.pricing .section .wrap{padding:110px 0;}
+#wrap.pricing .section .content{padding-top:0;}
+
+#wrap.pricing #main .slider .text{padding: 238px 0 230px 205px;}
+#wrap.pricing{background-color:#fff;}
+#wrap.pricing #main .slider{background-image: url(/resources/images/pricing_bg.jpg);}
+
+#wrap.pricing #section1 .content{}
+#wrap.pricing #section1 .content .paymentList{}
+#wrap.pricing #section1 .content .paymentList>li{display:inline-block;width: 21.7%;vertical-align: top;position: relative;}
+#wrap.pricing #section1 .content .paymentList>li .recommend{line-height:38px;font-size:22px;background:#ecf0f6;color:#203864;width: 100%;top: -38px;font-weight: 500;}
+#wrap.pricing #section1 .content .paymentList> li+li{margin-left: 4%;}
+#wrap.pricing #section1 .content .paymentList li .top{border-top:4px solid #203864; padding:19px; }
+#wrap.pricing #section1 .content .paymentList li .top .button{background:#203864;line-height: 45px;color: #fff;margin-top: 22px;}
+#wrap.pricing #section1 .content .paymentList li .top .button.active{background:#9d9d9d;}
+#wrap.pricing #section1 .content .paymentList li .top p:nth-child(1){color:#203864;font-size:28px;font-weight:600;padding-bottom: 50px;}
+#wrap.pricing #section1 .content .paymentList li .top p:nth-child(3){font-size:20px;color:#4e4e4e;padding-bottom: 40px;}
+#wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size:22px;}
+#wrap.pricing #section1 .content .paymentList li .top p.payment{font-size:38px;font-weight:600;}
+#wrap.pricing #section1 .content .paymentList li .top p.payment em{background-image:url(/resources/images/unit.png); width:31px; height:21px; background-size:cover; background-repeat:no-repeat;     display: inline-block;}
+#wrap.pricing #section1 .content .paymentList li .bottom{margin-top:90px;background:#f4f4f4;padding:50px 15px;border-radius:20px;height:1140px;position: relative;}
+#wrap.pricing #section1 .content .paymentList li .bottom .button{transition:all .5s; width:185px;line-height:45px;border:2px solid #203864;background:transparent;color:#203864;font-size: 22px;font-weight: 500;bottom: 30px;left: calc(50% - 92.5px);}
+#wrap.pricing #section1 .content .paymentList li .bottom .button.active{border:2px solid #9d9d9d; color:#9d9d9d;}
+#wrap.pricing #section1 .content .paymentList li .bottom .button:hover{background:#203864; color:#fff;}
+#wrap.pricing #section1 .content .paymentList li .bottom .button.active:hover{background:none; color:#9d9d9d;}
+#wrap.pricing #section1 .content .paymentList li .bottom ul{text-align: left;}
+#wrap.pricing #section1 .content .paymentList li .bottom ul li{ display: block;}
+#wrap.pricing #section1 .content .paymentList li .bottom ul li+li{margin-top:20px;}
+#wrap.pricing #section1 .content .paymentList li .bottom ul li em{width:15px;height:12px;background-image:url(/resources/images/check.png);background-repeat:no-repeat;background-size:cover;display: inline-block;margin-right: 10px;}
+#wrap.pricing #section1 .content  .help{font-size:28px; font-weight:500; margin-top: 50px;}
+#wrap.pricing #section1 .content  .help a{color:#1551c3; display:inline-block;}
+#wrap.pricing #section1 .content .data{font-size:28px;font-weight:500;left: -110px;top: 662px;}
+#wrap.pricing #section1 .content .feature{font-size:28px;font-weight:500;left: -110px;top: 1100px;}
+
+#wrap.pricing #section2{background:#f4f4f4;}
+#wrap.pricing #section2 .content{margin-top: 35px;}
+#wrap.pricing #section2 .content ul li{padding:50px;text-align: left;}
+#wrap.pricing #section2 .content ul li+li{border-top:1px solid #cfcfcf;}
+#wrap.pricing #section2 .content ul li .answer{display:none; font-size:20px;padding-left: 30px;padding-top: 20px;padding-right: 130px;}
+#wrap.pricing #section2 .content ul li .question{ position: relative; cursor:pointer;}
+#wrap.pricing #section2 .content ul li .answer.active{display:block;}
+#wrap.pricing #section2 .content ul li .question p{font-size:22px;font-weight:500;}
+#wrap.pricing #section2 .content ul li .question em{width:15px;height:9px;background-image:url(/resources/images/arrow.png);background-size:cover;background-repeat:no-repeat;display:inline-block;position: absolute;top: 11px;right: 0px;}
+#wrap.pricing #section2 .content ul li .question em.fold{transform:rotate(180deg);}
+
+/*구독-----------------------------------------------------------*/
+#wrap.subscribe{}
+#wrap.subscribe #section .content{background-color:#fff;width: 720px;margin: 0 auto;padding:50px 90px;box-sizing: border-box;}
+#wrap.subscribe #section .content .inner{ margin-bottom: 50px; }
+#wrap.subscribe #section .content .inner .title{font-size:24px;font-weight:600;padding-bottom: 10px;text-align: left;}
+#wrap.subscribe #section .content .inner .checkBox{}
+#wrap.subscribe #section .content .inner .checkBox li{position:relative; display:inline-block;color:#606060;width: 44%;}
+#wrap.subscribe #section .content .inner .checkBox li+li{}
+#wrap.subscribe #section .checkBox input[type="radio"]{display:none; }
+#wrap.subscribe #section .checkBox input[type="radio"] + em {width:18px; height:18px; margin-right:10px; vertical-align:-2px; background-repeat:no-repeat; background-size:contain; background-position:center; display:inline-block; background-image: url('/resources/images/register_checkbox1.png'); }
+#wrap.subscribe #section .checkBox input[type="radio"]:checked + em {display:inline-block; background-image: url('/resources/images/register_checkbox2.png'); }
+#wrap.subscribe #section .content .inner3{}
+#wrap.subscribe #section .content .inner3 ul{}
+#wrap.subscribe #section .content .inner3 ul li{color:#606060;margin-bottom: 15px;}
+#wrap.subscribe #section .content .inner3 ul li p{ display: inline-block; }
+#wrap.subscribe #section .content .inner3 ul li span{float: right;}
+#wrap.subscribe #section .content .inner3 ul li span em{}
+#wrap.subscribe #section .content .inner3 ul li.totalCost{border-top:1px solid #c7c7c7;padding-top: 15px;}
+#wrap.subscribe #section .content .pay{width:60%;line-height:60px;background-color: #203864;color: #fff;font-size: 22px;display: block;margin: 0 auto;}
+#wrap.subscribe #section .content .tail{ color: #1551c3; font-size: 18px; right: -20px; z-index:3;}
+
+/*주문완료-----------------------------------------------------------*/
+#wrap.order #section p span{color:#203864; font-weight:500;}
+#wrap.order .title p{font-size:22px;}
+#wrap.order #section .content{background-color:#fff;width: 720px;margin: 0 auto;padding:50px 90px;box-sizing: border-box;}
+#wrap.order #section .content ul{}
+#wrap.order #section .content ul li{font-size:20px;}
+#wrap.order #section .content ul li+li{margin-top:20px;}
+#wrap.order #section .content ul li span{color:#606060;width: 150px;display: inline-block;}
+#wrap.order #section .content ul li p{display:inline-block;}
+#wrap.order #section .content  .back{color:#04316f;text-align: center;margin-top: 50px;}
+
+/*구독완료-----------------------------------------------------------*/
+#wrap.subscribe_complete{}
+#wrap.subscribe_complete #section p span{color:#203864; font-weight:500;}
+#wrap.subscribe_complete #section .content{width:1200px; margin:0 auto; margin-top: 50px;}
+#wrap.subscribe_complete #section .title p{margin-top:30px;}
+#wrap.subscribe_complete #section ul{}
+#wrap.subscribe_complete #section ul li:nth-child(2){margin: 0 1.5%;}
+#wrap.subscribe_complete #section ul li{position:relative; width: 27%; height: 260px; display: inline-block; vertical-align: top; padding:55px 30px; background-color:#fff;}
+#wrap.subscribe_complete #section ul li h3{font-size:28px; color:#203864; font-weight:700; margin-bottom:20px;}
+#wrap.subscribe_complete #section ul li p{width: 90%; word-break:keep-all;}
+#wrap.subscribe_complete #section ul li a{position:absolute; bottom:55px; text-align:center; transition:all .5s; width:140px; height:40px; line-height:40px; color: #203864; border:1px solid #203864;} 
+#wrap.subscribe_complete #section ul li a:hover{background-color:#203864; color:#fff; } 
+
+/*billing-----------------------------------------------------------*/
+#wrap.billing #section .content{background-color:#fff;width: 970px;margin: 0 auto;padding:50px 80px;box-sizing: border-box;}
+#wrap.billing #section .content .inner{}
+#wrap.billing #section .content .inner .title{font-size:24px;font-weight:600;text-align: left;padding-bottom: 30px;}
+#wrap.billing #section .content .inner .current{margin-bottom:50px;}
+#wrap.billing #section .content .inner .current a{width:135px;line-height:40px;color:#fff;background:#203864;text-align:center;display: inline-block;margin-left: 5%;}
+#wrap.billing #section .content .inner .current>span{display:block; margin-bottom: 5px;}
+#wrap.billing #section .content .inner .current p{color:#606060;display: inline-block;}
+#wrap.billing #section .content .inner .charge span{ display: block; margin-bottom: 5px; }
+#wrap.billing #section .content .inner .charge p{ color: #606060; }
+#wrap.billing #section .content .inner2{}
+#wrap.billing #section .content .inner2 .current{}
+#wrap.billing #section .content .inner2 .current p{}
+#wrap.billing #section .content .inner2 .current p em{font-size:22px;color:#203864;font-weight: 500;margin-right: 30px;}
+#wrap.billing #section .content .inner2 .charge table{width:100%;border-collapse: collapse;text-align:center;margin-top: 15px;}
+#wrap.billing #section .content .inner2 .charge table th{padding:5px; background:#eaeaea;}
+#wrap.billing #section .content .inner2 .charge table td{padding:5px;color:#606060;border-bottom: 1px solid #d3d3d3;}
+#wrap.billing #section .content .inner2 .charge table th:nth-child(2){border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3;}
+#wrap.billing #section .content .inner2 .charge table td:nth-child(2){border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3;}
+#wrap.billing #section .content .inner2 .charge .tail{font-size:16px; color:#808080; margin-top:5px;}
+
 /*로그인-----------------------------------------------------------*/
 #wrap.login{}
 #wrap.login #section .content{background-color:#fff; width: 440px; margin: 0 auto; padding: 80px 65px;}
@@ -559,7 +677,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap #top{position: fixed;width: 100%;z-index: 10; }
     #wrap #top h1{width: 140px; margin-top:-8px; margin-left:-10px;}
     #wrap #top h1 .logo1{display: none;}
-	#wrap #top h1 .logo2{display: block;}
+    #wrap #top h1 .logo2{display: block;}
     #wrap #top .content::before{background-color: #fff;  width:100%; height:100%; top:0px; left:0px; display:block; content: ""; position: absolute; z-index: 10;}
     #wrap #top .content #navOn .mypage.type1 li{border: none; line-height: 1; width: auto; height: auto;position:relative; }
     #wrap #top .content #navOn .mypage.type1 li:first-child::after{content:""; width:1px; height:12px; display:inline-block; background:#090909;     position: absolute; right: -8px; top: 13px;}
@@ -621,7 +739,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.sub{font-size: 14px;}
     #wrap.sub select{background: url(/resources/images/select_arrow.png) no-repeat 98% 50%/12px auto;}
     #wrap.sub #top{background-color: #fff;}
-	#wrap.sub #top .content .mypage.type1 li.join{background-color: transparent;}
+    #wrap.sub #top .content .mypage.type1 li.join{background-color: transparent;}
 
 /*메인-----------------------------------------------------------*/
     #wrap.main #section1 .content .bg{margin-left:0; margin:0 auto;width: 90%;height: 49vw;}
@@ -639,69 +757,145 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.main #section3 .content ul{text-align:left;}
     #wrap.main #section3 .content li{text-align:center; margin-top: 6px; font-size: 16px; width: 49%; vertical-align: top; height: 28.888vw;line-height: 28.888vw; }
     #wrap.main #section3 .content li:nth-child(2), #wrap.main #section3 .content li:nth-child(3), #wrap.main #section3 .content li:nth-child(4){margin:6px 0 0 0;}
-	#wrap.main #section3 .more{bottom: 6%;}
+    #wrap.main #section3 .more{bottom: 6%;}
 
 /*WhyNetMiner -----------------------------------------------------------*/
-	#wrap.whyNetminer .section .content .text{font-size:14px; width: 100%; padding:20px 0;}
-	#wrap.whyNetminer .section .content .bg{width: 100%; background-size: cover;height: 49vw;}
-	
-	#wrap.whyNetminer #section2{height: 540px;}
-	#wrap.whyNetminer #section2 .content .text{position:absolute; top: 165%; left: 0; }
-	#wrap.whyNetminer #section2 .content .bg{position:absolute; top: 77%;  left: 0;}
-	
+    #wrap.whyNetminer .section .content .text{font-size:14px; width: 100%; padding:20px 0;}
+    #wrap.whyNetminer .section .content .bg{width: 100%; background-size: cover;height: 49vw;}
+    
+    #wrap.whyNetminer #section2{height: 540px;}
+    #wrap.whyNetminer #section2 .content .text{position:absolute; top: 165%; left: 0; }
+    #wrap.whyNetminer #section2 .content .bg{position:absolute; top: 77%;  left: 0;}
+    
 /*feature-----------------------------------------------------------*/
-	#wrap.feature #section1 .content li{width: 100%;}
-	#wrap.feature #section1 .content li .bg{height: 45vw;}
-	#wrap.feature #section1 .content li .text{padding-left:0;height: auto; padding-bottom: 20px;}
-	#wrap.feature #section1 .content li h4{font-size:16px; padding: 15px 0;}
-	#wrap.feature #section1 .content li p{font-size: 14px; }
-	#wrap.feature #section1 .content li:nth-child(even){margin-left:0;}
-	
-	#wrap.feature #section2 .content li{width: 100%;}
-	#wrap.feature #section2 .content li .bg{background-size: cover; height: 52vw;}
-	#wrap.feature #section2 .content li .text{padding: 10px; }
-	#wrap.feature #section2 .content li h4{font-size:16px; padding-bottom: 15px;}
-	#wrap.feature #section2 .content li p{font-size:14px;}
-	#wrap.feature #section2 .content li:nth-child(2){margin:3% 0;}
-	
+    #wrap.feature #section1 .content li{width: 100%;}
+    #wrap.feature #section1 .content li .bg{height: 45vw;}
+    #wrap.feature #section1 .content li .text{padding-left:0;height: auto; padding-bottom: 20px;}
+    #wrap.feature #section1 .content li h4{font-size:16px; padding: 15px 0;}
+    #wrap.feature #section1 .content li p{font-size: 14px; }
+    #wrap.feature #section1 .content li:nth-child(even){margin-left:0;}
+    
+    #wrap.feature #section2 .content li{width: 100%;}
+    #wrap.feature #section2 .content li .bg{background-size: cover; height: 52vw;}
+    #wrap.feature #section2 .content li .text{padding: 10px; }
+    #wrap.feature #section2 .content li h4{font-size:16px; padding-bottom: 15px;}
+    #wrap.feature #section2 .content li p{font-size:14px;}
+    #wrap.feature #section2 .content li:nth-child(2){margin:3% 0;}
+    
 /*function-----------------------------------------------------------*/
-	#wrap.function #section1 .content .bg{width:100%; background-size: cover; height: 54vw;}
-	#wrap.function #section1 .content .text{width:100%; padding: 15px 0; font-size: 14px;}
-	
-	#wrap.function #section2 .content li{width: 100%;}
-	#wrap.function #section2 .content li:nth-child(2){margin-left:0;}
-	#wrap.function #section2 .content li .bg{background-size: cover; height: 50vw;}
-	#wrap.function #section2 .content li .text{font-size:14px; padding: 15px 0 20px;}
-	
-	#wrap.function #section3 .content li{width:100%;}
-	#wrap.function #section3 .content li .bg{width: 30%;}
-	#wrap.function #section3 .content li .text{padding: 0 0 0 30px!important;width: 48%; font-size:14px;}
-	#wrap.function #section3 .content li:nth-child(1)::after{display:none;}
-	#wrap.function #section3 .content li:nth-child(1){margin-bottom: 6%;}
-	
-/*solution-----------------------------------------------------------*/	
-	#wrap.solution .section .wrap{padding: 10px 0;}
-	#wrap.solution .section .content .text h4{font-size:16px; padding: 10px 0; padding-top:0px;}
-	#wrap.solution .section .content .bg{width: 100%; background-size: cover; height: 49vw;}
-	#wrap.solution .section .content .text{width: 100%; font-size: 14px; padding: 20px 0;}
-	
-	#wrap.solution #section2 .wrap, #wrap #section4 .wrap{}
-	#wrap.solution #section2 .content .text, #wrap.solution #section4 .content .text{padding:20px 0px;}
-	
-	#wrap.solution #section5 .wrap{padding-bottom:50px;}
-	
+    #wrap.function #section1 .content .bg{width:100%; background-size: cover; height: 54vw;}
+    #wrap.function #section1 .content .text{width:100%; padding: 15px 0; font-size: 14px;}
+    
+    #wrap.function #section2 .content li{width: 100%;}
+    #wrap.function #section2 .content li:nth-child(2){margin-left:0;}
+    #wrap.function #section2 .content li .bg{background-size: cover; height: 50vw;}
+    #wrap.function #section2 .content li .text{font-size:14px; padding: 15px 0 20px;}
+    
+    #wrap.function #section3 .content li{width:100%;}
+    #wrap.function #section3 .content li .bg{width: 30%;}
+    #wrap.function #section3 .content li .text{padding: 0 0 0 30px!important;width: 48%; font-size:14px;}
+    #wrap.function #section3 .content li:nth-child(1)::after{display:none;}
+    #wrap.function #section3 .content li:nth-child(1){margin-bottom: 6%;}
+    
+/*solution-----------------------------------------------------------*/ 
+    #wrap.solution .section .wrap{padding: 10px 0;}
+    #wrap.solution .section .content .text h4{font-size:16px; padding: 10px 0; padding-top:0px;}
+    #wrap.solution .section .content .bg{width: 100%; background-size: cover; height: 49vw;}
+    #wrap.solution .section .content .text{width: 100%; font-size: 14px; padding: 20px 0;}
+    
+    #wrap.solution #section2 .wrap, #wrap #section4 .wrap{}
+    #wrap.solution #section2 .content .text, #wrap.solution #section4 .content .text{padding:20px 0px;}
+    
+    #wrap.solution #section5 .wrap{padding-bottom:50px;}
+
+/*pricing-----------------------------------------------------------*/
+    #wrap.pricing .section .wrap{padding:40px 0;}
+    #wrap.pricing #section1 .content{position:relative;}
+    #wrap.pricing #section1 .content .paymentList{}
+    #wrap.pricing #section1 .content .paymentList>li{width:47.5%;position: relative;}
+    #wrap.pricing #section1 .content .paymentList>li:nth-child(even){margin-left:3%;}
+    #wrap.pricing #section1 .content .paymentList>li:nth-child(3),#wrap.pricing #section1 .content .paymentList>li:nth-child(4){margin-top:15%;}
+    #wrap.pricing #section1 .content .paymentList>li+li{margin-left:0;}
+    #wrap.pricing #section1 .content .paymentList li .top{ border-top: 2px solid #203864; }
+    #wrap.pricing #section1 .content .paymentList li .recommend{font-size:15px;line-height: 30px;top: -30px;width: 100%;}
+    #wrap.pricing #section1 .content .paymentList li .top .button{font-size: 15px;line-height: 35px;}
+    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(1){font-size: 16px;padding-bottom: 15px;}
+    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(3){font-size: 13px;padding-bottom: 15px;}
+    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size: 13px;}
+    #wrap.pricing #section1 .content .paymentList li .top p.payment{font-size: 19px;}
+    #wrap.pricing #section1 .content .paymentList li .top p.payment em{width:18px; height:12px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom{margin-top: 20px;padding: 20px 10px;height: 270px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom .button{width: 73%;line-height: 35px;font-size: 15px;left: 12%;bottom: 20px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom ul{}
+    #wrap.pricing #section1 .content .paymentList li .bottom ul li{font-size: 12px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom ul li+li{margin-top:10px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom ul li em{width: 11px;height: 9px;}
+    #wrap.pricing #section1 .content  .help{font-size: 15px;margin-top: 30px;}
+    #wrap.pricing #section1 .content  .help a{}
+    #wrap.pricing #section1 .content  .data{display:none;}
+    #wrap.pricing #section1 .content  .feature{display:none;}
+
+    
+    #wrap.pricing #section2{}
+    #wrap.pricing #section2 .content{ padding-top: 0; }
+    #wrap.pricing #section2 .content ul{}
+    #wrap.pricing #section2 .content ul li{ padding: 10px; }
+    #wrap.pricing #section2 .content ul li .answer{ padding-left: 10px; padding-right: 10px; padding-top: 10px; font-size: 12px; }
+    #wrap.pricing #section2 .content ul li .question{}
+    #wrap.pricing #section2 .content ul li .question p{ font-size: 13px; width: 85%; }
+    #wrap.pricing #section2 .content ul li .question p em{}
+
+/*구독-----------------------------------------------------------*/
+    #wrap.subscribe #section .content{padding:20px;} 
+    #wrap.subscribe #section .content .inner .title{font-size: 17px;}
+    #wrap.subscribe #section .checkBox input[type="radio"] + em{width:15px; height:15px; margin-right: 3px;}
+    #wrap.subscribe #section .content .inner .checkBox li{width:49%;}
+    #wrap.subscribe #section .content .tail{font-size: 13px; top: -17px; right:23px;}
+    #wrap.subscribe #section .content .pay{font-size:16px; line-height:35px; height:35px;}
+    #wrap.subscribe #section .content .inner{margin-bottom:30px;}
+    #wrap.subscribe #section .content .inner3{margin-bottom:30px;}
+ 
+ /*주문완료-----------------------------------------------------------*/
+    #wrap.order #section p span{}
+    #wrap.order #section .content{padding:20px;}
+    #wrap.order #section .content ul{}
+    #wrap.order #section .content ul li+li{margin-top:15px;}
+    #wrap.order #section .content ul li span{ font-size: 15px; width: 95px; }
+    #wrap.order #section .content ul li p{ font-size: 15px; }
+    #wrap.order #section .content  .back{ font-size: 14px; margin-top: 35px; }
+
+/*구독완료-----------------------------------------------------------*/  
+    #wrap.subscribe_complete #section .content{margin-top:0;}
+    #wrap.sub.subscribe_complete #section .wrap{padding-top:90px;}
+    #wrap.subscribe_complete #section ul li{width:100%; padding: 12px; display: block; height: 178px; box-sizing: border-box;}
+    #wrap.subscribe_complete #section ul li:nth-child(2){margin:1.5% 0; }
+    #wrap.subscribe_complete #section ul li h3{margin-bottom:10px; font-size: 20px;}
+    #wrap.subscribe_complete #section ul li p{font-size:13px;}
+    #wrap.subscribe_complete #section ul li a{width:100px; height:30px; line-height: 30px; bottom: 10px;}
+
+/*billing-----------------------------------------------------------*/  
+    #wrap.billing #section .content{padding:20px;}
+    #wrap.billing #section .content .inner .title{padding-bottom:10px;}
+    #wrap.billing #section .content .inner .title{font-size:17px;}
+    #wrap.billing #section .content .inner .current a{display:block;line-height: 35px;width: 120px;margin-left: 0;margin-top: 10px;} 
+    #wrap.billing #section .content .inner .current{margin-bottom:20px;}
+    
+    #wrap.billing #section .content .inner2 .charge .tail{font-size:11px;}
+    #wrap.billing #section .content .inner2 .charge table{font-size:11px;}
+    #wrap.billing #section .content .inner2 .charge table td:last-child img{width:12px;}
+    #wrap.billing #section .content .inner2 .current p em{font-size:16px;margin-right: 12px;}
 /*로그인-----------------------------------------------------------*/
     #wrap.login #section .content{padding: 20px;}
     #wrap.login #section .input input{height:35px;}
     #wrap.login #section .content button{height:35px; line-height: 35px; font-size: 16px;}
     #wrap.login #section .content button.google{background-size: contain;}
     #wrap.login #section .content .line{font-size: 14px; margin:15px  0; display: block; text-align: center; color:#606060;}
-	#wrap.login #section .content .line::after,#wrap.login #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
-	#wrap.login #section .content .line::after{margin-left: 32px;}
-	#wrap.login #section .content .line::before{margin-right: 32px;}
+    #wrap.login #section .content .line::after,#wrap.login #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+    #wrap.login #section .content .line::after{margin-left: 32px;}
+    #wrap.login #section .content .line::before{margin-right: 32px;}
     
 /*회원가입-----------------------------------------------------------*/
-	#wrap.register #section .content{padding:20px; background-color:#fff; margin-top: 100px;}
+    #wrap.register #section .content{padding:20px; background-color:#fff; margin-top: 100px;}
     #wrap.register #section .content>div{width: 100%;  padding: 0px;}
     #wrap.register #section dl{position:absolute; top: 22%; left: 0; padding-left: 0; padding-top: 0;}
     #wrap.register #section dl dt{font-size: 15px; margin-bottom: 10px;}
@@ -718,10 +912,10 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.register #section .checkBox ul li+li{margin-left:10px;}
     #wrap.register #section .content button{height:35px; line-height: 35px; font-size: 16px;}
     #wrap.register #section .content .line{font-size: 14px; margin:15px  0; display: block; text-align: center; color:#606060;}
-	#wrap.register #section .content .line::after,#wrap.register #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
-	#wrap.register #section .content .line::after{margin-left: 32px;}
-	#wrap.register #section .content .line::before{margin-right: 32px;}
-	#wrap.register #section .content button.google{background-size: contain;}
+    #wrap.register #section .content .line::after,#wrap.register #section .content .line::before{content:""; width: 92px; height: 1px; background-color: #606060; display: inline-block; vertical-align: middle;}
+    #wrap.register #section .content .line::after{margin-left: 32px;}
+    #wrap.register #section .content .line::before{margin-right: 32px;}
+    #wrap.register #section .content button.google{background-size: contain;}
 /*이메일인증코드-----------------------------------------------------------*/
     #wrap.authentic #section .content{padding:20px;}
     #wrap.authentic .input p{font-size: 16px; margin: 15px 0 10px;}
@@ -789,7 +983,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.register_sns_fail #check_all[type="checkbox"]+ em{width: 16px; height: 11px;}
 
 /*비밀번호 찾기-----------------------------------------------------------*/ 
-	#wrap.searchPw #section .wrap{}
+    #wrap.searchPw #section .wrap{}
     #wrap.searchPw #section .content{padding:20px;}
     #wrap.searchPw #section .content>p{font-size:13px;}
     #wrap.searchPw .input p{font-size:16px; margin: 15px 0 10px;}
@@ -804,15 +998,15 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.activate #section .content .back{font-size:15px;}
     #wrap.activate #section .wrap{}
 /*이용자설정-----------------------------------------------------------*/   
-	#wrap.sub.account #section .wrap{}
+    #wrap.sub.account #section .wrap{}
     #wrap.account #section .content{padding:20px;}
     #wrap.account #section .content>div{width: 100%;}
     #wrap.account #section button.email{padding:0 8px; font-size: 13px; right: 0; height: 35px; line-height: 35px;}
-	#wrap.account #section .input input{height:35px; padding-left:10px;}
-	#wrap.account #section select{height:35px; font-size:14px; padding-left:10px;}
-	#wrap.account #section .input input[name="email"]{padding-right: 27%;}
-	#wrap.account #section .checkBox *{font-size: 15px;}
-	#wrap.account #section .checkBox input[type="radio"] + em{width:15px; height:15px;}
+    #wrap.account #section .input input{height:35px; padding-left:10px;}
+    #wrap.account #section select{height:35px; font-size:14px; padding-left:10px;}
+    #wrap.account #section .input input[name="email"]{padding-right: 27%;}
+    #wrap.account #section .checkBox *{font-size: 15px;}
+    #wrap.account #section .checkBox input[type="radio"] + em{width:15px; height:15px;}
     #wrap.account #section .checkBox{padding: 10px 5px 15px;}
     #wrap.account #section .checkBox p{margin-right: 30px;}
     #wrap.account #section .checkBox ul li+li{margin-left:10px;}
@@ -824,31 +1018,31 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.account #section button{height: 35px; line-height: 35px;}
     #wrap.account #section .content.leave button{height: 35px;line-height: 35px; font-size: 15px; width: 120px; margin-top: 20px;}
 /*팝업*/    
-	.popup .wrap{padding:20px 5px; width:90%; }
-   	.popup h4{font-size: 17px; padding-bottom: 20px;}
-	.popup .close{width: 100px; height: 35px; font-size: 15px;     margin-top: 20px;}
-	
-	#agree_popup .wrap p{font-size: 14px;}
-	
-	#refuse_popup .wrap p{font-size: 14px;}
-	
-	#leave_popup .wrap p{font-size: 13px;}
-	#leave_popup .wrap p span{font-size: 11px;}
-	#leave_popup .wrap button{width: 100px; height: 35px; font-size: 15px; margin: 15px 10px 0;}
-	#leave_popup .wrap button.leave{ font-size: 15px;}
-	
-	/*이용약관*/
-	#wrap.sub.terms #section .wrap{font-size:12px;}
-	#wrap.sub.terms #section .wrap h3{font-size:25px; margin-bottom:50px; }
-	#wrap.sub.terms #section .wrap dl{margin:30px 0px;}
-	#wrap.sub.terms #section .wrap dt{font-size:14px; margin-bottom:10px; }
-	#wrap.sub.terms #section .wrap dd ul>li{margin:10px 0px;}
-	#wrap.sub.terms #section .wrap dd ol li{margin-left:7px;}
-	#wrap.sub.terms #section .wrap dd table{margin:5px 0px; margin-bottom:20px;}
-	#wrap.sub.terms #section .wrap dd table th, #wrap.sub.terms #section .wrap dd table td {font-size:11px; padding: 5px; }
-	
-	/*점검중-----------------------------------------------------------*/
-	#wrap.sub.check .checkContainer{width:90%;}
+    .popup .wrap{padding:20px 5px; width:90%; }
+    .popup h4{font-size: 17px; padding-bottom: 20px;}
+    .popup .close{width: 100px; height: 35px; font-size: 15px;     margin-top: 20px;}
+    
+    #agree_popup .wrap p{font-size: 14px;}
+    
+    #refuse_popup .wrap p{font-size: 14px;}
+    
+    #leave_popup .wrap p{font-size: 13px;}
+    #leave_popup .wrap p span{font-size: 11px;}
+    #leave_popup .wrap button{width: 100px; height: 35px; font-size: 15px; margin: 15px 10px 0;}
+    #leave_popup .wrap button.leave{ font-size: 15px;}
+    
+    /*이용약관*/
+    #wrap.sub.terms #section .wrap{font-size:12px;}
+    #wrap.sub.terms #section .wrap h3{font-size:25px; margin-bottom:50px; }
+    #wrap.sub.terms #section .wrap dl{margin:30px 0px;}
+    #wrap.sub.terms #section .wrap dt{font-size:14px; margin-bottom:10px; }
+    #wrap.sub.terms #section .wrap dd ul>li{margin:10px 0px;}
+    #wrap.sub.terms #section .wrap dd ol li{margin-left:7px;}
+    #wrap.sub.terms #section .wrap dd table{margin:5px 0px; margin-bottom:20px;}
+    #wrap.sub.terms #section .wrap dd table th, #wrap.sub.terms #section .wrap dd table td {font-size:11px; padding: 5px; }
+    
+    /*점검중-----------------------------------------------------------*/
+    #wrap.sub.check .checkContainer{width:90%;}
     #wrap.sub.check h1{margin:20px 0px;}
     #wrap.sub.check h1 img{width:200px;}
     #wrap.sub.check p{font-size:12px;}
@@ -858,8 +1052,8 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.sub.check .box li{margin:3px 0px; padding-left:70px; text-align: left;}
     #wrap.sub.check .box li span{position: absolute; top:0px; left:0px;}
     #wrap.sub.check p.txt2{font-size:11px;}
-	
-	
-	
-	
+    
+    
+    
+    
 }

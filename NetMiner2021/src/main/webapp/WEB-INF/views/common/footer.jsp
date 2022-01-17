@@ -5,10 +5,12 @@
 						<div>
 							<h4>NetMiner 365 무료로 시작</h4>
 							<c:if test="${empty memberVo}">
-							<a href="./login">Start for free</a>
+							<!--  <a href="./login">Start for free</a>-->
+							<a href="./pricing">Start for free</a>
 							</c:if>
 							<c:if test="${!empty memberVo}">
-							<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start for free</a>
+							<!--  <a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start for free</a>-->
+							<a href="./pricing">Start for free</a>
 							</c:if>
 						</div>
 					</div>

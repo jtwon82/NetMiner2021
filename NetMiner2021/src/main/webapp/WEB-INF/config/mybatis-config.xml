@@ -11,10 +11,12 @@
    <typeAlias type="com.netMiner.app.model.vo.NationVo" alias="NationVo"/>
    <typeAlias type="com.netMiner.app.model.vo.MailVo" alias="MailVo"/>
    <typeAlias type="com.netMiner.app.model.vo.AdminVo" alias="AdminVo"/>
+   <typeAlias type="com.netMiner.app.model.vo.BillingVo" alias="BillingVo"/>
   </typeAliases>
   <mappers>
     <mapper resource="/mapper/Member.xml"/>
     <mapper resource="/mapper/Select.xml"/>
     <mapper resource="/mapper/Admin.xml"/>
+     <mapper resource="/mapper/Billing.xml"/>
   </mappers>
 </configuration>
