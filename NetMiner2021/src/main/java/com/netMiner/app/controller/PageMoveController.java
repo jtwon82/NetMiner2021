@@ -132,20 +132,7 @@ public class PageMoveController extends HttpServlet {
 		return path+"/privacy";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -469,4 +456,6 @@ public class PageMoveController extends HttpServlet {
 		
 		return url;
 	}
+	
+	
 }

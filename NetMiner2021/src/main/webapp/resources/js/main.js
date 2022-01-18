@@ -2,6 +2,13 @@ var checkRandomNumber = false;
 var now = new Date();
 $(document).ready(function() {
 	
+	//pricing 자주하는 질문
+	$("#wrap.pricing #section2 .content ul li .question").click(
+		function(){
+			$(this).next().toggleClass("active");
+			$(this).children().toggleClass("fold");
+		}
+	);
 		
 	/*if (location.pathname == '/login_dev') {
 		$("#register").remove("onclick");
@@ -90,7 +97,20 @@ $(document).ready(function() {
 		openPoup("leave_popup");
 	})
 	
-	history.replaceState({}, null, location.pathname);	
+	history.replaceState({}, null, location.pathname);
+	
+	/*subscribe */
+	$("button[class='pay trs']").click(function (){
+		var accountRoute = $("input[name='sub2']:checked").val();
+		/*카드결제시 */
+		if (accountRoute == 'card') {
+			
+		} else {
+		/*계좌 이체시*/
+			location.href = "./order";
+		}
+	});
+	
 })
 var emailNumber = "";
 
@@ -747,6 +767,22 @@ function changePwd2BtnChangeAct(userId){
 	}
 }
 
+/*Billing Script*/
+/*
+function subscribe(price, payType) {
+	$.ajax({
+		url:"./payment",
+		type:"POST",
+		data :{'price':price,'payType':payType},
+		success : function(data) {
+			if (data.result == 'success') {
+				location.href = "./subscribe";
+			}
+		}
+	
+	})
+}
+*/
 
 
 

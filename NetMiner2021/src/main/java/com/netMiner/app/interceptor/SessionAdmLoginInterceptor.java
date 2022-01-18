@@ -62,7 +62,7 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 			String [] urlPath = {"login","feature","Privacy","solution",
 					"function","feature","whyNetMiner","registerCheckEmail",
 					"goCheckEmail","goChangePwd","register","findPwd",
-					"moveCheckEmail","activate","account"};
+					"moveCheckEmail","activate","account","pricing","billing"};
 			for (String path : urlPath) {
 				if (url.contains(path)) {
 					try {

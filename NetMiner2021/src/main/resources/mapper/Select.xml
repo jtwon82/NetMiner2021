@@ -56,5 +56,6 @@
   	</delete>
   	<select id="getNowDate" resultType="String">
   	SELECT NOW();
-  	</select>
+  	</select>  	
+	
   </mapper>
