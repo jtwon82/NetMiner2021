@@ -56,7 +56,7 @@ NetMiner 365 를 이용하세요.</p>
 									<p class="button"><a href="./login">무료체험</a></p>
 									</c:if>
 									<c:if test="${!empty memberVo}">
-									<p class="button"><a href="./goSubscribe?code='01'">무료체험</a></p>
+									<p class="button"><a href="./goSubscribe?code=01">무료체험</a></p>
 									</c:if>
 								</div>
 								<div class="bottom">
@@ -69,7 +69,7 @@ NetMiner 365 를 이용하세요.</p>
 									<p class="button obj"><a href="./login">무료체험</a></p>
 									</c:if>
 									<c:if test="${!empty memberVo}">
-									<p class="button obj"><a href="./goSubscribe?code='01'">무료체험</a></p>
+									<p class="button obj"><a href="./goSubscribe?code=01">무료체험</a></p>
 									</c:if>
 								</div>
 							</li>
@@ -84,7 +84,7 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 									<p class="button">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?code='02'">구독하기</a>
+									<a href="./goSubscribe?code=02">구독하기</a>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
@@ -98,7 +98,7 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em></li> -->
 									</ul>
 									<p class="button obj">
-									<a href="./goSubscribe?code='02'">구독하기</a>
+									<a href="./goSubscribe?code=02">구독하기</a>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
 									</c:if>
@@ -117,7 +117,7 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 									<p class="button active">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?code='03'">현재 플랜</a>
+									<a href="./goSubscribe?code=03">현재 플랜</a>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
@@ -132,7 +132,7 @@ NetMiner 365 를 이용하세요.</p>
 									</ul>
 									<p class="button active obj">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?code='03'">현재 플랜</a>
+									<a href="./goSubscribe?code=03">현재 플랜</a>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
@@ -151,7 +151,7 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 									<p class="button">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?code='04'">구독하기</a>
+									<a href="./goSubscribe?code=04">구독하기</a>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
@@ -166,7 +166,7 @@ NetMiner 365 를 이용하세요.</p>
 									</ul>
 									<p class="button obj">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?code='04'">구독하기</a>
+									<a href="./goSubscribe?code=04">구독하기</a>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>

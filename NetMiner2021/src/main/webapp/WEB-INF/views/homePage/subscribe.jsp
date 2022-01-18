@@ -24,6 +24,16 @@
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+		
+		<script src="https://js.tosspayments.com/v1"></script>
+		<script type="text/javascript">
+		var Payment=[];
+		Payment['tossPayments'] = TossPayments('test_ck_OEP59LybZ8Bdv6A1JxkV6GYo7pRe');
+		Payment['amount'] = ${billing.PAY_PRICE};
+		Payment['orderId'] = '${billing.ORDER_ID}';
+		Payment['orderName'] = '${billing.ORDER_NAME}';
+		Payment['customerName'] = '${billing.CUSTOMER_NAME}';
+		</script>
 </head>
 <body>
 		<div id="wrap" class="sub subscribe">
@@ -56,8 +66,8 @@
 						<div class="inner2 inner">
 							<p class="title">결제 방법</p>
 							<ul class="checkBox">
-								<li><label><input type="radio" name="sub2" value ="card"><em></em>신용 / 직불카드</label></li>
-								<li><label><input type="radio" checked="checked" name="sub2" value="account"><em></em>계좌 이체 / 세금계산서</label></li>
+								<li><label><input type="radio" checked="checked" name="sub2" value="CARD"><em></em>신용 / 직불카드</label></li>
+								<li><label><input type="radio" name="sub2" value="TRANSFER"><em></em>계좌 이체 / 세금계산서</label></li>
 							</ul>
 						</div>
 						<div class="inner3 inner">

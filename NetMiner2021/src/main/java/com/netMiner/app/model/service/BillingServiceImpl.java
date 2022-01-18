@@ -21,4 +21,9 @@ public class BillingServiceImpl  implements BillingService{
 		return billingDao.selectPlanCode(param);
 	}
 
+	@Override
+	public HashMap<String, Object> selectSubscript(Map<String, Object> param) {
+		return billingDao.selectSubscript(param);
+	}
+
 }

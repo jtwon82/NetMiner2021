@@ -9,4 +9,6 @@ public interface BillingDao {
 
 	HashMap<String, Object> selectPlanCode(Map<String, Object> param);
 
+	HashMap<String, Object> selectSubscript(Map<String, Object> param);
+
 }

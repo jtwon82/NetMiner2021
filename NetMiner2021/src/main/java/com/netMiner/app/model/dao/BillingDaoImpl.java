@@ -17,8 +17,13 @@ public class BillingDaoImpl implements BillingDao {
 	
 	@Override
 	public HashMap<String, Object> selectPlanCode(Map<String, Object> param) {
-		HashMap<String, Object> result = sqlSession.selectOne("getPlanCode", param);
+		HashMap<String, Object> result = sqlSession.selectOne("selectPlanCode", param);
 		return result;
+	}
+
+	@Override
+	public HashMap<String, Object> selectSubscript(Map<String, Object> param) {
+		return sqlSession.selectOne("selectSubscript", param);
 	}
 
 }

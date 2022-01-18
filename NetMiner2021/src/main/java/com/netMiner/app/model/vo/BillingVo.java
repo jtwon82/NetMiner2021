@@ -19,6 +19,9 @@ public class BillingVo implements Serializable {
 	@JsonAlias("REG_DATE") private String REG_DATE = "";
 	@JsonAlias("USER_ID") private String USER_ID = "";
 	@JsonAlias("LANGUAGE") private String LANGUAGE = "";
+	@JsonAlias("ORDER_ID") private String ORDER_ID = "";
+	@JsonAlias("ORDER_NAME") private String ORDER_NAME = "";
+	@JsonAlias("CUSTOMER_NAME") private String CUSTOMER_NAME = "";
 	@JsonAlias("PLAN_TYPE") private String PLAN_TYPE = "";
 	@JsonAlias("TYPE_CODE") private String TYPE_CODE = "";
 	@JsonAlias("PAY_CODE") private String PAY_CODE = ""; 
@@ -40,6 +43,10 @@ public class BillingVo implements Serializable {
 	@JsonAlias("PLAN_NAME") private String PLAN_NAME = "";
 
 	private String DATE_TYPE = "year";
+
+	private String orderId="";
+	private String paymentKey="";
+	private int amount=0;
 	
 	public static BillingVo fromMap(HashMap<String, Object> map) {
 		BillingVo result= new ObjectMapper()

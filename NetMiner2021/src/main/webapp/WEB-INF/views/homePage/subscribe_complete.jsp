@@ -1,19 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<link rel="shortcut icon" type="image/x-icon" href="https://www.netminer365.com/resources/images/favicon.ico" />
+		<title></title>
+		<meta name="title" content="" />
+		<meta name="description" content="" />
+		<meta property="og:title" content="">
+		<meta property="og:image" content="">
+		<meta property="og:description" content="">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:title" content="">
+		<meta name="twitter:image" content="">
+		<meta name="twitter:description" content="">
+		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
+		<script src="resources/js/gnb.js" type="text/javascript"></script>
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 </head>
-<body>
+<body>${billing }
 		<div id="wrap" class="sub subscribe_complete">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
 						<h2>Thank you for subscription</h2>
-						<p class="pc"><span>SMALL</span> 구독이 시작되었습니다.<br>
+						<p class="pc"><span>${billing.PLAN_NAME }</span> 구독이 시작되었습니다.<br>
 이제 이 플랜의 모든 기능을 사용할 수 있고, 영업팀에 도움을 요청할 수 있습니다.</p>
 						<p class="mobile"><span>SMALL</span> 구독이 시작되었습니다.<br>
 이제 이 플랜의 모든 기능을 사용할 수 있고, <br>영업팀에 도움을 요청할 수 있습니다.</p>
