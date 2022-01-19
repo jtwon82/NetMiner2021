@@ -11,4 +11,5 @@ public interface BillingDao {
 
 	HashMap<String, Object> selectSubscript(Map<String, Object> param);
 
+	void insertSubscript(BillingVo billingVo);
 }

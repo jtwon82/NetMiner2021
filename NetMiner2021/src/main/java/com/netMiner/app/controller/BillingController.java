@@ -16,13 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.model.service.BillingService;
 import com.netMiner.app.model.vo.BillingVo;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.util.Base64Util;
+import com.netMiner.app.util.StringUtils2;
 
 @Controller
 public class BillingController extends HttpServlet {
@@ -32,8 +32,6 @@ public class BillingController extends HttpServlet {
 	@Autowired
 	private BillingService billingService;
 
-    private RestTemplate restTemplate = new RestTemplate();
-	
 	/*page Move Billing*/
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
 	public String pricing (HttpSession session) {
@@ -53,65 +51,89 @@ public class BillingController extends HttpServlet {
 	public String subscribe (ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
-		String code = request.getParameter("code");
+//		String planCode= request.getParameter("planCode");
+		String planCode= request.getParameter("planCode");
 		String dateType = request.getParameter("dateType") == null ? "year" : request.getParameter("dateType");
+		String payType = request.getParameter("payType") == null ? "card" : request.getParameter("payType");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
 		int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
 		
-		if (code == null) {
+		if (planCode == null) {
 			if(billingVo==null) {
 				return "redirect:/";
 			}
-			code = billingVo.getPLAN_CODE();
+			planCode = billingVo.getPLAN_CODE();
 		}
 		
-		HashMap<String , Object> param = new HashMap<String , Object>();
-		param.put("code",code);
-
-		HashMap<String ,Object> billingMap = billingService.selectPlanCode(param);	
+		HashMap<String , Object> param= new HashMap<String , Object>();
+		param.put("planCode", planCode);
+		
+		HashMap<String ,Object> billingMap= billingService.selectPlanCode(param);	
 		billingVo = new BillingVo().fromMap(billingMap);
 		billingVo.setDATE_TYPE(dateType);
-		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", code, dateType, timestamp, randomNo)));
-		billingVo.setORDER_NAME("ORDER_NAME");
+		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
+		billingVo.setORDER_PNM("ORDER_PNM");
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
+		billingVo.setPAY_TYPE(payType);
 		
 		if (language.equals("EN")) {
-
+			billingVo.setPAY_PLATFORM("paypal");
+			
 		} else {
+			billingVo.setPAY_PLATFORM("toss");
 			if (dateType.equals("year")) {
 				int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
 				billingVo.setPAY_PRICE(total);
-				billingVo.setPAY_CODE(billingVo.getPLAN_NAME());
 				billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 				billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);	
 			} else {
 				billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
-				billingVo.setPAY_CODE(billingVo.getPLAN_NAME());
 				billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 				billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 			}
-		}	
+		}
 
 		session.setAttribute("billing",billingVo);
 		logger.info("billing -{}", billingVo.toString());
 		//mv.setViewName(path+"/subscribe");
-
+		
 		return path+"/subscribe";
 	}
 	
 	
 	/*결제시 해당 데이터 가지고 오는 부분 */
-	@RequestMapping(value="payment", method=RequestMethod.POST)
-	public ModelAndView payment ( ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		String price = request.getParameter("price");
-		String planType = request.getParameter("payType");
+	@RequestMapping(value="payment", method= {RequestMethod.GET, RequestMethod.POST})
+	public String payment ( HttpSession session,HttpServletRequest request, HttpServletResponse response
+			, BillingVo form) {
+		String language = (String) session.getAttribute("language");
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		
-		mv.addObject("result" , "success");
-		mv.setViewName("jsonView");
-		return mv;
+		logger.info("form {}", form);
+		logger.info("memberVo {}", memberVo);
+		logger.info("billingVo {}", billingVo);
+		
+		if(form == null || memberVo == null || billingVo == null) {
+			StringUtils2.script(response, language, "잘못된 접근입니다.", "The wrong approach", "./");
+			return "redirect:/";
+		}
+		else {
+			if(form.getOrderId().equals(billingVo.getORDER_ID())) {
+				billingVo.setUSER_ID(memberVo.getUserId());
+				billingVo.setOrderId(form.getOrderId());
+				billingVo.setPaymentKey(form.getPaymentKey());
+				billingVo.setAmount(form.getAmount());
+
+				billingService.insertSubscript(billingVo);
+				logger.info("insert succ billingVo {}", billingVo);
+				
+				return "redirect:/goSubscribeComplete";
+			} else {
+				
+				return "redirect:/";
+			}
+		}
 	}
 	
 	@RequestMapping(value="order",method=RequestMethod.GET)
@@ -119,8 +141,9 @@ public class BillingController extends HttpServlet {
 			, BillingVo form) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
+		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		
-		logger.info("form {}", form);
+		logger.info("billingVo {}", billingVo);
 		
 		mv.setViewName(path+"/order");
 		return mv;

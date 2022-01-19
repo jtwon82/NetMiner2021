@@ -107,7 +107,7 @@ $(document).ready(function() {
 		var url = document.createElement('a');
 		url.href = location.href;
 			
-		if (accountRoute == 'CARD') {
+		if (accountRoute == 'card') {
 			/*카드결제시 */
 			Payment['successUrl'] = url.origin +'/payment';
 			

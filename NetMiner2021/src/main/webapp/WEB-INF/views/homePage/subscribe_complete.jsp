@@ -25,14 +25,14 @@
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 </head>
-<body>${billing }
+<body>
 		<div id="wrap" class="sub subscribe_complete">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
 						<h2>Thank you for subscription</h2>
-						<p class="pc"><span>${billing.PLAN_NAME }</span> 구독이 시작되었습니다.<br>
+						<p class="pc"><span>${billing.PLAN_NAME}</span> 구독이 시작되었습니다.<br>
 이제 이 플랜의 모든 기능을 사용할 수 있고, 영업팀에 도움을 요청할 수 있습니다.</p>
 						<p class="mobile"><span>SMALL</span> 구독이 시작되었습니다.<br>
 이제 이 플랜의 모든 기능을 사용할 수 있고, <br>영업팀에 도움을 요청할 수 있습니다.</p>

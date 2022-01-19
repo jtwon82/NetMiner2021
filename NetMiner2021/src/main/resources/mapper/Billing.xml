@@ -5,11 +5,27 @@
 <mapper namespace="billing">
 	<select id="selectPlanCode" parameterType="Map" resultType="Map">
 		select * from NetMiner.PLAN_CODE 
-		WHERE PLAN_CODE = ${code}
+		WHERE PLAN_CODE= ${planCode}
 	</select>
 	
 	<select id="selectSubscript" parameterType="Map" resultType="Map">
-		select * from SUBSCRIPT where USER_ID =#{userId}
+		select * from NetMiner.SUBSCRIPT where USER_ID =#{userId}
 		order by no desc limit 1
 	</select>
+	
+	<update id="insertSubscript" parameterType="BillingVo">
+	INSERT INTO NetMiner.SUBSCRIPT (
+		REG_DATE, USER_ID
+		, PLAN_CODE, PLAN_TYPE, DATE_TYPE, PAY_TYPE
+		, PAY_PLATFORM, PAY_PRICE, PAY_PRICE_TOTAL
+		, ACCOUNT_NAME, ACCOUNT_NO, ACCOUNT_HOLDER, ACCOUNT_DEPOSITLIMIT
+		, ORDER_ID, ORDER_PNM, paymentKey, amount) 
+	VALUES(now(), #{USER_ID}
+		, #{PLAN_CODE}, #{PLAN_TYPE}, #{DATE_TYPE}, #{PAY_TYPE}
+		, #{PAY_PLATFORM}, #{PAY_PRICE}, #{PAY_PRICE_TOTAL}
+		, #{ACCOUNT_NAME}, #{ACCOUNT_NO}, #{ACCOUNT_HOLDER}, now()
+		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount}
+	);
+	</update>
+	
 </mapper>

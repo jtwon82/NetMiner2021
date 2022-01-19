@@ -33,7 +33,7 @@
 					<div class="title">
 						<h2>Thank you for your order</h2>
 						<p>입금기한 내에 아래 가상계좌로 입금해 주시면<br>
-						<span>${billing.PAY_CODE}</span>을 바로 이용하실 수 있습니다.</p>
+						<span>${billing.PAY_NAME}</span>을 바로 이용하실 수 있습니다.</p>
 					</div>
 					<div class="content">
 						<ul>

@@ -26,4 +26,8 @@ public class BillingDaoImpl implements BillingDao {
 		return sqlSession.selectOne("selectSubscript", param);
 	}
 
+	@Override
+	public void insertSubscript(BillingVo billingVo) {
+		sqlSession.insert("insertSubscript", billingVo);
+	}
 }

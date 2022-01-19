@@ -28,10 +28,10 @@
 		<script src="https://js.tosspayments.com/v1"></script>
 		<script type="text/javascript">
 		var Payment=[];
-		Payment['tossPayments'] = TossPayments('test_ck_OEP59LybZ8Bdv6A1JxkV6GYo7pRe');
+		Payment['tossPayments'] = TossPayments('test_ck_4vZnjEJeQVxLAMAABvYVPmOoBN0k');
 		Payment['amount'] = ${billing.PAY_PRICE};
 		Payment['orderId'] = '${billing.ORDER_ID}';
-		Payment['orderName'] = '${billing.ORDER_NAME}';
+		Payment['orderName'] = '${billing.ORDER_PNM}';
 		Payment['customerName'] = '${billing.CUSTOMER_NAME}';
 		</script>
 </head>
@@ -51,30 +51,20 @@
 								<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
 								<li><label><input type="radio" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
 							</ul>
-							<script>
-							$(document).ready(function() {
-								$('input:radio[name=sub1]:input[value="${billing.DATE_TYPE }"]').attr("checked", true);
-								$("input[name='sub1']").change(function (){
-									var dateType = $("input[name='sub1']:checked").val();
-									
-									location.href="./goSubscribe?dateType="+dateType;
-									
-								})
-							})
-							</script>
 						</div>
 						<div class="inner2 inner">
 							<p class="title">결제 방법</p>
+							<input type="hidden" id="PAY_TYPE" name="PAY_TYPE" value="${billing.PAY_TYPE}"/>
 							<ul class="checkBox">
-								<li><label><input type="radio" checked="checked" name="sub2" value="CARD"><em></em>신용 / 직불카드</label></li>
-								<li><label><input type="radio" name="sub2" value="TRANSFER"><em></em>계좌 이체 / 세금계산서</label></li>
+								<li><label><input type="radio" checked="checked" name="sub2" value="card"><em></em>신용 / 직불카드</label></li>
+								<li><label><input type="radio" name="sub2" value="transfer"><em></em>계좌 이체 / 세금계산서</label></li>
 							</ul>
 						</div>
 						<div class="inner3 inner">
 							<p class="title">결제 금액</p>
 							<ul>
 								<li>
-									<p>NetMiner 365 - </p><p>${billing.PAY_CODE}</p>
+									<p>NetMiner 365 - </p><p>${billing.PAY_TYPE}</p>
 									<span> &#8361; <em>${billing.PAY_PRICE_VAT}</em></span>
 								</li>
 								<li>
@@ -91,6 +81,19 @@
 					</div>
 				</div>
 			</div>
+							<script>
+							$(document).ready(function() {
+								$('input:radio[name=sub1]:input[value="${billing.DATE_TYPE }"]').attr("checked", true);
+								$('input:radio[name=sub2]:input[value="${billing.PAY_TYPE}"]').attr("checked", true);
+								$("input[name='sub1'],input[name='sub2']").change(function (){
+									var dateType= $("input[name='sub1']:checked").val();
+									var payType= $("input[name='sub2']:checked").val();
+									
+									location.href="./goSubscribe?dateType="+dateType+"&payType="+payType;
+									
+								})
+							})
+							</script>
 			<%@include file = "../common/footer.jsp" %>
 		</div>
 	

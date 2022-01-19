@@ -26,4 +26,9 @@ public class BillingServiceImpl  implements BillingService{
 		return billingDao.selectSubscript(param);
 	}
 
+	@Override
+	public void insertSubscript(BillingVo billingVo) {
+		billingDao.insertSubscript(billingVo);
+	}
+
 }
