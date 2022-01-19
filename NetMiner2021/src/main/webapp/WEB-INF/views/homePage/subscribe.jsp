@@ -64,7 +64,7 @@
 							<p class="title">결제 금액</p>
 							<ul>
 								<li>
-									<p>NetMiner 365 - </p><p>${billing.PAY_TYPE}</p>
+									<p>NetMiner 365 - </p><p>${billing.PLAN_NAME}</p>
 									<span> &#8361; <em>${billing.PAY_PRICE_VAT}</em></span>
 								</li>
 								<li>

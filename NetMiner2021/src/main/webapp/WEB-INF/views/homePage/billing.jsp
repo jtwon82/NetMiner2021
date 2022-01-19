@@ -40,7 +40,7 @@
 							<div class="current">
 								<span>현재 플랜</span>
 								<p>아직 NetMiner 365를 시작하지 않으셨나요?</p>
-								<a href="#">무료 체험</a>
+								<a href="./pricing">무료 체험</a>
 							</div>
 							<div class="charge">
 								<span>결제 내역</span>

@@ -26,8 +26,9 @@
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 </head>
 <body>
+<body>
 		<div id="wrap" class="pricing">
-			<%@include file = "../common/top.jsp" %>			
+			<%@include file = "../common/top.jsp" %>
 			<div id="main">
 				<div class="wrap">
 					<div class="slider">
@@ -42,17 +43,46 @@ NetMiner 365 를 이용하세요.</p>
 			<div id="section1" class="section">
 				<div class="wrap">
 					<div class="content">
+						<div class="paymentList_header">
+							<ul>
+								<li>TRIAL</li>
+								<li>SMALL</li>
+								<li>MEDIUM<p class="recommend obj"><em>권장사항</em></p></li>
+								<li>LARGE</li>
+							</ul>
+						</div>
+						<script>
+						$(document).ready(function() {
+							$(window).bind('scroll', function(e) {
+								scrollEvt();
+							});
+						})
+							function scrollEvt() {
+								if ($(document).scrollTop() > $('#section1').offset().top+80 && $(document).scrollTop() < $('#section2').offset().top-400) {
+									$(".paymentList_header").addClass("show");
+								}else{
+									$(".paymentList_header").removeClass("show");
+								}
+							}
+						</script>
 						<ul class="paymentList">
+							<li>
+								<div class="top"></div>
+								<div class="bottom">
+									<p class="data">Data</p>
+									<p class="feature">Feature</p>
+								</div>
+							</li>
 							<li>
 								<div class="top">
 									<p>TRIAL</p>
 									<p class="payment">Free</p>
-									<p>User / 30 days</p>
+									<p>28 days</p>
 									<p>NetMiner 365의<br>
 										모든 기능을 무료로<br>
 										사용해 보세요.
 									</p>
-									<c:if test="${empty memberVo}">
+								<c:if test="${empty memberVo}">
 									<p class="button"><a href="./login">무료체험</a></p>
 									</c:if>
 									<c:if test="${!empty memberVo}">
@@ -60,16 +90,21 @@ NetMiner 365 를 이용하세요.</p>
 									</c:if>
 								</div>
 								<div class="bottom">
-									<ul>
+									<ul class="data">
 										<li><em></em>3 workspace</li>
 										<li><em></em>5 Tabular & Nodeset</li>
 										<li><em></em>10 Networks</li>
 									</ul>
+									<ul class="feature">
+										<!-- <li><em></em></li>
+										<li><em></em></li>
+										<li><em></em></li> -->
+									</ul>
 									<c:if test="${empty memberVo}">
-									<p class="button obj"><a href="./login">무료체험</a></p>
+									<p class="button"><a href="./login">무료체험</a></p>
 									</c:if>
 									<c:if test="${!empty memberVo}">
-									<p class="button obj"><a href="./goSubscribe?planCode=01">무료체험</a></p>
+									<p class="button"><a href="./goSubscribe?planCode=01">무료체험</a></p>
 									</c:if>
 								</div>
 							</li>
@@ -79,26 +114,33 @@ NetMiner 365 를 이용하세요.</p>
 									<p class="payment"><em></em> 68,600</p>
 									<p>User / month</p>
 									<p>NetMiner365 를<br>
-									가볍고, 실용적으로<br>
-									사용할 수 있습니다.
+								가볍고, 실용적으로<br>
+								사용할 수 있습니다.
 									</p>
 									<p class="button">
-									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=02">구독하기</a>
-									</c:if>
-									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
+										<c:if test="${!empty memberVo}">
+										<a href="./goSubscribe?planCode=02">구독하기</a>
+										</c:if>
+										<c:if test="${empty memberVo}">
+										<a href="./login" >구독하기</a>
+										</c:if>
 									</p>
 								</div>
 								<div class="bottom">
-									<ul>
+									<ul class="data">
 										<!-- <li><em></em></li>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button obj">
+									<ul class="feature">
+										<!-- <li><em></em></li>
+										<li><em></em></li>
+										<li><em></em></li> -->
+									</ul>
+									<p class="button">
+									<c:if test="${!empty memberVo}">
 									<a href="./goSubscribe?planCode=02">구독하기</a>
+									</c:if>
 									<c:if test="${empty memberVo}">
 									<a href="./login" >구독하기</a>
 									</c:if>
@@ -112,10 +154,10 @@ NetMiner 365 를 이용하세요.</p>
 									<p class="payment"><em></em> 138,600</p>
 									<p>User / month</p>
 									<p>중급 규모의<br>
-										데이터를 분석하기에<br>
-										가장 적합합니다.
+								데이터를 분석하기에<br>
+								가장 적합합니다.
 									</p>
-									<p class="button active">
+									<p class="button">
 									<c:if test="${!empty memberVo}">
 									<a href="./goSubscribe?planCode=03">현재 플랜</a>
 									</c:if>
@@ -125,12 +167,17 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 								</div>
 								<div class="bottom">
-									<ul>
+									<ul class="data">
 										<!-- <li><em></em></li>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button active obj">
+									<ul class="feature">
+										<!-- <li><em></em></li>
+										<li><em></em></li>
+										<li><em></em></li> -->
+									</ul>
+									<p class="button">
 									<c:if test="${!empty memberVo}">
 									<a href="./goSubscribe?planCode=03">현재 플랜</a>
 									</c:if>
@@ -146,8 +193,8 @@ NetMiner 365 를 이용하세요.</p>
 									<p class="payment"><em></em> 278,600</p>
 									<p>User / month</p>
 									<p>다양한 데이터를 위해<br>
-										충분한 공간을<br>
-										제공합니다.
+								충분한 공간을<br>
+								제공합니다.
 									</p>
 									<p class="button">
 									<c:if test="${!empty memberVo}">
@@ -159,12 +206,17 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 								</div>
 								<div class="bottom">
-									<ul>
+									<ul class="data">
 										<!-- <li><em></em></li>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button obj">
+									<ul class="feature">
+										<!-- <li><em></em></li>
+										<li><em></em></li>
+										<li><em></em></li> -->
+									</ul>
+									<p class="button">
 									<c:if test="${!empty memberVo}">
 									<a href="./goSubscribe?planCode=04">구독하기</a>
 									</c:if>
@@ -175,8 +227,6 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 							</li>
 						</ul>
-						<p class="obj data">Data</p>
-						<p class="obj feature">Feature</p>
 						<p class="help">도움이 필요하십니까? <a href="#">영업팀 문의</a></p>
 					</div>
 				</div>

@@ -30,4 +30,6 @@ public class BillingDaoImpl implements BillingDao {
 	public void insertSubscript(BillingVo billingVo) {
 		sqlSession.insert("insertSubscript", billingVo);
 	}
+
+
 }

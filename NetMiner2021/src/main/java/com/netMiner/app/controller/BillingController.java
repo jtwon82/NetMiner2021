@@ -3,6 +3,7 @@ package com.netMiner.app.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServlet;
@@ -36,6 +37,15 @@ public class BillingController extends HttpServlet {
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
 	public String pricing (HttpSession session) {
 		String language = (String) session.getAttribute("language");
+		MemberVo member = (MemberVo) session.getAttribute("memberVo");
+		String userId = member.getUserId();
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("userId", userId);
+		Map<String, Object> result = billingService.selectSubscript(param);
+		//플랜타입이 trial 이고 날짜가 지난경우 해당 trial 막아야함 
+
+		session.setAttribute("memberVo",member);
+		
 		String path = "homePage"+ language;
 		return path+"/pricing";
 	}

@@ -29,6 +29,7 @@ public class MemberVo implements Serializable{
 	private String userStatsYn="N";
 	private String lastLoginDate;
 	private String chk;
+	private String planType;
 	
 	public MemberVo() {
 		

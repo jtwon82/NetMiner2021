@@ -57,7 +57,7 @@
 								<span>입금기한</span>
 								<p><em>YYYY-MM-DD HH:MM</em> 까지</p>
 							</li>
-							<a class="back" href="#">주문 페이지로 돌아가기 </a>
+							<a class="back" href="./pricing">주문 페이지로 돌아가기 </a>
 						</ul>
 					</div>
 				</div>

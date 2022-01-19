@@ -13,4 +13,5 @@ public interface BillingService {
 	HashMap<String, Object> selectSubscript(Map<String, Object> param);
 
 	void insertSubscript(BillingVo billingVo);
+
 }

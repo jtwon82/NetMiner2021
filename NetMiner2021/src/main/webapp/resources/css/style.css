@@ -68,7 +68,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap .section .wrap .more{font-size:22px; color:#1551c3; position: absolute; right: 0; padding: 10px; bottom: 70px;}
 #wrap .section .wrap .content{padding-top:110px;}
 
-#wrap #top{position: absolute; width: 100%;  transition: all 0.3s; border-bottom:1px solid #d7d7d7;}
+#wrap #top{position: absolute; width: 100%;  transition: all 0.3s;  z-index:9999;}
 #wrap #top h1{margin-top:-14px;}
 #wrap #top h1 .logo2{display: none;}
 #wrap #top.sticky h1 .logo1{display: none;}
@@ -105,7 +105,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top .content .mypage.type2 li a{padding:5px;}
 #wrap #top .content .mypage.type2 li:first-child a{display:inline-block;}
 #wrap #top .content .mypage.type2 li:first-child::after{content:"↗"; display: inline-block;}
-#wrap #top.sticky { position: fixed; top: 0; background-color:#fff; z-index:9999;}
+#wrap #top.sticky {position: fixed;top: 0;background-color:#fff;z-index:9999;border-bottom: 1px solid #d7d7d7;}
 #wrap #top.sticky .menu li:hover{color:#3462c7;}
 #wrap #top.sticky .menu span{color:#090909;}
 #wrap #top.sticky .content .mypage.type1 li.join{background-color:#203864;}
@@ -158,7 +158,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.sub #section .wrap{padding-top: 200px; padding-bottom: 200px;}
 #wrap.sub .title{text-align: center; padding-bottom: 50px;}
 #wrap.sub .title h2{font-size:38px; font-weight:700;}
-#wrap.sub .title p{font-size:24px;margin-top: 10px; }
+#wrap.sub .title p{font-size:22px;margin-top: 15px; }
 #wrap.sub .title p a{color:#114fbf; display:inline-block; padding-left:22px; }
 #wrap.sub input{border:1px solid #9d9d9d; font-size:20px; color:#606060;}
 #wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("/resources/images/select_arrow.png") no-repeat 98% 50%/15px auto;}
@@ -312,33 +312,41 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.pricing #main .slider .text{padding: 238px 0 230px 205px;}
 #wrap.pricing{background-color:#fff;}
 #wrap.pricing #main .slider{background-image: url(/resources/images/pricing_bg.jpg);}
-
 #wrap.pricing #section1 .content{}
-#wrap.pricing #section1 .content .paymentList{}
+#wrap.pricing #section1 .content .paymentList_header{height:98px; border-bottom: 1px solid #d7d7d7; width:100%; position: fixed; z-index: 10000; top:0px; left:0px; background-color: #ffffff; display: none;}
+#wrap.pricing #section1 .content .paymentList_header.show{display: block;}
+#wrap.pricing #section1 .content .paymentList_header ul{width:1250px; margin:0px auto; overflow: hidden;}
+#wrap.pricing #section1 .content .paymentList_header li{padding:29px 0px; float:left; width:25%; color: #203864; font-size: 28px; font-weight: 600; position: relative;}
+#wrap.pricing #section1 .content .paymentList_header li p.recommend{width:100%; left:0px; width: 100%; top:0px; }
+#wrap.pricing #section1 .content .paymentList_header li p.recommend em{line-height: 30px; padding:0px 30px; font-size: 18px; font-weight: 500; background: #ecf0f6; color: #203864; display: inline-block; vertical-align: top;}
 #wrap.pricing #section1 .content .paymentList>li{display:inline-block;width: 21.7%;vertical-align: top;position: relative;}
+#wrap.pricing #section1 .content .paymentList>li:first-child{position:absolute; width:auto; left: -140px;}
+#wrap.pricing #section1 .content .paymentList>li:first-child .top{border-top:0;}
+#wrap.pricing #section1 .content .paymentList>li:first-child .bottom{position:absolute; background:none; font-size:28px; font-weight:500; width: 108px; text-align: left;}
 #wrap.pricing #section1 .content .paymentList>li .recommend{line-height:38px;font-size:22px;background:#ecf0f6;color:#203864;width: 100%;top: -38px;font-weight: 500;}
-#wrap.pricing #section1 .content .paymentList> li+li{margin-left: 4%;}
-#wrap.pricing #section1 .content .paymentList li .top{border-top:4px solid #203864; padding:19px; }
+#wrap.pricing #section1 .content .paymentList>li+li{margin-right: 4%;}
+#wrap.pricing #section1 .content .paymentList>li:last-child{margin-right:0;}
+#wrap.pricing #section1 .content .paymentList li .top{border-top:4px solid #203864; padding:19px; height: 380px;}
 #wrap.pricing #section1 .content .paymentList li .top .button{background:#203864;line-height: 45px;color: #fff;margin-top: 22px;}
 #wrap.pricing #section1 .content .paymentList li .top .button.active{background:#9d9d9d;}
 #wrap.pricing #section1 .content .paymentList li .top p:nth-child(1){color:#203864;font-size:28px;font-weight:600;padding-bottom: 50px;}
 #wrap.pricing #section1 .content .paymentList li .top p:nth-child(3){font-size:20px;color:#4e4e4e;padding-bottom: 40px;}
 #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size:22px;}
 #wrap.pricing #section1 .content .paymentList li .top p.payment{font-size:38px;font-weight:600;}
-#wrap.pricing #section1 .content .paymentList li .top p.payment em{background-image:url(/resources/images/unit.png); width:31px; height:21px; background-size:cover; background-repeat:no-repeat;     display: inline-block;}
-#wrap.pricing #section1 .content .paymentList li .bottom{margin-top:90px;background:#f4f4f4;padding:50px 15px;border-radius:20px;height:1140px;position: relative;}
-#wrap.pricing #section1 .content .paymentList li .bottom .button{transition:all .5s; width:185px;line-height:45px;border:2px solid #203864;background:transparent;color:#203864;font-size: 22px;font-weight: 500;bottom: 30px;left: calc(50% - 92.5px);}
+#wrap.pricing #section1 .content .paymentList li .top p.payment em{background-image:url(/resources/images/unit.png);width: 31px;height: 21px;background-size:cover;background-repeat:no-repeat;display: inline-block;}
+#wrap.pricing #section1 .content .paymentList li .bottom{margin-top:90px;background:#f4f4f4;padding:50px 15px;border-radius:20px;position: relative;}
+#wrap.pricing #section1 .content .paymentList li .bottom .button{transition:all .5s; margin: 0 auto;  width:185px;line-height:45px;border:2px solid #203864;background:transparent;color:#203864;font-size: 22px;font-weight: 500;}
 #wrap.pricing #section1 .content .paymentList li .bottom .button.active{border:2px solid #9d9d9d; color:#9d9d9d;}
 #wrap.pricing #section1 .content .paymentList li .bottom .button:hover{background:#203864; color:#fff;}
 #wrap.pricing #section1 .content .paymentList li .bottom .button.active:hover{background:none; color:#9d9d9d;}
+#wrap.pricing #section1 .content .paymentList li .bottom .data{height:450px; margin-bottom:40px;}
+#wrap.pricing #section1 .content .paymentList li .bottom .feature{height:500px; margin-bottom: 20px;}
 #wrap.pricing #section1 .content .paymentList li .bottom ul{text-align: left;}
 #wrap.pricing #section1 .content .paymentList li .bottom ul li{ display: block;}
 #wrap.pricing #section1 .content .paymentList li .bottom ul li+li{margin-top:20px;}
 #wrap.pricing #section1 .content .paymentList li .bottom ul li em{width:15px;height:12px;background-image:url(/resources/images/check.png);background-repeat:no-repeat;background-size:cover;display: inline-block;margin-right: 10px;}
 #wrap.pricing #section1 .content  .help{font-size:28px; font-weight:500; margin-top: 50px;}
-#wrap.pricing #section1 .content  .help a{color:#1551c3; display:inline-block;}
-#wrap.pricing #section1 .content .data{font-size:28px;font-weight:500;left: -110px;top: 662px;}
-#wrap.pricing #section1 .content .feature{font-size:28px;font-weight:500;left: -110px;top: 1100px;}
+#wrap.pricing #section1 .content  .help a{color:#1551c3; display:inline-block;  margin-left: 10px;}
 
 #wrap.pricing #section2{background:#f4f4f4;}
 #wrap.pricing #section2 .content{margin-top: 35px;}
@@ -373,7 +381,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.subscribe #section .content .tail{ color: #1551c3; font-size: 18px; right: -20px; z-index:3;}
 
 /*주문완료-----------------------------------------------------------*/
-#wrap.order #section p span{color:#203864; font-weight:500;}
+#wrap.order #section p span{color:#203864; font-weight:600;}
 #wrap.order .title p{font-size:22px;}
 #wrap.order #section .content{background-color:#fff;width: 720px;margin: 0 auto;padding:50px 90px;box-sizing: border-box;}
 #wrap.order #section .content ul{}
@@ -381,13 +389,12 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.order #section .content ul li+li{margin-top:20px;}
 #wrap.order #section .content ul li span{color:#606060;width: 150px;display: inline-block;}
 #wrap.order #section .content ul li p{display:inline-block;}
-#wrap.order #section .content  .back{color:#04316f;text-align: center;margin-top: 50px;}
+#wrap.order #section .content  .back{width:60%;line-height:60px;background-color: #203864;color: #fff;font-size: 22px;display: block;margin: 0 auto; text-align: center; margin-top: 50px;}
 
 /*구독완료-----------------------------------------------------------*/
 #wrap.subscribe_complete{}
-#wrap.subscribe_complete #section p span{color:#203864; font-weight:500;}
+#wrap.subscribe_complete #section p span{color:#203864; font-weight:600;}
 #wrap.subscribe_complete #section .content{width:1200px; margin:0 auto; margin-top: 50px;}
-#wrap.subscribe_complete #section .title p{margin-top:30px;}
 #wrap.subscribe_complete #section ul{}
 #wrap.subscribe_complete #section ul li:nth-child(2){margin: 0 1.5%;}
 #wrap.subscribe_complete #section ul li{position:relative; width: 27%; height: 260px; display: inline-block; vertical-align: top; padding:55px 30px; background-color:#fff;}
@@ -400,7 +407,8 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.billing #section .content{background-color:#fff;width: 970px;margin: 0 auto;padding:50px 80px;box-sizing: border-box;}
 #wrap.billing #section .content .inner{}
 #wrap.billing #section .content .inner .title{font-size:24px;font-weight:600;text-align: left;padding-bottom: 30px;}
-#wrap.billing #section .content .inner .current{margin-bottom:50px;}
+#wrap.billing #section .content .inner .current{margin-bottom:50px; padding-left:20px;}
+#wrap.billing #section .content .inner .charge{padding-left:20px;}
 #wrap.billing #section .content .inner .current a{width:135px;line-height:40px;color:#fff;background:#203864;text-align:center;display: inline-block;margin-left: 5%;}
 #wrap.billing #section .content .inner .current>span{display:block; margin-bottom: 5px;}
 #wrap.billing #section .content .inner .current p{color:#606060;display: inline-block;}
@@ -411,11 +419,12 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.billing #section .content .inner2 .current p{}
 #wrap.billing #section .content .inner2 .current p em{font-size:22px;color:#203864;font-weight: 500;margin-right: 30px;}
 #wrap.billing #section .content .inner2 .charge table{width:100%;border-collapse: collapse;text-align:center;margin-top: 15px;}
-#wrap.billing #section .content .inner2 .charge table th{padding:5px; background:#eaeaea;}
+#wrap.billing #section .content .inner2 .charge table th{padding:5px; background:#eaeaea; font-weight:500;}
 #wrap.billing #section .content .inner2 .charge table td{padding:5px;color:#606060;border-bottom: 1px solid #d3d3d3;}
 #wrap.billing #section .content .inner2 .charge table th:nth-child(2){border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3;}
 #wrap.billing #section .content .inner2 .charge table td:nth-child(2){border-left:1px solid #d3d3d3; border-right:1px solid #d3d3d3;}
 #wrap.billing #section .content .inner2 .charge .tail{font-size:16px; color:#808080; margin-top:5px;}
+
 
 /*로그인-----------------------------------------------------------*/
 #wrap.login{}
@@ -626,6 +635,10 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #leave_popup .wrap button{width:130px; height:50px; margin: 30px 15px 0; }
 #leave_popup .wrap button.leave{background:#c20907; color:#fff; font-size: 20px;}
 
+#leave_hold_popup{}
+#leave_hold_popup .close{width:180px; height:45px; height:50px;}
+#leave_hold_popup p{margin-top:20px;}
+
 /*이용약관*/
 #wrap.terms #top .menu{display: block;}
 #wrap.terms #top .menu span{color: #090909;}
@@ -674,7 +687,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
      #wrap #navOn #nav .menu li:last-child{border-bottom:1px solid #d8d7d7;}
     #wrap #navOn #nav .menu li a{width: auto;}
     #wrap #navOn #nav .menu li a:active{color:#06a8e7;}
-    #wrap #top{position: fixed;width: 100%;z-index: 10; }
+    #wrap #top{position: fixed;width: 100%; border-bottom: 1px solid #d7d7d7;}
     #wrap #top h1{width: 140px; margin-top:-8px; margin-left:-10px;}
     #wrap #top h1 .logo1{display: none;}
     #wrap #top h1 .logo2{display: block;}
@@ -811,29 +824,29 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 /*pricing-----------------------------------------------------------*/
     #wrap.pricing .section .wrap{padding:40px 0;}
     #wrap.pricing #section1 .content{position:relative;}
-    #wrap.pricing #section1 .content .paymentList{}
-    #wrap.pricing #section1 .content .paymentList>li{width:47.5%;position: relative;}
-    #wrap.pricing #section1 .content .paymentList>li:nth-child(even){margin-left:3%;}
-    #wrap.pricing #section1 .content .paymentList>li:nth-child(3),#wrap.pricing #section1 .content .paymentList>li:nth-child(4){margin-top:15%;}
-    #wrap.pricing #section1 .content .paymentList>li+li{margin-left:0;}
-    #wrap.pricing #section1 .content .paymentList li .top{ border-top: 2px solid #203864; }
-    #wrap.pricing #section1 .content .paymentList li .recommend{font-size:15px;line-height: 30px;top: -30px;width: 100%;}
+    #wrap.pricing #section1 .content .paymentList_header.show{display: none;}
+    #wrap.pricing #section1 .content .paymentList>li:first-child{display:none;}
+    #wrap.pricing #section1 .content .paymentList>li{width:90%;position: relative;}
+    #wrap.pricing #section1 .content .paymentList>li:nth-child(odd){margin-right:0;}
+    #wrap.pricing #section1 .content .paymentList>li+li{margin-left:5%; margin-right:5%; margin-bottom: 45px; display: block;}
+    #wrap.pricing #section1 .content .paymentList li .top{ border-top: 2px solid #203864; height: auto;}
+    #wrap.pricing #section1 .content .paymentList li .recommend{font-size:15px;line-height: 30px;top: 0px;width: 100%; position: relative;}
     #wrap.pricing #section1 .content .paymentList li .top .button{font-size: 15px;line-height: 35px;}
     #wrap.pricing #section1 .content .paymentList li .top p:nth-child(1){font-size: 16px;padding-bottom: 15px;}
     #wrap.pricing #section1 .content .paymentList li .top p:nth-child(3){font-size: 13px;padding-bottom: 15px;}
-    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size: 13px;}
+    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size: 13px; word-break: keep-all;}
+    #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4) br{display:none;}
     #wrap.pricing #section1 .content .paymentList li .top p.payment{font-size: 19px;}
-    #wrap.pricing #section1 .content .paymentList li .top p.payment em{width:18px; height:12px;}
-    #wrap.pricing #section1 .content .paymentList li .bottom{margin-top: 20px;padding: 20px 10px;height: 270px;}
+    #wrap.pricing #section1 .content .paymentList li .top p.payment em{width: 17px; height: 11px;}
+    #wrap.pricing #section1 .content .paymentList li .bottom{margin-top: 20px;padding: 20px 10px;}
     #wrap.pricing #section1 .content .paymentList li .bottom .button{width: 73%;line-height: 35px;font-size: 15px;left: 12%;bottom: 20px;}
-    #wrap.pricing #section1 .content .paymentList li .bottom ul{}
+    #wrap.pricing #section1 .content .paymentList li .bottom .data{height:auto;}
+    #wrap.pricing #section1 .content .paymentList li .bottom .feature{height:auto; margin-top:20px;}
     #wrap.pricing #section1 .content .paymentList li .bottom ul li{font-size: 12px;}
     #wrap.pricing #section1 .content .paymentList li .bottom ul li+li{margin-top:10px;}
     #wrap.pricing #section1 .content .paymentList li .bottom ul li em{width: 11px;height: 9px;}
     #wrap.pricing #section1 .content  .help{font-size: 15px;margin-top: 30px;}
     #wrap.pricing #section1 .content  .help a{}
-    #wrap.pricing #section1 .content  .data{display:none;}
-    #wrap.pricing #section1 .content  .feature{display:none;}
 
     
     #wrap.pricing #section2{}
@@ -862,7 +875,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.order #section .content ul li+li{margin-top:15px;}
     #wrap.order #section .content ul li span{ font-size: 15px; width: 95px; }
     #wrap.order #section .content ul li p{ font-size: 15px; }
-    #wrap.order #section .content  .back{ font-size: 14px; margin-top: 35px; }
+    #wrap.order #section .content  .back{font-size: 16px;line-height: 35px; height: 35px; margin-top: 20px;}
 
 /*구독완료-----------------------------------------------------------*/  
     #wrap.subscribe_complete #section .content{margin-top:0;}
@@ -878,7 +891,8 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.billing #section .content .inner .title{padding-bottom:10px;}
     #wrap.billing #section .content .inner .title{font-size:17px;}
     #wrap.billing #section .content .inner .current a{display:block;line-height: 35px;width: 120px;margin-left: 0;margin-top: 10px;} 
-    #wrap.billing #section .content .inner .current{margin-bottom:20px;}
+    #wrap.billing #section .content .inner .current{margin-bottom:20px; padding-left:0;}
+    #wrap.billing #section .content .inner .charge{padding-left:0;}
     
     #wrap.billing #section .content .inner2 .charge .tail{font-size:11px;}
     #wrap.billing #section .content .inner2 .charge table{font-size:11px;}
@@ -1031,6 +1045,9 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #leave_popup .wrap button{width: 100px; height: 35px; font-size: 15px; margin: 15px 10px 0;}
     #leave_popup .wrap button.leave{ font-size: 15px;}
     
+    #leave_hold_popup .wrap p{font-size: 13px; margin-top:10px;}
+    #leave_hold_popup .wrap img{width:30px;}
+    #leave_hold_popup .wrap button{width: 120px; height: 35px; font-size: 15px; margin: 15px 10px 0; font-size: 15px;}
     /*이용약관*/
     #wrap.sub.terms #section .wrap{font-size:12px;}
     #wrap.sub.terms #section .wrap h3{font-size:25px; margin-bottom:50px; }

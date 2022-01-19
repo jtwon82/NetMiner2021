@@ -27,5 +27,5 @@
 		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount}
 	);
 	</update>
-	
+
 </mapper>
