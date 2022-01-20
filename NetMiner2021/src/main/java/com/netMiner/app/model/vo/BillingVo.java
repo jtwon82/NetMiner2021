@@ -25,6 +25,7 @@ public class BillingVo implements Serializable {
 	@JsonAlias("DATE_TYPE") private String DATE_TYPE = "";	// year, month
 //	@JsonAlias("TYPE_CODE") private String TYPE_CODE = "";
 	@JsonAlias("PAY_PLATFORM") private String PAY_PLATFORM = "";
+	@JsonAlias("PAY_STEP") private String PAY_STEP= "1";
 	@JsonAlias("PAY_TYPE") private String PAY_TYPE = "";
 	@JsonAlias("PAY_PRICE") private int PAY_PRICE = 0;
 	@JsonAlias("PAY_PRICE_TOTAL") private int PAY_PRICE_TOTAL = 0;
