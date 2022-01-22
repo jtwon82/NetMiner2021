@@ -1,6 +1,7 @@
 package com.netMiner.app.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,6 +30,18 @@ public class BillingDaoImpl implements BillingDao {
 	@Override
 	public void insertSubscript(BillingVo billingVo) {
 		sqlSession.insert("insertSubscript", billingVo);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectSubscriptAll(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectSubscriptAll", param);
+	}
+
+	@Override
+	public Map<String, Object> selectSubscriptOne(Map<String,Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("selectSubscriptOne", param);
 	}
 
 

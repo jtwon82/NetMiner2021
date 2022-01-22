@@ -93,7 +93,7 @@
 			#wrap #top .menu{left:320px;}
 			#wrap #top .menu span{font-size:22px; color:#fff; cursor: pointer;}
 			#wrap #top .menu span.active::after{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
-			#wrap #top .menu span::after{content:""; width:11px; height:7px; display:inline-block; background:url(../images/top_arrow.png); vertical-align: 5px; margin-left: 10px;}
+			#wrap #top .menu span::after{content:""; width:11px; height:7px; display:inline-block; background:url(resources/images/top_arrow.png); vertical-align: 5px; margin-left: 10px;}
 			#wrap #top .menu li{font-size:18px; color:#090909;}
 			#wrap #top .menu li:hover{color:#3462c7;}
 			#wrap #top .menu li.active{font-weight:700;}
@@ -119,7 +119,7 @@
 			#wrap #top.sticky .menu span{color:#090909;}
 			#wrap #top.sticky .content .mypage.type1 li.join{background-color:#203864;}
 			#wrap #top.sticky .content .mypage.type1 li.login a{color:#090909;}
-			#wrap #top.sticky .menu span::after{background:url(../images/top_arrow2.png); }
+			#wrap #top.sticky .menu span::after{background:url(resources/images/top_arrow2.png); }
 			#wrap #top.sticky .menu ul{box-shadow:none; border-radius:0; margin-top: 39px;}
 			#wrap #top.sticky .price{color:#090909;}
 			#wrap #top.sticky .menu{}
@@ -140,7 +140,7 @@
 			#wrap #footer .sns li a{padding: 12px;}
 			#wrap #footer .lang{text-align: left; cursor: pointer;width: 175px;border: 1px solid #fff; left: 42%;}
 			#wrap #footer .lang p{height: 56px;line-height: 56px;  position: relative; padding-left: 15px;}
-			#wrap #footer .lang p span{background: url(../images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
+			#wrap #footer .lang p span{background: url(resources/images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
 			#wrap #footer .lang ul{display:none;}
 			#wrap #footer .lang.active ul{display:block;}
 			#wrap #footer .lang.active p span{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
@@ -148,7 +148,7 @@
 			#wrap #footer .lang li:hover{color:#d10000;}
 			#wrap #footer .family{text-align: left; cursor: pointer;width: 175px;border: 1px solid #fff; left: 61%; }
 			#wrap #footer .family p{height: 56px;line-height: 56px;  position: relative; padding-left: 15px;}
-			#wrap #footer .family p span{background: url(../images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
+			#wrap #footer .family p span{background: url(resources/images/footer_arrow.png); width:11px; height:7px; display:inline-block; position:absolute;right: 7%;top: 43%;}
 			#wrap #footer .family ul{display:none; }
 			#wrap #footer .family.active ul{display:block;}
 			#wrap #footer .family.active p span{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
@@ -156,14 +156,14 @@
 			#wrap #footer .family li:hover{color:#d10000;}
 			#wrap #footer .cr{top: 45%; color:#9b9b9b; font-size:18px;}
 	
-			#wrap.sub{background: url(../images/sub_bg.jpg); color: #090909; font-size:20px; background-size: cover; background-position: center;}
+			#wrap.sub{background: url(resources/images/sub_bg.jpg); color: #090909; font-size:20px; background-size: cover; background-position: center;}
 			#wrap.sub #section .wrap{padding-top: 200px; padding-bottom: 200px;}
 			#wrap.sub .title{text-align: center; padding-bottom: 50px; }
 			#wrap.sub .title h2{font-size:38px; font-weight:700;}
 			#wrap.sub .title p{font-size:22px;margin-top: 15px; }
 			#wrap.sub .title p a{color:#114fbf; display:inline-block; padding-left:22px; }
 			#wrap.sub input{border:1px solid #9d9d9d; font-size:20px; color:#606060;}
-			#wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("../images/select_arrow.png") no-repeat 98% 50%/15px auto;}
+			#wrap.sub select{font-size:20px; color:#606060; border:1px solid #9d9d9d;  background:url("resources/images/select_arrow.png") no-repeat 98% 50%/15px auto;}
 			#wrap.sub .blue{color:#114fbf; font-size:18px; }
 			#wrap.sub #top .menu{display:none;}
 			#wrap.sub #top .price{display:none;}
@@ -252,7 +252,7 @@
 			    #wrap.sub .blue{font-size: 13px;}
 			    #wrap.sub #section .wrap{padding-top: 90px; padding-bottom: 100px;}
 			    #wrap.sub{font-size: 14px;}
-			    #wrap.sub select{background: url(../images/select_arrow.png) no-repeat 98% 50%/12px auto;}
+			    #wrap.sub select{background: url(resources/images/select_arrow.png) no-repeat 98% 50%/12px auto;}
 			    #wrap.sub #top{background-color: #fff;}
 			    #wrap.sub #top .content .mypage.type1 li.join{background-color: transparent;}
 			    
@@ -277,19 +277,19 @@
 							<ul>
 								<li>
 									<p>Customer</p>
-									<span>xxxxxxx@netminer365.com</span>
+									<span>${result.USER_ID}</span>
 								</li>
 								<li>
 									<p>Date</p>
-									<span>MM/DD/YYYY</span>
+									<span>${result.REG_DATE}</span>
 								</li>
 								<li>
 									<p>Description</p>
-									<span>상품명</span>
+									<span>${result.PLAN_NAME}</span>
 								</li>
 								<li>
 									<p>Service Period</p>
-									<span>MM/DD/YYYY ~MM/DD/YYYY</span>
+									<span>${result.REG_DATE} ~ ${result.EXITS_DATE }</span>
 								</li>
 							</ul>
 						</div>
@@ -298,15 +298,15 @@
 							<ul>
 								<li>
 									<p>Subtotall</p>
-									<span>₩<em>49.9</em></span>
+									<span>₩<em> ${result.PAY_PRICE - result.PAY_TAX} </em></span>
 								</li>
 								<li>
 									<p>Tax</p>
-									<span>₩<em>0.1</em></span>
+									<span>₩<em> ${result.PAY_TAX} </em></span>
 								</li>
 								<li class="totalCost">
 									<p>Total</p>
-									<span>₩ <em>50.0</em></span>
+									<span>₩ <em> ${result.PAY_PRICE} </em></span>
 								</li>
 							</ul>
 						</div>
@@ -317,7 +317,6 @@
 					</div>
 				</div>
 			</div>
-			<%@include file = "../common/footer.jsp" %>
 		</div>
 	
 	</body>

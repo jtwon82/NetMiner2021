@@ -1,6 +1,7 @@
 package com.netMiner.app.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class BillingServiceImpl  implements BillingService{
 	@Override
 	public void insertSubscript(BillingVo billingVo) {
 		billingDao.insertSubscript(billingVo);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectSubscriptAll(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return billingDao.selectSubscriptAll(param);
+	}
+
+	@Override
+	public Map<String, Object> selectSubscriptOne(Map<String,Object> param) {
+		// TODO Auto-generated method stub
+		return billingDao.selectSubscriptOne(param);
 	}
 
 

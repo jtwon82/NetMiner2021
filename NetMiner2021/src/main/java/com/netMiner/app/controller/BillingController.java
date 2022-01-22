@@ -3,9 +3,11 @@ package com.netMiner.app.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,7 +46,12 @@ public class BillingController extends HttpServlet {
 		param.put("userId", userId);
 		Map<String, Object> result = billingService.selectSubscript(param);
 		//플랜타입이 trial 이고 날짜가 지난경우 해당 trial 막아야함 
-
+		if (result == null) {
+			member.setPlanType(0);
+		} else {
+			//플랜 코드가 1이면 기입 날짜 기준 28일이 지나면 
+			member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));				
+		}
 		session.setAttribute("memberVo",member);
 		
 		String path = "homePage"+ language;
@@ -51,10 +59,37 @@ public class BillingController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="billing", method=RequestMethod.GET) 
-	public String billing (HttpSession session) {
+	public String billing (HttpSession session, Model mv,HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
+		MemberVo member = (MemberVo) session.getAttribute("memberVo");
+		String userId = member.getUserId();
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("userId", userId);
+		List<Map<String,Object>> billingList = billingService.selectSubscriptAll(param);
+		Map<String, Object> nowPlan = billingService.selectSubscript(param);
+		
+		logger.info("billingList - {}", billingList.toString());
+		
+		if (nowPlan == null && billingList.size() > 1) {
+			// 현재 플랜은 없고 이전 결재 내역이 있는경우 
+			mv.addAttribute("nowPlan", "none");
+			mv.addAttribute("billingList", billingList);
+		} else if (nowPlan != null && billingList.size() < 1) {
+			// 현재 플랜은 있으나 이전 결재 내역이 없는경우 
+			mv.addAttribute("nowPlan", nowPlan);
+			mv.addAttribute("billingList", "none");
+		} else if (nowPlan != null && billingList.size() > 1){
+			// 둘다 존재 하는 경우 
+			mv.addAttribute("nowPlan", nowPlan);
+			mv.addAttribute("billingList", billingList);
+		} else {
+			//현재 플랜도 없고 이전 결재 내역또한 없는경우 
+			mv.addAttribute("nowPlan","none");
+			mv.addAttribute("billingList", "none");
+			
+		}
 		String path = "homePage"+ language;
-		return path+"/billing";
+		return path + "/billing";
 	}
 	
 	@RequestMapping(value="goSubscribe", method=RequestMethod.GET) 
@@ -170,5 +205,17 @@ public class BillingController extends HttpServlet {
 		mv.setViewName(path+"/subscribe_complete");
 		return mv;
 	}
-	
+	@RequestMapping(value="invoice",method=RequestMethod.GET)
+	public String goInvoice(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		String language = (String) session.getAttribute("language");
+		String billingNo= request.getParameter("no");
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("billingNo", billingNo);
+		Map<String ,Object> result = billingService.selectSubscriptOne(param);
+		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
+		mv.addAttribute("result",result);
+		mv.addAttribute("language",language);
+		String path = "homePage"+ language;
+		return path + "/invoice";
+	}
 }

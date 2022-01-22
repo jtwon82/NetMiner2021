@@ -82,11 +82,27 @@ NetMiner 365 를 이용하세요.</p>
 										모든 기능을 무료로<br>
 										사용해 보세요.
 									</p>
-								<c:if test="${empty memberVo}">
-									<p class="button"><a href="./login">무료체험</a></p>
+								<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 1}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 1}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=01">무료체험</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 1}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 									</c:if>
-									<c:if test="${!empty memberVo}">
-									<p class="button"><a href="./goSubscribe?planCode=01">무료체험</a></p>
+									<c:if test="${empty memberVo}">
+									<p class="button">
+										<a href="./goSubscribe?planCode=01">구독하기</a>
+									</p>
 									</c:if>
 								</div>
 								<div class="bottom">
@@ -100,12 +116,29 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
+									<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 1}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 1}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=01">구독하기</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 1}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
+									</c:if>
 									<c:if test="${empty memberVo}">
-									<p class="button"><a href="./login">무료체험</a></p>
+									<p class="button">
+										<a href="./goSubscribe?planCode=01">구독하기</a>
+									</p>
 									</c:if>
-									<c:if test="${!empty memberVo}">
-									<p class="button"><a href="./goSubscribe?planCode=01">무료체험</a></p>
-									</c:if>
+
 								</div>
 							</li>
 							<li>
@@ -117,14 +150,26 @@ NetMiner 365 를 이용하세요.</p>
 								가볍고, 실용적으로<br>
 								사용할 수 있습니다.
 									</p>
-									<p class="button">
 										<c:if test="${!empty memberVo}">
-										<a href="./goSubscribe?planCode=02">구독하기</a>
+											<c:if test="${memberVo.planType == 2}"> 
+											<p class="button active">
+												<a href="javascript:void(0);">현재 플랜</a>
+											</p>
+											</c:if>
+											<c:if test="${memberVo.planType < 2}"> 
+												<p class="button">
+													<a href="./goSubscribe?planCode=02">구독하기</a>
+												</p>
+											</c:if>
+											<c:if test="${memberVo.planType > 2}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 										</c:if>
 										<c:if test="${empty memberVo}">
 										<a href="./login" >구독하기</a>
 										</c:if>
-									</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
@@ -137,14 +182,26 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button">
 									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=02">구독하기</a>
+											<c:if test="${memberVo.planType == 2}"> 
+											<p class="button active">
+												<a href="javascript:void(0);">현재 플랜</a>
+											</p>
+											</c:if>
+											<c:if test="${memberVo.planType < 2}"> 
+												<p class="button">
+													<a href="./goSubscribe?planCode=02">구독하기</a>
+												</p>
+											</c:if>
+											<c:if test="${memberVo.planType > 2}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
+										</c:if>
+										<c:if test="${empty memberVo}">
+										<a href="./login" >구독하기</a>
 									</c:if>
-									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
-									</p>
 								</div>
 							</li>
 							<li>
@@ -157,14 +214,28 @@ NetMiner 365 를 이용하세요.</p>
 								데이터를 분석하기에<br>
 								가장 적합합니다.
 									</p>
-									<p class="button">
-									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=03">현재 플랜</a>
+									<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 3}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 3}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=03">구독하기</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 3}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 									</c:if>
 									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
+									<p class="button">
+										<a href="./goSubscribe?planCode=03">구독하기</a>
 									</p>
+									</c:if>
 								</div>
 								<div class="bottom">
 									<ul class="data">
@@ -177,14 +248,28 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button">
-									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=03">현재 플랜</a>
+									<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 3}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 3}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=03">구독하기</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 3}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 									</c:if>
 									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
+									<p class="button">
+										<a href="./goSubscribe?planCode=03">구독하기</a>
 									</p>
+									</c:if>
 								</div>
 							</li>
 							<li>
@@ -196,14 +281,28 @@ NetMiner 365 를 이용하세요.</p>
 								충분한 공간을<br>
 								제공합니다.
 									</p>
-									<p class="button">
-									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=04">구독하기</a>
+									<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 4}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 4}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=04">구독하기</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 4}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 									</c:if>
 									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
+									<p class="button">
+										<a href="./goSubscribe?planCode=04">구독하기</a>
 									</p>
+									</c:if>
 								</div>
 								<div class="bottom">
 									<ul class="data">
@@ -216,14 +315,28 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em></li>
 										<li><em></em></li> -->
 									</ul>
-									<p class="button">
-									<c:if test="${!empty memberVo}">
-									<a href="./goSubscribe?planCode=04">구독하기</a>
+									<c:if test="${!empty memberVo}">										
+										<c:if test="${memberVo.planType == 4}"> 
+										<p class="button active">
+											<a href="javascript:void(0);">현재 플랜</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType < 4}"> 
+										<p class="button">
+											<a href="./goSubscribe?planCode=04">구독하기</a>
+										</p>
+										</c:if>
+										<c:if test="${memberVo.planType > 4}"> 
+												<p class="button active">
+													<a href="javascript:void(0)">구독하기</a>
+												</p>
+											</c:if>
 									</c:if>
 									<c:if test="${empty memberVo}">
-									<a href="./login" >구독하기</a>
-									</c:if>
+									<p class="button">
+										<a href="./goSubscribe?planCode=04">구독하기</a>
 									</p>
+									</c:if>
 								</div>
 							</li>
 						</ul>

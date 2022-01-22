@@ -26,6 +26,13 @@
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		var str = "${nowPlan}";
+		var str2 = "${billingList}";
+		
+		console.log("str - " + str);
+		console.log("str2 - " +str2);
+	</script>
 		<div id="wrap" class="sub billing">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
@@ -34,6 +41,7 @@
 						<h2>Billing</h2>
 					</div>
 					<div class="content">
+					<c:if test = "${nowPlan == 'none'}" > 
 						<!-- 비구매자 -->
 						<div class="inner inner1">
 							<p class="title">플랜 및 결제</p>
@@ -42,19 +50,7 @@
 								<p>아직 NetMiner 365를 시작하지 않으셨나요?</p>
 								<a href="./pricing">무료 체험</a>
 							</div>
-							<div class="charge">
-								<span>결제 내역</span>
-								<p>최근 3개월 내 결제 내역이 없습니다.</p>
-							</div>
-						</div>
-						<!-- 구매자 -->
-						<div class="inner inner2" style="display:none;" >
-							<p class="title">플랜 및 결제</p>
-							<div class="current">
-								<span>현재 플랜</span>
-								<p><em>SMALL</em> <span>YYYY 년 MM월 DD일</span>에 만료됩니다. </p>
-								<a href="#">플랜 변경</a>
-							</div>
+							<c:if test="${billingList != 'none'}">
 							<div class="charge">
 								<span>결제 내역</span>
 								<table>
@@ -66,29 +62,69 @@
 										<th></th>
 									</thead>
 									<tbody>
-										<tr>
-											<td>YYYY 년 MM월 DD일</td>
-											<td>SMALL</td>
-											<td>50</td>
-											<td><img src="images/download.png"></td>
-										</tr>
-										<tr>
-											<td>YYYY 년 MM월 DD일</td>
-											<td>SMALL</td>
-											<td>50</td>
-											<td><img src="images/download.png"></td>
-										</tr>
-										<tr>
-											<td>YYYY 년 MM월 DD일</td>
-											<td>SMALL</td>
-											<td>50</td>
-											<td><img src="images/download.png"></td>
-										</tr>
+										<c:forEach var="billingList" items="${billingList}" varStatus="status">
+											<tr>
+												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><c:out value="${billingList.PLAN_NAME}"/></td>
+												<td><c:out value="${billingList.PAY_PRICE}"/></td>
+												<td><img src="resources/images/download.png"></td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 								<p class="tail">*최근 3개월의 결제 내역만 확인할 수 있습니다.</p>
 							</div>
+							</c:if>
+							<c:if test="${billingList == 'none'}" >	
+							<div class="charge">
+								<span>결제 내역</span>
+								<p>최근 3개월 내 결제 내역이 없습니다.</p>
+							</div>
+							</c:if>
 						</div>
+						</c:if>
+						<!-- 구매자 -->
+						<c:if test = "${nowPlan != 'none'}" > 
+						<div class="inner inner2" >
+							<p class="title">플랜 및 결제</p>
+							<div class="current">
+								<span>현재 플랜</span>
+								<p><em>${nowPlan.PLAN_NAME}</em> <span>${nowPlan.EXITS_DATE}</span>에 만료됩니다. </p>
+								<a href="./pricing">플랜 변경</a>
+							</div>
+							<c:if test="${billingList != 'none'}">
+							<div class="charge">
+								<span>결제 내역</span>
+								<table>
+									<colgroup><col width="*"><col width="25%"><col width="28%"><col width="10%"></colgroup>
+									<thead>
+										<th>날짜</th>
+										<th>플랜</th>
+										<th>결제 금액 </th>
+										<th></th>
+									</thead>
+									<tbody>
+										<c:forEach var="billingList" items="${billingList}" varStatus="status">
+											<tr>
+												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><c:out value="${billingList.PLAN_NAME}"/></td>
+												<td><c:out value="${billingList.PAY_PRICE}"/></td>
+												<td><a href="./invoice?no=${billingList.NO}"><img src="resources/images/download.png"></a></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<p class="tail">*최근 3개월의 결제 내역만 확인할 수 있습니다.</p>
+							</div>
+							</c:if>										
+							<c:if test="${billingList == 'none'}" >
+								<div class="charge">
+									<span>결제 내역</span>
+									<p>최근 3개월 내 결제 내역이 없습니다.</p>
+								</div>
+							</c:if>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>

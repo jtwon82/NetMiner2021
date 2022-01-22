@@ -1,6 +1,7 @@
 package com.netMiner.app.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.netMiner.app.model.vo.BillingVo;
@@ -13,5 +14,9 @@ public interface BillingService {
 	HashMap<String, Object> selectSubscript(Map<String, Object> param);
 
 	void insertSubscript(BillingVo billingVo);
+
+	List<Map<String,Object>> selectSubscriptAll(Map<String, Object> param);
+
+	Map<String, Object> selectSubscriptOne(Map<String,Object> param);
 
 }

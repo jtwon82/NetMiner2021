@@ -9,7 +9,14 @@
 	</select>
 	
 	<select id="selectSubscript" parameterType="Map" resultType="Map">
-		select * from NetMiner.SUBSCRIPT where USER_ID =#{userId}
+		select A.*, B.*, 
+			CASE WHEN A.DATE_TYPE = 'month' 
+			THEN DATE_FORMAT(DATE_ADD(A.REG_DATE, INTERVAL 1 MONTH), '%Y-%m-%d %H:%i:%S') 
+			ELSE DATE_FORMAT(DATE_ADD(A.REG_DATE, INTERVAL 1 YEAR), '%Y-%m-%d %H:%i:%S')
+			END AS EXITS_DATE 
+		from NetMiner.SUBSCRIPT AS A 
+		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE 
+		where USER_ID =#{userId}
 		order by no desc limit 1
 	</select>
 	
@@ -27,5 +34,26 @@
 		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount}
 	);
 	</update>
-
+	
+	<select id="selectSubscriptAll" parameterType="Map" resultType="Map">
+		select A.*, B.* 
+		 from NetMiner.SUBSCRIPT AS A 
+		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE
+		where USER_ID =#{userId}
+		AND A.REG_DATE  <![CDATA[>=]]> DATE_ADD(NOW(), INTERVAL -3 MONTH)
+		order by A.REG_DATE DESC;
+	</select>
+	
+	<select id="selectSubscriptOne" parameterType="Map" resultType="Map">
+		select DATE_FORMAT(A.REG_DATE, '%Y-%m-%d') AS REG_DATE, A.USER_ID, A.PLAN_CODE, A.PLAN_TYPE, A.PAY_PLATFORM, A.PAY_STEP, A.PAY_TYPE, A.PAY_PRICE, A.PAY_PRICE_TOTAL,
+				 A.ACCOUNT_NAME, A.ACCOUNT_NO, A.ACCOUNT_HOLDER, A.ACCOUNT_DEPOSITLIMIT, A.ORDER_ID, A.ORDER_PNM, A.paymentKey, A.amount 
+			, B.* 
+		,CASE WHEN A.DATE_TYPE = 'month' 
+			THEN DATE_FORMAT(DATE_ADD(A.REG_DATE, INTERVAL 1 MONTH), '%Y-%m-%d') 
+			ELSE DATE_FORMAT(DATE_ADD(A.REG_DATE, INTERVAL 1 YEAR), '%Y-%m-%d')
+			END  AS EXITS_DATE 
+		 from NetMiner.SUBSCRIPT AS A 
+		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE
+		where A.NO =#{billingNo};
+	</select>
 </mapper>
