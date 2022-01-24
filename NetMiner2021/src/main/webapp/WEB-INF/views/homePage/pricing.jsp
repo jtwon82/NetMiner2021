@@ -84,14 +84,21 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 								<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
-										<p class="button active">
-											<a href="javascript:void(0);">현재 플랜</a>
+										<p class="button">
+											<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">현재 플랜</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
-										<p class="button">
-											<a href="./goSubscribe?planCode=01">무료체험</a>
-										</p>
+											<c:if test ="${memberVo.planType == 0}">
+											<p class="button">
+												<a href="./goSubscribe?planCode=01">무료체험</a>
+											</p>
+											</c:if>
+											<c:if test ="${memberVo.planType == -1}">
+											<p class="button active">
+												<a href="avascript:alert('Sorry, your free trial has expired.')">무료체험</a>
+											</p>
+											</c:if>
 										</c:if>
 										<c:if test="${memberVo.planType > 1}"> 
 												<p class="button active">
@@ -101,7 +108,7 @@ NetMiner 365 를 이용하세요.</p>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<p class="button">
-										<a href="./goSubscribe?planCode=01">구독하기</a>
+										<a href="./login">구독하기</a>
 									</p>
 									</c:if>
 								</div>
@@ -135,7 +142,7 @@ NetMiner 365 를 이용하세요.</p>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<p class="button">
-										<a href="./goSubscribe?planCode=01">구독하기</a>
+										<a href="./login">구독하기</a>
 									</p>
 									</c:if>
 
@@ -340,7 +347,7 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 							</li>
 						</ul>
-						<p class="help">도움이 필요하십니까? <a href="#">영업팀 문의</a></p>
+						<p class="help">도움이 필요하십니까? <a href="mailto:netminer@cyram.com">영업팀 문의</a></p>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 package com.netMiner.app.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,16 +43,47 @@ public class BillingController extends HttpServlet {
 		String language = (String) session.getAttribute("language");
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
 		String userId = member.getUserId();
+		boolean checkDate = false;
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("userId", userId);
 		Map<String, Object> result = billingService.selectSubscript(param);
 		//플랜타입이 trial 이고 날짜가 지난경우 해당 trial 막아야함 
-		if (result == null) {
-			member.setPlanType(0);
+		if (result != null && result.get("PLAN_CODE").equals("01")) {
+			Date nowDate = new Date(System.currentTimeMillis());
+			 SimpleDateFormat dateFormat = new 
+		                SimpleDateFormat ("yyyy-MM-dd");
+			 try {
+				Date date1 = dateFormat.parse(dateFormat.format(nowDate));
+				Date date2 = dateFormat.parse((String) result.get("EXITS_DATE"));
+				logger.info("date1 -{}",date1.toString());
+				logger.info("date2 -{}",date2.toString());
+				if (date1.after(date2)) {
+					checkDate = true;
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} 
+		if (checkDate) {
+			//trial 이고 해당 trial 이 날짜가 지난경우 -1 리턴 
+			member.setPlanType(-1);
 		} else {
-			//플랜 코드가 1이면 기입 날짜 기준 28일이 지나면 
-			member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));				
-		}
+			if (result != null) {
+				if (result.get("PLAN_CODE").equals("01")) {
+					//조회가 trial 이고 해당 trial이 날짜가 지나지 않는 경우 1 리턴 
+					member.setPlanType(1);					
+				} else {
+					//조회가 되고 trial이 아닌경우 해당 plancode 리턴 
+					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
+				}
+			} else{
+				//조회가 안되는 경우 신규 이므로 0 리턴 
+				member.setPlanType(0);
+			} 
+		}		
+		logger.info("memberPlanType- {}", member.getPlanType());
 		session.setAttribute("memberVo",member);
 		
 		String path = "homePage"+ language;
@@ -70,17 +102,36 @@ public class BillingController extends HttpServlet {
 		
 		logger.info("billingList - {}", billingList.toString());
 		
+		long diffDays = 0;
+		Date nowDate = new Date(System.currentTimeMillis());
+		 SimpleDateFormat dateFormat = new 
+	                SimpleDateFormat ("yyyy-MM-dd");
+		 try {
+			Date now = dateFormat.parse(dateFormat.format(nowDate));
+			Date exitsDate = dateFormat.parse((String) nowPlan.get("EXITS_DATE"));
+			logger.info("date1 -{}",now.toString());
+			logger.info("date2 -{}",exitsDate.toString());
+			diffDays = ((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 //플랜 만료 7일 timestamp
+		 
+		 
 		if (nowPlan == null && billingList.size() > 1) {
 			// 현재 플랜은 없고 이전 결재 내역이 있는경우 
 			mv.addAttribute("nowPlan", "none");
 			mv.addAttribute("billingList", billingList);
 		} else if (nowPlan != null && billingList.size() < 1) {
-			// 현재 플랜은 있으나 이전 결재 내역이 없는경우 
+			// 현재 플랜은 있으나  이전 결재 내역이 없는경우 
 			mv.addAttribute("nowPlan", nowPlan);
+			mv.addAttribute("diffDays", diffDays);
 			mv.addAttribute("billingList", "none");
 		} else if (nowPlan != null && billingList.size() > 1){
 			// 둘다 존재 하는 경우 
 			mv.addAttribute("nowPlan", nowPlan);
+			mv.addAttribute("diffDays", diffDays);
 			mv.addAttribute("billingList", billingList);
 		} else {
 			//현재 플랜도 없고 이전 결재 내역또한 없는경우 
@@ -101,9 +152,10 @@ public class BillingController extends HttpServlet {
 		String dateType = request.getParameter("dateType") == null ? "year" : request.getParameter("dateType");
 		String payType = request.getParameter("payType") == null ? "card" : request.getParameter("payType");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
 		int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
-		
+		String pagePath = "";
 		if (planCode == null) {
 			if(billingVo==null) {
 				return "redirect:/";
@@ -138,12 +190,20 @@ public class BillingController extends HttpServlet {
 				billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 			}
 		}
-
+		
+		if (planCode.equals("01")) {
+			billingVo.setUSER_ID(memberVo.getUserId());
+			billingVo.setDATE_TYPE("month");
+			billingService.insertSubscript(billingVo);			
+			pagePath = "redirect:/goSubscribeComplete";
+		} else {
+			pagePath = path+"/subscribe";
+		}
 		session.setAttribute("billing",billingVo);
 		logger.info("billing -{}", billingVo.toString());
 		//mv.setViewName(path+"/subscribe");
 		
-		return path+"/subscribe";
+		return pagePath;
 	}
 	
 	

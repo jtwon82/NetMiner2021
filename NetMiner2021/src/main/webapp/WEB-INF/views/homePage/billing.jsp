@@ -29,9 +29,11 @@
 	<script type="text/javascript">
 		var str = "${nowPlan}";
 		var str2 = "${billingList}";
+		var str3 = "${diffDays}";
 		
 		console.log("str - " + str);
 		console.log("str2 - " +str2);
+		console.log("str3 - " +str3);
 	</script>
 		<div id="wrap" class="sub billing">
 			<%@include file = "../common/top.jsp" %>
@@ -41,7 +43,7 @@
 						<h2>Billing</h2>
 					</div>
 					<div class="content">
-					<c:if test = "${nowPlan == 'none'}" > 
+						<c:if test = "${nowPlan == 'none'}" > 
 						<!-- 비구매자 -->
 						<div class="inner inner1">
 							<p class="title">플랜 및 결제</p>
@@ -89,8 +91,31 @@
 							<p class="title">플랜 및 결제</p>
 							<div class="current">
 								<span>현재 플랜</span>
+								
+								<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays < 0}">
+								<p>Trial 이 만료되었습니다. 계속 이용하시겠습니까? </p>
+								<a href="./pricing">구독하기</a>
+								</c:if>
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 0 && diffDays < 7}">
 								<p><em>${nowPlan.PLAN_NAME}</em> <span>${nowPlan.EXITS_DATE}</span>에 만료됩니다. </p>
-								<a href="./pricing">플랜 변경</a>
+								<a href="./goSubscribe?planCode=${nowPlan.PLAN_CODE}" >플랜연장</a>
+								</c:if>
+								
+								<c:if test="${diffDays < 0 && diffDays > -7}">
+								<p>이용 중인 플랜이 만료되었습니다. 계속 이용하시겠습니까?</p>
+								<a href="./goSubscribe?planCode=${nowPlan.PLAN_CODE}" >플랜연장</a>
+								<a href="./pricing">플랜변경</a>
+								</c:if>
+								
+								<c:if test="${diffDays < -7}">
+								<p>현재 이용 중인 플랜이 없습니다. </p>
+								<a href="./pricing">구독하기</a>
+								</c:if>
+								
+								<c:if test="${diffDays > 7}">
+								<p><em>${nowPlan.PLAN_NAME}</em> <span>${nowPlan.EXITS_DATE}</span>에 만료됩니다. </p>
+								<a href="./pricing">업그레이드</a>
+								</c:if>
 							</div>
 							<c:if test="${billingList != 'none'}">
 							<div class="charge">

@@ -41,6 +41,7 @@
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE
 		where USER_ID =#{userId}
 		AND A.REG_DATE  <![CDATA[>=]]> DATE_ADD(NOW(), INTERVAL -3 MONTH)
+		AND A.PLAN_CODE != '01'
 		order by A.REG_DATE DESC;
 	</select>
 	

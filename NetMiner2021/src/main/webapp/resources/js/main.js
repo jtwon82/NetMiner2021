@@ -570,7 +570,13 @@ function delteUser () {
 			url : "./delteMember",
 			type : "POST",
 			success : function(data) {
-				window.location.href="./";
+				if (data.result == 'fail') {
+					alert(" 현재 이용 중인 플랜이 있습니다. 플랜이 끝나면 계정을삭제할 수 있습니다. ");
+					window.location.href="./";
+				} else {
+					window.location.href="./";
+				} 
+					
 			}
 			
 		})

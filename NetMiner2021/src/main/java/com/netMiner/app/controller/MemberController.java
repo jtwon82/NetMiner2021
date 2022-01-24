@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.dao.SelectDao;
+import com.netMiner.app.model.service.BillingService;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.model.vo.NationVo;
@@ -45,6 +46,9 @@ public class MemberController {
 	
 	@Autowired
 	private SendEmail sendEmail;
+	
+	@Autowired
+	private BillingService billingService;
 	
 
 	@RequestMapping(value="checkUser", method=RequestMethod.POST)
@@ -322,11 +326,21 @@ public class MemberController {
 	@RequestMapping(value="delteMember", method=RequestMethod.POST)
 	public ModelAndView delteMember(ModelAndView mv, HttpSession session) {
 		MemberVo vo = (MemberVo) session.getAttribute("memberVo");
-
-		vo.setUserStatsYn("Y");
-		memberService.changeMemberInfo(vo);
 		
-		session.removeAttribute("memberVo");
+		Map<String ,Object> param = new HashMap<String,Object> ();
+		param.put("userId", vo.getUserId());
+		Map<String, Object> result = billingService.selectSubscript(param);
+		
+		if (result != null) {
+			mv.addObject("result","fail");
+		} else {
+			vo.setUserStatsYn("Y");
+			memberService.changeMemberInfo(vo);
+			mv.addObject("result","success");
+			session.removeAttribute("memberVo");
+		}
+		
+		
 		mv.setViewName("jsonView");
 		return mv;
 	}

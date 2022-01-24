@@ -63,8 +63,12 @@
 							<c:if test="${!empty memberVo}">
 							<div class="mypage obj type1" style="right: 70px;">
 								<ul>
-									<!--  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>-->
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
+									  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>
+									 </c:if>
+									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
 									 <li class="join"><a href="./pricing" >Start for free</a></li>
+									 </c:if>
 								</ul>
 							</div>
 							<div class="mypage obj type2">
@@ -72,8 +76,12 @@
 									<img src="/resources/images/top_me.png" alt="mypage">
 								</p>
 								<ul>
-									<!-- <li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Start for free</a></li> -->
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
+									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li> 
+									</c:if>
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
 									<li class="workSpace active"><a href="./pricing" class="trs">Start for free</a></li>
+									</c:if>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="billing"><a href="./billing" class="trs">Billing</a></li>
 									<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
@@ -104,7 +112,9 @@
 											<img src="/resources/images/top_me.png" alt="mypage">
 										</p>
 										<ul>
+											<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
 											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li>
+											</c:if>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="billing"><a href="./billing" class="trs">Billing</a></li>
 											<li class="signOut"><a href="#" class="trs">Sign-Out</a></li>
