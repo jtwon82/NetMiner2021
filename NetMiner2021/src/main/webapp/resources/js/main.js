@@ -103,14 +103,12 @@ $(document).ready(function() {
 	$("button[class='pay trs']").click(function (){
 		var accountRoute = $("input[name='sub2']:checked").val();
 		console.log(accountRoute);
-		
 		var url = document.createElement('a');
 		url.href = location.href;
 			
 		if (accountRoute == 'card') {
 			/*카드결제시 */
-			Payment['successUrl'] = url.origin +'/payment';
-			
+			Payment['successUrl'] = url.origin +'/payment' ;
 		} else {
 			/*계좌 이체시*/
 			Payment['successUrl'] = url.origin +'/payment';

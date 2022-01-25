@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -97,13 +98,13 @@
 								<a href="./pricing">구독하기</a>
 								</c:if>
 								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 0 && diffDays < 7}">
-								<p><em>${nowPlan.PLAN_NAME}</em> <span>${nowPlan.EXITS_DATE}</span>에 만료됩니다. </p>
-								<a href="./goSubscribe?planCode=${nowPlan.PLAN_CODE}" >플랜연장</a>
+								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd HH:mm:ss"/></span>에 만료됩니다. </p>
+								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								</c:if>
 								
 								<c:if test="${diffDays < 0 && diffDays > -7}">
 								<p>이용 중인 플랜이 만료되었습니다. 계속 이용하시겠습니까?</p>
-								<a href="./goSubscribe?planCode=${nowPlan.PLAN_CODE}" >플랜연장</a>
+								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								<a href="./pricing">플랜변경</a>
 								</c:if>
 								
@@ -113,7 +114,7 @@
 								</c:if>
 								
 								<c:if test="${diffDays > 7}">
-								<p><em>${nowPlan.PLAN_NAME}</em> <span>${nowPlan.EXITS_DATE}</span>에 만료됩니다. </p>
+								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd HH:mm:ss"/></span> 에 만료됩니다. </p>
 								<a href="./pricing">업그레이드</a>
 								</c:if>
 							</div>

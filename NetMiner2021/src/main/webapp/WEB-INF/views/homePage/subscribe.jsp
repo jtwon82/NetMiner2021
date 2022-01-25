@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -46,6 +47,11 @@
 					<div class="content">
 						<div class="inner1 inner">
 							<p class="title">구독 기간</p>
+							 <c:if test="${!empty payState}">
+							 	<p><fmt:formatDate value="${payState.EXITS_DATE}" pattern="yyyy년 MM월 dd일 "/>에 만료됩니다 </p>
+							 	<p>(플랜을 변경해도 구독 기간은 유지됩니다)</p>
+							 	<input type="hidden" id="PAY_NO" name="PAY_NO" value="${payState.NO}"/>
+							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
 							<ul class="checkBox">
 								<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
@@ -65,15 +71,15 @@
 							<ul>
 								<li>
 									<p>NetMiner 365 - </p><p>${billing.PLAN_NAME}</p>
-									<span> &#8361; <em>${billing.PAY_PRICE_VAT}</em></span>
+									<span> &#8361; <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
 									<p>부가세</p>
-									<span> &#8361; <em>${billing.VAT} </em></span>
+									<span> &#8361; <em><fmt:formatNumber value='${billing.VAT}' pattern='#,###,###'/> </em></span>
 								</li>
 								<li class="totalCost">
 									<p>총 비용</p>
-									<span> &#8361; <em>${billing.PAY_PRICE}</em></span>
+									<span> &#8361; <em><fmt:formatNumber value='${billing.PAY_PRICE}' pattern='#,###,###'/></em></span>
 								</li>
 							</ul>
 						</div>
@@ -88,8 +94,13 @@
 								$("input[name='sub1'],input[name='sub2']").change(function (){
 									var dateType= $("input[name='sub1']:checked").val();
 									var payType= $("input[name='sub2']:checked").val();
+									var payNo = $("input[name='PAY_NO']").val();
+									if (payNo != null) {
+										location.href="./goSubscribe?dateType="+dateType+"&payType="+payType+"&payNo="+payNo;
+									} else {
+										location.href="./goSubscribe?dateType="+dateType+"&payType="+payType;
+									}
 									
-									location.href="./goSubscribe?dateType="+dateType+"&payType="+payType;
 									
 								})
 							})

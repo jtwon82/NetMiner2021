@@ -107,6 +107,7 @@ public class BillingController extends HttpServlet {
 		Map<String, Object> nowPlan = billingService.selectSubscript(param);
 		
 		logger.info("billingList - {}", billingList.toString());
+		logger.info("nowPlan - {}", nowPlan.toString());
 		
 		long diffDays = 0;
 		Date nowDate = new Date(System.currentTimeMillis());
@@ -115,7 +116,7 @@ public class BillingController extends HttpServlet {
 		 if (nowPlan != null) {
 			 try {
 					Date now = dateFormat.parse(dateFormat.format(nowDate));
-					Date exitsDate = dateFormat.parse((String) nowPlan.get("EXITS_DATE"));
+					Date exitsDate = dateFormat.parse(dateFormat.format(nowPlan.get("EXITS_DATE")));
 					logger.info("date1 -{}",now.toString());
 					logger.info("date2 -{}",exitsDate.toString());
 					diffDays = ((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60);
@@ -126,16 +127,16 @@ public class BillingController extends HttpServlet {
 		 }		 
 		 //플랜 만료 7일 timestamp		 
 		 
-		if (nowPlan == null && billingList.size() > 1) {
+		if (nowPlan == null && billingList.size() > 0) {
 			// 현재 플랜은 없고 이전 결재 내역이 있는경우 
 			mv.addAttribute("nowPlan", "none");
 			mv.addAttribute("billingList", billingList);
-		} else if (nowPlan != null && billingList.size() < 1) {
+		} else if (nowPlan != null && billingList.size() == 0) {
 			// 현재 플랜은 있으나  이전 결재 내역이 없는경우 
 			mv.addAttribute("nowPlan", nowPlan);
 			mv.addAttribute("diffDays", diffDays);
 			mv.addAttribute("billingList", "none");
-		} else if (nowPlan != null && billingList.size() > 1){
+		} else if (nowPlan != null && billingList.size() > 0){
 			// 둘다 존재 하는 경우 
 			mv.addAttribute("nowPlan", nowPlan);
 			mv.addAttribute("diffDays", diffDays);
@@ -151,10 +152,10 @@ public class BillingController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goSubscribe", method=RequestMethod.GET) 
-	public String subscribe (ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+	public String subscribe (Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
-//		String planCode= request.getParameter("planCode");
+		String payNo= request.getParameter("payNo");
 		String planCode= request.getParameter("planCode");
 		String dateType = request.getParameter("dateType") == null ? "year" : request.getParameter("dateType");
 		String payType = request.getParameter("payType") == null ? "card" : request.getParameter("payType");
@@ -202,12 +203,22 @@ public class BillingController extends HttpServlet {
 			}
 		}
 		
+		
+		
 		if (planCode.equals("01")) {
 			billingVo.setUSER_ID(memberVo.getUserId());
 			billingVo.setDATE_TYPE("month");
 			billingService.insertSubscript(billingVo);			
 			pagePath = "redirect:/goSubscribeComplete";
 		} else {
+			if (payNo != null) {
+				// payNo 가 널이 아닌경우 플랜 연장인 경우 
+				param.put("payNo", payNo);
+				param.put("userId", memberVo.getUserId());
+				Map<String ,Object> result = billingService.selectSubscript(param);
+				logger.info("result -{}", result);
+				mv.addAttribute("payState", result);
+			}
 			pagePath = path+"/subscribe";
 		}
 		session.setAttribute("billing",billingVo);
@@ -225,6 +236,8 @@ public class BillingController extends HttpServlet {
 		String language = (String) session.getAttribute("language");
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		String payNo =  request.getParameter("payNo");
+		
 		
 		logger.info("form {}", form);
 		logger.info("memberVo {}", memberVo);
@@ -234,8 +247,8 @@ public class BillingController extends HttpServlet {
 			StringUtils2.script(response, language, "잘못된 접근입니다.", "The wrong approach", "./");
 			return "redirect:/";
 		}
-		else {
-			if(form.getOrderId().equals(billingVo.getORDER_ID())) {
+		else {			
+			if(form.getOrderId().equals(billingVo.getORDER_ID()) && payNo == null) {
 				billingVo.setUSER_ID(memberVo.getUserId());
 				billingVo.setOrderId(form.getOrderId());
 				billingVo.setPaymentKey(form.getPaymentKey());
@@ -249,6 +262,7 @@ public class BillingController extends HttpServlet {
 				
 				return "redirect:/";
 			}
+			
 		}
 	}
 	
