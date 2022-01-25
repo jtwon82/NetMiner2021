@@ -42,6 +42,9 @@ public class BillingController extends HttpServlet {
 	public String pricing (HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
+		if (member == null ) {
+			return "redirect:/login";
+		}
 		String userId = member.getUserId();
 		boolean checkDate = false;
 		Map<String,Object> param = new HashMap<String,Object>();
@@ -94,6 +97,9 @@ public class BillingController extends HttpServlet {
 	public String billing (HttpSession session, Model mv,HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
+		if (member == null ) {
+			return "redirect:/login";
+		}
 		String userId = member.getUserId();
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("userId", userId);
@@ -106,18 +112,19 @@ public class BillingController extends HttpServlet {
 		Date nowDate = new Date(System.currentTimeMillis());
 		 SimpleDateFormat dateFormat = new 
 	                SimpleDateFormat ("yyyy-MM-dd");
-		 try {
-			Date now = dateFormat.parse(dateFormat.format(nowDate));
-			Date exitsDate = dateFormat.parse((String) nowPlan.get("EXITS_DATE"));
-			logger.info("date1 -{}",now.toString());
-			logger.info("date2 -{}",exitsDate.toString());
-			diffDays = ((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 //플랜 만료 7일 timestamp
-		 
+		 if (nowPlan != null) {
+			 try {
+					Date now = dateFormat.parse(dateFormat.format(nowDate));
+					Date exitsDate = dateFormat.parse((String) nowPlan.get("EXITS_DATE"));
+					logger.info("date1 -{}",now.toString());
+					logger.info("date2 -{}",exitsDate.toString());
+					diffDays = ((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 }		 
+		 //플랜 만료 7일 timestamp		 
 		 
 		if (nowPlan == null && billingList.size() > 1) {
 			// 현재 플랜은 없고 이전 결재 내역이 있는경우 
@@ -156,6 +163,10 @@ public class BillingController extends HttpServlet {
 		String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
 		int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
 		String pagePath = "";
+		if (memberVo == null ) {
+			return "redirect:/login";
+		}
+		
 		if (planCode == null) {
 			if(billingVo==null) {
 				return "redirect:/";
