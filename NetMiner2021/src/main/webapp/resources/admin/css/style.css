@@ -68,14 +68,16 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap{}
 
 #wrap #nav{z-index: 3; background-color:#0c1922; color:#fff; width: 360px;height: 100%;position: fixed;left: 0;top: 0;}
-#wrap #nav .menu2{padding-top:30px}
+#wrap #nav .menu+.menu{padding-top:30px}
 #wrap #nav .wrap>div{padding-top:40px;}
-#wrap #nav .menu ul.on li{height:45px; }
+#wrap #nav .menu ul.on li{height: 50px;line-height: 50px;}
 #wrap #nav .menu ul li{line-height: 45px; height: 0px; overflow: hidden; -webkit-transition: all .2s ease-out; -moz-transition: all .2s ease-out; -ms-transition: all .2s ease-out;-o-transition: all .2s ease-out;transition: all .2s ease-out;}
 #wrap #nav .menu{}
+#wrap #nav .menu li.active{background-color:#3b4c58; }
+#wrap #nav .menu li.active a{color:#f4f4f4; }
 #wrap #nav .menu li a{font-size:22px; color:#a4aeb4; padding: 0 70px;}
 #wrap #nav .menu li a:hover{ color:#fff; background-color:#3b4c58; }
-#wrap #nav .menu span{font-weight:700; font-size:24px; display: inline-block;padding: 0 60px; height: 44px; display: block; line-height: 44px; position: relative;}
+#wrap #nav .menu span{font-weight:700;font-size:24px;display: inline-block;padding: 0 60px;height: 50px;display: block;line-height: 44px;position: relative;}
 #wrap #nav .menu span::after{content:"";position: absolute;right: 55px; top: 18px; background-image:url(/resources/admin/images/nav_arrow.png); width:12px; height:7px; display: inline-block;vertical-align: 6px;}
 #wrap #nav .menu span.on::after{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
 
@@ -209,6 +211,55 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.check .checkInput dl dd .time input{width:50px; margin-right:10px; display: inline-block; text-align: center;}
 #wrap.check .checkInput dl dd .time .unsettled{display: inline-block; margin-left:30px;}
 #wrap.check .checkInput dl dd .time .unsettled input{margin-top:-2px; width:20px; height:20px; margin-right:5px;}
+
+/*주문관리-------------------------------------------------------*/
+#wrap.order .content .filter{}
+#wrap.order .content .filter li span{width: 110px; font-size:22px; margin-right: 40px;}
+#wrap.order .content .filter li>*{display:inline-block; vertical-align: top;}
+#wrap.order .content .filter li{margin-bottom: 25px;}
+#wrap.order .content .filter select{padding-bottom: 8px; margin-right: 25px; width:170px; border-bottom:1px solid #9d9d9d; }
+#wrap.order .content .filter select[id="column"]{color: #090909;}
+#wrap.order .content .filter li .search input{font-size:20px; padding-left:10px;width:370px; height:40px; border:1px solid #d3d3d3; }
+#wrap.order .content .filter input[type="checkbox"]{width:16px; height:16px; vertical-align: 0px; margin-right:10px;}
+#wrap.order .content .filter input[type="date"]{font-size: 20px; margin:0 20px; }
+#wrap.order .content .filter input[id="start"]{margin-left:0;}
+#wrap.order .content .filter li .search button{width:70px; height:40px;  position: relative;left: -3px;}
+#wrap.order .content .filter li .search button.active{background:#575757;}
+#wrap.order .content .filter .finalSearch{width:100px; height:42px;  }
+#wrap.order .content  table{margin-top:60px;}
+
+/*주문관리 수정-------------------------------------------------------*/
+#wrap.order_modify .delete button{width: 100px;height: 42px; line-height: 42px;font-size: 20px;}
+#wrap.order_modify .delete{float:left;}
+#wrap.order_modify #section .finish{float:right;}
+#wrap.order_modify #section table.modify input[type="radio"]{width:17px; margin-right:5px;}
+#wrap.order_modify #section table.modify label+label{margin-left:20px;}
+#wrap.order_modify select{width:150px; height:40px; border: 1px solid #d3d3d3; padding-left:5px;}
+
+/*faq-------------------------------------------------------*/
+#wrap.faq .content .filter .lang p{display:inline-block; font-size:22px; width:100px; text-align:center; font-weight: 600; padding-bottom: 3px;}
+#wrap.faq .content .filter .lang p.active{color:#134fbd; border-bottom:3px solid #134fbd;}
+#wrap.faq .content .filter li span{width: 110px; font-size:22px; margin-right: 40px;}
+#wrap.faq .content .filter li>*{display:inline-block; vertical-align: top;}
+#wrap.faq .content .filter li{margin-bottom: 25px;}
+#wrap.faq .content .filter select{padding-bottom: 8px; margin-right: 25px; width:170px; border-bottom:1px solid #9d9d9d; }
+#wrap.faq .content .filter select[id="column"]{color: #090909;}
+#wrap.faq .content .filter li .search input{font-size:20px; padding-left:10px;width:370px; height:40px; border:1px solid #d3d3d3; }
+#wrap.faq .content .filter input[type="checkbox"]{width:16px; height:16px; vertical-align: 0px; margin-right:10px;}
+#wrap.faq .content .filter input[type="date"]{font-size: 20px; margin:0 20px; }
+#wrap.faq .content .filter input[id="start"]{margin-left:0;}
+#wrap.faq .content .filter li .search button{width:70px; height:40px;  position: relative;left: -4px;}
+#wrap.faq .content .filter li .search button.active{background:#575757;}
+#wrap.faq .content .filter .finalSearch{width:100px; height:42px;  }
+#wrap.faq .content  table{margin-top:60px;}
+
+/*faq 수정-------------------------------------------------------*/
+#wrap.faq_modify .content li span{vertical-align: middle; width: 10%; font-size:22px; margin-right: 3.6%; display: inline-block;}
+#wrap.faq_modify .content li+li{margin-top:20px;}
+#wrap.faq_modify  input{vertical-align: middle; height: 40px; border: 1px solid #d3d3d3;font-size: 20px;padding-left: 5px; width: 86%; display: inline-block;}
+#wrap.faq_modify textarea{width:100%; height:450px; margin: 40px 0 30px; resize: none; border: 1px solid #d3d3d3; padding: 5px; font-size:20px; }
+#wrap.faq_modify .delete{float:left;}
+#wrap.faq_modify .delete button{width: 100px;height: 42px; line-height: 42px;font-size: 20px;}
 
 .switchContainer{position: relative;}
 .switchContainer .switch {position: relative; display: inline-block; width: 60px; height: 34px; vertical-align:middle;}

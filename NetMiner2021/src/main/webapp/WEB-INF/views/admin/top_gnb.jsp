@@ -22,6 +22,7 @@
 							<span class="on">게시판 관리</span>
 							<ul class="on">
 								<li><a href="email">자동 이메일</a></li>
+								<li><a href="faq">FAQ</a></li>
 							</ul>
 						</div>
 						<div class="menu menu2">
