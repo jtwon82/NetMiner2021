@@ -200,6 +200,7 @@ public class BillingController extends HttpServlet {
 		String dateType = request.getParameter("dateType") == null ? "year" : request.getParameter("dateType");
 		String payType = request.getParameter("payType") == null ? "card" : request.getParameter("payType");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		BillingVo billingOldVo = (BillingVo) session.getAttribute("billingOld");
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
 		int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
@@ -207,12 +208,16 @@ public class BillingController extends HttpServlet {
 		if (memberVo == null ) {
 			return "redirect:/login";
 		}
+		logger.info("dateType- {}", dateType);
 		
+		//planCode 가 널인경우 플랜변경 또는 업그레이드 이기 때문에 해당 이전 결제 정보 기준으로 plancode 를 셋팅 
 		if (planCode == null) {
-			if(billingVo==null) {
+			if (billingOldVo == null) {
 				return "redirect:/";
+			} else {
+				planCode = billingOldVo.getPLAN_CODE();
+				payNo = billingOldVo.getNO();
 			}
-			planCode = billingVo.getPLAN_CODE();
 		}
 		
 		HashMap<String , Object> param= new HashMap<String , Object>();
@@ -221,9 +226,8 @@ public class BillingController extends HttpServlet {
 		HashMap<String ,Object> billingMap= billingService.selectPlanCode(param);	
 		billingVo = new BillingVo().fromMap(billingMap);
 		billingVo.setDATE_TYPE(dateType);
-//		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
-		billingVo.setORDER_ID("ORD_"+ StringUtils2.getRandomStr(8));
-		billingVo.setORDER_PNM("ORDER_PNM");
+		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
+		billingVo.setORDER_PNM(String.valueOf(randomNo));
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
 		billingVo.setPAY_TYPE(payType);
 		
@@ -232,16 +236,69 @@ public class BillingController extends HttpServlet {
 			
 		} else {
 			billingVo.setPAY_PLATFORM("toss");
-			if (dateType.equals("year")) {
-				int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
-				billingVo.setPAY_PRICE(total);
-				billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-				billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);	
+			if (billingOldVo != null) {
+				if (billingOldVo.getDiffDay() > -7 && billingOldVo.getDiffDay() < 7) {
+					//플랜 연장 인경우 
+					
+					if (dateType.equals("year")) {
+						int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
+						billingVo.setPAY_PRICE(total);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("year");
+						billingVo.setType("extensionPlan");
+					} else {
+						billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("month");
+						billingVo.setType("extensionPlan");
+					}
+					
+				} else {
+					if (billingOldVo.getDATE_TYPE().equals("year")) {
+						// 1년에서 1년 업그레이드시
+						int oldPrice = billingOldVo.getPAY_PRICE();
+						int nowPrice = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
+						int result = nowPrice*((billingOldVo.getDiffDay()/365)) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
+						
+						billingVo.setPAY_PRICE(result);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("year");
+						billingVo.setType("upgradePlan");
+					} else {
+						// 한달에서 한달 업그레이드시 
+						int oldPrice = billingOldVo.getPAY_PRICE();
+						int nowPrice = billingVo.getPLAN_PER_KO();
+						int result = nowPrice*((billingOldVo.getDiffDay()/30)) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
+						
+						billingVo.setPAY_PRICE(result);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("month");
+						billingVo.setType("upgradePlan");
+					}					
+				}
 			} else {
-				billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
-				billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-				billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+				if (dateType.equals("year")) {
+					int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
+					billingVo.setPAY_PRICE(total);
+					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setType("none");
+				} else {
+					billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
+					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setType("none");
+				}
 			}
+			
 		}
 		
 		
@@ -252,6 +309,7 @@ public class BillingController extends HttpServlet {
 			billingService.insertSubscript(billingVo);			
 			pagePath = "redirect:/goSubscribeComplete";
 		} else {
+			/*
 			if (payNo != null) {
 				// payNo 가 널이 아닌경우 플랜 연장인 경우 
 				param.put("payNo", payNo);
@@ -260,6 +318,7 @@ public class BillingController extends HttpServlet {
 				logger.info("result -{}", result);
 				mv.addAttribute("payState", result);
 			}
+			*/
 			pagePath = path+"/subscribe";
 		}
 		session.setAttribute("billing",billingVo);
