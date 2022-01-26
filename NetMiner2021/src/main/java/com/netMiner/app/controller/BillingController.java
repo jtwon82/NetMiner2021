@@ -181,7 +181,8 @@ public class BillingController extends HttpServlet {
 		HashMap<String ,Object> billingMap= billingService.selectPlanCode(param);	
 		billingVo = new BillingVo().fromMap(billingMap);
 		billingVo.setDATE_TYPE(dateType);
-		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
+//		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
+		billingVo.setORDER_ID("ORD_"+ StringUtils2.getRandomStr(8));
 		billingVo.setORDER_PNM("ORDER_PNM");
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
 		billingVo.setPAY_TYPE(payType);
