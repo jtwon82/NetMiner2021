@@ -86,6 +86,8 @@ public class PageMoveController extends HttpServlet {
 	public String logOut(HttpSession session) {
 		String language = (String) session.getAttribute("language");
 		session.removeAttribute("memberVo");
+		session.removeAttribute("billingVo");
+		session.removeAttribute("billingOld");
 		session.setAttribute("language", language);		
 		return "redirect:/";
 	}

@@ -15,6 +15,12 @@
 		where USER_ID =#{userId}
 		order by no desc limit 1
 	</select>
+	<select id="checkUserTiralInfo" parameterType="Map" resultType="Map">
+		select * from NetMiner.SUBSCRIPT AS A 
+		WHERE  USER_ID =#{userId}
+		AND PLAN_CODE= '01'
+		AND EXITS_DATE > NOW();
+	</select>
 	
 	<update id="insertSubscript" parameterType="BillingVo">
 	INSERT INTO NetMiner.SUBSCRIPT (
@@ -23,6 +29,16 @@
 		, PAY_STEP , PAY_PLATFORM, PAY_PRICE, PAY_PRICE_TOTAL
 		, ACCOUNT_NAME, ACCOUNT_NO, ACCOUNT_HOLDER, ACCOUNT_DEPOSITLIMIT
 		, ORDER_ID, ORDER_PNM, paymentKey, amount, EXITS_DATE) 
+	<choose>
+		<when test="diffDay > 0">
+		SELECT now(), #{USER_ID}
+		, #{PLAN_CODE}, #{PLAN_TYPE}, #{DATE_TYPE}, #{PAY_TYPE}
+		, #{PAY_STEP}, #{PAY_PLATFORM}, #{PAY_PRICE}, #{PAY_PRICE_TOTAL}
+		, #{ACCOUNT_NAME}, #{ACCOUNT_NO}, #{ACCOUNT_HOLDER}, now()
+		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount},
+			 DATE_FORMAT(DATE_ADD(now(), INTERVAL #{diffDay} DAY), '%Y-%m-%d %H:%i:%S')  AS EXITS_DATE
+		</when>
+		<otherwise>
 	SELECT now(), #{USER_ID}
 		, #{PLAN_CODE}, #{PLAN_TYPE}, #{DATE_TYPE}, #{PAY_TYPE}
 		, #{PAY_STEP}, #{PAY_PLATFORM}, #{PAY_PRICE}, #{PAY_PRICE_TOTAL}
@@ -32,6 +48,8 @@
 			THEN DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 MONTH), '%Y-%m-%d %H:%i:%S') 
 			ELSE DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 YEAR), '%Y-%m-%d %H:%i:%S')
 			END AS EXITS_DATE
+		</otherwise>
+	</choose>
 			;
 	</update>
 	

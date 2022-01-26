@@ -44,5 +44,11 @@ public class BillingServiceImpl  implements BillingService{
 		return billingDao.selectSubscriptOne(param);
 	}
 
+	@Override
+	public Map<String, Object> checkUserTiralInfo(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return billingDao.checkUserTiralInfo(param);
+	}
+
 
 }

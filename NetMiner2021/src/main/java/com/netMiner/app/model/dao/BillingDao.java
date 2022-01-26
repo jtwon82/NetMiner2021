@@ -18,4 +18,6 @@ public interface BillingDao {
 
 	Map<String, Object> selectSubscriptOne(Map<String,Object> param);
 
+	Map<String, Object> checkUserTiralInfo(Map<String, Object> param);
+
 }

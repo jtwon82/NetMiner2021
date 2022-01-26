@@ -105,7 +105,7 @@
 								<c:if test="${diffDays < 0 && diffDays > -7}">
 								<p>이용 중인 플랜이 만료되었습니다. 계속 이용하시겠습니까?</p>
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
-								<a href="./pricing">플랜변경</a>
+								<a href="./pricing?type='changePlan'">플랜변경</a>
 								</c:if>
 								
 								<c:if test="${diffDays < -7}">
@@ -115,7 +115,7 @@
 								
 								<c:if test="${diffDays > 7}">
 								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd HH:mm:ss"/></span> 에 만료됩니다. </p>
-								<a href="./pricing">업그레이드</a>
+								<a href="./pricing?type='upgradePlan'">업그레이드</a>
 								</c:if>
 							</div>
 							<c:if test="${billingList != 'none'}">

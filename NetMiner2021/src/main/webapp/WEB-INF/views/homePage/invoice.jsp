@@ -269,7 +269,7 @@
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
-						<h2>Invoice<span>#00000000</span></h2>
+						<h2>Invoice<span>#${result.ORDER_PNM}</span></h2>
 					</div>
 					<div class="content">
 						<div class="inner1 inner">

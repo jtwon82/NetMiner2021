@@ -47,16 +47,25 @@
 					<div class="content">
 						<div class="inner1 inner">
 							<p class="title">구독 기간</p>
-							 <c:if test="${!empty payState}">
+							 <c:if test="${'upgradePlan' == billingVo.type}">
 							 	<p><fmt:formatDate value="${payState.EXITS_DATE}" pattern="yyyy년 MM월 dd일 "/>에 만료됩니다 </p>
 							 	<p>(플랜을 변경해도 구독 기간은 유지됩니다)</p>
-							 	<input type="hidden" id="PAY_NO" name="PAY_NO" value="${payState.NO}"/>
 							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
-							<ul class="checkBox">
-								<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
-								<li><label><input type="radio" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
-							</ul>
+							<c:if test="${'upgradePlan' != billingVo.type}">
+								<c:if test="${'year' == billing.DATE_TYPE }">	
+									<ul class="checkBox">
+										<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
+										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
+									</ul>
+								</c:if>
+								<c:if test="${'year' != billing.DATE_TYPE }">	
+									<ul class="checkBox">
+										<li><label><input type="radio" checked="checked" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
+										<li><label><input type="radio" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
+									</ul>
+								</c:if>
+							</c:if>
 						</div>
 						<div class="inner2 inner">
 							<p class="title">결제 방법</p>
@@ -89,19 +98,11 @@
 			</div>
 							<script>
 							$(document).ready(function() {
-								$('input:radio[name=sub1]:input[value="${billing.DATE_TYPE }"]').attr("checked", true);
-								$('input:radio[name=sub2]:input[value="${billing.PAY_TYPE}"]').attr("checked", true);
-								$("input[name='sub1'],input[name='sub2']").change(function (){
+								$('input:radio[name=sub1]:input[value="${billing.DATE_TYPE }"]').attr("checked", true);									
+																
+								$("input[name='sub1']").change(function (){
 									var dateType= $("input[name='sub1']:checked").val();
-									var payType= $("input[name='sub2']:checked").val();
-									var payNo = $("input[name='PAY_NO']").val();
-									if (payNo != null) {
-										location.href="./goSubscribe?dateType="+dateType+"&payType="+payType+"&payNo="+payNo;
-									} else {
-										location.href="./goSubscribe?dateType="+dateType+"&payType="+payType;
-									}
-									
-									
+									location.href="./goSubscribe?dateType="+dateType+"&planCode=${billing.PLAN_CODE }";									
 								})
 							})
 							</script>

@@ -44,5 +44,11 @@ public class BillingDaoImpl implements BillingDao {
 		return sqlSession.selectOne("selectSubscriptOne", param);
 	}
 
+	@Override
+	public Map<String, Object> checkUserTiralInfo(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("checkUserTiralInfo", param);
+	}
+
 
 }

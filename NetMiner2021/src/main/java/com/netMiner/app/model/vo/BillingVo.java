@@ -50,6 +50,9 @@ public class BillingVo implements Serializable {
 	private String paymentKey="";
 	private int amount=0;
 	
+	private int diffDay= 0;
+	private String type = "none";
+	
 	public static BillingVo fromMap(HashMap<String, Object> map) {
 		BillingVo result= new ObjectMapper()
 				.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
