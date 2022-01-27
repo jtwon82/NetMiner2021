@@ -356,29 +356,17 @@ NetMiner 365 를 이용하세요.</p>
 					<h3>자주하는 질문</h3>
 					<div class="content">
 						<ul>
+							<c:forEach var="faqList" items="${faqList}" varStatus="status">
 							<li>
 								<div class="question">
-									<p>내 결제 옵션에는 무엇이 있나요? 신용카드를 사용하거나 인보이스를 받을 수 있나요?(예시)</p>
+									<p><c:out value='${faqList.TITLE}'/></p>
 									<em></em>
 								</div>
 								<div class="answer">
-									신용카드를 사용해 모든 플랜의 요금을 결제할 수 있습니다. 연간 구독에 가입하고 US$5,000 이상을 사용할 계획이시라면,
-									1년 기준으로 인보이스를 받으실 수 있습니다. 자세한 정보를 얻으려면 고객지원센터를 방문하세요.
-									이 프로세스를 시작하려면 당사에 문의해주세요.(예시)
+									<c:out value='${faqList.CONTENT}'/>
 								</div>
 							</li>
-							<li>
-								<div class="question">
-									<p>팀에 활발하게 사용되지 않는 계정이 여러 개 있으나 이러한 계정을 비활성화하고 싶지는 않습니다.<br>
-그래도 해당 계정의 요금을 지불해야 하나요?(예시)</p>
-									<em></em>
-								</div>
-								<div class="answer">
-									신용카드를 사용해 모든 플랜의 요금을 결제할 수 있습니다. 연간 구독에 가입하고 US$5,000 이상을 사용할 계획이시라면,
-									1년 기준으로 인보이스를 받으실 수 있습니다. 자세한 정보를 얻으려면 고객지원센터를 방문하세요.
-									이 프로세스를 시작하려면 당사에 문의해주세요.(예시)
-								</div>
-							</li>
+							</c:forEach>
 						</ul>
 					</div>
 				</div>

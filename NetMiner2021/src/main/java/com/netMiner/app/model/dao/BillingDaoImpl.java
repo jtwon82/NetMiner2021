@@ -50,5 +50,11 @@ public class BillingDaoImpl implements BillingDao {
 		return sqlSession.selectOne("checkUserTiralInfo", param);
 	}
 
+	@Override
+	public List<Map<String,Object>> selectFaqList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectFaqList", param);
+	}
+
 
 }

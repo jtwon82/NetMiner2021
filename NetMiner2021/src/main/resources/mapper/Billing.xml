@@ -71,4 +71,10 @@
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE
 		where A.NO =#{billingNo};
 	</select>
+	
+	<select id="selectFaqList" parameterType="Map" resultType = "Map">
+	select * from NetMiner.FAQ
+	where language = #{language}
+	;
+	</select>
 </mapper>
