@@ -64,10 +64,13 @@
 							<div class="mypage obj type1" style="right: 70px;">
 								<ul>
 									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
-									  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>
+									  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
 									 </c:if>
-									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
+									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 0 }"> 
 									 <li class="join"><a href="./pricing" >Start for free</a></li>
+									 </c:if>
+									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 1}"> 
+									 <li class="join"><a href="./pricing" >Buy Now </a></li>
 									 </c:if>
 								</ul>
 							</div>
@@ -76,11 +79,14 @@
 									<img src="/resources/images/top_me.png" alt="mypage">
 								</p>
 								<ul>
-									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y'}"> 
 									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li> 
 									</c:if>
-									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 0 }"> 
 									<li class="workSpace active"><a href="./pricing" class="trs">Start for free</a></li>
+									</c:if>
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 1 }"> 
+									<li class="workSpace active"><a href="./pricing" class="trs">Buy Now</a></li>
 									</c:if>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="billing"><a href="./billing" class="trs">Billing</a></li>
@@ -99,7 +105,6 @@
 									<c:if test="${empty memberVo}">
 									<div class="mypage type1" >
 										<ul>
-											<!--  <li class="join"><a href="./login" >Start for free</a></li>-->
 											<li class="join"><a href="./pricing" >Start for free</a></li>
 											<li class="login"><a href="./login" >Sign in</a></li>
 										</ul>
@@ -112,8 +117,14 @@
 											<img src="/resources/images/top_me.png" alt="mypage">
 										</p>
 										<ul>
-											<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
-											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li>
+											<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y'}"> 
+											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">My Workspace</a></li> 
+											</c:if>
+											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 0 }"> 
+											<li class="workSpace active"><a href="./pricing" class="trs">Start for free</a></li>
+											</c:if>
+											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 1 }"> 
+											<li class="workSpace active"><a href="./pricing" class="trs">Buy Now</a></li>
 											</c:if>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="billing"><a href="./billing" class="trs">Billing</a></li>

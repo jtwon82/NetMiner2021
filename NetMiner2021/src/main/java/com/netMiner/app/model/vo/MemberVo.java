@@ -31,6 +31,7 @@ public class MemberVo implements Serializable{
 	private String chk;
 	private int planType;
 	private String SUBSCRIPT_YN = "N";
+	private int CHECK_TRIAL = 0;
 	
 	public MemberVo() {
 		
@@ -53,6 +54,7 @@ public class MemberVo implements Serializable{
 		if(json.containsKey("lastLoginDate"))this.lastLoginDate= json.get("lastLoginDate").toString();
 		if(json.containsKey("chk"))this.chk= json.get("chk").toString();
 		if(json.containsKey("SUBSCRIPT_YN"))this.SUBSCRIPT_YN= json.get("SUBSCRIPT_YN").toString();
+		if(json.containsKey("CHECK_TRIAL"))this.CHECK_TRIAL= Integer.parseInt(json.get("CHECK_TRIAL").toString());
 		
 	}
 	
@@ -73,6 +75,7 @@ public class MemberVo implements Serializable{
 		result.put("userStatsYn", this.userStatsYn);
 		result.put("lastLoginDate", this.lastLoginDate);
 		result.put("SUBSCRIPT_YN", this.SUBSCRIPT_YN);
+		result.put("CHECK_TRIAL" , this.CHECK_TRIAL);
 		return result;
 	}
 }
