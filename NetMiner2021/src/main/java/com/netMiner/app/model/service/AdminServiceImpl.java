@@ -165,7 +165,40 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	
+
+
 	
+
+	@Override
+	public List<HashMap<String, Object>> getFaqList(Map<String, Object> map) {
+		return adminDao.getFaqList(map);
+	}
+
+	@Override
+	public int getFaqCount(Map<String, Object> map) {
+		return adminDao.getFaqCount(map);
+	}
+
+	@Override
+	public HashMap<String, Object> getFaqDetailInfo(Map<String, Object> map) {
+		return adminDao.getFaqDetailInfo(map);
+	}
+	
+	@Override
+	public void deleteFaqInfo(HashMap<String, Object> map) {
+		adminDao.deleteFaqInfo(map);
+	}
+
+	@Override
+	public void insertFaqInfo(HashMap<String, Object> map) {
+		adminDao.insertFaqInfo(map);
+	}
+
+	@Override
+	public void modifyFaqInfo(HashMap<String, Object> map) {
+		adminDao.modifyFaqInfo(map);
+	}
+
 	
 	
 

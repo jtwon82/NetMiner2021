@@ -27,7 +27,7 @@
 							<tbody>
 							<c:if test="${not empty list }">
 								<c:forEach items="${list}" var="item" varStatus="status">
-									<tr onclick="location.href=('mail_modify?NO=${item.NO}')">
+									<tr onclick="location.href=('email_modify?NO=${item.NO}')">
 										<td>${item.REG_DATES}</td>
 										<td>${item.TITLE}</td>
 										<td>${item.EXPLAIN }</td>
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 					<div class="register">
-						<button class="navy" onclick="location.href='mail_modify'">등록</button>
+						<button class="navy" onclick="location.href='email_modify'">등록</button>
 					</div>
 					</div>
 					

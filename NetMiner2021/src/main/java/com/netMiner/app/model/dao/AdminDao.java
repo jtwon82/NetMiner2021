@@ -65,6 +65,25 @@ public interface AdminDao {
 
 	void modifyEmailInfo(HashMap<String, Object> map);
 
+	
+	
+	
+
+	List<HashMap<String, Object>> getFaqList(Map<String, Object> map);
+
+	int getFaqCount(Map<String, Object> map);
+
+	HashMap<String, Object> getFaqDetailInfo(Map<String, Object> map);
+
+	void deleteFaqInfo(HashMap<String, Object> map);
+
+	void insertFaqInfo(HashMap<String, Object> map);
+
+	void modifyFaqInfo(HashMap<String, Object> map);
+
+	
+	
+	
 	void modifyDropMemberInfo(HashMap<String, Object> map);
 
 	void recoverMemberQuitInfo(HashMap<String, Object> json);

@@ -66,6 +66,24 @@ public interface AdminService {
 
 	void modifyEmailInfo(HashMap<String, Object> json);
 
+	
+	
+
+	List getFaqList(Map<String, Object> json);
+
+	int getFaqCount(Map<String, Object> json);
+
+	HashMap<String, Object> getFaqDetailInfo(Map<String, Object> map);
+
+	void deleteFaqInfo(HashMap<String, Object> json);
+
+	void insertFaqInfo(HashMap<String, Object> json);
+
+	void modifyFaqInfo(HashMap<String, Object> json);
+
+	
+	
+	
 	SXSSFWorkbook excelFileDownloadProcess(List<HashMap<String, Object>> list);
 
 	void modifyDropMemberInfo(HashMap<String, Object> json);

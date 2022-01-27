@@ -369,7 +369,7 @@ public class AdminController {
 		return "admin/email";
 	}
 
-	@RequestMapping(value="mail_modify", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="email_modify", method={RequestMethod.GET, RequestMethod.POST})
 	public String mail_modify(Model model
 			, @RequestParam HashMap<String, Object> json) {
 		logger.info("json {}", json);
@@ -412,6 +412,99 @@ public class AdminController {
 
 		}
 	}
+	
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/faq" , method =  {RequestMethod.GET, RequestMethod.POST})
+	public String faq(Model model, HttpServletRequest request
+			, @RequestParam HashMap<String, Object> json) {
+
+		logger.info("json {}", json);
+		
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		json.put("page", page);
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
+
+		List list= adminService.getFaqList(json);
+		if(list != null && list.size()>0){
+			logger.info("list {}", list);
+
+			int count= adminService.getFaqCount(json);
+			paging.setTotalEntryCount(count);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "faq?", "", "", "red", json));
+		}
+
+		model.addAttribute("json", json);
+
+		return "admin/faq";
+	}
+	@RequestMapping(value="faq_modify", method={RequestMethod.GET, RequestMethod.POST})
+	public String faq_modify(Model model
+			, @RequestParam HashMap<String, Object> json) {
+		logger.info("json {}", json);
+
+		if( MapUtils.KeyIsEmpty(json, "NO") ) {
+			AdminVo admin= new AdminVo();
+			model.addAttribute("item", admin);
+		} else {
+
+			AdminVo admin= AdminVo.fromMap(adminService.getFaqDetailInfo(json));
+			model.addAttribute("item", admin);
+		}
+		return "admin/faq_modify";
+	}
+	@RequestMapping(value="/faq_modify/check", method = RequestMethod.POST)
+	public @ResponseBody String faq_modify_check(HttpSession session
+			, @RequestParam HashMap<String, Object> json) {
+		try {
+			logger.info("json {}", json);
+			if(json.get("MODE").equals("delete")) {
+				adminService.deleteFaqInfo(json);
+				logger.info("delete succ json {}", json);
+//				String FAQ_CODE = (String) json.get("FAQ_CODE");
+//				if(!FAQ_CODE.contains("01|02|03|04|05|06|07|08|09|10")) {
+//					adminService.deleteFaqInfo(json);
+//				} else {
+////					json.put("fix", true);
+//					return Constant.ResultJson(ServiceResult.FIX.name(),"", "");
+//				}
+
+			} else if(json.get("MODE").equals("insert")) {
+				adminService.insertFaqInfo(json);
+				logger.info("insert succ json {}", json);
+
+			} else if(json.get("MODE").equals("modify")) {
+				adminService.modifyFaqInfo(json);
+				logger.info("modify succ json {}", json);
+			}
+			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", "");
+
+		} catch(Exception e) {
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"", e.toString());
+
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.GET)
 	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
 

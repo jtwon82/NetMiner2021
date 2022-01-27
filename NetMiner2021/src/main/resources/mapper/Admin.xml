@@ -388,6 +388,63 @@
 	
 	</update>
 	
+	
+	
+	
+	<select id="getFaqList" parameterType="map" resultType="map">
+		SELECT * FROM (
+			SELECT A.*
+				, CEIL(RNUM / 10) as page
+			FROM (
+				SELECT A.*
+					, CASE WHEN CATE_CODE='01' THEN '결제'
+						WHEN CATE_CODE='02' THEN '서비스이용'
+						WHEN CATE_CODE='03' THEN '계정'
+						WHEN CATE_CODE='04' THEN '일반'
+						END CATE_CODE_STR
+					, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+				FROM NetMiner.FAQ A
+				<include refid="listPagedWhere"/>
+			)A
+		) NO
+		<include refid="listPagedWhere3"/>
+	</select>
+	<select id="getFaqCount" parameterType="map" resultType="int">
+		SELECT * FROM (
+			SELECT COUNT(1)totcnt, 1 rownum
+			FROM NetMiner.FAQ A
+			<include refid="listPagedWhere"/>
+		) NO
+	</select>
+	<select id="getFaqDetailInfo" parameterType="map" resultType="map">
+		SELECT * FROM (
+			SELECT A.*
+				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
+			FROM NetMiner.FAQ A
+	<if test="NO!=null and !NO.equals('')">WHERE A.NO = #{NO}</if>
+		) NO
+	</select>
+	<delete id="deleteFaqInfo" parameterType="map">
+		DELETE FROM NetMiner.FAQ
+			WHERE `NO` = #{NO}
+	</delete>
+	<update id="insertFaqInfo"  parameterType="map">
+		INSERT INTO NetMiner.FAQ
+		(LANGUAGE, CATE_CODE, TITLE, DESCRIPTION, CONTENT, REG_DATE)
+		VALUES(#{LANGUAGE}, #{CATE_CODE}, #{TITLE}, #{DESCRIPTION}, #{CONTENT}, NOW())
+	</update>
+	<update id="modifyFaqInfo"  parameterType="map">
+		UPDATE NetMiner.FAQ 
+			SET UPDATE_DATE = NOW()
+			<if test="CATE_CODE!=null and ! CATE_CODE.equals('')">, CATE_CODE = #{CATE_CODE}</if> 
+			<if test="TITLE!=null and ! TITLE.equals('')">, TITLE = #{TITLE}</if> 
+			<if test="COMMENT!=null and !COMMENT.equals('')">, COMMENT = #{COMMENT}</if> 
+		WHERE `NO` = ${NO}
+	</update>
+	
+	
+	
 	<select id="getCheck" resultType="Map">
 	SELECT A.*, 
 	 DATE_FORMAT(START_DATE,'%Y-%m-%d')START_DATES,

@@ -159,6 +159,51 @@ public class AdminDaoImpl implements AdminDao{
 		sqlSession.update("modifyEmailInfo", map);
 	}
 
+	
+	
+	
+	
+
+	@Override
+	public List<HashMap<String, Object>> getFaqList(Map<String, Object> map) {
+		return sqlSession.selectList("getFaqList", map);
+	}
+
+	@Override
+	public int getFaqCount(Map<String, Object> map) {
+		return sqlSession.selectOne("getFaqCount", map);
+	}
+
+	@Override
+	public HashMap<String, Object> getFaqDetailInfo(Map<String, Object> map) {
+		return sqlSession.selectOne("getFaqDetailInfo", map);
+	}
+
+	@Override
+	public void deleteFaqInfo(HashMap<String, Object> map) {
+		sqlSession.delete("deleteFaqInfo" , map);
+	}
+
+	@Override
+	public void insertFaqInfo(HashMap<String, Object> map) {
+		sqlSession.update("insertFaqInfo", map);
+	}
+
+	@Override
+	public void modifyFaqInfo(HashMap<String, Object> map) {
+		sqlSession.update("modifyFaqInfo", map);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void modifyDropMemberInfo(HashMap<String, Object> map) {
 		sqlSession.update("modifyDropMemberInfo", map);
