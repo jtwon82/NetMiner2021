@@ -50,5 +50,11 @@ public class BillingServiceImpl  implements BillingService{
 		return billingDao.checkUserTiralInfo(param);
 	}
 
+	@Override
+	public List<Map<String,Object>> selectFaqList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return billingDao.selectFaqList(param);
+	}
+
 
 }

@@ -21,4 +21,6 @@ public interface BillingService {
 
 	Map<String, Object> checkUserTiralInfo(Map<String, Object> param);
 
+	List<Map<String,Object>> selectFaqList(Map<String, Object> param);
+
 }

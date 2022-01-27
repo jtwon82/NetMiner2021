@@ -39,7 +39,7 @@ public class BillingController extends HttpServlet {
 
 	/*page Move Billing*/
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
-	public String pricing (HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String pricing (Model mv,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
 		String type = (String) request.getParameter("type");
@@ -123,7 +123,10 @@ public class BillingController extends HttpServlet {
 		*/		
 		logger.info("memberPlanType- {}", member.getPlanType());
 		session.setAttribute("memberVo",member);
-		
+		param = new HashMap<String,Object>();
+		param.put("language", member.getLanguage());
+		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
+		mv.addAttribute("faqList", faqList);
 		String path = "homePage"+ language;
 		return path+"/pricing";
 	}
