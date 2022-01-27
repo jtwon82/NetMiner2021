@@ -17,8 +17,8 @@
 								<li class="lang">
 									<select id="LANGUAGE" name="LANGUAGE">
 										<option value="">다국어</option>
-										<option value="KR">국문</option>
-										<option value="EN">영문</option>
+										<option value="ko">국문</option>
+										<option value="en">영문</option>
 									</select>
 								</li>
 								<li>
@@ -44,10 +44,12 @@
 							<colgroup>
 								<col width="15%">
 								<col width="15%">
+								<col width="15%">
 								<col width="*">
 							</colgroup>
 							<thead>
 								<tr>
+									<th>언어</th>
 									<th>카테고리</th>
 									<th>작성일시</th>
 									<th>설명</th>
@@ -57,6 +59,7 @@
 								<c:if test="${not empty list }">
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('faq_modify?NO=${item.NO}')">
+											<td>${item.LANGUAGE_STR }</td>
 											<td>${item.CATE_CODE_STR }</td>
 											<td>${item.REG_DATE }</td>
 											<td>${item.DESCRIPTION }</td>

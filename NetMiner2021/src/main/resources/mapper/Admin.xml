@@ -397,6 +397,8 @@
 				, CEIL(RNUM / 10) as page
 			FROM (
 				SELECT A.*
+					, CASE WHEN LANGUAGE='ko' then '국문' 
+						else '영문' end LANGUAGE_STR
 					, CASE WHEN CATE_CODE='01' THEN '결제'
 						WHEN CATE_CODE='02' THEN '서비스이용'
 						WHEN CATE_CODE='03' THEN '계정'
@@ -437,9 +439,10 @@
 	<update id="modifyFaqInfo"  parameterType="map">
 		UPDATE NetMiner.FAQ 
 			SET UPDATE_DATE = NOW()
-			<if test="CATE_CODE!=null and ! CATE_CODE.equals('')">, CATE_CODE = #{CATE_CODE}</if> 
-			<if test="TITLE!=null and ! TITLE.equals('')">, TITLE = #{TITLE}</if> 
-			<if test="COMMENT!=null and !COMMENT.equals('')">, COMMENT = #{COMMENT}</if> 
+			<if test="CATE_CODE!=null and !CATE_CODE.equals('')">, CATE_CODE = #{CATE_CODE}</if> 
+			<if test="TITLE!=null and !TITLE.equals('')">, TITLE = #{TITLE}</if> 
+			<if test="DESCRIPTION!=null and !DESCRIPTION.equals('')">, DESCRIPTION = #{DESCRIPTION}</if> 
+			<if test="CONTENT!=null and !CONTENT.equals('')">, CONTENT= #{CONTENT}</if> 
 		WHERE `NO` = ${NO}
 	</update>
 	

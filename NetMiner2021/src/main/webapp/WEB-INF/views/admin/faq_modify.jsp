@@ -19,8 +19,8 @@
 							<li>
 								<span>언어</span>
 									<select id="LANGUAGE" name="LANGUAGE">
-										<option value="KR">국문</option>
-										<option value="EN">영문</option>
+										<option value="ko">국문</option>
+										<option value="en">영문</option>
 									</select><script>LANGUAGE.value='${item.LANGUAGE }';</script>
 							</li>
 							<li>
@@ -60,7 +60,6 @@
 						</div>
 						</form>
 					</div>
-					${item }
 				</div>
 			</div>
 			

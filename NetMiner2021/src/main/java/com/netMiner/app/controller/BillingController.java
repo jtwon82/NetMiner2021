@@ -121,7 +121,7 @@ public class BillingController extends HttpServlet {
 			} 
 		}
 		*/		
-		logger.info("memberPlanType- {}", member.getPlanType());
+		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
 		param = new HashMap<String,Object>();
 		param.put("language", member.getLanguage());
@@ -144,8 +144,8 @@ public class BillingController extends HttpServlet {
 		List<Map<String,Object>> billingList = billingService.selectSubscriptAll(param);
 		Map<String, Object> nowPlan = billingService.selectSubscript(param);
 		
-		logger.info("billingList - {}", billingList.toString());
-		logger.info("nowPlan - {}", nowPlan.toString());
+		//logger.info("billingList - {}", billingList.toString());
+		//logger.info("nowPlan - {}", nowPlan.toString());
 		BillingVo billingVo = new BillingVo().fromMap((HashMap<String, Object>)nowPlan);
 		
 		int diffDays = 0;
