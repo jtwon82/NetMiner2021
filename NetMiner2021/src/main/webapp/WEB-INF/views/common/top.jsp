@@ -48,6 +48,8 @@
 									<li><a href="./solution">Solution</a>
 								</ul>
 							</div>
+							<a class="price obj" href="/pricing">Pricing</a>
+							
 							<!-- 로그인 전-->
 							<c:if test="${empty memberVo}">
 							<div class="mypage obj type1" >

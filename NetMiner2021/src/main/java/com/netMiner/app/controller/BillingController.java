@@ -212,6 +212,7 @@ public class BillingController extends HttpServlet {
 			return "redirect:/login";
 		}
 		logger.info("dateType- {}", dateType);
+		logger.info("billingOldVo-{}",billingOldVo);
 		
 		//planCode 가 널인경우 플랜변경 또는 업그레이드 이기 때문에 해당 이전 결제 정보 기준으로 plancode 를 셋팅 
 		if (planCode == null) {

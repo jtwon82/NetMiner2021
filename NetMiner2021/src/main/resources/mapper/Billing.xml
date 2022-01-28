@@ -19,7 +19,9 @@
 		select * from NetMiner.SUBSCRIPT AS A 
 		WHERE  USER_ID =#{userId}
 		AND PLAN_CODE= '01'
-		AND EXITS_DATE > NOW();
+		AND EXITS_DATE > NOW()
+		order by no desc
+		limit 1
 	</select>
 	
 	<update id="insertSubscript" parameterType="BillingVo">
