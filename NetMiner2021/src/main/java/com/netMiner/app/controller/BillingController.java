@@ -56,9 +56,9 @@ public class BillingController extends HttpServlet {
 		Map<String, Object> checkUserTiralInfo = billingService.checkUserTiralInfo(param);
 		
 		//해당유저의 현재 플랜과 TRAIL 사용 여부와 동일한경우 
-		if (checkUserTiralInfo != null) {
+		if (result != null) {
 			//Trial 를 사용한 사용자 
-			if (result.get("NO").equals(checkUserTiralInfo.get("NO"))) {
+			if (result.get("NO").equals("01")) {
 				//현재 사용중인 플랜이 Trial 인경우
 				member.setPlanType(1);
 			} else {
@@ -78,49 +78,14 @@ public class BillingController extends HttpServlet {
 			}
 		} else {
 				//Trial 를 사용하지 않고 바로 진행한후  경우
+			if (checkUserTiralInfo != null) {
+				member.setPlanType(1);
+			} else {
 				//신규  사용자 
 				member.setPlanType(0);
-		}
-		/*
-		//플랜타입이 trial 이고 날짜가 지난경우 해당 trial 막아야함 
-		if (result != null && result.get("PLAN_CODE").equals("01")) {
-			Date nowDate = new Date(System.currentTimeMillis());
-			 SimpleDateFormat dateFormat = new 
-		                SimpleDateFormat ("yyyy-MM-dd");
-			 try {
-				Date date1 = dateFormat.parse(dateFormat.format(nowDate));
-				Date date2 = dateFormat.parse((String) result.get("EXITS_DATE"));
-				logger.info("date1 -{}",date1.toString());
-				logger.info("date2 -{}",date2.toString());
-				if (date1.after(date2)) {
-					checkDate = true;
-				}
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			
 		}
 		
-		
-		if (checkDate) {
-			//trial 이고 해당 trial 이 날짜가 지난경우 -1 리턴 
-			member.setPlanType(-1);
-		} else {
-			if (result != null) {
-				if (result.get("PLAN_CODE").equals("01")) {
-					//조회가 trial 이고 해당 trial이 날짜가 지나지 않는 경우 1 리턴 
-					member.setPlanType(1);					
-				} else {
-					//조회가 되고 trial이 아닌경우 해당 plancode 리턴 
-					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
-				}
-			} else{
-				//조회가 안되는 경우 신규 이므로 0 리턴 
-				member.setPlanType(0);
-			} 
-		}
-		*/		
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
 		param = new HashMap<String,Object>();
@@ -243,7 +208,6 @@ public class BillingController extends HttpServlet {
 			if (billingOldVo != null) {
 				if (billingOldVo.getDiffDay() > -7 && billingOldVo.getDiffDay() < 7) {
 					//플랜 연장 인경우 
-					
 					if (dateType.equals("year")) {
 						int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
 						billingVo.setPAY_PRICE(total);
@@ -313,7 +277,7 @@ public class BillingController extends HttpServlet {
 			billingService.insertSubscript(billingVo);			
 			pagePath = "redirect:/goSubscribeComplete";
 		} else {
-			/*
+			
 			if (payNo != null) {
 				// payNo 가 널이 아닌경우 플랜 연장인 경우 
 				param.put("payNo", payNo);
@@ -322,7 +286,7 @@ public class BillingController extends HttpServlet {
 				logger.info("result -{}", result);
 				mv.addAttribute("payState", result);
 			}
-			*/
+			
 			pagePath = path+"/subscribe";
 		}
 		session.setAttribute("billing",billingVo);

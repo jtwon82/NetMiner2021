@@ -47,12 +47,12 @@
 					<div class="content">
 						<div class="inner1 inner">
 							<p class="title">구독 기간</p>
-							 <c:if test="${'upgradePlan' eq billingVo.type}">
+							 <c:if test="${'upgradePlan' == billing.type}">
 							 	<p><fmt:formatDate value="${payState.EXITS_DATE}" pattern="yyyy년 MM월 dd일 "/>에 만료됩니다 </p>
 							 	<p>(플랜을 변경해도 구독 기간은 유지됩니다)</p>
 							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
-							<c:if test="${'upgradePlan' != billingVo.type}">
+							<c:if test="${'upgradePlan' != billing.type}">
 								<c:if test="${'year' == billing.DATE_TYPE }">	
 									<ul class="checkBox">
 										<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
