@@ -102,7 +102,7 @@ NetMiner 365 를 이용하세요.</p>
 										</c:if>
 										<c:if test="${memberVo.planType > 1}"> 
 												<p class="button active">
-													<a href="javascript:void(0)">구독하기</a>
+													<a href="javascript:void(0)">무료체험</a>
 												</p>
 											</c:if>
 									</c:if>
@@ -131,18 +131,18 @@ NetMiner 365 를 이용하세요.</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
 										<p class="button">
-											<a href="./goSubscribe?planCode=01">구독하기</a>
+											<a href="./goSubscribe?planCode=01">무료체험</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType > 1}"> 
 												<p class="button active">
-													<a href="javascript:void(0)">구독하기</a>
+													<a href="javascript:void(0)">무료체험</a>
 												</p>
 											</c:if>
 									</c:if>
 									<c:if test="${empty memberVo}">
 									<p class="button">
-										<a href="./login">구독하기</a>
+										<a href="./login">무료체험</a>
 									</p>
 									</c:if>
 

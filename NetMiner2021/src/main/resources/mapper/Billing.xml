@@ -47,8 +47,8 @@
 		, #{ACCOUNT_NAME}, #{ACCOUNT_NO}, #{ACCOUNT_HOLDER}, now()
 		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount},
 			CASE WHEN #{DATE_TYPE} = 'month' 
-			THEN DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 MONTH), '%Y-%m-%d %H:%i:%S') 
-			ELSE DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 YEAR), '%Y-%m-%d %H:%i:%S')
+			THEN DATE_FORMAT(DATE_ADD(DATE_ADD(now(), INTERVAL 1 MONTH), INTERVAL 1 DAY) , '%Y-%m-%d %H:%i:%S') 
+			ELSE DATE_FORMAT(DATE_ADD(DATE_ADD(now(), INTERVAL 1 YEAR),INTERVAL 1 DAY) , '%Y-%m-%d %H:%i:%S')
 			END AS EXITS_DATE
 		</otherwise>
 	</choose>

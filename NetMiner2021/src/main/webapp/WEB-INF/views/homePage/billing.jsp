@@ -25,6 +25,7 @@
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
+
 </head>
 <body>
 	<script type="text/javascript">
@@ -66,11 +67,12 @@
 									</thead>
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
+										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
 											<tr>
 												<td><c:out value="${billingList.REG_DATE}"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
-												<td><c:out value="${billingList.PAY_PRICE}"/></td>
-												<td><img src="resources/images/download.png"></td>
+												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
+												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -131,11 +133,12 @@
 									</thead>
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
+										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
 											<tr>
 												<td><c:out value="${billingList.REG_DATE}"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
-												<td><c:out value="${billingList.PAY_PRICE}"/></td>
-												<td><a href="./invoice?no=${billingList.NO}"><img src="resources/images/download.png"></a></td>
+												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
+												<td><a href= "./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>

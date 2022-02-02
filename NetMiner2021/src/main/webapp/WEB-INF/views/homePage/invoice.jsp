@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -16,10 +18,12 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
+		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
 		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
 		<script src="resources/js/gnb.js" type="text/javascript"></script>
+		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
 		<style>
@@ -264,8 +268,9 @@
 			}
 			
 		</style>
+
 		<div id="wrap" class="sub invoice">
-			<%@include file = "../common/top.jsp" %>	
+				
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
@@ -295,24 +300,27 @@
 						</div>
 						<div class="inner2 inner">
 							<p class="title">Amount</p>
-							<ul>
+							<ul>	
 								<li>
-									<p>Subtotall</p>
-									<span>₩<em> ${result.PAY_PRICE - result.PAY_TAX} </em></span>
+									<p>Subtotal</p>
+									<c:set var="subTotal" value="${result.PAY_PRICE - result.PAY_TAX}"/>
+									<span>₩<em><fmt:formatNumber value='${subTotal}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
 									<p>Tax</p>
-									<span>₩<em> ${result.PAY_TAX} </em></span>
+									<c:set var="Tax" value="${result.PAY_TAX}"/>
+									<span>₩<em> <fmt:formatNumber value='${Tax}' pattern='#,###,###'/> </em></span>
 								</li>
 								<li class="totalCost">
 									<p>Total</p>
-									<span>₩ <em> ${result.PAY_PRICE} </em></span>
+									<c:set var= "Total" value="${result.PAY_PRICE}"/>
+									<span>₩ <em> <fmt:formatNumber value='${Total}' pattern='#,###,###'/> </em></span>
 								</li>
 							</ul>
 						</div>
 						<div class="inner3 inner">
 							<p class="title">Payment method</p>
-							<span>VISA **** **** **** 4450</span>
+							<span>${result.PAY_TYPE }</span>
 						</div>
 					</div>
 				</div>

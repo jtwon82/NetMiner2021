@@ -63,6 +63,7 @@ public class BillingController extends HttpServlet {
 				member.setPlanType(1);
 			} else {
 				//현재 사용중인 플랜이 Trial 이 아닌경우 
+				
 				if (type != null) {
 					if (type.equals("changePlan")) {
 						//해당 플랜 변경인지 
@@ -74,6 +75,9 @@ public class BillingController extends HttpServlet {
 						//billing 를 통해 들어온 user 가 아닌경우 
 						member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
 					}
+				} else {
+					
+					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
 				}
 			}
 		} else {
@@ -230,26 +234,30 @@ public class BillingController extends HttpServlet {
 						// 1년에서 1년 업그레이드시
 						int oldPrice = billingOldVo.getPAY_PRICE();
 						int nowPrice = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
-						int result = nowPrice*((billingOldVo.getDiffDay()/365)) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
+						int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
 						
 						billingVo.setPAY_PRICE(result);
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
 						billingVo.setDATE_TYPE("year");
 						billingVo.setType("upgradePlan");
+						logger.info("billingVo year- {}", billingVo.toString());
 					} else {
 						// 한달에서 한달 업그레이드시 
 						int oldPrice = billingOldVo.getPAY_PRICE();
 						int nowPrice = billingVo.getPLAN_PER_KO();
-						int result = nowPrice*((billingOldVo.getDiffDay()/30)) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
+						int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
 						
 						billingVo.setPAY_PRICE(result);
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
 						billingVo.setDATE_TYPE("month");
 						billingVo.setType("upgradePlan");
+						logger.info("billingVo month - {}", billingVo.toString());
 					}					
 				}
 			} else {

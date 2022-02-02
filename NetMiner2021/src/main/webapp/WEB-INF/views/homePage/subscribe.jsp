@@ -34,6 +34,7 @@
 		Payment['orderId'] = '${billing.ORDER_ID}';
 		Payment['orderName'] = '${billing.ORDER_PNM}';
 		Payment['customerName'] = '${billing.CUSTOMER_NAME}';
+		Payment['card'] = '${billing.CARD_INFO}';	
 		</script>
 </head>
 <body>
@@ -42,27 +43,27 @@
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
-						<h2>Subscribing NetMiner 365</h2>
+						<h2>Subscribing to NetMiner 365</h2>
 					</div>
 					<div class="content">
 						<div class="inner1 inner">
 							<p class="title">구독 기간</p>
 							 <c:if test="${'upgradePlan' == billing.type}">
-							 	<p><fmt:formatDate value="${payState.EXITS_DATE}" pattern="yyyy년 MM월 dd일 "/>에 만료됩니다 </p>
+							 	<p><fmt:formatDate value="${billing.EXITS_DATE}" pattern="yyyy년 MM월 dd일 "/>에 만료됩니다 </p>
 							 	<p>(플랜을 변경해도 구독 기간은 유지됩니다)</p>
 							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
 							<c:if test="${'upgradePlan' != billing.type}">
 								<c:if test="${'year' == billing.DATE_TYPE }">	
 									<ul class="checkBox">
-										<li><label><input type="radio" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
-										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" name="sub1" value="month"><em></em>월간</label></li>
+										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>연간 </label><span class="tail obj">Save 20%</span>	</li>
 									</ul>
 								</c:if>
 								<c:if test="${'year' != billing.DATE_TYPE }">	
 									<ul class="checkBox">
-										<li><label><input type="radio" checked="checked" name="sub1" value="month"><em></em>월간 (월 가격 표시)</label></li>
-										<li><label><input type="radio" name="sub1" value="year"><em></em>연간 (연 가격 표시)</label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" checked="checked" name="sub1" value="month"><em></em>월간</label></li>
+										<li><label><input type="radio" name="sub1" value="year"><em></em>연간</label><span class="tail obj">Save 20%</span>	</li>
 									</ul>
 								</c:if>
 							</c:if>
@@ -72,14 +73,14 @@
 							<input type="hidden" id="PAY_TYPE" name="PAY_TYPE" value="${billing.PAY_TYPE}"/>
 							<ul class="checkBox">
 								<li><label><input type="radio" checked="checked" name="sub2" value="card"><em></em>신용 / 직불카드</label></li>
-								<li><label><input type="radio" name="sub2" value="transfer"><em></em>계좌 이체 / 세금계산서</label></li>
+								<li><label><input type="radio" name="sub2" value="transfer"><em></em>계좌 이체 </label></li>
 							</ul>
 						</div>
 						<div class="inner3 inner">
 							<p class="title">결제 금액</p>
 							<ul>
 								<li>
-									<p>NetMiner 365 - </p><p>${billing.PLAN_NAME}</p>
+									<p>NetMiner 365 - </p><p> ${billing.PLAN_NAME}</p>
 									<span> &#8361; <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
+import net.sf.json.JSONObject;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -34,6 +35,9 @@ public class BillingVo implements Serializable {
 	@JsonAlias("ACCOUNT_NO") private String ACCOUNT_NO = "";
 	@JsonAlias("ACCOUNT_HOLDER") private String ACCOUNT_HOLDER = "";
 	@JsonAlias("ACCOUNT_DEPOSITLIMIT") private String ACCOUNT_DEPOSITLIMIT = "";
+	@JsonAlias("EXITS_DATE") private Date EXITS_DATE;
+	@JsonAlias("CARD_INFO") private JSONObject CARD_INFO;
+	
 	
 	private int VAT = 0;
 	private int PAY_PRICE_VAT=0;
@@ -50,6 +54,7 @@ public class BillingVo implements Serializable {
 	private String orderId="";
 	private String paymentKey="";
 	private int amount=0;
+	private JSONObject card = null; 
 	
 	private int diffDay= 0;
 	private String type = "none";
