@@ -93,8 +93,13 @@ public class BillingController extends HttpServlet {
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
 		param = new HashMap<String,Object>();
-		param.put("language", member.getLanguage());
+		if (language.equals("_EN")) {
+			param.put("language","en");
+		} else {
+			param.put("language","ko");
+		}
 		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
+		logger.info("faqList - {}", faqList.toString());
 		mv.addAttribute("faqList", faqList);
 		String path = "homePage"+ language;
 		return path+"/pricing";
@@ -183,15 +188,11 @@ public class BillingController extends HttpServlet {
 		logger.info("dateType- {}", dateType);
 		logger.info("billingOldVo-{}",billingOldVo);
 		
-		//planCode 가 널인경우 플랜변경 또는 업그레이드 이기 때문에 해당 이전 결제 정보 기준으로 plancode 를 셋팅 
+		//planCode 가 널인경우 새로 고침이므로 메인으로 이동 
 		if (planCode == null) {
-			if (billingOldVo == null) {
-				return "redirect:/";
-			} else {
-				planCode = billingOldVo.getPLAN_CODE();
-				payNo = billingOldVo.getNO();
-			}
+			return "redirect:/";
 		}
+		
 		
 		HashMap<String , Object> param= new HashMap<String , Object>();
 		param.put("planCode", planCode);
@@ -203,10 +204,75 @@ public class BillingController extends HttpServlet {
 		billingVo.setORDER_PNM(String.valueOf(randomNo));
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
 		billingVo.setPAY_TYPE(payType);
+		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
-		if (language.equals("EN")) {
+		if (language.equals("_EN")) {
 			billingVo.setPAY_PLATFORM("paypal");
-			
+			if (billingOldVo != null) {
+				if (billingOldVo.getDiffDay() > -7 && billingOldVo.getDiffDay() < 7) {
+					//플랜 연장 인경우 
+					if (dateType.equals("year")) {
+						int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
+						billingVo.setPAY_PRICE(total);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("year"); 
+						billingVo.setType("extensionPlan");
+					} else {
+						billingVo.setPAY_PRICE( billingVo.getPLAN_PER_EN());
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
+						billingVo.setDATE_TYPE("month");
+						billingVo.setType("extensionPlan");
+					}
+					
+				} else {
+					if (billingOldVo.getDATE_TYPE().equals("year")) {
+						// 1년에서 1년 업그레이드시
+						int oldPrice = billingOldVo.getPLAN_PER_EN();
+						int nowPrice = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
+						int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
+						
+						billingVo.setPAY_PRICE(result);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+						billingVo.setDATE_TYPE("year");
+						billingVo.setType("upgradePlan");
+						logger.info("billingVo year- {}", billingVo.toString());
+					} else {
+						// 한달에서 한달 업그레이드시 
+						int oldPrice = billingOldVo.getPLAN_PER_EN();
+						int nowPrice = billingVo.getPLAN_PER_EN();
+						int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
+						
+						billingVo.setPAY_PRICE(result);
+						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+						billingVo.setDiffDay(billingOldVo.getDiffDay());
+						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+						billingVo.setDATE_TYPE("month");
+						billingVo.setType("upgradePlan");
+						logger.info("billingVo month - {}", billingVo.toString());
+					}					
+				}
+			} else {
+				if (dateType.equals("year")) {
+					int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
+					billingVo.setPAY_PRICE(total);
+					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setType("none");
+				} else {
+					billingVo.setPAY_PRICE( billingVo.getPLAN_PER_EN());
+					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+					billingVo.setType("none");
+				}
+			}
 		} else {
 			billingVo.setPAY_PLATFORM("toss");
 			if (billingOldVo != null) {
@@ -218,7 +284,7 @@ public class BillingController extends HttpServlet {
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
-						billingVo.setDATE_TYPE("year");
+						billingVo.setDATE_TYPE("year"); 
 						billingVo.setType("extensionPlan");
 					} else {
 						billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
@@ -232,7 +298,7 @@ public class BillingController extends HttpServlet {
 				} else {
 					if (billingOldVo.getDATE_TYPE().equals("year")) {
 						// 1년에서 1년 업그레이드시
-						int oldPrice = billingOldVo.getPAY_PRICE();
+						int oldPrice = billingOldVo.getPLAN_PER_KO();
 						int nowPrice = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
 						int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
 						
@@ -246,7 +312,7 @@ public class BillingController extends HttpServlet {
 						logger.info("billingVo year- {}", billingVo.toString());
 					} else {
 						// 한달에서 한달 업그레이드시 
-						int oldPrice = billingOldVo.getPAY_PRICE();
+						int oldPrice = billingOldVo.getPLAN_PER_KO();
 						int nowPrice = billingVo.getPLAN_PER_KO();
 						int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
 						

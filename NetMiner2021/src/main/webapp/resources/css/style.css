@@ -100,19 +100,17 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top .content .mypage.type2{right:0; top: -5px;}
 #wrap #top .content .mypage.type2 ul{display:none; margin-top: 63px; border-radius: 10px; padding:20px; background-color:#fff; box-shadow: 0px 0px 11px #424242;}
 #wrap #top .content .mypage.type2 li{font-size:18px;}
-#wrap #top .content .mypage.type2 li.active a{color:#d10000;}
-#wrap #top .content .mypage.type2 li.active:first-child::after{color:#d10000;}
 #wrap #top .content .mypage.type2 li a{padding:5px;}
 #wrap #top .content .mypage.type2 li:first-child a{display:inline-block;}
 #wrap #top .content .mypage.type2 li:first-child::after{content:"↗"; display: inline-block;}
-#wrap #top.sticky {position: fixed;top: 0;background-color:#fff;z-index:9999;border-bottom: 1px solid #d7d7d7;}
-#wrap #top.sticky .menu li:hover{color:#3462c7;}
+#wrap #top.sticky { position: fixed; top: 0; background-color:#fff; z-index:9999; border-bottom: 1px solid #d7d7d7;}
+#wrap #top.sticky li:hover{color:#3462c7;}
 #wrap #top.sticky .menu span{color:#090909;}
 #wrap #top.sticky .content .mypage.type1 li.join{background-color:#203864;}
 #wrap #top.sticky .content .mypage.type1 li.login a{color:#090909;}
 #wrap #top.sticky .menu span::after{background:url(/resources/images/top_arrow2.png); }
-#wrap #top.sticky .menu ul{box-shadow:none; border-radius:0; margin-top: 39px;}
 #wrap #top.sticky .price{color:#090909;}
+#wrap #top.sticky .menu ul{box-shadow:none; border-radius:0; margin-top: 39px;}
 #wrap #top.sticky .menu{}
 #wrap #top.sticky .menu ul::before{width:100px; height:4px; background:#3462c7; display:block; content:""; position: absolute; left: calc(50% - 50px); top: 26%;}
 #wrap #top.sticky .content{padding: 27px 90px 0;}

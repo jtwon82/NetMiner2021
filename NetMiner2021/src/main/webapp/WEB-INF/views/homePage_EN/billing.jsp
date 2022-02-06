@@ -26,15 +26,6 @@
 		<script src="resources/js/main.js?st=<%= Math.floor(Math.random() *100)%>" type="text/javascript"></script>
 	</head>
 	<body>
-	<script type="text/javascript">
-		var str = "${nowPlan}";
-		var str2 = "${billingList}";
-		var str3 = "${diffDays}";
-		
-		console.log("str - " + str);
-		console.log("str2 - " +str2);
-		console.log("str3 - " +str3);
-	</script>
 		<div id="wrap" class="sub billing">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">

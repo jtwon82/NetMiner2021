@@ -58,6 +58,8 @@ public class BillingVo implements Serializable {
 	
 	private int diffDay= 0;
 	private String type = "none";
+	//payPal 결재 시 필요 
+	private String Encrypted_ret_url;
 	
 	public static BillingVo fromMap(HashMap<String, Object> map) {
 		BillingVo result= new ObjectMapper()
@@ -65,5 +67,5 @@ public class BillingVo implements Serializable {
 				.convertValue(map, BillingVo.class);
 		return result;
 	}
-	
+
 }
