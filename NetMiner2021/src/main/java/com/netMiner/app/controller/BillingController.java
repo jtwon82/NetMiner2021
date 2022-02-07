@@ -36,6 +36,7 @@ public class BillingController extends HttpServlet {
 	
 	@Autowired
 	private BillingService billingService;
+	
 
 	/*page Move Billing*/
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
@@ -445,4 +446,11 @@ public class BillingController extends HttpServlet {
 		String path = "homePage"+ language;
 		return path + "/invoice";
 	}
+	
+	@RequestMapping("paypal")
+	public void payPal() {
+		logger.info("hellow PayPal");
+	}
+	
+	
 }

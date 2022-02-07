@@ -28,26 +28,24 @@
 	<body>
 		<script type="text/javascript">
 			function pay(){
-				/* var pagemoveflag = true;
+				var pagemoveflag = true;
 				var date = new Date();
-				var url = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&";
-				params = "business=netminer@cyram.com"
-					+"&return=http://www.netminer.com/NetMiner/payment_review.jsp"
-					+"&notify_url=http://www.netminer.com/NetMiner/payment_review.jsp"
-					+"&cancel_return=http://www.netminer.com/NetMiner/payment_review.jsp?test=cancel"
+				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
+				params = "business=sb-ix8yx13109654@business.example.com"
+					+"&return=http://localhost:8001/goSubscribeComplete"
+					+"&notify_url=http://localhost:8001/paypal"
+					+"&cancel_return=http://localhost:8001/"
 					+"&quantity=1"
 					+"&item_number="+date.getTime()
 					+"&amount=<c:out value='${billing.PAY_PRICE}'/>"
-					+"&item_name=NetMiner"
+					+"&item_name=<c:out value='${billing.PLAN_NAME}'/>"
 					+"&no_shipping=1"
 					+"&no_note=0"
 					+"&currency_code=USD";
 				if(pagemoveflag) {
 					location.href = url + params;
 				}
-				opener.parent.location = "/download_buy/buy/buy_ok_Research_academic-view.do"; */
-				alert("not working");
-				
+				opener.parent.location = "/download_buy/buy/buy_ok_Research_academic-view.do";
 			}
 		</script>
 		<div id="wrap" class="sub subscribe">
@@ -91,7 +89,7 @@
 							<p class="title">Amount</p>
 							<ul>
 								<li>
-									<p>NetMiner 365 - Small</p>
+									<p>NetMiner 365 - ${billing.PLAN_NAME}</p>
 									<span>$ <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
