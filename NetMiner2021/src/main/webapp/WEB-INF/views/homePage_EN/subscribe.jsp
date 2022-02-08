@@ -32,7 +32,7 @@
 				var date = new Date();
 				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 				params = "business=sb-ix8yx13109654@business.example.com"
-					+"&return=http://localhost:8001/goSubscribeComplete"
+					+"&return=http://localhost:8001/payment"
 					+"&notify_url=http://localhost:8001/paypal"
 					+"&cancel_return=http://localhost:8001/"
 					+"&quantity=1"

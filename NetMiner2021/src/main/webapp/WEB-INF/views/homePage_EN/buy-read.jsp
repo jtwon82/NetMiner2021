@@ -721,11 +721,11 @@ package and the hardware key will be delivered by door-to-door express delivery 
       <li class="mdl10"><strong>Large</strong> : 100,000</li>
       <li class="mdl10" style="margin-bottom:18px;"><strong>Huge</strong> :1,000,000</li>
       <li>Available data size for each type of Usage is as follows.</li>
-<li class="mdl10 mdt10">Coursework Use : Small</li>
-<li class="mdl10 ">Student Research Use : Small, Medium, Large</li>
-<li class="mdl10 ">Academic Use : Small, Medium, Large, Huge</li>
-<li class="mdl10 ">Institute/Commercial Use : Small, Medium, Large, Huge</li>
-<li class="mdl10 ">Enterprise Use : Unlimited</li>
+	<li class="mdl10 mdt10">Coursework Use : Small</li>
+	<li class="mdl10 ">Student Research Use : Small, Medium, Large</li>
+	<li class="mdl10 ">Academic Use : Small, Medium, Large, Huge</li>
+	<li class="mdl10 ">Institute/Commercial Use : Small, Medium, Large, Huge</li>
+	<li class="mdl10 ">Enterprise Use : Unlimited</li>
       <li class=" mdt5"><strong>Notice</strong> : It is not guaranteed that the software will perform efficiently on the Data Size. 
 The Data Size is the maximum size of nodes allowed to be imported into NetMiner. The performance of NetMiner depends on the system performance on which NetMiner is installed.
 You need to check the full description about 'Scalability and Performance' of NetMiner on our web page in FAQ Menu.</li>

@@ -20,7 +20,7 @@ import com.netMiner.app.model.vo.BillingVo;
 public class PayPalController extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(PayPalController.class);
 	
-	private String serverUrl = "http://www.netminer.com";
+	private String serverUrl = "http://localhost:8001/";
 	
 	@RequestMapping("/download_buy/buy/lg-popup.do")
 	public String read_lg(HttpSession session,HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
