@@ -27,20 +27,11 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-		var Payment=[];
-		Payment['tossPayments'] = '';
-		Payment['amount'] = ${billing.PAY_PRICE};
-		Payment['orderId'] = '${billing.ORDER_ID}';
-		Payment['orderName'] = '${billing.ORDER_PNM}';
-		Payment['customerName'] = '${billing.CUSTOMER_NAME}';
-		Payment['card'] = '${billing.CARD_INFO}';	
-		</script>
-		<script type="text/javascript">
 			function pay(){
 				var pagemoveflag = true;
 				var date = new Date();
 				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
-				params = "business=sb-ix8yx13109654@business.example.com"
+				params = "business=sb-1mesd13290912@business.example.com"
 					+"&return="+ URL +"/payment_paypal"
 					+"&notify_url="+ URL +"/payment_paypal"
 					+"&cancel_return="+ URL +"/"
@@ -52,8 +43,8 @@
 					+"&no_note=0"
 					+"&currency_code=USD";
 				if(pagemoveflag) {
-					var href=url + params;
-					window.open(href, 'pop', 'width=500,height=600');
+					var path=url + params;
+					window.location.href= path;
 				}
 			}
 		</script>

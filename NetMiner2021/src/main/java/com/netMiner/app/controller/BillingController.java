@@ -195,6 +195,7 @@ public class BillingController extends HttpServlet {
 		}
 		
 		
+		
 		HashMap<String , Object> param= new HashMap<String , Object>();
 		param.put("planCode", planCode);
 		
@@ -205,6 +206,14 @@ public class BillingController extends HttpServlet {
 		billingVo.setORDER_PNM(String.valueOf(randomNo));
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
 		billingVo.setPAY_TYPE(payType);
+		
+		if (billingOldVo != null) {
+			if (billingOldVo.getPLAN_CODE().equals("01")) {
+				billingOldVo = null;
+								
+			}
+		}
+		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
 		if (language.equals("_EN")) {
@@ -409,21 +418,29 @@ public class BillingController extends HttpServlet {
 		}
 	}
 	@RequestMapping(value="payment_paypal", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView payment_paypal ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
+	public String payment_paypal ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {
 		String language = (String) session.getAttribute("language");
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		String payNo =  request.getParameter("payNo");
+		String path = "homePage"+ language;
 
 		logger.info("form {}", form);
 		logger.info("billingVo {}", billingVo);
-		
+		if (form.getPayerID() != null) {
+			billingVo.setUSER_ID(memberVo.getUserId());
+			billingVo.setOrderId(billingVo.getOrderId());
+			billingVo.setPaymentKey(form.getPayerID());
+			billingVo.setAmount(billingVo.getAmount());
+			
+			billingService.insertSubscript(billingVo);
+			logger.info("insert succ PayPal billingVo {}", billingVo);
+			return "redirect:/goSubscribeComplete";
+		}  else {
+			return "redirect:/";
+		}
 //		return "redirect:/goSubscribeComplete";
-		
-		String path = "homePage"+ language;
-		mv.setViewName(path+"/payment_paypal");
-		return mv;
 	}
 	
 	@RequestMapping(value="order",method=RequestMethod.GET)
@@ -459,6 +476,9 @@ public class BillingController extends HttpServlet {
 		Map<String ,Object> result = billingService.selectSubscriptOne(param);
 		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
 		mv.addAttribute("result",result);
+		if ((int) result.get("PAY_PRICE") < 50000) {
+			language = "_EN";
+		}
 		mv.addAttribute("language",language);
 		String path = "homePage"+ language;
 		return path + "/invoice";
