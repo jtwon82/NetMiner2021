@@ -56,6 +56,8 @@ public class BillingVo implements Serializable {
 	private int amount=0;
 	private JSONObject card = null; 
 	
+	private String PayerID="";
+	
 	private int diffDay= 0;
 	private String type = "none";
 	//payPal 결재 시 필요 

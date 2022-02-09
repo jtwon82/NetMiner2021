@@ -101,6 +101,9 @@ $(document).ready(function() {
 	
 	/*subscribe */
 	$("button[class='pay trs']").click(function (){
+		if($(this).data('payplatform')=='paypal'){
+			return false;
+		}
 		var accountRoute = $("input[name='sub2']:checked").val();
 		console.log(accountRoute);
 		var url = document.createElement('a');

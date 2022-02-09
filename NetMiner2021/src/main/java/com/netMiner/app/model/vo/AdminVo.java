@@ -16,7 +16,9 @@ public class AdminVo implements Serializable{
 
 	@JsonAlias("NO") private String NO= "";
 	@JsonAlias("REG_DATE") private String REG_DATE= "";
+	@JsonAlias("MB_REG_DATE_STR") private String MB_REG_DATE_STR= "";
 	@JsonAlias("REG_DATES") private String REG_DATES= "";
+	@JsonAlias("REG_DATE_STR") private String REG_DATE_STR= "";
 	@JsonAlias("LAST_LOGIN_DATE") private String LAST_LOGIN_DATE= "";
 	@JsonAlias("LAST_LOGIN_DATES") private String LAST_LOGIN_DATES= "";
 	
@@ -32,9 +34,15 @@ public class AdminVo implements Serializable{
 	@JsonAlias("USER_ID") private String USER_ID= "";
 	@JsonAlias("USER_PWD") private String USER_PWD= "";
 	@JsonAlias("COMPANY") private String COMPANY= "";
+	@JsonAlias("MB_COMPANY") private String MB_COMPANY= "";
 	@JsonAlias("NATION") private String NATION= "";
+	@JsonAlias("MB_NATION") private String MB_NATION= "";
 	@JsonAlias("LANGUAGE") private String LANGUAGE= "";
+	@JsonAlias("MB_LANGUAGE") private String MB_LANGUAGE= "";
 	@JsonAlias("USE_CODE") private String USE_CODE= "";
+	@JsonAlias("USE_CODE_STR") private String USE_CODE_STR= "";
+	@JsonAlias("MB_USE_CODE") private String MB_USE_CODE= "";
+	@JsonAlias("MB_USE_CODE_STR") private String MB_USE_CODE_STR= "";
 	@JsonAlias("MARKET_YN") private String MARKET_YN= "";
 	@JsonAlias("MARKET_DATE") private String MARKET_DATE= "";
 	@JsonAlias("MARKET_DATES") private String MARKET_DATES= "";
@@ -43,6 +51,7 @@ public class AdminVo implements Serializable{
 	@JsonAlias("USER_OUT_DATES") private String USER_OUT_DATES= "";
 	@JsonAlias("USER_STATS_YN") private String USER_STATS_YN= "";
 	@JsonAlias("TYPE_CODE") private String TYPE_CODE= "";
+	@JsonAlias("TYPE_CODE_STR") private String TYPE_CODE_STR= "";
 	
 	//EMAIL
 	@JsonAlias("EMAIL_CODE") private String EMAIL_CODE = "";
@@ -70,6 +79,37 @@ public class AdminVo implements Serializable{
 //	@JsonAlias("DESCRIPTION") private String DESCRIPTION= "";
 	@JsonAlias("CONTENT") private String CONTENT= "";
 	
+	
+	// order
+	@JsonAlias("SC_NO") private String SC_NO= "";
+	@JsonAlias("SC_REG_DATE") private String SC_REG_DATE= "";
+	@JsonAlias("SC_REG_DATES") private String SC_REG_DATES= "";
+	@JsonAlias("SC_USER_ID") private String SC_USER_ID= "";
+	@JsonAlias("ORDER_ID") private String ORDER_ID= "";
+//	@JsonAlias("ORDER_ID") private String USER_ID= "";
+	@JsonAlias("PLAN_CODE") private String PLAN_CODE= "";
+	@JsonAlias("SC_PLAN_CODE") private String SC_PLAN_CODE= "";
+	@JsonAlias("PLAN_CODE_STR") private String PLAN_CODE_STR= "";
+	@JsonAlias("SC_PLAN_CODE_STR") private String SC_PLAN_CODE_STR= "";
+	@JsonAlias("PLAN_TYPE") private String PLAN_TYPE= "";
+	@JsonAlias("DATE_TYPE") private String DATE_TYPE= "";
+	@JsonAlias("PAY_PLATFORM") private String PAY_PLATFORM= "";
+	@JsonAlias("PAY_STEP") private String PAY_STEP= "";
+	@JsonAlias("PAY_TYPE") private String PAY_TYPE= "";
+	@JsonAlias("PAY_PRICE") private String PAY_PRICE= "";
+	@JsonAlias("PAY_PRICE_TOTAL") private String PAY_PRICE_TOTAL= "";
+	@JsonAlias("ACCOUNT_NAME") private String ACCOUNT_NAME= "";
+	@JsonAlias("ACCOUNT_NO") private String ACCOUNT_NO= "";
+	@JsonAlias("ACCOUNT_HOLDER") private String ACCOUNT_HOLDER= "";
+	@JsonAlias("ACCOUNT_DEPOSITLIMIT") private String ACCOUNT_DEPOSITLIMIT= "";
+	@JsonAlias("ORDER_PNM") private String ORDER_PNM= "";
+	@JsonAlias("paymentKey") private String paymentKey= "";
+	@JsonAlias("amount") private String amount= "";
+	@JsonAlias("EXITS_DATE") private String EXITS_DATE= "";
+	@JsonAlias("SC_EXITS_DATE") private String SC_EXITS_DATE= "";
+	@JsonAlias("SC_EXITS_DATES") private String SC_EXITS_DATES= "";
+	@JsonAlias("EXITS_DATE_STR") private String EXITS_DATE_STR= "";
+
 //	public String toString() {
 //		return ToStringBuilder.reflectionToString(this);
 //	}

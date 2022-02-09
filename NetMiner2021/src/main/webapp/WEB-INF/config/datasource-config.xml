@@ -14,8 +14,8 @@
   <bean id="dataSourceSpied" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close"
       p:driverClassName="#{jdbcConfig['jdbc.driver']}" p:jdbcUrl="#{jdbcConfig['jdbc.datasource.url']}" p:username="#{jdbcConfig['jdbc.datasource.username']}"
       p:password="#{jdbcConfig['jdbc.datasource.userpwd']}"
-      p:minimumIdle="50"
-      p:maximumPoolSize="50"
+      p:minimumIdle="3"
+      p:maximumPoolSize="3"
       p:maxLifetime="3600000 "
       p:connectionTimeout="5000"
       />

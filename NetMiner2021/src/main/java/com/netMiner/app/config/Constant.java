@@ -21,15 +21,26 @@ public class Constant {
 	
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
 
-	public static String GOOGLE_CALL_BACK_LOGIN_URL = "http://localhost:8081/auth";	
-	public static String GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
-	//	public static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
-	//	public static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
+	// local
+//	public static String URL = "http://localhost:8001/";
+//	public static String GOOGLE_CALL_BACK_LOGIN_URL = URL +"/auth";	
+//	public static String GOOGLE_CALL_BACK_REGISTER_URL = URL +"/socialRegister";
+	
+	// dev
+	public static String URL = "http://dev.netminer365.com/";
+	public static String GOOGLE_CALL_BACK_LOGIN_URL = URL +"/auth";	
+	public static String GOOGLE_CALL_BACK_REGISTER_URL = URL +"/socialRegister";
+	
+	// real
+//	public static String URL = "http://www.netminer365.com/";
+//	public static String GOOGLE_CALL_BACK_LOGIN_URL = "https://www.netminer365.com/auth";	
+//	public static String GOOGLE_CALL_BACK_REGISTER_URL = "https://www.netminer365.com/socialRegister";
 
 	public static Constant getInstance(HttpServletRequest request) {
 		if(ins==null) {
 			ins = new Constant();
 			if(request.getRequestURL().toString().contains("localhost")) {
+				ins.URL= "http://localhost:8081/";
 				ins.GOOGLE_CALL_BACK_LOGIN_URL= "http://localhost:8081/auth";
 				ins.GOOGLE_CALL_BACK_REGISTER_URL = "http://localhost:8081/socialRegister";
 			}

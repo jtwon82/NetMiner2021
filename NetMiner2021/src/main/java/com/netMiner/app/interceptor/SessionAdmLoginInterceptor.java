@@ -35,7 +35,8 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		String url = sbUrl.toString();
 		
 		logger.info("getRequestURL {}", request.getRequestURL());
-		
+
+		request.setAttribute("URL", Constant.getInstance(request).URL);
 		request.setAttribute("GOOGLE_CALL_BACK_LOGIN_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL);
 		request.setAttribute("GOOGLE_CALL_BACK_REGISTER_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL);
 		

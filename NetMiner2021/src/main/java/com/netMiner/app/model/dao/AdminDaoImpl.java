@@ -89,6 +89,11 @@ public class AdminDaoImpl implements AdminDao{
 	public void deleteMemberInfo(Map<String, Object> map) {
 		sqlSession.update("deleteMemberInfo", map);
 	}
+	
+	@Override
+	public void updateSubscript(Map<String, Object> map) {
+		sqlSession.update("updateSubscript", map);
+	}
 
 	
 
@@ -158,6 +163,43 @@ public class AdminDaoImpl implements AdminDao{
 	public void modifyEmailInfo(HashMap<String, Object> map) {
 		sqlSession.update("modifyEmailInfo", map);
 	}
+
+	
+	
+	
+	
+	
+
+	@Override
+	public List<HashMap<String, Object>> getOrderList(Map<String, Object> map) {
+		return sqlSession.selectList("getOrderList", map);
+	}
+
+	@Override
+	public int getOrderCount(Map<String, Object> map) {
+		return sqlSession.selectOne("getOrderCount", map);
+	}
+
+	@Override
+	public HashMap<String, Object> getOrderDetailInfo(Map<String, Object> map) {
+		return sqlSession.selectOne("getOrderDetailInfo", map);
+	}
+
+	@Override
+	public void deleteOrderInfo(HashMap<String, Object> map) {
+		sqlSession.delete("deleteOrderInfo" , map);
+	}
+
+	@Override
+	public void insertOrderInfo(HashMap<String, Object> map) {
+		sqlSession.update("insertOrderInfo", map);
+	}
+
+	@Override
+	public void modifyOrderInfo(HashMap<String, Object> map) {
+		sqlSession.update("modifyOrderInfo", map);
+	}
+
 
 	
 	

@@ -21,6 +21,7 @@
 										<option value="" >컬럼</option>
 										<option value="USER_ID">이메일</option>
 										<option value="COMPANY">소속</option>
+										<option value="NATION">국가</option>
 									</select>
 									<div class="search">
 										<input type="text" name="SEARCH_VALUE" value="${json.SEARCH_VALUE }">
@@ -33,6 +34,13 @@
 										<option value="01">Academic</option>
 										<option value="02">Commercial</option>
 										<option value="99">Super</option>
+									</select>
+									<select id="SC_PLAN_CODE" name="SC_PLAN_CODE" disabled="disabled" class='filter filter1'>
+										<option value="">주문상품</option>
+										<option value="01">FREE</option>
+										<option value="02">SMALL</option>
+										<option value="03">MEDIUM</option>
+										<option value="04">LARGE</option>
 									</select>
 									<select id="LANGUAGE" name="LANGUAGE" disabled="disabled" class='filter filter1'>
 										<option value="" >언어</option>
@@ -69,25 +77,32 @@
 <script type="text/javascript">SEARCH_KEY.value='${json.SEARCH_KEY}';</script>
 <script type="text/javascript">USE_CODE.value='${json.USE_CODE}';</script>
 <script type="text/javascript">LANGUAGE.value='${json.LANGUAGE}';</script>
+<script type="text/javascript">SC_PLAN_CODE.value='${json.SC_PLAN_CODE}';</script>
 <script type="text/javascript">MARKET_YN.value='${json.MARKET_YN}';</script>
 
 						</div>
 						<table class="main">
 							<colgroup>
-								<col width="12%">
-								<col width="12%">
-								<col width="12%">
-								<col width="*">
+								<col width="20%">
 								<col width="8%">
-								<col width="12%">
-								<col width="12%">
+								<col width="8%">
+								<col width="8%">
+								<col width="8%">
+								<col width="8%">
+								<col width="*">
+								<col width="5%">
+								<col width="8%">
+								<col width="8%">
 								<col width="8%">
 							</colgroup>
 							<thead>
 								<tr>
+									<th>UUID</th>
 									<th>가입일시</th>
 									<th>타입구분</th>
 									<th>용도구분</th>
+									<th>이용현황</th>
+									<th>트라이얼</th>
 									<th>이메일</th>
 									<th>언어</th>
 									<th>국가</th>
@@ -96,12 +111,16 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${not empty list }">
+								<c:choose>
+								<c:when test="${not empty list }">
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('user_modify?NO=${item.NO}')">
+											<td>${item.UUID }</td>
 											<td>${item.REG_DATES }</td>
 											<td>${item.TYPE_CODE_STR }</td>
 											<td>${item.USE_CODE_STR }</td>
+											<td>${item.SC_PLAN_CODE_STR }</td>
+											<td>${item.FREE_YN }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
 											<td>${item.NATION_NAME_KR }</td>
@@ -109,7 +128,13 @@
 											<td>${item.MARKET_YN }</td>
 										</tr>
 									</c:forEach>
-								</c:if>
+								</c:when>
+								<c:otherwise>
+								<tr>
+									<td colspan='8' align='center'>검색결과가 없습니다.</td>
+								</tr>
+								</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 						<%--@ include file="paging.jsp"--%>

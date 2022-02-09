@@ -408,6 +408,23 @@ public class BillingController extends HttpServlet {
 			
 		}
 	}
+	@RequestMapping(value="payment_paypal", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView payment_paypal ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
+			, BillingVo form) {
+		String language = (String) session.getAttribute("language");
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		String payNo =  request.getParameter("payNo");
+
+		logger.info("form {}", form);
+		logger.info("billingVo {}", billingVo);
+		
+//		return "redirect:/goSubscribeComplete";
+		
+		String path = "homePage"+ language;
+		mv.setViewName(path+"/payment_paypal");
+		return mv;
+	}
 	
 	@RequestMapping(value="order",method=RequestMethod.GET)
 	public ModelAndView order(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response

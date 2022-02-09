@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8 " pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file = "top.jsp" %>
 	<body OnUnload="location.href='logout'">
 		<div id="wrap" class="user_modify">
@@ -39,6 +40,20 @@
 										<label><input type="radio" name="r1" value='01' selected><span>Academic</span></label>
 										<label><input type="radio" name="r1" value='02'><span>Commercial</span></label>
 									</td><script>$('input:radio[name=r1]:input[value="${item.USE_CODE }"]').attr("checked", true);</script>
+								</tr>
+								<tr>
+									<th>이용현황</td>
+									<td>
+									<input type="hidden" name="CHK_SC" value="false">
+									<input type="hidden" name="SC_NO" value="${item.SC_NO }">
+									<select id="SC_PLAN_CODE" name="SC_PLAN_CODE" onchange="CHK_SC.value='true'">
+										<option value="">주문상품</option>
+										<option value="01">FREE</option>
+										<option value="02">SMALL</option>
+										<option value="03">MEDIUM</option>
+										<option value="04">LARGE</option>
+									</select><script type="text/javascript">SC_PLAN_CODE.value='${item.SC_PLAN_CODE}';</script>
+									<input type="date" name="SC_EXITS_DATE" value="${fn:substring(item.SC_EXITS_DATES,0,10) }" onchange="CHK_SC.value='true'"></td>
 								</tr>
 								<tr>
 									<th>이메일</td>

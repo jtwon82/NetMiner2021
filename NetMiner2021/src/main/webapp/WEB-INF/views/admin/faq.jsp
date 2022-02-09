@@ -32,10 +32,10 @@
 									<div class="search">
 										<input type="hidden" id='SEARCH_KEY' name='SEARCH_KEY' value="TITLE">
 										<input type="text" id='SEARCH_VALUE' name='SEARCH_VALUE' value="${json.SEARCH_VALUE }">
-										<button>검색</button>
 									</div>
 								</li>
 							</ul>
+							<button class="finalSearch navy">검색</button>
 							</form>
 <script type="text/javascript">LANGUAGE.value='${json.LANGUAGE}';</script>
 <script type="text/javascript">CATE_CODE.value='${json.CATE_CODE}';</script>
@@ -56,7 +56,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:if test="${not empty list }">
+								<c:choose>
+								<c:when test="${not empty list }">
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('faq_modify?NO=${item.NO}')">
 											<td>${item.LANGUAGE_STR }</td>
@@ -65,7 +66,13 @@
 											<td>${item.DESCRIPTION }</td>
 										</tr>
 									</c:forEach>
-								</c:if>
+								</c:when>
+								<c:otherwise>
+								<tr>
+									<td colspan='8' align='center'>검색결과가 없습니다.</td>
+								</tr>
+								</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 						<div class="pagingContainer">

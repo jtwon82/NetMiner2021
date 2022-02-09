@@ -267,6 +267,12 @@ public class AdminController {
 
 			} else if(json.get("MODE").equals("modify")) {
 				adminService.modifyMemberInfo(json);
+				logger.info("member modify succ");
+				
+				if(json.get("CHK_SC").toString().equals("true")) {
+					adminService.updateSubscript(json);
+					logger.info("member subscript modify succ");
+				}
 			}
 
 			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", json.toString());
@@ -416,6 +422,76 @@ public class AdminController {
 	
 
 
+
+	@RequestMapping(value="/order" , method =  {RequestMethod.GET, RequestMethod.POST})
+	public String order(Model model, HttpServletRequest request
+			, @RequestParam HashMap<String, Object> json) {
+
+		logger.info("json {}", json);
+		
+		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
+		json.put("page", page);
+		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
+
+		List list= adminService.getOrderList(json);
+		if(list != null && list.size()>0){
+			logger.info("list {}", list);
+
+			int count= adminService.getOrderCount(json);
+			paging.setTotalEntryCount(count);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("paging2", paging.printPaging_S(page, Constant.PER_PAGE_GROUP, paging.pageCnt(count, Constant.PER_ONE_PAGE), "order?", "", "", "red", json));
+		}
+
+		model.addAttribute("json", json);
+
+		return "admin/order";
+	}
+	@RequestMapping(value="order_modify", method={RequestMethod.GET, RequestMethod.POST})
+	public String order_modify(Model model
+			, @RequestParam HashMap<String, Object> json) {
+		logger.info("json {}", json);
+
+		if( MapUtils.KeyIsEmpty(json, "NO") ) {
+			AdminVo admin= new AdminVo();
+			model.addAttribute("item", admin);
+			
+			List members= adminService.getMemberList(new HashMap());
+			logger.info("members.size - {}",members.size());
+			model.addAttribute("members", members);
+		} else {
+
+			AdminVo admin= AdminVo.fromMap(adminService.getOrderDetailInfo(json));
+			logger.info("admin-{}",admin);
+			model.addAttribute("item", admin);
+		}
+		return "admin/order_modify";
+	}
+	@RequestMapping(value="/order_modify/check", method = RequestMethod.POST)
+	public @ResponseBody String order_modify_check(HttpSession session
+			, @RequestParam HashMap<String, Object> json) {
+		try {
+			logger.info("json {}", json);
+			if(json.get("MODE").equals("delete")) {
+				adminService.deleteOrderInfo(json);
+				logger.info("delete succ json {}", json);
+
+			} else if(json.get("MODE").equals("insert")) {
+				adminService.insertOrderInfo(json);
+				logger.info("insert succ json {}", json);
+
+			} else if(json.get("MODE").equals("modify")) {
+				adminService.modifyOrderInfo(json);
+				logger.info("modify succ json {}", json);
+			}
+			return Constant.ResultJson(ServiceResult.SUCCESS.name(),"", "");
+
+		} catch(Exception e) {
+			return Constant.ResultJson(ServiceResult.FAIL.name(),"", e.toString());
+
+		}
+	}
 	
 	
 	

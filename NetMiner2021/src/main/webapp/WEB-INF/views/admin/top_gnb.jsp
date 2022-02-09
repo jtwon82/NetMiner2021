@@ -19,13 +19,19 @@
 							</ul>
 						</div>
 						<div class="menu menu2">
+							<span class="on">판매 관리</span>
+							<ul class="on">
+								<li><a href="order">주문 관리</a></li>
+							</ul>
+						</div>
+						<div class="menu menu3">
 							<span class="on">게시판 관리</span>
 							<ul class="on">
 								<li><a href="email">자동 이메일</a></li>
 								<li><a href="faq">FAQ</a></li>
 							</ul>
 						</div>
-						<div class="menu menu2">
+						<div class="menu menu4">
 							<span class="on">서비스 관리</span>
 							<ul class="on">
 								<li><a href="check">점검 설정</a></li>

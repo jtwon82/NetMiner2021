@@ -49,6 +49,13 @@
 		    <version>3.4</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.5</version>
+		</dependency>
+
 
 		<!-- AspectJ -->
 		<dependency>
@@ -215,7 +222,11 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.3.2</version>
 		</dependency>
-				
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>LATEST</version>
+		</dependency>		
 	</dependencies>
 	
 	<profiles>
@@ -235,6 +246,7 @@
 	
 	
 	<build>
+		<finalName>NetMiner2021</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

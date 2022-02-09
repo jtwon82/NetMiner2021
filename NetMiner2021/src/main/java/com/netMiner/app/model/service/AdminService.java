@@ -37,6 +37,8 @@ public interface AdminService {
 	void insertMemberInfoDrop(Map<String, Object> map);
 	
 	void deleteMemberInfo(Map<String, Object> map);
+	
+	void updateSubscript(Map<String, Object> map);
 
 
 	
@@ -65,6 +67,22 @@ public interface AdminService {
 	void insertEmailInfo(HashMap<String, Object> json);
 
 	void modifyEmailInfo(HashMap<String, Object> json);
+
+	
+	
+	
+
+	List getOrderList(Map<String, Object> json);
+
+	int getOrderCount(Map<String, Object> json);
+
+	HashMap<String, Object> getOrderDetailInfo(Map<String, Object> map);
+
+	void deleteOrderInfo(HashMap<String, Object> json);
+
+	void insertOrderInfo(HashMap<String, Object> json);
+
+	void modifyOrderInfo(HashMap<String, Object> json);
 
 	
 	

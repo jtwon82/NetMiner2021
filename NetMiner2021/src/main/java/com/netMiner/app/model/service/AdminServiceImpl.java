@@ -94,6 +94,11 @@ public class AdminServiceImpl implements AdminService{
 		adminDao.deleteMemberInfo(map);
 	}
 
+	@Override
+	public void updateSubscript(Map<String, Object> map) {
+		adminDao.updateSubscript(map);
+	}
+
 
 	
 	
@@ -167,6 +172,41 @@ public class AdminServiceImpl implements AdminService{
 	
 
 
+	
+	
+
+	@Override
+	public List<HashMap<String, Object>> getOrderList(Map<String, Object> map) {
+		return adminDao.getOrderList(map);
+	}
+
+	@Override
+	public int getOrderCount(Map<String, Object> map) {
+		return adminDao.getOrderCount(map);
+	}
+
+	@Override
+	public HashMap<String, Object> getOrderDetailInfo(Map<String, Object> map) {
+		return adminDao.getOrderDetailInfo(map);
+	}
+	
+	@Override
+	public void deleteOrderInfo(HashMap<String, Object> map) {
+		adminDao.deleteOrderInfo(map);
+	}
+
+	@Override
+	public void insertOrderInfo(HashMap<String, Object> map) {
+		adminDao.insertOrderInfo(map);
+	}
+
+	@Override
+	public void modifyOrderInfo(HashMap<String, Object> map) {
+		adminDao.modifyOrderInfo(map);
+	}
+
+
+	
 	
 
 	@Override
