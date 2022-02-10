@@ -99,4 +99,26 @@ public class CommonScheduler {
 			logger.error("DB Exception TimeOut");
 		}
 	}
+	//플랜 결제 아이디 중에 3일 전 알림
+	@Scheduled(cron="0 0 9 * * *")
+	//@Scheduled(cron="*/30 * * * * *")
+	public void payPlanUser() {
+		try {
+			List<Map<String , Object>> memberList = memberDao.getPayPlanUser();
+			if (memberList.size() > 0) {
+				logger.info("memberList- {} ", memberList.toString());
+				
+				for (Map<String,Object> result : memberList) {
+					String userId = (String) result.get("USER_ID");
+					String language = (String) result.get("LANGUAGE");
+					String endDate = (String) result.get("END_DATE");
+					logger.info("result - {}", result.toString());
+					sendEmail.sendPayPlanUser(userId, language, endDate);
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

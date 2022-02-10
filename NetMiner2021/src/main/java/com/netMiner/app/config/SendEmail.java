@@ -208,6 +208,25 @@ public class SendEmail {
 		return ThreadLocalRandom.current().nextInt(1000000, 10000000);
 	}
 
+	//플랜 종료 3일전 유저 메일 발송 
+	public void sendPayPlanUser(String userId, String language, String endDate) {
+		MailVo vo = new MailVo();
+		
+		if ("en".equals(language)) {
+			vo = selectDao.getRandomMail("12");
+		} else {
+			vo = selectDao.getRandomMail("11");
+		}
+		
+		String title = vo.getTitle();
+		String comment = vo.getComment();
+		
+		comment = comment.replace("{YYYY/MM/DD}", endDate);
+		logger.info("payPlan- {}", vo.toString());
+		
+		this.sendMailSender(userId, comment, title);
+	}
+
 	
 
 
