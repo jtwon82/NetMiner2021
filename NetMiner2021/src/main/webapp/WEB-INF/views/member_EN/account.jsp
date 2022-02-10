@@ -143,7 +143,7 @@ by e-mail since <em class="date">${nowDate}</em></p>
 		<!-- 탈퇴 불가 팝업  -->
 		<div id="leave_hold_popup" class="popup">
 			<div class="wrap">
-				<img src="images/leave_hold_popup_ico.png">
+				<img src="resources/images/leave_hold_popup_ico.png">
 				<p>You can't delete your account<br>
 					until your plan expires.</p>
 				<button class="close trs">Close</button>

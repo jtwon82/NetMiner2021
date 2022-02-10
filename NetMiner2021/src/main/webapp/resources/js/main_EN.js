@@ -9,6 +9,13 @@ $(document).ready(function() {
 		$(".google").attr("onclick","googleLogin()");
 	} 
 	*/
+	//pricing 자주하는 질문
+	$("#wrap.pricing #section2 .content ul li .question").click(
+		function(){
+			$(this).next().toggleClass("active");
+			$(this).children().toggleClass("fold");
+		}
+	);
 	// 체크박스 전체 선택
 		$(".agree").on("click", "#check_all", function () {
 		    $(this).parents(".content").find('.agree input').prop("checked", $(this).is(":checked"));
@@ -34,6 +41,7 @@ $(document).ready(function() {
 	$(".popup .close, .popup .closeBtn").click(function() {
 		$(".popup").fadeOut();
 		$("body").css("overflow-y","auto");
+		window.location.reload();
 	});
 //	$("#check").change(function (){
 //		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
@@ -509,7 +517,14 @@ function delteUser () {
 			url : "./delteMember",
 			type : "POST",
 			success : function(data) {
-				window.location.href="./";
+				if (data.result == 'fail') {
+					$(".popup").hide();
+					$("body").css("overflow-y","hidden");
+					$("#leave_hold_popup").fadeIn();
+					
+				} else {
+					window.location.href="./";
+				} 
 			}
 			
 		})

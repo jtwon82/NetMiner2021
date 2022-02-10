@@ -136,6 +136,16 @@
 				<button class="leave trs" onClick="delteUser()">계정삭제</button>
 			</div>
 		</div>
-		
+			<!-- 220118 추가 -->	
+		<!-- 탈퇴 불가 팝업  -->
+		<div id="leave_hold_popup" class="popup">
+			<div class="wrap">
+				<img src="resources/images/leave_hold_popup_ico.png">
+				<p>현재 이용 중인 플랜이 있습니다.<br>
+플랜이 끝나면 계정을 삭제할 수 있습니다. </p>
+				<button class="close trs">닫기</button>
+			</div>
+		</div>
+	<!-- 220118 추가 -->	
 	</body>
 </html>
