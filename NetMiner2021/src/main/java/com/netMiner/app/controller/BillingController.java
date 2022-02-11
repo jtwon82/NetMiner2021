@@ -81,6 +81,11 @@ public class BillingController extends HttpServlet {
 					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
 				}
 			}
+				//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
+			if (result.get("PAY_PLATFORM").equals("paypal")) {
+				language = "_EN";
+				session.setAttribute("language", language);
+			}
 		} else {
 				//Trial 를 사용하지 않고 바로 진행한후  경우
 			if (checkUserTiralInfo != null) {
@@ -93,11 +98,6 @@ public class BillingController extends HttpServlet {
 		
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
-		
-		if (member.getLanguage().equals("en")) {
-			language = "_EN";
-			session.setAttribute("language", language);
-		}
 		
 		param = new HashMap<String,Object>();
 		if (language.equals("_EN")) {
@@ -440,7 +440,7 @@ public class BillingController extends HttpServlet {
 			billingVo.setUSER_ID(memberVo.getUserId());
 			billingVo.setOrderId(billingVo.getOrderId());
 			billingVo.setPaymentKey(form.getPayerID());
-			billingVo.setAmount(billingVo.getAmount());
+			billingVo.setAmount(billingVo.getPAY_PRICE());
 			
 			billingService.insertSubscript(billingVo);
 			logger.info("insert succ PayPal billingVo {}", billingVo);
