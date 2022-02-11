@@ -444,12 +444,28 @@ public class BillingController extends HttpServlet {
 			
 			billingService.insertSubscript(billingVo);
 			logger.info("insert succ PayPal billingVo {}", billingVo);
-			return "redirect:/goSubscribeComplete";
+			return "redirect:/payment_paypal_final";
 		}  else {
 			return "redirect:/";
 		}
 	}
-	
+	@RequestMapping(value="payment_paypal_final", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView payment_paypal_final ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
+			, BillingVo form) {
+		String language = (String) session.getAttribute("language");
+		String path = "homePage"+ language;
+		mv.setViewName(path+"/payment_paypal_final");
+		return mv;
+	}
+	@RequestMapping(value="payment_paypal_cancel", method= {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView payment_paypal_cancel ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
+			, BillingVo form) {
+		String language = (String) session.getAttribute("language");
+		String path = "homePage"+ language;
+		mv.setViewName(path+"/payment_paypal_cancel");
+		return mv;
+	}
+
 	@RequestMapping(value="order",method=RequestMethod.GET)
 	public ModelAndView order(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {

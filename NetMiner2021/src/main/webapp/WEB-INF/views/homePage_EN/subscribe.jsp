@@ -27,14 +27,15 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+			var pop;
 			function pay(){
 				var pagemoveflag = true;
 				var date = new Date();
 				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
-				params = "business=sb-1mesd13290912@business.example.com"
+				params = "business=sb-gbvkr13290921@business.example.com"
 					+"&return="+ ROOT_URL +"/payment_paypal"
 					+"&notify_url="+ ROOT_URL +"/payment_paypal"
-					+"&cancel_return="+ ROOT_URL +"/"
+					+"&cancel_return="+ ROOT_URL +"/payment_paypal_cancel"
 					+"&quantity=1"
 					+"&item_number="+date.getTime()
 					+"&amount=<c:out value='${billing.PAY_PRICE}'/>"
@@ -44,8 +45,17 @@
 					+"&currency_code=USD";
 				if(pagemoveflag) {
 					var path=url + params;
-					window.location.href= path;
+					//window.location.href= path;
+					pop= window.open(path, 'pop', 'width=500, height=700');
 				}
+			}
+			function pay_final(){
+				pop.close();
+				location.href= "/goSubscribeComplete";
+			}
+			function pay_cancel(){
+				pop.close();
+				location.href= "/";
 			}
 		</script>
 		<div id="wrap" class="sub subscribe">
