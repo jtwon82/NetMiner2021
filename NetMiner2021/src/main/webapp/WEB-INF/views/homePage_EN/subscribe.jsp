@@ -32,9 +32,9 @@
 				var date = new Date();
 				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 				params = "business=sb-1mesd13290912@business.example.com"
-					+"&return="+ URL +"/payment_paypal"
-					+"&notify_url="+ URL +"/payment_paypal"
-					+"&cancel_return="+ URL +"/"
+					+"&return="+ ROOT_URL +"/payment_paypal"
+					+"&notify_url="+ ROOT_URL +"/payment_paypal"
+					+"&cancel_return="+ ROOT_URL +"/"
 					+"&quantity=1"
 					+"&item_number="+date.getTime()
 					+"&amount=<c:out value='${billing.PAY_PRICE}'/>"

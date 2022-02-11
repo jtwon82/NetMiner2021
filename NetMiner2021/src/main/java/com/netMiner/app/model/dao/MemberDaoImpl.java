@@ -187,5 +187,11 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("checkRandomNumber", param);
 	}
 
+	@Override
+	public List<Map<String, Object>> getPayPlanUser() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getPayPlanUser");
+	}
+
 
 }

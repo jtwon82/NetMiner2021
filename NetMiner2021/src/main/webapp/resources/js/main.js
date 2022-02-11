@@ -42,6 +42,7 @@ $(document).ready(function() {
 	$(".popup .close, .popup .closeBtn").click(function() {
 		$(".popup").fadeOut();
 		$("body").css("overflow-y","auto");
+		window.location.reload();
 	});
 //	$("#check").change(function (){
 //		if ($('input:checkbox[name="marketYn"]').is(":checked") == true) {
@@ -572,8 +573,10 @@ function delteUser () {
 			type : "POST",
 			success : function(data) {
 				if (data.result == 'fail') {
-					alert(" 현재 이용 중인 플랜이 있습니다. 플랜이 끝나면 계정을 삭제할 수 있습니다. ");
-					window.location.href="./";
+					$(".popup").hide();
+					$("body").css("overflow-y","hidden");
+					$("#leave_hold_popup").fadeIn();
+					
 				} else {
 					window.location.href="./";
 				} 

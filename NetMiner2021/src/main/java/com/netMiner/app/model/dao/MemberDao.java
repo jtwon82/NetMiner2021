@@ -57,5 +57,7 @@ public interface MemberDao {
 
 	Map<String, Object> checkRandomNumber(Map<String, Object> param);
 
+	List<Map<String, Object>> getPayPlanUser();
+
 
 }

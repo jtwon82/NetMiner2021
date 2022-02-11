@@ -93,6 +93,12 @@ public class BillingController extends HttpServlet {
 		
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
+		
+		if (member.getLanguage().equals("en")) {
+			language = "_EN";
+			session.setAttribute("language", language);
+		}
+		
 		param = new HashMap<String,Object>();
 		if (language.equals("_EN")) {
 			param.put("language","en");
@@ -102,6 +108,7 @@ public class BillingController extends HttpServlet {
 		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
 		logger.info("faqList - {}", faqList.toString());
 		mv.addAttribute("faqList", faqList);
+		
 		String path = "homePage"+ language;
 		return path+"/pricing";
 	}
@@ -213,6 +220,7 @@ public class BillingController extends HttpServlet {
 								
 			}
 		}
+		
 		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
@@ -440,7 +448,6 @@ public class BillingController extends HttpServlet {
 		}  else {
 			return "redirect:/";
 		}
-//		return "redirect:/goSubscribeComplete";
 	}
 	
 	@RequestMapping(value="order",method=RequestMethod.GET)
