@@ -84,8 +84,8 @@ NetMiner 365 를 이용하세요.</p>
 									</p>
 								<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
-										<p class="button">
-											<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">현재 플랜</a>
+										<p class="button active">
+											<a href="javascript:void(0)">현재 플랜</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
@@ -125,8 +125,8 @@ NetMiner 365 를 이용하세요.</p>
 									</ul>
 										<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
-										<p class="button">
-											<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">현재 플랜</a>
+										<p class="button active">
+											<a href="javascript:void(0)">현재 플랜</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
@@ -181,7 +181,9 @@ NetMiner 365 를 이용하세요.</p>
 											</c:if>
 										</c:if>
 										<c:if test="${empty memberVo}">
-										<a href="./login" >구독하기</a>
+											<p class="button">
+												<a href="./login" >구독하기</a>
+											</p>
 										</c:if>
 								</div>
 								<div class="bottom">
@@ -213,7 +215,9 @@ NetMiner 365 를 이용하세요.</p>
 											</c:if>
 										</c:if>
 										<c:if test="${empty memberVo}">
-										<a href="./login" >구독하기</a>
+											<p class="button">
+												<a href="./login" >구독하기</a>
+											</p>
 									</c:if>
 								</div>
 							</li>

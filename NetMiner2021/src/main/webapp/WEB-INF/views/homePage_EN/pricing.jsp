@@ -18,7 +18,7 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
 		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
@@ -46,7 +46,7 @@ Compare our subscription plans and find yours.</p>
 							<ul>
 								<li>TRIAL</li>
 								<li>SMALL</li>
-								<li>MEDIUM<p class="recommend obj"><em>Recommendations</em></p></li>
+								<li>MEDIUM<p class="recommend obj"><em>Recommended</em></p></li>
 								<li>LARGE</li>
 							</ul>
 						</div>
@@ -81,8 +81,8 @@ Compare our subscription plans and find yours.</p>
 									</p>
 										<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
-										<p class="button">
-											<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Current Plan</a>
+										<p class="button active">
+											<a href="javascript:void(0)">Current Plan</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
@@ -122,8 +122,8 @@ Compare our subscription plans and find yours.</p>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
-										<p class="button">
-											<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Current Plan</a>
+										<p class="button active">
+											<a href="javascript:void(0)">Current Plan</a>
 										</p>
 										</c:if>
 										<c:if test="${memberVo.planType < 1}"> 
@@ -178,7 +178,9 @@ Compare our subscription plans and find yours.</p>
 											</c:if>
 										</c:if>
 										<c:if test="${empty memberVo}">
-										<a href="./login" >Get Started</a>
+											<p class="button">
+												<a href="./login" >Get Started</a>
+											</p>
 										</c:if>
 								</div>
 								<div class="bottom">
@@ -210,7 +212,9 @@ Compare our subscription plans and find yours.</p>
 											</c:if>
 										</c:if>
 										<c:if test="${empty memberVo}">
-										<a href="./login" >Get Started</a>
+											<p class="button">
+												<a href="./login" >Get Started</a>
+											</p>
 										</c:if>
 								</div>
 							</li>

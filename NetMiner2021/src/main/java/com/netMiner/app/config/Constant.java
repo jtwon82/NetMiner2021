@@ -22,14 +22,14 @@ public class Constant {
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
 
 	// local
-	//public static String ROOT_URL = "http://localhost:8001";
-	//public static String GOOGLE_CALL_BACK_LOGIN_URL = ROOT_URL +"/auth";	
-	//public static String GOOGLE_CALL_BACK_REGISTER_URL = ROOT_URL +"/socialRegister";
-	
-	// dev
-	public static String ROOT_URL = "http://dev.netminer365.com";
+	public static String ROOT_URL = "http://localhost:8001";
 	public static String GOOGLE_CALL_BACK_LOGIN_URL = ROOT_URL +"/auth";	
 	public static String GOOGLE_CALL_BACK_REGISTER_URL = ROOT_URL +"/socialRegister";
+	
+	// dev
+	//public static String ROOT_URL = "http://dev.netminer365.com";
+	//public static String GOOGLE_CALL_BACK_LOGIN_URL = ROOT_URL +"/auth";	
+	//public static String GOOGLE_CALL_BACK_REGISTER_URL = ROOT_URL +"/socialRegister";
 	
 	// real
 //	public static String ROOT_URL = "http://www.netminer365.com";

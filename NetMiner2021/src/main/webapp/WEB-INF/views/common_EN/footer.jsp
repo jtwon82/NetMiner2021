@@ -5,10 +5,10 @@
 						<div>
 							<h4>Start NetMiner 365 for Free</h4>
 							<c:if test="${empty memberVo}">
-							<a href="./login">Start for free</a>
+							<a href="./pricing">Start for free</a>
 							</c:if>
 							<c:if test="${!empty memberVo}">
-							<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start for free</a>
+							<a href="./pricing">Start for free</a>
 							</c:if>
 						</div>
 					</div>

@@ -73,7 +73,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top h1 .logo2{display: none;}
 #wrap #top.sticky h1 .logo1{display: none;}
 #wrap #top.sticky h1 .logo2{display: block;}
-#wrap #top .price{color:#fff;font-size:22px;font-weight:500;left: 555px;}
+#wrap #top .price{color:#fff;font-size:22px;left: 555px;}
 
 #wrap.sub #top h1 .logo1{display: none;}
 #wrap.sub #top h1 .logo2{display: block;}
@@ -381,7 +381,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.subscribe #section .content .inner3 ul li span em{}
 #wrap.subscribe #section .content .inner3 ul li.totalCost{border-top:1px solid #c7c7c7;padding-top: 15px;}
 #wrap.subscribe #section .content .pay{width:60%;line-height:60px;background-color: #203864;color: #fff;font-size: 22px;display: block;margin: 0 auto;}
-#wrap.subscribe #section .content .tail{ color: #1551c3; font-size: 18px; right: -30px; z-index:3;}
+#wrap.subscribe #section .content .tail{ color: #1551c3; font-size: 18px; z-index:3;}
 
 /*주문완료-----------------------------------------------------------*/
 #wrap.order #section p span{color:#203864; font-weight:600;}

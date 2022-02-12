@@ -138,7 +138,12 @@
 												<td><c:out value="${billingList.REG_DATE}"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
-												<td><a href= "./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
+												<td>
+													<a href= "./invoice?no=${billingList.NO}" onclick="window.open(this.href); return false;" >
+														<img src="resources/images/download.png" style="display: block; margin: 0 auto;">
+													</a>
+												</td>
+												
 											</tr>
 										</c:forEach>
 									</tbody>

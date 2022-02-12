@@ -57,13 +57,13 @@
 								<c:if test="${'year' == billing.DATE_TYPE }">	
 									<ul class="checkBox">
 										<li><label><input type="radio" name="sub1" value="month"><em></em>월간</label></li>
-										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>연간 </label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>연간&nbsp;<span class="tail obj">&nbsp;Save 20%</span></label> </li>
 									</ul>
 								</c:if>
 								<c:if test="${'year' != billing.DATE_TYPE }">	
 									<ul class="checkBox">
 										<li><label><input type="radio" checked="checked" name="sub1" value="month"><em></em>월간</label></li>
-										<li><label><input type="radio" name="sub1" value="year"><em></em>연간</label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" name="sub1" value="year"><em></em>연간&nbsp;<span class="tail obj">&nbsp;Save 20%</span></label>	</li>
 									</ul>
 								</c:if>
 							</c:if>
@@ -80,7 +80,7 @@
 							<p class="title">결제 금액</p>
 							<ul>
 								<li>
-									<p>NetMiner 365 - </p><p> ${billing.PLAN_NAME}</p>
+									<p>NetMiner 365&nbsp;-&nbsp;</p><p>${billing.PLAN_NAME}</p>
 									<span> &#8361; <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
@@ -100,6 +100,7 @@
 							<script>
 							$(document).ready(function() {
 								$('input:radio[name=sub1]:input[value="${billing.DATE_TYPE }"]').attr("checked", true);									
+								history.scrollRestoration = "manual";
 																
 								$("input[name='sub1']").change(function (){
 									var dateType= $("input[name='sub1']:checked").val();

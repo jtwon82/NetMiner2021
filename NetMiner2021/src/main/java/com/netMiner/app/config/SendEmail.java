@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import com.netMiner.app.model.dao.SelectDao;
+import com.netMiner.app.model.vo.BillingVo;
 import com.netMiner.app.model.vo.MailVo;
 
 @Configuration
@@ -32,6 +33,7 @@ public class SendEmail {
 	
 	@Autowired
 	private SelectDao selectDao;
+
 	
 	//마켓팅 수신 정보동의
 	public void sendMarketEmail(String userId, String language , Date marketDate) {
@@ -227,8 +229,9 @@ public class SendEmail {
 		this.sendMailSender(userId, comment, title);
 	}
 
-	
-
-
+	public void sendBankTransfer(String payUserId,BillingVo billingVo) {
+		MailVo vo = new MailVo();
+		
+	}
 
 }

@@ -29,25 +29,32 @@
 		<script type="text/javascript">
 			var pop;
 			function pay(){
-				var pagemoveflag = true;
-				var date = new Date();
-				var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
-				params = "business=sb-gbvkr13290921@business.example.com"
-					+"&return="+ ROOT_URL +"/payment_paypal"
-					+"&notify_url="+ ROOT_URL +"/payment_paypal"
-					+"&cancel_return="+ ROOT_URL +"/payment_paypal_cancel"
-					+"&quantity=1"
-					+"&item_number="+date.getTime()
-					+"&amount=<c:out value='${billing.PAY_PRICE}'/>"
-					+"&item_name=<c:out value='${billing.PLAN_NAME}'/>"
-					+"&no_shipping=1"
-					+"&no_note=0"
-					+"&currency_code=USD";
-				if(pagemoveflag) {
-					var path=url + params;
-					//window.location.href= path;
-					pop= window.open(path, 'pop', 'width=500, height=700');
+				var pay_state = $('input:radio[name="sub2"]:checked').val();
+				if (pay_state == 'card') {
+					
+					var pagemoveflag = true;
+					var date = new Date();
+					var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
+					params = "business=sb-gbvkr13290921@business.example.com"
+						+"&return="+ ROOT_URL +"/payment_paypal"
+						+"&notify_url="+ ROOT_URL +"/payment_paypal"
+						+"&cancel_return="+ ROOT_URL +"/payment_paypal_cancel"
+						+"&quantity=1"
+						+"&item_number="+date.getTime()
+						+"&amount=<c:out value='${billing.PAY_PRICE}'/>"
+						+"&item_name=<c:out value='${billing.PLAN_NAME}'/>"
+						+"&no_shipping=1"
+						+"&no_note=0"
+						+"&currency_code=USD";
+					if(pagemoveflag) {
+						var path=url + params;
+						//window.location.href= path;
+						pop= window.open(path, 'pop', 'width=500, height=700');
+					}
+				} else {
+					window.location.href = "./order"
 				}
+				
 			}
 			function pay_final(){
 				pop.close();
@@ -63,13 +70,13 @@
 			<div id="section">
 				<div class="wrap">
 					<div class="title">
-						<h2>Subscribing NetMiner 365</h2>
+						<h2>Subscribing to NetMiner 365</h2>
 					</div>
 					<div class="content">
 						<div class="inner1 inner">
 							<p class="title">Service Period</p>
 							<c:if test="${'upgradePlan' == billing.type}">
-							 	<p>Your plan will expire on <fmt:formatDate value="${billing.EXITS_DATE}" pattern="yyyy/ MM/ dd/ "/> </p>
+							 	<p>Your plan will expire on <fmt:formatDate value="${billing.EXITS_DATE}" pattern="MM/dd/yyyy"/> </p>
 							 	<p>(If you change plans, your subscription will remain)</p>
 							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
@@ -77,13 +84,13 @@
 								<c:if test="${'year' == billing.DATE_TYPE }">	
 									<ul class="checkBox">
 										<li><label><input type="radio" name="sub1" value="month"><em></em>Monthly</label></li>
-										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>Yearly </label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" checked="checked" name="sub1" value="year"><em></em>Yearly&nbsp;</label><span class="tail obj">&nbsp;Save 20%</span>	</li>
 									</ul>
 								</c:if>
 								<c:if test="${'year' != billing.DATE_TYPE }">	
 									<ul class="checkBox">
 										<li><label><input type="radio" checked="checked" name="sub1" value="month"><em></em>Monthly</label></li>
-										<li><label><input type="radio" name="sub1" value="year"><em></em>Yearly</label><span class="tail obj">Save 20%</span>	</li>
+										<li><label><input type="radio" name="sub1" value="year"><em></em>Yearly&nbsp;</label><span class="tail obj">&nbsp;Save 20%</span>	</li>
 									</ul>
 								</c:if>
 							</c:if>
@@ -91,8 +98,8 @@
 						<div class="inner2 inner">
 							<p class="title">Payment Method</p>
 							<ul class="checkBox">
-								<li><label><input type="radio" name="sub2"><em></em>Credit Card (PayPal)</label></li>
-								<li><label><input type="radio" checked="checked" name="sub2"><em></em>Bank Transfer</label></li>
+								<li><label><input type="radio" checked="checked" name="sub2" value="card"><em></em>Credit Card (PayPal)</label></li>
+								<li><label><input type="radio" name="sub2" value="bank"><em></em>Bank Transfer</label></li>
 							</ul>
 						</div>
 						<div class="inner3 inner">

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.BillingService;
 import com.netMiner.app.model.vo.BillingVo;
 import com.netMiner.app.model.vo.MemberVo;
@@ -37,6 +38,8 @@ public class BillingController extends HttpServlet {
 	@Autowired
 	private BillingService billingService;
 	
+	@Autowired
+	private SendEmail sendEmail;
 
 	/*page Move Billing*/
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
@@ -45,7 +48,8 @@ public class BillingController extends HttpServlet {
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
 		String type = (String) request.getParameter("type");
 		if (member == null ) {
-			return "redirect:/login";
+			String path = "homePage"+ language;
+			return path+"/pricing";
 		}
 		String userId = member.getUserId();
 		boolean checkDate = false;
@@ -81,8 +85,8 @@ public class BillingController extends HttpServlet {
 					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
 				}
 			}
-				//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
-			if (result.get("PAY_PLATFORM").equals("paypal")) {
+			//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
+			if (result.get("PAY_PLATFORM").equals("paypal") && !result.get("NO").equals("01")) {
 				language = "_EN";
 				session.setAttribute("language", language);
 			}
@@ -90,7 +94,7 @@ public class BillingController extends HttpServlet {
 				//Trial 를 사용하지 않고 바로 진행한후  경우
 			if (checkUserTiralInfo != null) {
 				member.setPlanType(1);
-			} else {
+			} else { 
 				//신규  사용자 
 				member.setPlanType(0);
 			}
@@ -197,10 +201,12 @@ public class BillingController extends HttpServlet {
 		logger.info("billingOldVo-{}",billingOldVo);
 		
 		//planCode 가 널인경우 새로 고침이므로 메인으로 이동 
-		if (planCode == null) {
+		if (planCode == null && payNo == null) {
 			return "redirect:/";
 		}
-		
+		if (billingOldVo != null) {
+			planCode = billingOldVo.getPLAN_CODE();
+		}
 		
 		
 		HashMap<String , Object> param= new HashMap<String , Object>();
@@ -219,6 +225,11 @@ public class BillingController extends HttpServlet {
 				billingOldVo = null;
 								
 			}
+		}
+		//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
+		if ( billingOldVo != null && billingOldVo.getPAY_PLATFORM().equals("paypal")) {
+			language = "_EN";
+			session.setAttribute("language", language);
 		}
 		
 		
@@ -467,16 +478,27 @@ public class BillingController extends HttpServlet {
 	}
 
 	@RequestMapping(value="order",method=RequestMethod.GET)
-	public ModelAndView order(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
+	public String order(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		
+		if (memberVo == null) {
+			return "redirect:/";
+		}
+		
+		String payUserId = memberVo.getUserId();
 		
 		logger.info("billingVo {}", billingVo);
+		billingVo.setPAY_PLATFORM("bank");
+		billingVo.setPAY_TYPE("bank");
 		
-		mv.setViewName(path+"/order");
-		return mv;
+		sendEmail.sendBankTransfer(payUserId, billingVo);
+		mv.addAttribute("billing",billingVo);
+		
+		return path+"/order";
 	}
 	
 	@RequestMapping(value="goSubscribeComplete",method=RequestMethod.GET)
@@ -507,10 +529,14 @@ public class BillingController extends HttpServlet {
 		return path + "/invoice";
 	}
 	
-	@RequestMapping("paypal")
-	public void payPal() {
-		logger.info("hellow PayPal");
+	/*
+	@RequestMapping("goBank")
+	public String goBank(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		String language = (String) session.getAttribute("language");
+		String path = "homePage"+ language;
+		return path + "/subscribe_complete";
 	}
+	*/
 	
 	
 }

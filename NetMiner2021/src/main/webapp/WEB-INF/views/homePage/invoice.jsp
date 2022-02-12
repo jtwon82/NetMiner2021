@@ -304,12 +304,12 @@
 								<li>
 									<p>Subtotal</p>
 									<c:set var="subTotal" value="${result.PAY_PRICE - result.PAY_TAX}"/>
-									<span>₩<em><fmt:formatNumber value='${subTotal}' pattern='#,###,###'/></em></span>
+									<span>₩ <em><fmt:formatNumber value='${subTotal}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
 									<p>Tax</p>
 									<c:set var="Tax" value="${result.PAY_TAX}"/>
-									<span>₩<em> <fmt:formatNumber value='${Tax}' pattern='#,###,###'/> </em></span>
+									<span>₩ <em> <fmt:formatNumber value='${Tax}' pattern='#,###,###'/> </em></span>
 								</li>
 								<li class="totalCost">
 									<p>Total</p>

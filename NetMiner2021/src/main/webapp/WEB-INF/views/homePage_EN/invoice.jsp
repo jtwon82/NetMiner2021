@@ -18,7 +18,7 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
 		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
@@ -304,12 +304,12 @@
 								<li>
 									<p>Subtotal</p>
 									<c:set var="subTotal" value="${result.PAY_PRICE - result.PAY_TAX}"/>
-									<span>$<em><fmt:formatNumber value='${subTotal}' pattern='#,###,###'/></em></span>
+									<span>$ <em><fmt:formatNumber value='${subTotal}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
 									<p>Tax</p>
 									<c:set var="Tax" value="${result.PAY_TAX}"/>
-									<span>$<em> <fmt:formatNumber value='${Tax}' pattern='#,###,###'/> </em></span>
+									<span>$ <em> <fmt:formatNumber value='${Tax}' pattern='#,###,###'/> </em></span>
 								</li>
 								<li class="totalCost">
 									<p>Total</p>

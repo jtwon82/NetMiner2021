@@ -18,7 +18,7 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="resources/css/style.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
+		<link href="resources/css/style_en.css?st=<%= Math.floor(Math.random() *100)%>" rel="stylesheet" type="text/css"/>
 		<link href="resources/css/swiper.min.css" rel="stylesheet" type="text/css"/>
 		<script src="resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="resources/js/swiper.min.js" type="text/javascript"></script>
@@ -61,7 +61,7 @@
 												<td><c:out value="${billingList.REG_DATE}"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
-												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
+												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href); return false;" ><img src="resources/images/download.png"></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -103,8 +103,8 @@
 									</c:if>
 									
 									<c:if test="${diffDays > 7}">
-									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span> </p>
-									<a href="./pricing?type='upgradePlan'">Renew</a>
+									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/> (Service period won't be changed if changing plan)</span> </p>
+									<a href="./pricing?type='upgradePlan'">Upgrade</a>
 									</c:if>
 								</div>
 							
@@ -126,13 +126,23 @@
 												<td><c:out value="${billingList.REG_DATE}"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
-												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
+												<td>
+													<a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" >
+														<img src="resources/images/download.png" style="display: block; margin: 0 auto;">
+													</a>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
 								<p class="tail">* Invoices in the last three months are displayed.</p>
 							</div>	
+							</c:if>
+							<c:if test="${billingList == 'none'}">
+							<div class="charge">
+								<span>Invoice</span>
+								<p>No invoices found in the last three months.</p>
+							</div>
 							</c:if>
 						</div>
 						</c:if>
