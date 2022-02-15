@@ -48,7 +48,7 @@
 		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount},
 			CASE WHEN #{DATE_TYPE} = 'month' 
 			THEN DATE_FORMAT(DATE_ADD(DATE_ADD(now(), INTERVAL 1 MONTH), INTERVAL 1 DAY) , '%Y-%m-%d %H:%i:%S') 
-			ELSE DATE_FORMAT(DATE_ADD(DATE_ADD(now(), INTERVAL 1 YEAR),INTERVAL 1 DAY) , '%Y-%m-%d %H:%i:%S')
+			ELSE DATE_FORMAT(DATE_ADD(DATE_ADD(now(), INTERVAL 1 YEAR), INTERVAL 1 DAY) , '%Y-%m-%d %H:%i:%S')
 			END AS EXITS_DATE
 		</otherwise>
 	</choose>
@@ -66,8 +66,9 @@
 	</select>
 	
 	<select id="selectSubscriptOne" parameterType="Map" resultType="Map">
-		select DATE_FORMAT(A.REG_DATE, '%Y-%m-%d') AS REG_DATE, A.USER_ID, A.PLAN_CODE, A.PLAN_TYPE, A.PAY_PLATFORM, A.PAY_STEP, A.PAY_TYPE, A.PAY_PRICE, A.PAY_PRICE_TOTAL,
-				 A.ACCOUNT_NAME, A.ACCOUNT_NO, A.ACCOUNT_HOLDER, A.ACCOUNT_DEPOSITLIMIT, A.ORDER_ID, A.ORDER_PNM, A.paymentKey, A.amount , DATE_FORMAT(A.EXITS_DATE, '%Y-%m-%d') AS EXITS_DATE
+		select DATE_FORMAT(A.REG_DATE, '%Y-%m-%d') AS REG_DATE_KO, DATE_FORMAT(A.REG_DATE, '%m/%d/%Y') AS REG_DATE_EN , A.USER_ID, A.PLAN_CODE, A.PLAN_TYPE, A.PAY_PLATFORM, A.PAY_STEP, A.PAY_TYPE, A.PAY_PRICE, A.PAY_PRICE_TOTAL,
+				 A.ACCOUNT_NAME, A.ACCOUNT_NO, A.ACCOUNT_HOLDER, A.ACCOUNT_DEPOSITLIMIT, A.ORDER_ID, A.ORDER_PNM, A.paymentKey, A.amount , DATE_FORMAT(A.EXITS_DATE, '%Y-%m-%d') AS EXITS_DATE_KO, 
+				 DATE_FORMAT(A.EXITS_DATE, '%m/%d/%Y') AS EXITS_DATE_EN
 			, B.* 
 		 from NetMiner.SUBSCRIPT AS A 
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE
@@ -79,4 +80,5 @@
 	where language = #{language}
 	;
 	</select>
+	
 </mapper>

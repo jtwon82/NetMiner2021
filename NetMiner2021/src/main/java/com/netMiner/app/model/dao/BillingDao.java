@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.netMiner.app.model.vo.BillingVo;
+import com.netMiner.app.model.vo.MemberVo;
 
 public interface BillingDao {
 
@@ -21,5 +22,6 @@ public interface BillingDao {
 	Map<String, Object> checkUserTiralInfo(Map<String, Object> param);
 
 	List<Map<String,Object>> selectFaqList(Map<String, Object> param);
+
 
 }

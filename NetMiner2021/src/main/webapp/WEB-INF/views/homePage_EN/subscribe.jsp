@@ -77,7 +77,7 @@
 							<p class="title">Service Period</p>
 							<c:if test="${'upgradePlan' == billing.type}">
 							 	<p>Your plan will expire on <fmt:formatDate value="${billing.EXITS_DATE}" pattern="MM/dd/yyyy"/> </p>
-							 	<p>(If you change plans, your subscription will remain)</p>
+							 	<p>(Service period won't be changed if changing plan)</p>
 							 </c:if>
 							<input type="hidden" id="DATE_TYPE" name="DATE_TYPE" value="${billing.DATE_TYPE }"/>
 							<c:if test="${'upgradePlan' != billing.type}">

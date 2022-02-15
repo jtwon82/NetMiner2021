@@ -111,5 +111,9 @@ public class MemberServiceImpl implements MemberService{
 	public Map<String, Object> checkRandomNumber(Map<String, Object> param) {
 		return memberDao.checkRandomNumber(param);
 	}
+	@Override
+	public MemberVo selectPayCompleteUser(MemberVo memberVo) {
+		return memberDao.selectPayCompleteUser(memberVo);
+	}
 
 }

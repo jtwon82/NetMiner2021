@@ -46,6 +46,8 @@ public interface MemberService {
 
 	Map<String, Object> checkRandomNumber(Map<String, Object> param);
 
+	MemberVo selectPayCompleteUser(MemberVo memberVo);
+
 	
 
 	

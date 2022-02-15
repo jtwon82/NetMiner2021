@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.netMiner.app.model.dao.BillingDao;
 import com.netMiner.app.model.vo.BillingVo;
+import com.netMiner.app.model.vo.MemberVo;
 
 @Service
 public class BillingServiceImpl  implements BillingService{
@@ -55,6 +56,8 @@ public class BillingServiceImpl  implements BillingService{
 		// TODO Auto-generated method stub
 		return billingDao.selectFaqList(param);
 	}
+
+
 
 
 }

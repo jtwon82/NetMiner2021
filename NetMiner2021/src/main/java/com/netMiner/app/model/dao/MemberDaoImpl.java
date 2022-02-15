@@ -193,5 +193,11 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectList("getPayPlanUser");
 	}
 
+	@Override
+	public MemberVo selectPayCompleteUser(MemberVo memberVo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getUserInfoPayComplete", memberVo);
+	}
+
 
 }

@@ -61,7 +61,7 @@
 	<br><br>
 	Let's get started with NetMiner 365<br>
 	for Free !</p>
-									<a href="http://online.netminer365.com/Loginfo?passport=${memberId}">Start now</a>
+									<a href="./pricing">Start now</a>
 								</li>
 							</ul>
 							

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.BillingService;
+import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.BillingVo;
 import com.netMiner.app.model.vo.MemberVo;
 import com.netMiner.app.util.Base64Util;
@@ -39,6 +40,9 @@ public class BillingController extends HttpServlet {
 	private BillingService billingService;
 	
 	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
 	private SendEmail sendEmail;
 
 	/*page Move Billing*/
@@ -47,19 +51,32 @@ public class BillingController extends HttpServlet {
 		String language = (String) session.getAttribute("language");
 		MemberVo member = (MemberVo) session.getAttribute("memberVo");
 		String type = (String) request.getParameter("type");
+
+		Map<String,Object> param = new HashMap<String,Object>();
+		//faq 는 해당 유저의 정보 없이도 알수있어야 하므로 선 select 
+		if (language.equals("_EN")) {
+			param.put("language","en");
+		} else {
+			param.put("language","ko");
+		}
+		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
+		logger.info("faqList - {}", faqList.toString());
+		mv.addAttribute("faqList", faqList);
+		
 		if (member == null ) {
 			String path = "homePage"+ language;
 			return path+"/pricing";
 		}
 		String userId = member.getUserId();
 		boolean checkDate = false;
-		Map<String,Object> param = new HashMap<String,Object>();
+
+		param = new HashMap<String,Object>();
 		param.put("userId", userId);
 		Map<String, Object> result = billingService.selectSubscript(param);
-
+		logger.info("result- {}",result);
 		//해당 유저의 플랜타입 01 사용여부 확인 
 		Map<String, Object> checkUserTiralInfo = billingService.checkUserTiralInfo(param);
-		
+		logger.info("checkUserTiralInfo- {}",checkUserTiralInfo);
 		//해당유저의 현재 플랜과 TRAIL 사용 여부와 동일한경우 
 		if (result != null) {
 			//Trial 를 사용한 사용자 
@@ -102,16 +119,6 @@ public class BillingController extends HttpServlet {
 		
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
-		
-		param = new HashMap<String,Object>();
-		if (language.equals("_EN")) {
-			param.put("language","en");
-		} else {
-			param.put("language","ko");
-		}
-		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
-		logger.info("faqList - {}", faqList.toString());
-		mv.addAttribute("faqList", faqList);
 		
 		String path = "homePage"+ language;
 		return path+"/pricing";
@@ -194,6 +201,7 @@ public class BillingController extends HttpServlet {
 		String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
 		int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
 		String pagePath = "";
+		logger.info("hellow");
 		if (memberVo == null ) {
 			return "redirect:/login";
 		}
@@ -204,7 +212,34 @@ public class BillingController extends HttpServlet {
 		if (planCode == null && payNo == null) {
 			return "redirect:/";
 		}
-		if (billingOldVo != null) {
+		//pricing 으로 통해 들어온 유저인경우 이전 billingOldVo 가 없기때문에 해당 부분확인해야함
+		if (billingOldVo == null) {
+			String userId = memberVo.getUserId();
+			Map<String,Object> param = new HashMap<String,Object>();
+			param.put("userId", userId);
+			Map<String, Object> nowPlan = billingService.selectSubscript(param);
+			if (nowPlan != null) {
+				billingOldVo = new BillingVo().fromMap((HashMap<String, Object>)nowPlan);
+				int diffDays = 0;
+				Date nowDate = new Date(System.currentTimeMillis());
+				SimpleDateFormat dateFormat = new 
+						SimpleDateFormat ("yyyy-MM-dd");
+				try {
+					Date now = dateFormat.parse(dateFormat.format(nowDate));
+					Date exitsDate = dateFormat.parse(dateFormat.format(nowPlan.get("EXITS_DATE")));
+					logger.info("date1 -{}",now.toString());
+					logger.info("date2 -{}",exitsDate.toString());
+					diffDays = (int) (((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60));					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				billingOldVo.setDiffDay(diffDays);
+			}
+		}
+		////////
+		
+		if (billingOldVo != null && !billingOldVo.getPLAN_CODE().equals("01")) {
 			planCode = billingOldVo.getPLAN_CODE();
 		}
 		
@@ -220,6 +255,7 @@ public class BillingController extends HttpServlet {
 		billingVo.setCUSTOMER_NAME("CUSTOMER_NAME");
 		billingVo.setPAY_TYPE(payType);
 		
+		//billingOld Vo 가 널이 아니며 해당 마지막 결제 코드 01 인경우 해당 olDvo를 null 처리한다	
 		if (billingOldVo != null) {
 			if (billingOldVo.getPLAN_CODE().equals("01")) {
 				billingOldVo = null;
@@ -427,7 +463,7 @@ public class BillingController extends HttpServlet {
 
 				billingService.insertSubscript(billingVo);
 				logger.info("insert succ billingVo {}", billingVo);
-				
+				session.setAttribute("billingVo", billingVo);
 				return "redirect:/goSubscribeComplete";
 			} else {
 				
@@ -455,6 +491,7 @@ public class BillingController extends HttpServlet {
 			
 			billingService.insertSubscript(billingVo);
 			logger.info("insert succ PayPal billingVo {}", billingVo);
+			session.setAttribute("billingVo", billingVo);
 			return "redirect:/payment_paypal_final";
 		}  else {
 			return "redirect:/";
@@ -502,15 +539,23 @@ public class BillingController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goSubscribeComplete",method=RequestMethod.GET)
-	public ModelAndView goSubscribeComplete(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
+	public String goSubscribeComplete(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		logger.info("billingVo- {}", billingVo);
+		if (billingVo.getPaymentKey().equals("")) {
+			return "redirect:/pricing";
+		}
 		
 		logger.info("form {}", form);
-		
-		mv.setViewName(path+"/subscribe_complete");
-		return mv;
+		memberVo = memberService.selectPayCompleteUser(memberVo);
+		session.setAttribute("memberVo",memberVo);
+		session.removeAttribute("billingVo");
+		session.removeAttribute("billingOld");
+		return path+"/subscribe_complete";
 	}
 	@RequestMapping(value="invoice",method=RequestMethod.GET)
 	public String goInvoice(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
@@ -520,10 +565,14 @@ public class BillingController extends HttpServlet {
 		param.put("billingNo", billingNo);
 		Map<String ,Object> result = billingService.selectSubscriptOne(param);
 		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
-		mv.addAttribute("result",result);
+		
 		if ((int) result.get("PAY_PRICE") < 50000) {
 			language = "_EN";
+		} else {
+			language = "";
 		}
+
+		mv.addAttribute("result",result);
 		mv.addAttribute("language",language);
 		String path = "homePage"+ language;
 		return path + "/invoice";

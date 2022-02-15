@@ -286,7 +286,7 @@
 								</li>
 								<li>
 									<p>Date</p>
-									<span>${result.REG_DATE}</span>
+									<span>${result.REG_DATE_KO}</span>
 								</li>
 								<li>
 									<p>Description</p>
@@ -294,7 +294,7 @@
 								</li>
 								<li>
 									<p>Service Period</p>
-									<span>${result.REG_DATE} ~ ${result.EXITS_DATE }</span>
+									<span>${result.REG_DATE_KO} ~ ${result.EXITS_DATE_KO}</span>
 								</li>
 							</ul>
 						</div>

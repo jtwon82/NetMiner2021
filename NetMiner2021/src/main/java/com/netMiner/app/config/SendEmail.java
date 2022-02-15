@@ -228,10 +228,17 @@ public class SendEmail {
 		
 		this.sendMailSender(userId, comment, title);
 	}
-
+	
+	//영문 플랜 계좌 이체시 
 	public void sendBankTransfer(String payUserId,BillingVo billingVo) {
-		MailVo vo = new MailVo();
+		StringBuffer sb = new StringBuffer()
+				.append("- 회원 ID : ").append(payUserId).append("\n")
+				.append("- 주문상품 : ").append(billingVo.getORDER_PNM()).append("\n")
+				.append("- 구독기간 : ").append(billingVo.getDATE_TYPE().equals("month")? "월": "년").append("\n")
+				.append("- 결제금액 : ").append(billingVo.getPAY_PRICE());
+		String title = "해외 계좌이체 주문건";
 		
+		this.sendMailSender("netminer@cyram.com",sb.toString(), title);
 	}
 
 }

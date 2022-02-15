@@ -59,5 +59,7 @@ public interface MemberDao {
 
 	List<Map<String, Object>> getPayPlanUser();
 
+	MemberVo selectPayCompleteUser(MemberVo memberVo);
+
 
 }

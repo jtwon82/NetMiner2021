@@ -57,8 +57,9 @@
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
 										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
+										<c:set var="regDate" value="${billingList.REG_DATE}"/>
 											<tr>
-												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><fmt:formatDate value="${regDate}" pattern="MM/dd/yyyy"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
 												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href); return false;" ><img src="resources/images/download.png"></a></td>
@@ -82,28 +83,33 @@
 							<div class="inner inner2" >
 								<p class="title">Plan & Paymnet</p>
 								<div class="current">
-									<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays < 0}">
+									<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays <= 0}">
 									<p>Trial has expired. Would you like to continue? </p>
 									<a href="./pricing">Subscribe</a>
 									</c:if>
+									<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays > 0}">
+									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span></p>
+									<a href="./pricing">Subscribe</a>
+									</c:if>
+									
 									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 0 && diffDays < 7}">
 									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span></p>
-									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Plan Extension</a>
+									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
 									</c:if>
 									
-									<c:if test="${diffDays < 0 && diffDays > -7}">
-									<p>Your plan has expired. Would you like to continue?</p>
-									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Plan Extension</a>
-									<a href="./pricing?type='changePlan'">Plan Change</a>
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays > -7}">
+									<p>Your plan has expired. Continue to use?</p>
+									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
+									<a href="./pricing?type='changePlan'">Change Plan</a>
 									</c:if>
 									
-									<c:if test="${diffDays < -7}">
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -7}">
 									<p>There are currently no plans in use.</p>
 									<a href="./pricing">Subscribe</a>
 									</c:if>
 									
-									<c:if test="${diffDays > 7}">
-									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/> (Service period won't be changed if changing plan)</span> </p>
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays > 7}">
+									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span> </p>
 									<a href="./pricing?type='upgradePlan'">Upgrade</a>
 									</c:if>
 								</div>
@@ -122,12 +128,13 @@
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
 										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
+										<c:set var="regDate" value="${billingList.REG_DATE}"/>
 											<tr>
-												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><fmt:formatDate value="${regDate}" pattern="MM/dd/yyyy"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
 												<td>
-													<a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" >
+													<a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href); return false;" >
 														<img src="resources/images/download.png" style="display: block; margin: 0 auto;">
 													</a>
 												</td>

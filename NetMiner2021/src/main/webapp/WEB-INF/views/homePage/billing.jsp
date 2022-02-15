@@ -68,11 +68,12 @@
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
 										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
+										<c:set var="regDate" value="${billingList.REG_DATE}"/>	
 											<tr>
-												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><fmt:formatDate value="${regDate}" pattern="yyyy-MM-dd"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
-												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href,'invoice','width=800, height=600'); return false;" ><img src="resources/images/download.png"></a></td>
+												<td><a href="./invoice?no=${billingList.NO}" onclick="window.open(this.href); return false;" ><img src="resources/images/download.png"></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -95,28 +96,33 @@
 							<div class="current">
 								<span>현재 플랜</span>
 								
-								<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays < 0}">
+								<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays <= 0}">
 								<p>Trial 이 만료되었습니다. 계속 이용하시겠습니까? </p>
 								<a href="./pricing">구독하기</a>
 								</c:if>
+								<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays > 0}">
+								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd"/></span>에 만료됩니다. </p>
+								<a href="./pricing">구독하기</a>
+								</c:if>
+							
 								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 0 && diffDays < 7}">
-								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd HH:mm:ss"/></span>에 만료됩니다. </p>
+								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd"/></span>에 만료됩니다. </p>
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								</c:if>
 								
-								<c:if test="${diffDays < 0 && diffDays > -7}">
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays > -7}">
 								<p>이용 중인 플랜이 만료되었습니다. 계속 이용하시겠습니까?</p>
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								<a href="./pricing?type='changePlan'">플랜변경</a>
 								</c:if>
 								
-								<c:if test="${diffDays < -7}">
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -7}">
 								<p>현재 이용 중인 플랜이 없습니다. </p>
 								<a href="./pricing">구독하기</a>
 								</c:if>
 								
-								<c:if test="${diffDays > 7}">
-								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd HH:mm:ss"/></span> 에 만료됩니다. </p>
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays > 7}">
+								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd"/></span> 에 만료됩니다. </p>
 								<a href="./pricing?type='upgradePlan'">업그레이드</a>
 								</c:if>
 							</div>
@@ -134,8 +140,9 @@
 									<tbody>
 										<c:forEach var="billingList" items="${billingList}" varStatus="status">
 										<c:set var="payPrice" value="${billingList.PAY_PRICE}"/>
+										<c:set var="regDate" value="${billingList.REG_DATE}"/>
 											<tr>
-												<td><c:out value="${billingList.REG_DATE}"/></td>
+												<td><fmt:formatDate value="${regDate}" pattern="yyyy-MM-dd"/></td>
 												<td><c:out value="${billingList.PLAN_NAME}"/></td>
 												<td><fmt:formatNumber type="number" maxFractionDigits="3" value="${payPrice}"/></td>
 												<td>

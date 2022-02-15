@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.netMiner.app.model.vo.BillingVo;
+import com.netMiner.app.model.vo.MemberVo;
 
 @Repository
 public class BillingDaoImpl implements BillingDao {
@@ -55,6 +56,5 @@ public class BillingDaoImpl implements BillingDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("selectFaqList", param);
 	}
-
 
 }
