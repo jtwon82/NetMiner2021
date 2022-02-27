@@ -547,7 +547,7 @@ public class BillingController extends HttpServlet {
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
 		if (billingVo.getPaymentKey().equals("") && 
-				!billingVo.getPLAN_TYPE().equals("01")) {
+				!billingVo.getPLAN_CODE().equals("01")) {
 			return "redirect:/pricing";				
 		}
 		
