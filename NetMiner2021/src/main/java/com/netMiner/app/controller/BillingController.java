@@ -546,14 +546,15 @@ public class BillingController extends HttpServlet {
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
-		if (billingVo.getPaymentKey().equals("")) {
-			return "redirect:/pricing";
+		if (billingVo.getPaymentKey().equals("") && 
+				!billingVo.getPLAN_TYPE().equals("01")) {
+			return "redirect:/pricing";				
 		}
 		
 		logger.info("form {}", form);
 		memberVo = memberService.selectPayCompleteUser(memberVo);
 		session.setAttribute("memberVo",memberVo);
-		session.removeAttribute("billingVo");
+		session.removeAttribute("billing");
 		session.removeAttribute("billingOld");
 		return path+"/subscribe_complete";
 	}
