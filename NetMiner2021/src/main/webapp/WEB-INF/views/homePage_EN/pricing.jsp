@@ -74,7 +74,7 @@ Compare our subscription plans and find yours.</p>
 								<div class="top">
 									<p>TRIAL</p>
 									<p class="payment">Free</p>
-									<p>28 days</p>
+									<p>1 month</p>
 									<p>Enjoy<br>
 										NetMiner 365<br>
 										for free.

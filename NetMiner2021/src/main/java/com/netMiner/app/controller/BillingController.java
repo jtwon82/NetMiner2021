@@ -53,20 +53,22 @@ public class BillingController extends HttpServlet {
 		String type = (String) request.getParameter("type");
 
 		Map<String,Object> param = new HashMap<String,Object>();
-		//faq 는 해당 유저의 정보 없이도 알수있어야 하므로 선 select 
 		if (language.equals("_EN")) {
 			param.put("language","en");
 		} else {
 			param.put("language","ko");
 		}
+
+		//faq 는 해당 유저의 정보 없이도 알수있어야 하므로 선 select 
 		List<Map<String,Object>> faqList = billingService.selectFaqList(param);
 		logger.info("faqList - {}", faqList.toString());
 		mv.addAttribute("faqList", faqList);
-		
+		// 비회원 유저인경우 해당 프라이싱 페이지로 바로 이동 
 		if (member == null ) {
 			String path = "homePage"+ language;
 			return path+"/pricing";
 		}
+
 		String userId = member.getUserId();
 		boolean checkDate = false;
 
@@ -74,6 +76,27 @@ public class BillingController extends HttpServlet {
 		param.put("userId", userId);
 		Map<String, Object> result = billingService.selectSubscript(param);
 		logger.info("result- {}",result);
+		
+		int diffDays = 0;
+		Date nowDate = new Date(System.currentTimeMillis());
+		 SimpleDateFormat dateFormat = new 
+	                SimpleDateFormat ("yyyy-MM-dd");
+		 if (result != null) {
+			 try {
+					Date now = dateFormat.parse(dateFormat.format(nowDate));
+					Date exitsDate = dateFormat.parse(dateFormat.format(result.get("EXITS_DATE")));
+					logger.info("date1 -{}",now.toString());
+					logger.info("date2 -{}",exitsDate.toString());
+					diffDays = (int) (((exitsDate.getTime() - now.getTime())/1000)/ (24*60*60));					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		 }		 
+		if (diffDays <= 0) {
+			result = null;
+		}
+		
 		//해당 유저의 플랜타입 01 사용여부 확인 
 		Map<String, Object> checkUserTiralInfo = billingService.checkUserTiralInfo(param);
 		logger.info("checkUserTiralInfo- {}",checkUserTiralInfo);
@@ -101,11 +124,6 @@ public class BillingController extends HttpServlet {
 					
 					member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
 				}
-			}
-			//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
-			if (result.get("PAY_PLATFORM").equals("paypal") && !result.get("NO").equals("01")) {
-				language = "_EN";
-				session.setAttribute("language", language);
 			}
 		} else {
 				//Trial 를 사용하지 않고 바로 진행한후  경우
@@ -212,6 +230,7 @@ public class BillingController extends HttpServlet {
 		if (planCode == null && payNo == null) {
 			return "redirect:/";
 		}
+		
 		//pricing 으로 통해 들어온 유저인경우 이전 billingOldVo 가 없기때문에 해당 부분확인해야함
 		if (billingOldVo == null) {
 			String userId = memberVo.getUserId();
@@ -237,7 +256,6 @@ public class BillingController extends HttpServlet {
 				billingOldVo.setDiffDay(diffDays);
 			}
 		}
-		////////
 		
 		if (billingOldVo != null && !billingOldVo.getPLAN_CODE().equals("01")) {
 			planCode = billingOldVo.getPLAN_CODE();
@@ -267,7 +285,6 @@ public class BillingController extends HttpServlet {
 			language = "_EN";
 			session.setAttribute("language", language);
 		}
-		
 		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
@@ -413,7 +430,8 @@ public class BillingController extends HttpServlet {
 		if (planCode.equals("01")) {
 			billingVo.setUSER_ID(memberVo.getUserId());
 			billingVo.setDATE_TYPE("month");
-			billingService.insertSubscript(billingVo);			
+			billingService.insertSubscript(billingVo);
+			session.setAttribute("billing",billingVo);
 			pagePath = "redirect:/goSubscribeComplete";
 		} else {
 			
@@ -547,8 +565,10 @@ public class BillingController extends HttpServlet {
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
 		if (billingVo.getPaymentKey().equals("") && 
-				!billingVo.getPLAN_CODE().equals("01")) {
+				!billingVo.getPLAN_CODE().equals("01")) {			
 			return "redirect:/pricing";				
+		} else if (billingVo.getPaymentKey().equals("")) {
+			return "redirect:/pricing";
 		}
 		
 		logger.info("form {}", form);

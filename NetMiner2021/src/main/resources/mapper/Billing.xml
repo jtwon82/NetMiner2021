@@ -13,7 +13,7 @@
 		from NetMiner.SUBSCRIPT AS A 
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE 
 		where USER_ID =#{userId}
-		order by no desc limit 1
+		order by A.no desc limit 1
 	</select>
 	<select id="checkUserTiralInfo" parameterType="Map" resultType="Map">
 		select * from NetMiner.SUBSCRIPT AS A 

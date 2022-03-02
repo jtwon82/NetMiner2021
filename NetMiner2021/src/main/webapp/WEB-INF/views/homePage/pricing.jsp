@@ -77,7 +77,7 @@ NetMiner 365 를 이용하세요.</p>
 								<div class="top">
 									<p>TRIAL</p>
 									<p class="payment">Free</p>
-									<p>28 days</p>
+									<p>1 month</p>
 									<p>NetMiner 365의<br>
 										모든 기능을 무료로<br>
 										사용해 보세요.
