@@ -602,7 +602,7 @@ public class BillingController extends HttpServlet {
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
 		if (billingVo.getPaymentKey().equals("")) {
-			return "redirect:/pricing";
+			return path + "/pricing";
 		}
 		
 		logger.info("form {}", form);
