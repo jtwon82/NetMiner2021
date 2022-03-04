@@ -1,5 +1,7 @@
 package com.netMiner.app.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,19 +105,18 @@ public class BillingController extends HttpServlet {
 		//해당유저의 현재 플랜과 TRAIL 사용 여부와 동일한경우 
 		if (result != null) {
 			//Trial 를 사용한 사용자 
-			if (result.get("NO").equals("01")) {
+			if (result.get("PLAN_CODE").equals("01")) {
 				//현재 사용중인 플랜이 Trial 인경우
 				member.setPlanType(1);
 			} else {
 				//현재 사용중인 플랜이 Trial 이 아닌경우 
-				
 				if (type != null) {
-					if (type.equals("changePlan")) {
+					if (type.indexOf("changePlan") > 0) {
 						//해당 플랜 변경인지 
 						member.setPlanType(1);
-					} else if (type.equals("upgradePlan")) {
-						//해당 플랜의 업그레이드인지 
-						member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
+					} else if (type.indexOf("upgradePlan") > 0) {
+						//해당 플랜의 업그레이드인지 						
+						member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));							
 					} else {
 						//billing 를 통해 들어온 user 가 아닌경우 
 						member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));
@@ -128,7 +129,7 @@ public class BillingController extends HttpServlet {
 		} else {
 				//Trial 를 사용하지 않고 바로 진행한후  경우
 			if (checkUserTiralInfo != null) {
-				member.setPlanType(1);
+				member.setPlanType(-1);
 			} else { 
 				//신규  사용자 
 				member.setPlanType(0);
@@ -137,7 +138,7 @@ public class BillingController extends HttpServlet {
 		
 		logger.info("memberPlanType- {}, language-{}", member.getPlanType(), member.getLanguage());
 		session.setAttribute("memberVo",member);
-		
+		logger.info(language);
 		String path = "homePage"+ language;
 		return path+"/pricing";
 	}
@@ -257,7 +258,9 @@ public class BillingController extends HttpServlet {
 			}
 		}
 		
-		if (billingOldVo != null && !billingOldVo.getPLAN_CODE().equals("01")) {
+		if (billingOldVo != null && 
+				!billingOldVo.getPLAN_CODE().equals("01")
+				&& payNo != null) {
 			planCode = billingOldVo.getPLAN_CODE();
 		}
 		
@@ -280,18 +283,12 @@ public class BillingController extends HttpServlet {
 								
 			}
 		}
-		//이전의 결제 이력이 paypal 인경우 영문페이지로 전환 
-		if ( billingOldVo != null && billingOldVo.getPAY_PLATFORM().equals("paypal")) {
-			language = "_EN";
-			session.setAttribute("language", language);
-		}
-		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
 		if (language.equals("_EN")) {
 			billingVo.setPAY_PLATFORM("paypal");
 			if (billingOldVo != null) {
-				if (billingOldVo.getDiffDay() > -7 && billingOldVo.getDiffDay() < 7) {
+				if (billingOldVo.getDiffDay() >= -7 && billingOldVo.getDiffDay() <= 7) {
 					//플랜 연장 인경우 
 					if (dateType.equals("year")) {
 						int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
@@ -311,6 +308,26 @@ public class BillingController extends HttpServlet {
 					}
 					
 				} else {
+					String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
+					String payLanguage = payPlatform.equals("toss")?"ko":"en";
+					String pageLanguage = language.equals("_EN")?"en":"ko";
+					if (!payLanguage.equals(pageLanguage)) {
+						 response.setContentType("text/html; charset=UTF-8");
+						 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
+						 if (pageLanguage.equals("en")) {
+							 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
+						 }
+						 PrintWriter out;
+						try {
+							out = response.getWriter();
+							out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
+							out.flush();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
 					if (billingOldVo.getDATE_TYPE().equals("year")) {
 						// 1년에서 1년 업그레이드시
 						int oldPrice = billingOldVo.getPLAN_PER_EN();
@@ -358,7 +375,7 @@ public class BillingController extends HttpServlet {
 		} else {
 			billingVo.setPAY_PLATFORM("toss");
 			if (billingOldVo != null) {
-				if (billingOldVo.getDiffDay() > -7 && billingOldVo.getDiffDay() < 7) {
+				if (billingOldVo.getDiffDay()  >= -7 && billingOldVo.getDiffDay() <= 7) {
 					//플랜 연장 인경우 
 					if (dateType.equals("year")) {
 						int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
@@ -378,6 +395,25 @@ public class BillingController extends HttpServlet {
 					}
 					
 				} else {
+					String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
+					String payLanguage = payPlatform.equals("toss")?"ko":"en";
+					String pageLanguage = language.equals("_EN")?"en":"ko";
+					if (!payLanguage.equals(pageLanguage)) {
+						 response.setContentType("text/html; charset=UTF-8");
+						 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
+						 if (pageLanguage.equals("en")) {
+							 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
+						 }
+						 PrintWriter out;
+						try {
+							out = response.getWriter();
+							out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
+							out.flush();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 					if (billingOldVo.getDATE_TYPE().equals("year")) {
 						// 1년에서 1년 업그레이드시
 						int oldPrice = billingOldVo.getPLAN_PER_KO();
@@ -430,9 +466,10 @@ public class BillingController extends HttpServlet {
 		if (planCode.equals("01")) {
 			billingVo.setUSER_ID(memberVo.getUserId());
 			billingVo.setDATE_TYPE("month");
+			billingVo.setPLAN_NAME("TRIAL");
 			billingService.insertSubscript(billingVo);
 			session.setAttribute("billing",billingVo);
-			pagePath = "redirect:/goSubscribeComplete";
+			pagePath = "redirect:/goSubscribeCompleteTrial";
 		} else {
 			
 			if (payNo != null) {
@@ -478,7 +515,7 @@ public class BillingController extends HttpServlet {
 				billingVo.setOrderId(form.getOrderId());
 				billingVo.setPaymentKey(form.getPaymentKey());
 				billingVo.setAmount(form.getAmount());
-
+				
 				billingService.insertSubscript(billingVo);
 				logger.info("insert succ billingVo {}", billingVo);
 				session.setAttribute("billingVo", billingVo);
@@ -557,17 +594,14 @@ public class BillingController extends HttpServlet {
 	}
 	
 	@RequestMapping(value="goSubscribeComplete",method=RequestMethod.GET)
-	public String goSubscribeComplete(ModelAndView mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
+	public String goSubscribeComplete(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {
 		String language = (String) session.getAttribute("language");
 		String path = "homePage"+ language;
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
-		if (billingVo.getPaymentKey().equals("") && 
-				!billingVo.getPLAN_CODE().equals("01")) {			
-			return "redirect:/pricing";				
-		} else if (billingVo.getPaymentKey().equals("")) {
+		if (billingVo.getPaymentKey().equals("")) {
 			return "redirect:/pricing";
 		}
 		
@@ -576,8 +610,26 @@ public class BillingController extends HttpServlet {
 		session.setAttribute("memberVo",memberVo);
 		session.removeAttribute("billing");
 		session.removeAttribute("billingOld");
+		mv.addAttribute("billing", billingVo);
 		return path+"/subscribe_complete";
 	}
+	
+	@RequestMapping(value="goSubscribeCompleteTrial", method=RequestMethod.GET) 
+	public String goSubscribeCompleteTrial (Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response
+			, BillingVo form) {
+		String language = (String) session.getAttribute("language");
+		String path = "homePage"+ language;
+		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
+		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
+		logger.info("billingVo- {}", billingVo);
+		memberVo = memberService.selectPayCompleteUser(memberVo);
+		session.setAttribute("memberVo",memberVo);
+		session.removeAttribute("billing");
+		session.removeAttribute("billingOld");
+		mv.addAttribute("billing", billingVo);
+		return path+"/subscribe_complete";
+	}
+	
 	@RequestMapping(value="invoice",method=RequestMethod.GET)
 	public String goInvoice(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
 		String language = (String) session.getAttribute("language");

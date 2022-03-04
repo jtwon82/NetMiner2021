@@ -96,7 +96,7 @@ NetMiner 365 를 이용하세요.</p>
 											</c:if>
 											<c:if test ="${memberVo.planType == -1}">
 											<p class="button">
-												<a href="avascript:alert('Sorry, your free trial has expired.')">무료체험</a>
+												<a href="javascript:alert('TRIAL 사용 기간이 만료 되었습니다.')">무료체험</a>
 											</p>
 											</c:if>
 										</c:if>
@@ -137,7 +137,7 @@ NetMiner 365 를 이용하세요.</p>
 											</c:if>
 											<c:if test ="${memberVo.planType == -1}">
 											<p class="button">
-												<a href="avascript:alert('Sorry, your free trial has expired.')">무료체험</a>
+												<a href="javascript:alert('TRIAL 사용 기간이 만료 되었습니다.')">무료체험</a>
 											</p>
 											</c:if>
 										</c:if>

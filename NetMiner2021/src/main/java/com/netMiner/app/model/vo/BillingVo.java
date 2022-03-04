@@ -62,6 +62,7 @@ public class BillingVo implements Serializable {
 	private String type = "none";
 	//payPal 결재 시 필요 
 	private String Encrypted_ret_url;
+
 	
 	public static BillingVo fromMap(HashMap<String, Object> map) {
 		BillingVo result= new ObjectMapper()

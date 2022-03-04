@@ -93,7 +93,7 @@ Compare our subscription plans and find yours.</p>
 											</c:if>
 											<c:if test ="${memberVo.planType == -1}">
 											<p class="button">
-												<a href="avascript:alert('Sorry, your free trial has expired.')">Try for free</a>
+												<a href="javascript:alert('Sorry, your free trial has expired.')">Try for free</a>
 											</p>
 											</c:if>
 										</c:if>
@@ -134,7 +134,7 @@ Compare our subscription plans and find yours.</p>
 											</c:if>
 											<c:if test ="${memberVo.planType == -1}">
 											<p class="button">
-												<a href="avascript:alert('Sorry, your free trial has expired.')">Try for free</a>
+												<a href="javascript:alert('Sorry, your free trial has expired.')">Try for free</a>
 											</p>
 											</c:if>
 										</c:if>

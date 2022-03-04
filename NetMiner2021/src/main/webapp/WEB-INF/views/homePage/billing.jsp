@@ -28,15 +28,6 @@
 
 </head>
 <body>
-	<script type="text/javascript">
-		var str = "${nowPlan}";
-		var str2 = "${billingList}";
-		var str3 = "${diffDays}";
-		
-		console.log("str - " + str);
-		console.log("str2 - " +str2);
-		console.log("str3 - " +str3);
-	</script>
 		<div id="wrap" class="sub billing">
 			<%@include file = "../common/top.jsp" %>
 			<div id="section">
@@ -110,8 +101,8 @@
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								</c:if>
 								
-								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays > -7}">
-								<p>이용 중인 플랜이 만료되었습니다. 계속 이용하시겠습니까?</p>
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -7}">
+								<p>이용 중인 플랜이 만료되었습니다. <br> 계속 이용하시겠습니까?</p>
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								<a href="./pricing?type='changePlan'">플랜변경</a>
 								</c:if>

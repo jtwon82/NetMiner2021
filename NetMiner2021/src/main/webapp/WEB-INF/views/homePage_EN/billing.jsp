@@ -83,6 +83,8 @@
 							<div class="inner inner2" >
 								<p class="title">Plan & Paymnet</p>
 								<div class="current">
+									<span>Current Plan</span>
+									
 									<c:if test="${nowPlan.PLAN_CODE == '01' && diffDays <= 0}">
 									<p>Trial has expired. Would you like to continue? </p>
 									<a href="./pricing">Subscribe</a>
@@ -97,7 +99,7 @@
 									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
 									</c:if>
 									
-									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays > -7}">
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -7}">
 									<p>Your plan has expired. Continue to use?</p>
 									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
 									<a href="./pricing?type='changePlan'">Change Plan</a>
