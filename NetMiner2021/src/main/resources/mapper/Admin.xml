@@ -475,8 +475,6 @@
 	
 	<select id="getOrderList" parameterType="map" resultType="map">
 		SELECT NO.*
-			, CASE WHEN MB_TYPE_CODE='01' THEN 'Normal'
-				WHEN MB_TYPE_CODE='99' THEN 'Super' END MB_TYPE_CODE_STR
 			, CASE WHEN MB_USE_CODE='01' THEN 'Academic'
 				WHEN MB_USE_CODE='02' THEN 'Commercial' END MB_USE_CODE_STR
 			, CASE WHEN PLAN_CODE='01' THEN 'FREE'
@@ -488,18 +486,10 @@
 				, CEIL(RNUM / 10) as page
 			FROM (
 				SELECT A.*
-					, MB_LANGUAGE, MB_USE_CODE, MB_TYPE_CODE, MB_NATION, MB_COMPANY
+					, LANGUAGE MB_LANGUAGE, USE_CODE MB_USE_CODE, NATION MB_NATION, COMPANY MB_COMPANY
 					, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
 					, ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
-				FROM NetMiner.SUBSCRIPT A JOIN (
-					SELECT USER_ID MB_USER_ID
-						, LANGUAGE MB_LANGUAGE
-						, USE_CODE MB_USE_CODE
-						, TYPE_CODE MB_TYPE_CODE
-						, COMPANY MB_COMPANY
-						, NATION MB_NATION
-					FROM NetMiner.MEMBER_INFO
-				) MB ON A.USER_ID = MB.MB_USER_ID
+				FROM NetMiner.SUBSCRIPT A 
 				<include refid="listPagedWhere"/>
 				ORDER BY A.NO DESC
 			)A
@@ -509,28 +499,20 @@
 	<select id="getOrderCount" parameterType="map" resultType="int">
 		SELECT * FROM (
 			SELECT COUNT(1)totcnt, 1 rownum
-			FROM NetMiner.SUBSCRIPT A JOIN (
-					SELECT USER_ID MB_USER_ID
-						, LANGUAGE MB_LANGUAGE
-						, USE_CODE MB_USE_CODE
-						, TYPE_CODE MB_TYPE_CODE
-						, COMPANY MB_COMPANY
-						, NATION MB_NATION
-					FROM NetMiner.MEMBER_INFO
-				) MB ON A.USER_ID = MB.MB_USER_ID
+			FROM NetMiner.SUBSCRIPT A
 			<include refid="listPagedWhere"/>
 		) NO
 	</select>
 	<select id="getOrderDetailInfo" parameterType="map" resultType="map">
 		SELECT NO.*
-			, B.LANGUAGE, B.NATION, B.USE_CODE, B.COMPANY
+			, LANGUAGE, NATION, USE_CODE, COMPANY
 			, CASE WHEN USE_CODE='01' THEN 'Academic'
 				WHEN USE_CODE='02' THEN 'Commercial' END USE_CODE_STR
 			, CASE WHEN PLAN_CODE='01' THEN 'FREE'
 				WHEN PLAN_CODE='02' THEN 'SMALL' 
 				WHEN PLAN_CODE='03' THEN 'MEDIUM'  
 				WHEN PLAN_CODE='04' THEN 'LARGE' END PLAN_CODE_STR
-			, DATE_FORMAT(B.REG_DATE,'%Y-%m-%d %H:%i:%s') MB_REG_DATE_STR
+			, DATE_FORMAT(REG_DATE,'%Y-%m-%d %H:%i:%s') MB_REG_DATE_STR
 			, DATE_FORMAT(NO.REG_DATE,'%Y-%m-%d %H:%i:%s') REG_DATE_STR 
 			, DATE_FORMAT(EXITS_DATE,'%Y-%m-%d %H:%i:%s') EXITS_DATE_STR
 		FROM (
@@ -538,7 +520,7 @@
 				, DATE_FORMAT(REG_DATE,'%Y-%m-%d')REG_DATES
 			FROM NetMiner.SUBSCRIPT A
 	<if test="NO!=null and !NO.equals('')">WHERE A.NO = #{NO}</if>
-		) NO JOIN NetMiner.MEMBER_INFO B ON NO.USER_ID =B.USER_ID
+		) NO 
 	</select>
 	<delete id="deleteOrderInfo" parameterType="map">
 		DELETE FROM NetMiner.SUBSCRIPT
