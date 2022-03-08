@@ -33,6 +33,7 @@ public class MemberVo implements Serializable{
 	private String SUBSCRIPT_YN = "N";
 	private int CHECK_TRIAL = 0;
 	private String UUID;
+	private int DIFF_DAY;
 	
 	public MemberVo() {
 		
@@ -57,6 +58,7 @@ public class MemberVo implements Serializable{
 		if(json.containsKey("SUBSCRIPT_YN"))this.SUBSCRIPT_YN= json.get("SUBSCRIPT_YN").toString();
 		if(json.containsKey("CHECK_TRIAL"))this.CHECK_TRIAL= Integer.parseInt(json.get("CHECK_TRIAL").toString());
 		if(json.containsKey("UUID"))this.UUID = json.get("UUID").toString();
+		if(json.containsKey("DIFF_DAY"))this.DIFF_DAY = Integer.parseInt(json.get("DIFF_DAY").toString());
 		
 	}
 	
@@ -79,6 +81,7 @@ public class MemberVo implements Serializable{
 		result.put("SUBSCRIPT_YN", this.SUBSCRIPT_YN);
 		result.put("CHECK_TRIAL" , this.CHECK_TRIAL);
 		result.put("UUID", this.UUID);
+		result.put("DIIFF_DAY", this.DIFF_DAY);
 		return result;
 	}
 }

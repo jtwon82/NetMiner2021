@@ -232,10 +232,11 @@ public class SendEmail {
 	//영문 플랜 계좌 이체시 
 	public void sendBankTransfer(String payUserId,BillingVo billingVo) {
 		StringBuffer sb = new StringBuffer()
-				.append("- 회원 ID : ").append(payUserId).append("\n")
-				.append("- 주문상품 : ").append(billingVo.getORDER_PNM()).append("\n")
-				.append("- 구독기간 : ").append(billingVo.getDATE_TYPE().equals("month")? "월": "년").append("\n")
-				.append("- 결제금액 : ").append(billingVo.getPAY_PRICE());
+				.append("- 회원 ID : ").append(payUserId).append(System.lineSeparator())
+				.append("- 주문번호 : ").append(billingVo.getORDER_PNM()).append(System.lineSeparator())
+				.append("- 상품명  : ").append(billingVo.getPAY_TYPE()).append(System.lineSeparator())
+				.append("- 구독기간 : ").append(billingVo.getDATE_TYPE().equals("month")? "월": "년").append(System.lineSeparator())
+				.append("- 결제금액 : ").append(" $ ").append(billingVo.getPAY_PRICE()).append(System.lineSeparator());
 		String title = "해외 계좌이체 주문건";
 		
 		this.sendMailSender("netminer@cyram.com",sb.toString(), title);

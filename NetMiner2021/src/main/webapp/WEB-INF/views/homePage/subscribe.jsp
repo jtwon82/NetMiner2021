@@ -28,12 +28,14 @@
 		
 		<script src="https://js.tosspayments.com/v1"></script>
 		<script type="text/javascript">
+		//live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk
+		//test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d
 		var Payment=[];
-		Payment['tossPayments'] = TossPayments('test_ck_4vZnjEJeQVxLAMAABvYVPmOoBN0k');
+		Payment['tossPayments'] = TossPayments('live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk');
 		Payment['amount'] = ${billing.PAY_PRICE};
 		Payment['orderId'] = '${billing.ORDER_ID}';
 		Payment['orderName'] = '${billing.ORDER_PNM}';
-		Payment['customerName'] = '${billing.CUSTOMER_NAME}';
+		Payment['customerName'] = '${billing.USER_ID}';
 		Payment['card'] = '${billing.CARD_INFO}';	
 		</script>
 </head>
@@ -72,8 +74,8 @@
 							<p class="title">결제 방법</p>
 							<input type="hidden" id="PAY_TYPE" name="PAY_TYPE" value="${billing.PAY_TYPE}"/>
 							<ul class="checkBox">
-								<li><label><input type="radio" checked="checked" name="sub2" value="card"><em></em>신용 / 직불카드</label></li>
-								<li><label><input type="radio" name="sub2" value="transfer"><em></em>계좌 이체 </label></li>
+								<li><label><input type="radio" checked="checked" name="sub2" value="카드"><em></em>신용 / 직불카드</label></li>
+								<li><label><input type="radio" name="sub2" value="계좌이체"><em></em>계좌 이체 </label></li>
 							</ul>
 						</div>
 						<div class="inner3 inner">

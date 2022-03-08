@@ -66,12 +66,27 @@
 							<c:if test="${!empty memberVo}">
 							<div class="mypage obj type1" style="right: 70px;">
 								<ul>
-									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y' }"> 
-									  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
-									 </c:if>
+									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y'}">
+										<c:if test="${memberVo.DIFF_DAY >= -7}">
+										  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+										</c:if>
+										<c:if test="${memberVo.DIFF_DAY < -7}">
+											<c:if test="${language eq '_EN'}">
+											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >My Workspace</a></li>
+											</c:if>
+											<c:if test="${language eq ''}">
+											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" >My Workspace</a></li>
+											</c:if>
+										</c:if>
+									</c:if>
 									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 
-									 <li class="join"><a href="./pricing" >Buy now</a></li>
-									 </c:if>
+											<c:if test="${language eq '_EN'}">
+											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >My Workspace</a></li>
+											</c:if>
+											<c:if test="${language eq ''}">
+											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.'); " >My Workspace</a></li>
+											</c:if>
+									 </c:if>									 
 								</ul>
 							</div>
 							<div class="mypage obj type2">
@@ -80,10 +95,21 @@
 								</p>
 								<ul>
 									<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y'}"> 
-									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+										<c:if test="${memberVo.DIFF_DAY >= -7}">
+											
+											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+										</c:if>
+										<c:if test="${memberVo.DIFF_DAY < -7}">
+											<c:if test="${language eq '_EN'}">
+												<li class="workSpace active"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" class="trs">Go to my workspace</a></li> 
+											</c:if>
+											<c:if test="${language eq ''}">
+												<li class="workSpace active"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" class="trs">Go to my workspace</a></li> 
+											</c:if>
+										</c:if>
 									</c:if>
 									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 
-									<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+									<li class="workSpace active"><a href="./pricing" class="trs">Go to my workspace</a></li> 
 									</c:if>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="billing"><a href="./billing" class="trs">Billing</a></li>
@@ -97,7 +123,6 @@
 							<div id="nav" class="obj">
 								<div class="navClose obj"><img src="/resources/images/nav_close.png" alt="닫기"></div>
 								<div class="container">
-									
 									<!-- 로그인 전-->
 									<c:if test="${empty memberVo}">
 									<div class="mypage type1" >
@@ -115,13 +140,20 @@
 										</p>
 										<ul>
 											<c:if test="${memberVo.SUBSCRIPT_YN eq 'Y'}"> 
-											<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+												<c:if test="${memberVo.DIFF_DAY >= -7}">
+													<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+												</c:if>
+												<c:if test="${memberVo.DIFF_DAY < -7}">
+													<c:if test="${language eq '_EN'}">
+													<li class="workSpace active"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" class="trs">Go to my workspace</a></li> 
+													</c:if>
+													<c:if test="${language eq ''}">
+														<li class="workSpace active"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" class="trs">Go to my workspace</a></li> 
+													</c:if>
+												</c:if>
 											</c:if>
-											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 0 }"> 
-											<li class="workSpace active"><a href="./pricing" class="trs">Start for free</a></li>
-											</c:if>
-											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' && memberVo.CHECK_TRIAL == 1 }"> 
-											<li class="workSpace active"><a href="./pricing" class="trs">Buy Now</a></li>
+											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
+											<li class="workSpace active"><a href="./pricing" class="trs">Go to my workspace</a></li>
 											</c:if>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="billing"><a href="./billing" class="trs">Billing</a></li>
@@ -134,6 +166,7 @@
 										<li><a href="./feature">Feature</a></li>
 										<li><a href="./function">Function</a>
 										<li><a href="./solution">Solution</a>
+										<li><a href="./pricing">Pricing</a>
 									</ul>
 								</div>
 							</div>
