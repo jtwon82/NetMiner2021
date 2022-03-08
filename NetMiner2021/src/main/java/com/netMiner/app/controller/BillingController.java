@@ -53,7 +53,7 @@ public class BillingController extends HttpServlet {
 	@Autowired
 	private SendEmail sendEmail;
 	
-	private String SECRET_KEY = "live_sk_lpP2YxJ4K87AD1JXz1LVRGZwXLOb";
+	private String SECRET_KEY = "test_sk_P24xLea5zVAAgzALk6YVQAMYNwW6";
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final RestTemplate restTemplate = new RestTemplate();
 	/*page Move Billing*/

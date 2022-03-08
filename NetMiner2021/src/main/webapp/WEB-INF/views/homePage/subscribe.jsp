@@ -31,7 +31,7 @@
 		//live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk
 		//test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d
 		var Payment=[];
-		Payment['tossPayments'] = TossPayments('live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk');
+		Payment['tossPayments'] = TossPayments('test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d');
 		Payment['amount'] = ${billing.PAY_PRICE};
 		Payment['orderId'] = '${billing.ORDER_ID}';
 		Payment['orderName'] = '${billing.ORDER_PNM}';
