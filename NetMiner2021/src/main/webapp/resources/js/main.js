@@ -106,7 +106,6 @@ $(document).ready(function() {
 			return false;
 		}
 		var accountRoute = $("input[name='sub2']:checked").val();
-		console.log(accountRoute);
 		var url = document.createElement('a');
 		url.href = location.href;
 			
@@ -117,9 +116,8 @@ $(document).ready(function() {
 			/*계좌 이체시*/
 			Payment['successUrl'] = url.origin +'/payment';
 		}
-		Payment['failUrl'] = url.origin;
-		
-		console.log( Payment );
+		Payment['failUrl'] = url.origin+'/pricing';
+		console.log("url.origin"+ url.origin);
 		Payment['tossPayments'].requestPayment(accountRoute, {
 			amount: Payment['amount'],
 			orderId: Payment['orderId'],

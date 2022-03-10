@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +19,18 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.BillingService;
 import com.netMiner.app.model.service.MemberService;
@@ -46,7 +52,10 @@ public class BillingController extends HttpServlet {
 	
 	@Autowired
 	private SendEmail sendEmail;
-
+	
+	private String SECRET_KEY = "test_sk_P24xLea5zVAAgzALk6YVQAMYNwW6";
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	private final RestTemplate restTemplate = new RestTemplate();
 	/*page Move Billing*/
 	@RequestMapping(value="pricing", method=RequestMethod.GET) 
 	public String pricing (Model mv,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -284,6 +293,11 @@ public class BillingController extends HttpServlet {
 			}
 		}
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
+		//이전 결재 내역의 만료일 지난경우 해당 billingOldVo 를 null 로 처리 
+		
+		if (billingOldVo.getDiffDay() < -7) {
+			billingOldVo = null;
+		}
 		
 		if (language.equals("_EN")) {
 			billingVo.setPAY_PLATFORM("paypal");
@@ -494,7 +508,7 @@ public class BillingController extends HttpServlet {
 	/*결제시 해당 데이터 가지고 오는 부분 */
 	@RequestMapping(value="payment", method= {RequestMethod.GET, RequestMethod.POST})
 	public String payment ( HttpSession session,HttpServletRequest request, HttpServletResponse response
-			, BillingVo form) {
+			, BillingVo form) throws Exception {
 		String language = (String) session.getAttribute("language");
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
@@ -516,10 +530,24 @@ public class BillingController extends HttpServlet {
 				billingVo.setPaymentKey(form.getPaymentKey());
 				billingVo.setAmount(form.getAmount());
 				
-				billingService.insertSubscript(billingVo);
-				logger.info("insert succ billingVo {}", billingVo);
-				session.setAttribute("billingVo", billingVo);
-				return "redirect:/goSubscribeComplete";
+				HttpHeaders headers = new HttpHeaders();
+				headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+			    headers.setContentType(MediaType.APPLICATION_JSON);
+			    Map<String, String> payloadMap = new HashMap<>();
+		        payloadMap.put("orderId", form.getOrderId());
+		        payloadMap.put("amount", String.valueOf(form.getAmount()));		
+				HttpEntity<String> request1 = new HttpEntity<>(objectMapper.writeValueAsString(payloadMap), headers);
+				
+				ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
+		        "https://api.tosspayments.com/v1/payments/" + form.getPaymentKey(), request1, JsonNode.class);
+				 if (responseEntity.getStatusCode() == HttpStatus.OK) {
+					 billingService.insertSubscript(billingVo);
+					 logger.info("insert succ billingVo {}", billingVo);
+					 session.setAttribute("billingVo", billingVo);
+					 return "redirect:/goSubscribeComplete";
+				 } else {
+					 return "redirect:/pricing";
+				 }
 			} else {
 				
 				return "redirect:/";
@@ -527,6 +555,11 @@ public class BillingController extends HttpServlet {
 			
 		}
 	}
+	private void callPaySuccess(BillingVo billingVo) {
+			
+		
+	}
+
 	@RequestMapping(value="payment_paypal", method= {RequestMethod.GET, RequestMethod.POST})
 	public String payment_paypal ( ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response
 			, BillingVo form) {
@@ -601,6 +634,10 @@ public class BillingController extends HttpServlet {
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
+		if (billingVo == null) {
+			return path + "/pricing";
+		}
+		
 		if (billingVo.getPaymentKey().equals("")) {
 			return path + "/pricing";
 		}
@@ -622,6 +659,9 @@ public class BillingController extends HttpServlet {
 		MemberVo memberVo = (MemberVo) session.getAttribute("memberVo");
 		BillingVo billingVo = (BillingVo) session.getAttribute("billing");
 		logger.info("billingVo- {}", billingVo);
+		if (billingVo == null) {
+			return path + "/pricing";
+		}
 		memberVo = memberService.selectPayCompleteUser(memberVo);
 		session.setAttribute("memberVo",memberVo);
 		session.removeAttribute("billing");

@@ -20,6 +20,7 @@
  		<result property="lastLoginDate" column = "LAST_LOGIN_DATE"/>
  		<result property="SUBSCRIPT_YN" column = "SUBSCRIPT_YN"/>
  		<result property="CHECK_TRIAL" column = "CHECK_TRIAL"/>
+ 		<result property="DIFF_DAY" column = "DIFF_DAY"/>
  	</resultMap> 
  	<select id="selectDate" resultType="String">
  	select now();
@@ -28,18 +29,23 @@
  	<select id="getUserInfo" resultMap="MemberVo" parameterType="MemberVo">
 	SELECT a.*, password(#{userPwd}) chk
 	, (SELECT CASE WHEN (
-	SELECT COUNT(1) FROM (
-	SELECT  EXITS_DATE , REG_DATE AS SUBSCRIPT_REG_DATE FROM NetMiner.SUBSCRIPT	s
-	WHERE USER_ID = #{userId}
-	AND PLAN_CODE !='01'
-	order by no desc limit 1
-	) AS A
-	WHERE NOW() <![CDATA[<]]> A.EXITS_DATE
+		SELECT COUNT(1) FROM (
+			SELECT  EXITS_DATE , REG_DATE AS SUBSCRIPT_REG_DATE FROM NetMiner.SUBSCRIPT	s
+			WHERE USER_ID = #{userId}
+			AND PLAN_CODE !='01'
+			order by no desc limit 1
+		) AS A
+		WHERE NOW() <![CDATA[<]]> A.EXITS_DATE
 	) = 0 THEN 'N' ELSE 'Y' END SUBSCRIPT_YN
 	FROM DUAL) as SUBSCRIPT_YN,
 	(
 	select COUNT(1) FROM NetMiner.SUBSCRIPT s2 WHERE USER_ID = #{userId} and PLAN_CODE ='01'
-	) AS CHECK_TRIAL
+	) AS CHECK_TRIAL,
+	(
+	SELECT TIMESTAMPDIFF(DAY, NOW(),EXITS_DATE) AS DIFF_DAY 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = ''
+	order by s2.no desc limit 1
+	) AS DIFF_DAY
 	FROM NetMiner.MEMBER_INFO a
 	WHERE USER_ID = #{userId}
 	UNION ALL
@@ -58,7 +64,12 @@
 	) as SUBSCRIPT_YN,
 	(
 	select COUNT(1) FROM NetMiner.SUBSCRIPT s2 WHERE USER_ID = #{userId} and PLAN_CODE ='01'
-	) AS CHECK_TRIAL
+	) AS CHECK_TRIAL,
+	(
+	SELECT TIMESTAMPDIFF(DAY, NOW(),EXITS_DATE) AS DIFF_DAY 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
+	order by s2.no desc limit 1
+	) AS DIFF_DAY
 	FROM NetMiner.MEMBER_INFO_DROP a
 	WHERE USER_ID = #{userId};
  	</select>
