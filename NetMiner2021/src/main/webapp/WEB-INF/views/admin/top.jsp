@@ -16,7 +16,7 @@
 		<meta name="twitter:title" content="">
 		<meta name="twitter:image" content="">
 		<meta name="twitter:description" content="">
-		<link href="/resources/admin/css/style.css?st=5" rel="stylesheet" type="text/css"/>
+		<link href="/resources/admin/css/style.css?st=7" rel="stylesheet" type="text/css"/>
 <!-- 		<link href="/resources/admin/css/swiper.min.css" rel="stylesheet" type="text/css"/> -->
 		<script src="/resources/admin/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="/resources/admin/js/swiper.min.js" type="text/javascript"></script>

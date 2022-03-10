@@ -17,7 +17,7 @@
 						<input type="hidden" name="USER_CODE">
 						<table class="modify">
 							<colgroup>
-								<col width="25%">
+								<col width="15%">
 								<col width="*">
 							</colgroup>
 							<tbody>

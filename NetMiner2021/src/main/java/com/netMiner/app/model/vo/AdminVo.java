@@ -36,6 +36,7 @@ public class AdminVo implements Serializable{
 	@JsonAlias("COMPANY") private String COMPANY= "";
 	@JsonAlias("MB_COMPANY") private String MB_COMPANY= "";
 	@JsonAlias("NATION") private String NATION= "";
+	@JsonAlias("NATION_NAME_KR") private String NATION_NAME_KR= "";
 	@JsonAlias("MB_NATION") private String MB_NATION= "";
 	@JsonAlias("LANGUAGE") private String LANGUAGE= "";
 	@JsonAlias("MB_LANGUAGE") private String MB_LANGUAGE= "";

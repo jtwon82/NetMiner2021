@@ -455,11 +455,11 @@ public class AdminController {
 		json.put("page", page);
 		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
 
+		int count= adminService.getOrderCount(json);
+		json.put("COUNT", count);
 		List list= adminService.getOrderList(json);
 		if(list != null && list.size()>0){
 			logger.info("list {}", list);
-
-			int count= adminService.getOrderCount(json);
 			paging.setTotalEntryCount(count);
 			
 			model.addAttribute("list", list);

@@ -16,7 +16,7 @@
 						<input type="hidden" name="NO" readOnly value="${item.NO }">
 						<table class="modify">
 							<colgroup>
-								<col width="25%">
+								<col width="15%">
 								<col width="*">
 							</colgroup>
 							<tbody>

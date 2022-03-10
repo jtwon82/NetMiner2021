@@ -96,17 +96,18 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #section .content{padding-top:40px; position:relative;}
 #wrap #section table{font-size:20px;width:100%; border-collapse : collapse;}
 #wrap #section table th{font-weight: 500; border: 1px solid #cdcfd0; border-top:none; background:#eaeaea; height: 50px; text-align: center;}
-#wrap #section table td{border: 1px solid #cdcfd0; height: 50px; /*padding-left: 25px;*/ text-align:center;}
+#wrap #section table td{border: 1px solid #cdcfd0; height: 50px; /*padding-left: 25px;*/}
 #wrap #section table.main tbody tr{cursor:pointer;}
 #wrap #section table.main tr th:first-child{border-left:none;}
 #wrap #section table.main tr th:last-child{border-right:none;}
 #wrap #section table.main tr td:first-child{border-left:none;}
 #wrap #section table.main tr td:last-child{border-right:none;}
 #wrap #section table.main tbody tr:hover{background:#f4f6f8; color:#3462c7;}
+#wrap #section table.main tbody td{text-align:center;}
 
 #wrap #section table.modify{margin-bottom:30px;}
 #wrap #section table.modify tr th{border:none}
-#wrap #section table.modify tr td{border:none}
+#wrap #section table.modify tr td{border:none; padding-left:10px;}
 #wrap #section table.modify tr{border-top:1px solid #d3d3d3;}
 #wrap #section table.modify tr:first-child{border-top:2px solid #868686;}
 #wrap #section table.modify tr:last-child{border-bottom:2px solid #868686;}

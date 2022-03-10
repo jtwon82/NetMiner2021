@@ -80,9 +80,9 @@ function s2ab(s) {
 											<td>${item.REG_DATE }</td>
 											<td>${item.UUID }</td>
 											<td>${item.MB_USE_CODE_STR }</td>
-											<td>${item.MB_LANGUAGE }</td>
-											<td>${item.MB_NATION }</td>
-											<td>${item.MB_COMPANY }</td>
+											<td>${item.LANGUAGE }</td>
+											<td>${item.NATION_NAME_KR }</td>
+											<td>${item.COMPANY }</td>
 											<td>${item.PLAN_CODE_STR }</td>
 											<td>${item.DATE_TYPE }</td>
 											<td>${item.PAY_PRICE }</td>

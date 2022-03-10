@@ -34,7 +34,7 @@
 										<option value="" >용도</option>
 										<option value="01">Academic</option>
 										<option value="02">Commercial</option>
-										<option value="99">Super</option>
+										<!-- 	<option value="99">Super</option> -->
 									</select>
 									<select id="SC_PLAN_CODE" name="SC_PLAN_CODE" disabled="disabled" class='filter filter1'>
 										<option value="">주문상품</option>
@@ -126,7 +126,7 @@
 											<td>${item.TYPE_CODE_STR }</td>
 											<td>${item.USE_CODE_STR }</td>
 											<td>${item.SC_PLAN_CODE_STR }</td>
-											<td>${item.SC_REG_DATE_STR }</td>
+											<td>${item.SC_EXITS_DATE_STR }</td>
 											<td>${item.FREE_YN }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>

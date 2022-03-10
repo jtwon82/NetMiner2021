@@ -19,7 +19,7 @@
 						<input type="hidden" name="USER_CODE">
 						<table class="modify">
 							<colgroup>
-								<col width="25%">
+								<col width="15%">
 								<col width="*">
 							</colgroup>
 							<tbody>
@@ -47,7 +47,7 @@
 								</tr>
 								<tr>
 									<th>국가</td>
-									<td>${item.NATION}</td>
+									<td>${item.NATION_NAME_KR}</td>
 								</tr>
 								<tr>
 									<th>소속</td>

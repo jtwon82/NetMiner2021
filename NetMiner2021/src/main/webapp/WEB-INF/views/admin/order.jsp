@@ -33,10 +33,10 @@
 										<option value="01">Academic</option>
 										<option value="02">Commercial</option>
 									</select>
-									<select id="MB_TYPE_CODE" name="MB_TYPE_CODE" disabled="disabled" class='filter filter1'>
-										<option value="" >타입구분</option>
-										<option value="99">Super</option>
-									</select>
+<!-- 									<select id="MB_TYPE_CODE" name="MB_TYPE_CODE" disabled="disabled" class='filter filter1'> -->
+<!-- 										<option value="" >타입구분</option> -->
+<!-- 										<option value="99">Super</option> -->
+<!-- 									</select> -->
 									<select id="MB_LANGUAGE" name="MB_LANGUAGE" disabled="disabled" class='filter filter1'>
 										<option value="" >언어</option>
 										<option value="ko">Korean</option>
@@ -84,6 +84,7 @@
 						</div>
 						<table class="main">
 							<colgroup>
+								<col width="3%">
 								<col width="10%">
 								<col width="*">
 								<col width="8%">
@@ -96,6 +97,7 @@
 							</colgroup>
 							<thead>
 								<tr>
+									<th>NO</th>
 									<th>결제시간</th>
 									<th>UUID</th>
 									<th>용도</th>
@@ -112,12 +114,13 @@
 								<c:when test="${not empty list }">
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('order_modify?NO=${item.NO}')">
+											<td style='text-align:center;padding-left:0px;'>${item.ROWCNT }</td>
 											<td>${item.REG_DATE }</td>
 											<td>${item.UUID }</td>
 											<td>${item.MB_USE_CODE_STR }</td>
-											<td>${item.MB_LANGUAGE }</td>
-											<td>${item.MB_NATION }</td>
-											<td>${item.MB_COMPANY }</td>
+											<td>${item.LANGUAGE }</td>
+											<td>${item.NATION_NAME_KR }</td>
+											<td>${item.COMPANY }</td>
 											<td>${item.PLAN_CODE_STR }</td>
 											<td>${item.DATE_TYPE }</td>
 											<td>${item.PAY_PRICE }</td>
