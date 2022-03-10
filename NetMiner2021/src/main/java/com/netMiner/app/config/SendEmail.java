@@ -232,14 +232,18 @@ public class SendEmail {
 	//영문 플랜 계좌 이체시 
 	public void sendBankTransfer(String payUserId,BillingVo billingVo) {
 		StringBuffer sb = new StringBuffer()
-				.append("- 회원 ID : ").append(payUserId).append(System.lineSeparator())
-				.append("- 주문번호 : ").append(billingVo.getORDER_PNM()).append(System.lineSeparator())
-				.append("- 상품명  : ").append(billingVo.getPAY_TYPE()).append(System.lineSeparator())
-				.append("- 구독기간 : ").append(billingVo.getDATE_TYPE().equals("month")? "월": "년").append(System.lineSeparator())
-				.append("- 결제금액 : ").append(" $ ").append(billingVo.getPAY_PRICE()).append(System.lineSeparator());
+			.append("<html>")
+			.append("<head></head>")
+			.append("<body>")
+			.append("- 회원 ID : ").append(payUserId).append("<br>")
+			.append("- 상품명  : ").append(billingVo.getPLAN_NAME()).append("<br>")
+			.append("- 구독기간 : ").append(billingVo.getDATE_TYPE().equals("month")? "월": "년").append("<br>")
+			.append("- 결제금액 : ").append(" $ ").append(billingVo.getPAY_PRICE()).append("<br>")
+			.append("</body>")
+			.append("</html>");					
 		String title = "해외 계좌이체 주문건";
 		
-		this.sendMailSender("netminer@cyram.com",sb.toString(), title);
+		this.sendMailSender("limdh93@naver.com",sb.toString(), title);
 	}
 
 }

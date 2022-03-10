@@ -107,15 +107,15 @@
 							<ul>
 								<li>
 									<p>NetMiner 365 - ${billing.PLAN_NAME}</p>
-									<span>$ <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
+									<span>&#36; <em><fmt:formatNumber value='${billing.PAY_PRICE_VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li>
 									<p>Tax</p>
-									<span>$ <em><fmt:formatNumber value='${billing.VAT}' pattern='#,###,###'/></em></span>
+									<span>&#36; <em><fmt:formatNumber value='${billing.VAT}' pattern='#,###,###'/></em></span>
 								</li>
 								<li class="totalCost">
 									<p>Total</p>
-									<span>$ <em><fmt:formatNumber value='${billing.PAY_PRICE}' pattern='#,###,###'/></em></span>
+									<span>&#36; <em><fmt:formatNumber value='${billing.PAY_PRICE}' pattern='#,###,###'/></em></span>
 								</li>
 							</ul>
 						</div>

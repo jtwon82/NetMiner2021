@@ -72,19 +72,19 @@
 										</c:if>
 										<c:if test="${memberVo.DIFF_DAY < -7}">
 											<c:if test="${language eq '_EN'}">
-											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >My Workspace</a></li>
+											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >Buy Now</a></li>
 											</c:if>
 											<c:if test="${language eq ''}">
-											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" >My Workspace</a></li>
+											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" >Buy Now</a></li>
 											</c:if>
 										</c:if>
 									</c:if>
 									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 
 											<c:if test="${language eq '_EN'}">
-											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >My Workspace</a></li>
+											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >Start for free</a></li>
 											</c:if>
 											<c:if test="${language eq ''}">
-											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.'); " >My Workspace</a></li>
+											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.'); " >Start for free</a></li>
 											</c:if>
 									 </c:if>									 
 								</ul>

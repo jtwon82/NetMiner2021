@@ -40,7 +40,7 @@
 						<ul>
 							<li>
 								<span>Amount</span>
-								<p>${billing.PAY_PRICE}</p>
+								<p>&#36;  ${billing.PAY_PRICE}</p>
 							</li>
 							<li>
 								<span>Bank Name</span>

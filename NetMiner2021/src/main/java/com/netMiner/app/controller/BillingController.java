@@ -165,8 +165,8 @@ public class BillingController extends HttpServlet {
 		List<Map<String,Object>> billingList = billingService.selectSubscriptAll(param);
 		Map<String, Object> nowPlan = billingService.selectSubscript(param);
 		
-		//logger.info("billingList - {}", billingList.toString());
-		//logger.info("nowPlan - {}", nowPlan.toString());
+		logger.info("billingList - {}", billingList.toString());
+		logger.info("nowPlan - {}", nowPlan.toString());
 		BillingVo billingVo = new BillingVo().fromMap((HashMap<String, Object>)nowPlan);
 		
 		int diffDays = 0;
@@ -246,7 +246,8 @@ public class BillingController extends HttpServlet {
 			String userId = memberVo.getUserId();
 			Map<String,Object> param = new HashMap<String,Object>();
 			param.put("userId", userId);
-			Map<String, Object> nowPlan = billingService.selectSubscript(param);
+			Map<String, Object> nowPlan = null ;
+			nowPlan = billingService.selectSubscript(param);
 			if (nowPlan != null) {
 				billingOldVo = new BillingVo().fromMap((HashMap<String, Object>)nowPlan);
 				int diffDays = 0;
@@ -275,9 +276,9 @@ public class BillingController extends HttpServlet {
 		
 		
 		HashMap<String , Object> param= new HashMap<String , Object>();
+		HashMap<String ,Object> billingMap= null;
 		param.put("planCode", planCode);
-		
-		HashMap<String ,Object> billingMap= billingService.selectPlanCode(param);	
+		billingMap= billingService.selectPlanCode(param);	
 		billingVo = new BillingVo().fromMap(billingMap);
 		billingVo.setDATE_TYPE(dateType);
 		billingVo.setORDER_ID("ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo)));
