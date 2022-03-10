@@ -167,14 +167,16 @@
 	
 	<select id="getMemberList" parameterType="map" resultType="map">
 		/* getMemberList USER_CODE, 01:관리자, 02:일반, 03:휴면,탈퇴 */
-		SELECT NO.*
+		SELECT (${COUNT}-NO.RNUM)+1 ROWCNT
+			, NO.*
 			, B.SC_PLAN_CODE
 			, CASE 
 				WHEN B.SC_PLAN_CODE='01' THEN 'FREE'
 				WHEN B.SC_PLAN_CODE='02' THEN 'SMALL' 
 				WHEN B.SC_PLAN_CODE='03' THEN 'MEDIUM'  
 				WHEN B.SC_PLAN_CODE='04' THEN 'LARGE'
-			END SC_PLAN_CODE_STR
+				END SC_PLAN_CODE_STR
+			, DATE_FORMAT(B.SC_REG_DATE,'%Y-%m-%d')SC_REG_DATE_STR
 		FROM (
 			SELECT A.*
 				, CEIL(RNUM / 10) as page
@@ -193,7 +195,7 @@
 				FROM NetMiner.MEMBER_INFO A JOIN NATION_CODE B ON A.NATION = B.NATION_CODE
 				LEFT JOIN (
 					SELECT A.* FROM (
-						SELECT MAX(NO) SC_NO, REG_DATE SC_REG_DATE
+						SELECT MAX(NO) SC_NO
 							, USER_ID SC_USER_ID, PLAN_CODE SC_PLAN_CODE
 							, ROW_NUMBER() OVER (PARTITION BY USER_ID ORDER BY PLAN_CODE DESC) AS RNUM
 						FROM NetMiner.SUBSCRIPT GROUP BY USER_ID, PLAN_CODE
@@ -206,7 +208,7 @@
 		) NO LEFT JOIN (
 					SELECT A.*
 					FROM (
-						SELECT USER_ID SC_USER_ID, PLAN_CODE SC_PLAN_CODE
+						SELECT USER_ID SC_USER_ID, PLAN_CODE SC_PLAN_CODE, REG_DATE SC_REG_DATE
 							, ROW_NUMBER() OVER (PARTITION BY USER_ID ORDER BY PLAN_CODE DESC) AS RNUM
 						FROM NetMiner.SUBSCRIPT GROUP BY USER_ID, PLAN_CODE
 					)A
@@ -531,12 +533,17 @@
 			, USER_ID, PLAN_CODE, PLAN_TYPE, DATE_TYPE
 			, PAY_PLATFORM, PAY_STEP, PAY_TYPE, PAY_PRICE, PAY_PRICE_TOTAL
 			, ACCOUNT_NAME, ACCOUNT_NO, ACCOUNT_HOLDER, ACCOUNT_DEPOSITLIMIT
-			, ORDER_ID, ORDER_PNM, paymentKey, amount, EXITS_DATE, UPDATE_DATE)
-		VALUES (NOW()
+			, ORDER_ID, ORDER_PNM, paymentKey, amount, EXITS_DATE, UPDATE_DATE
+			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE)
+		SELECT NOW()
 			, #{USER_ID}, #{PLAN_CODE}, '', #{DATE_TYPE}
 			, '', 0, '', 0, 0
 			, '', '', '', NOW()
-			, 'ORDER_ID', 'ORDER_PNM', 'paymentKey', 0, #{EXITS_DATE}, NOW());
+			, 'ORDER_ID', 'ORDER_PNM', 'paymentKey', 0, #{EXITS_DATE}, NOW()
+			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE
+			FROM NetMiner.MEMBER_INFO
+			WHERE USER_ID=#{USER_ID}
+			;
 	</update>
 	<update id="modifyOrderInfo"  parameterType="map">
 		UPDATE NetMiner.SUBSCRIPT 
@@ -604,6 +611,7 @@
 			<if test="TITLE!=null and !TITLE.equals('')">, TITLE = #{TITLE}</if> 
 			<if test="DESCRIPTION!=null and !DESCRIPTION.equals('')">, DESCRIPTION = #{DESCRIPTION}</if> 
 			<if test="CONTENT!=null and !CONTENT.equals('')">, CONTENT= #{CONTENT}</if> 
+			<if test="LANGUAGE!=null and !LANGUAGE.equals('')">, LANGUAGE= #{LANGUAGE}</if> 
 		WHERE `NO` = ${NO}
 	</update>
 	

@@ -52,7 +52,7 @@
 									<th>언어</th>
 									<th>카테고리</th>
 									<th>작성일시</th>
-									<th>설명</th>
+									<th>제목</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -63,7 +63,7 @@
 											<td>${item.LANGUAGE_STR }</td>
 											<td>${item.CATE_CODE_STR }</td>
 											<td>${item.REG_DATE }</td>
-											<td>${item.DESCRIPTION }</td>
+											<td>${item.TITLE }</td>
 										</tr>
 									</c:forEach>
 								</c:when>

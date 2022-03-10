@@ -10,8 +10,8 @@
 700 Bold
 900 Black
 */
-
-body{background-color:#fff; height: 100%; font-size: 20px; font-weight: 400; color:#090909; font-family: 'Noto Sans KR', sans-serif; letter-spacing:-1px; text-align: left; word-break: break-all; }
+*{font-size: 15px;}
+body{background-color:#fff; height: 100%;  font-weight: 400; color:#090909; font-family: 'Noto Sans KR', sans-serif; letter-spacing:-1px; text-align: left; word-break: break-all; }
 html {height: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, form, fieldset, p, button, input { margin: 0;padding: 0}
 ul, ol, dl {list-style: none}
@@ -67,7 +67,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap h1{font-size:24px;padding: 35px 60px;} 
 #wrap{}
 
-#wrap #nav{z-index: 3; background-color:#0c1922; color:#fff; width: 360px;height: 100%;position: fixed;left: 0;top: 0;}
+#wrap #nav{z-index: 3; background-color:#0c1922; color:#fff; width: 240px;height: 100%;position: fixed;left: 0;top: 0;}
 #wrap #nav .menu+.menu{padding-top:30px}
 #wrap #nav .wrap>div{padding-top:40px;}
 #wrap #nav .menu ul.on li{height: 50px;line-height: 50px;}
@@ -75,9 +75,9 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #nav .menu{}
 #wrap #nav .menu li.active{background-color:#3b4c58; }
 #wrap #nav .menu li.active a{color:#f4f4f4; }
-#wrap #nav .menu li a{font-size:22px; color:#a4aeb4; padding: 0 70px;}
+#wrap #nav .menu li a{font-size:15px; color:#a4aeb4; padding: 0 70px;}
 #wrap #nav .menu li a:hover{ color:#fff; background-color:#3b4c58; }
-#wrap #nav .menu span{font-weight:700;font-size:24px;display: inline-block;padding: 0 60px;height: 50px;display: block;line-height: 44px;position: relative;}
+#wrap #nav .menu span{font-weight:700;font-size:18px;display: inline-block;padding: 0 60px;height: 50px;display: block;line-height: 44px;position: relative;}
 #wrap #nav .menu span::after{content:"";position: absolute;right: 55px; top: 18px; background-image:url(/resources/admin/images/nav_arrow.png); width:12px; height:7px; display: inline-block;vertical-align: 6px;}
 #wrap #nav .menu span.on::after{ -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg);}
 
@@ -91,12 +91,12 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap button{font-size:20px;}
 
 #wrap #section{}
-#wrap #section .wrap{padding:90px 60px 50px 420px;}
+#wrap #section .wrap{padding:90px 30px 50px 265px;}
 #wrap #section h2{padding-bottom: 12px; font-size:30px; font-weight:700; border-bottom:3px solid #0c1922;}
 #wrap #section .content{padding-top:40px; position:relative;}
 #wrap #section table{font-size:20px;width:100%; border-collapse : collapse;}
-#wrap #section table th{font-weight: 500; border: 1px solid #cdcfd0; border-top:none; background:#eaeaea; height: 50px; padding-left: 25px;}
-#wrap #section table td{border: 1px solid #cdcfd0; height: 50px; padding-left: 25px;}
+#wrap #section table th{font-weight: 500; border: 1px solid #cdcfd0; border-top:none; background:#eaeaea; height: 50px; text-align: center;}
+#wrap #section table td{border: 1px solid #cdcfd0; height: 50px; /*padding-left: 25px;*/ text-align:center;}
 #wrap #section table.main tbody tr{cursor:pointer;}
 #wrap #section table.main tr th:first-child{border-left:none;}
 #wrap #section table.main tr th:last-child{border-right:none;}

@@ -218,11 +218,11 @@ public class AdminController {
 		int page= Integer.parseInt((String) MapUtils.getOrDefault(json, "page", "1"));
 		json.put("page", page);
 		Paging paging= new Paging(page, Constant.PER_ONE_PAGE, Constant.PER_PAGE_GROUP);
-		
+
+		int count= adminService.getMemberCount(json);
+		json.put("COUNT", count);
 		List list= adminService.getMemberList(json);
 		if( list != null && list.size()>0){
-
-			int count= adminService.getMemberCount(json);
 			paging.setTotalEntryCount(count);
 
 			model.addAttribute("list", list);
@@ -232,6 +232,28 @@ public class AdminController {
 		model.addAttribute("json", json);
 
 		return "admin/user";
+	}
+	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.GET)
+	public ModelAndView userDownloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
+
+		logger.info("json-{}", json.toString());
+
+		int count= adminService.getMemberCount(json);
+		json.put("COUNT", count);
+		List<HashMap<String, Object>> list= adminService.getMemberList(json);
+		Date date = new Date();
+		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
+		String day = dayformat.format(date);
+		String hour = hourformat.format(date);
+		String fileName = "_" + day + "_" + hour;
+		
+		model.addObject("fileName", fileName);
+		model.addObject("list", list);
+		model.addObject("sheetName", "USER_INFO");
+		model.setViewName( "admin/userExcelDownLoad");
+		
+		return model;
 	}
 	@RequestMapping(value = "/user_modify", method=RequestMethod.GET)
 	public String user_modify(Model model
@@ -448,6 +470,26 @@ public class AdminController {
 
 		return "admin/order";
 	}
+	@RequestMapping(value="order/downLoadExcel", method=RequestMethod.GET)
+	public ModelAndView orderDownloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
+
+		logger.info("json-{}", json.toString());
+		
+		List<HashMap<String, Object>> list= adminService.getOrderList(json);
+		Date date = new Date();
+		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
+		String day = dayformat.format(date);
+		String hour = hourformat.format(date);
+		String fileName = "_" + day + "_" + hour;
+		
+		model.addObject("fileName", fileName);
+		model.addObject("list", list);
+		model.addObject("sheetName", "ORDER_LIST");
+		model.setViewName( "admin/orderExcelDownLoad");
+		
+		return model;
+	}
 	@RequestMapping(value="order_modify", method={RequestMethod.GET, RequestMethod.POST})
 	public String order_modify(Model model
 			, @RequestParam HashMap<String, Object> json) {
@@ -580,27 +622,7 @@ public class AdminController {
 	
 	
 	
-	
-	@RequestMapping(value="user/downLoadExcel", method=RequestMethod.GET)
-	public ModelAndView downloadExcelFile(ModelAndView model, HttpServletRequest request , HttpServletResponse response , @RequestParam HashMap<String, Object> json) {
 
-		logger.info("json-{}", json.toString());
-		
-		List<HashMap<String, Object>> list= adminService.getMemberList(json);
-		Date date = new Date();
-		SimpleDateFormat dayformat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
-		SimpleDateFormat hourformat = new SimpleDateFormat("hhmmss", Locale.KOREA);
-		String day = dayformat.format(date);
-		String hour = hourformat.format(date);
-		String fileName = "_" + day + "_" + hour;
-		
-		model.addObject("fileName", fileName);
-		model.addObject("list", list);
-		model.addObject("sheetName", "USER_INFO");
-		model.setViewName( "admin/excelDownLoad");
-		
-		return model;
-	}
 	@RequestMapping(value="/check" , method =  {RequestMethod.GET, RequestMethod.POST})
 	public String enterCheck(Model model, HttpServletRequest request
 			, @RequestParam HashMap<String, Object> json) {

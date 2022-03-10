@@ -85,12 +85,11 @@
 						<table class="main">
 							<colgroup>
 								<col width="10%">
-								<col width="10%">
 								<col width="*">
 								<col width="8%">
-								<col width="8%">
-								<col width="8%">
-								<col width="8%">
+								<col width="5%">
+								<col width="5%">
+								<col width="5%">
 								<col width="8%">
 								<col width="8%">
 								<col width="8%">
@@ -98,8 +97,7 @@
 							<thead>
 								<tr>
 									<th>결제시간</th>
-									<th>회원 ID</th>
-									<th>주문 ID</th>
+									<th>UUID</th>
 									<th>용도</th>
 									<th>언어</th>
 									<th>국가</th>
@@ -115,8 +113,7 @@
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('order_modify?NO=${item.NO}')">
 											<td>${item.REG_DATE }</td>
-											<td>${item.USER_ID }</td>
-											<td>${item.ORDER_ID }</td>
+											<td>${item.UUID }</td>
 											<td>${item.MB_USE_CODE_STR }</td>
 											<td>${item.MB_LANGUAGE }</td>
 											<td>${item.MB_NATION }</td>
@@ -141,6 +138,7 @@
 							</div>
 						</div>
 						<div class="register">
+							<button class="navy" onClick="downLoad();">다운로드</button>
 							<button class="navy" onclick="location.href='order_modify'">등록</button>
 						</div>
 					</div>
@@ -150,4 +148,10 @@
 		</div>
 	
 	</body>
+<script type="text/javascript">
+function downLoad() {
+	var para = document.location.href.split("?");
+	location.href = "order/downLoadExcel?"+para[1];	
+}
+</script>
 </html>

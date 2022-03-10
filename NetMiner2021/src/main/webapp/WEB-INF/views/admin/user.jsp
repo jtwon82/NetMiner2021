@@ -19,6 +19,7 @@
 									<span>이용자 검색</span>
 									<select id="SEARCH_KEY" name="SEARCH_KEY">
 										<option value="" >컬럼</option>
+										<option value="UUID">UUID</option>
 										<option value="USER_ID">이메일</option>
 										<option value="COMPANY">소속</option>
 										<option value="NATION">국가</option>
@@ -83,24 +84,28 @@
 						</div>
 						<table class="main">
 							<colgroup>
-								<col width="20%">
-								<col width="8%">
-								<col width="8%">
-								<col width="8%">
-								<col width="8%">
-								<col width="8%">
+								<col width="3%">
+								<col width="17%">
+								<col width="6%">
+								<col width="6%">
+								<col width="6%">
+								<col width="6%">
+								<col width="6%">
+								<col width="6%">
 								<col width="*">
-								<col width="5%">
-								<col width="8%">
-								<col width="8%">
-								<col width="8%">
+								<col width="7%">
+								<col width="7%">
+								<col width="7%">
+								<col width="7%">
 							</colgroup>
 							<thead>
 								<tr>
+									<th>NO</th>
 									<th>UUID</th>
 									<th>가입일시</th>
 									<th>타입구분</th>
 									<th>용도구분</th>
+									<th>이용현황</th>
 									<th>이용현황</th>
 									<th>트라이얼</th>
 									<th>이메일</th>
@@ -115,11 +120,13 @@
 								<c:when test="${not empty list }">
 									<c:forEach items="${list }" var="item" varStatus="status">
 										<tr onclick="location.href=('user_modify?NO=${item.NO}')">
+											<td style='text-align:center;padding-left:0px;'>${item.ROWCNT }</td>
 											<td>${item.UUID }</td>
 											<td>${item.REG_DATES }</td>
 											<td>${item.TYPE_CODE_STR }</td>
 											<td>${item.USE_CODE_STR }</td>
 											<td>${item.SC_PLAN_CODE_STR }</td>
+											<td>${item.SC_REG_DATE_STR }</td>
 											<td>${item.FREE_YN }</td>
 											<td>${item.USER_ID }</td>
 											<td>${item.LANGUAGE }</td>
@@ -155,45 +162,9 @@
 	
 	</body>
 <script type="text/javascript">
-
 function downLoad() {
 	var para = document.location.href.split("?");
 	location.href = "user/downLoadExcel?"+para[1];	
 }
-// $(function(){
-// 	$('form').ajaxForm({
-// 		dataType: 'json',
-//         beforeSubmit: function (data,form,option) {
-//             //validation체크 
-//             input_value = form.find('input[name="id"]').val();
-//             if(input_value == ''){
-//             	alert("아이디를 입력해주세요.");
-//             	return false;
-//             }
-            
-//             return true;
-//         },
-//         success: function(response,status){
-//             //성공후 서버에서 받은 데이터 처리
-//             console.log(response);
-//             if('SUCCESS'==response.result){
-//     			location.replace("/admin/login/confirm");
-    			
-//             }else if('DUPLICATE'==response.result){
-//             	if(confirm("이미 접속중입니다. 기존의 접속을 종료하시겠습니까?"))
-//             		location.replace("/admin/login/disconnect");
-//             	else
-//             		location.replace("/admin");
-            	
-//             }else{
-//             	alert("존재하지 않는 계정이거나 비밀번호가 올바르지 않습니다. 관리자에게 문의하세요.");
-//             }
-//         },
-//         error: function(){
-//         	alert("정상적으로 처리되지 않았습니다. 관리자에게 문의해주세요.");
-//         }                               
-//     });
-// 	$('input[name="id"]').focus();
-// });
 </script>
 </html>
