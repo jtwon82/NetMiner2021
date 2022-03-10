@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netMiner.app.config.Constant;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.BillingService;
 import com.netMiner.app.model.service.MemberService;
@@ -53,7 +54,7 @@ public class BillingController extends HttpServlet {
 	@Autowired
 	private SendEmail sendEmail;
 	
-	private String SECRET_KEY = "test_sk_P24xLea5zVAAgzALk6YVQAMYNwW6";
+	
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final RestTemplate restTemplate = new RestTemplate();
 	/*page Move Billing*/
@@ -532,7 +533,7 @@ public class BillingController extends HttpServlet {
 				billingVo.setAmount(form.getAmount());
 				
 				HttpHeaders headers = new HttpHeaders();
-				headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((SECRET_KEY + ":").getBytes()));
+				headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((Constant.TOSS_SECRET_KEY + ":").getBytes()));
 			    headers.setContentType(MediaType.APPLICATION_JSON);
 			    Map<String, String> payloadMap = new HashMap<>();
 		        payloadMap.put("orderId", form.getOrderId());
@@ -555,10 +556,6 @@ public class BillingController extends HttpServlet {
 			}
 			
 		}
-	}
-	private void callPaySuccess(BillingVo billingVo) {
-			
-		
 	}
 
 	@RequestMapping(value="payment_paypal", method= {RequestMethod.GET, RequestMethod.POST})

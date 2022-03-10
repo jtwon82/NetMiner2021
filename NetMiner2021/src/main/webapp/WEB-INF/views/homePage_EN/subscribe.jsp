@@ -28,14 +28,17 @@
 	<body>
 		<script type="text/javascript">
 			var pop;
+			var PAY_PAL_BUSINESS = "${PAY_PAL_BUSINESS}";
+			var PAY_PAL_URL = "${PAY_PAL_URL}";
+			
 			function pay(){
 				var pay_state = $('input:radio[name="sub2"]:checked').val();
 				if (pay_state == 'card') {
 					
 					var pagemoveflag = true;
 					var date = new Date();
-					var url = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
-					params = "business=sb-gbvkr13290921@business.example.com"
+					var url = PAY_PAL_URL;
+					params = "business="+PAY_PAL_BUSINESS
 						+"&return="+ ROOT_URL +"/payment_paypal"
 						+"&notify_url="+ ROOT_URL +"/payment_paypal"
 						+"&cancel_return="+ ROOT_URL +"/payment_paypal_cancel"

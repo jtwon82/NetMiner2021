@@ -34,6 +34,8 @@
 	var redirectAuth= "${GOOGLE_CALL_BACK_LOGIN_URL}";
 	var redirectRegister= "${GOOGLE_CALL_BACK_REGISTER_URL}";
 -->
+
+
 </script>
 	<div id="top">
 				<div class="content">

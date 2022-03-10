@@ -29,9 +29,10 @@
 		<script src="https://js.tosspayments.com/v1"></script>
 		<script type="text/javascript">
 		//live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk
-		//test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d
+		var TOSS_CLIENT_KEY = "${TOSS_CLIENT_KEY}";
+		
 		var Payment=[];
-		Payment['tossPayments'] = TossPayments('test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d');
+		Payment['tossPayments'] = TossPayments(TOSS_CLIENT_KEY);
 		Payment['amount'] = ${billing.PAY_PRICE};
 		Payment['orderId'] = '${billing.ORDER_ID}';
 		Payment['orderName'] = '${billing.ORDER_PNM}';

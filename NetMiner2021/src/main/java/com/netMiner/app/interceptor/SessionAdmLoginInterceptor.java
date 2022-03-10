@@ -40,6 +40,12 @@ public class SessionAdmLoginInterceptor implements HandlerInterceptor{
 		request.setAttribute("GOOGLE_CALL_BACK_LOGIN_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_LOGIN_URL);
 		request.setAttribute("GOOGLE_CALL_BACK_REGISTER_URL", Constant.getInstance(request).GOOGLE_CALL_BACK_REGISTER_URL);
 		
+		//결제 모듈 관한 키값 
+		request.setAttribute("TOSS_CLIENT_KEY",Constant.getInstance(request).TOSS_CLIENT_KEY);
+		request.setAttribute("PAY_PAL_URL",Constant.getInstance(request).PAY_PAL_URL);
+		request.setAttribute("PAY_PAL_BUSINESS",Constant.getInstance(request).PAY_PAL_BUSINESS);
+
+		
 		if (url.contains("admin")) {
 			// 세션체크
 //			HttpSession session= request.getSession();
