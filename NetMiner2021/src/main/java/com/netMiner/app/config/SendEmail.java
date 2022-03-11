@@ -243,7 +243,7 @@ public class SendEmail {
 			.append("</html>");					
 		String title = "해외 계좌이체 주문건";
 		
-		this.sendMailSender("limdh93@naver.com",sb.toString(), title);
+		this.sendMailSender("netminer@cyram.com",sb.toString(), title);
 	}
 
 }

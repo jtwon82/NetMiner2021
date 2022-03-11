@@ -101,13 +101,13 @@
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								</c:if>
 								
-								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -7}">
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -6}">
 								<p>이용 중인 플랜이 만료되었습니다. <br> 계속 이용하시겠습니까?</p>
 								<a href="./goSubscribe?payNo=${nowPlan.NO}" >플랜연장</a>
 								<a href="./pricing?type='changePlan'">플랜변경</a>
 								</c:if>
 								
-								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -7}">
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -6}">
 								<p>현재 이용 중인 플랜이 없습니다. </p>
 								<a href="./pricing">구독하기</a>
 								</c:if>

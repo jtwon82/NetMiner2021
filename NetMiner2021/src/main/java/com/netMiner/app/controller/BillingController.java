@@ -289,16 +289,13 @@ public class BillingController extends HttpServlet {
 		
 		//billingOld Vo 가 널이 아니며 해당 마지막 결제 코드 01 인경우 해당 olDvo를 null 처리한다	
 		if (billingOldVo != null) {
-			if (billingOldVo.getPLAN_CODE().equals("01")) {
-				billingOldVo = null;
-								
-			}
 			//이전 결재 내역의 만료일 지난경우 해당 billingOldVo 를 null 로 처리 
-			
-			if (billingOldVo.getDiffDay() < -7) {
+			if (billingOldVo.getPLAN_CODE().equals("01") || 
+					billingOldVo.getDiffDay() < -7) {
 				billingOldVo = null;
 			}
 		}
+		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
 		
 		if (language.equals("_EN")) {

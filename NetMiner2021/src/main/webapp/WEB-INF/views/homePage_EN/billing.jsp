@@ -99,13 +99,13 @@
 									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
 									</c:if>
 									
-									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -7}">
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < 0 && diffDays >= -6}">
 									<p>Your plan has expired. Continue to use?</p>
 									<a href="./goSubscribe?payNo=${nowPlan.NO}" >Renew</a>
 									<a href="./pricing?type='changePlan'">Change Plan</a>
 									</c:if>
 									
-									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -7}">
+									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays < -6}">
 									<p>There are currently no plans in use.</p>
 									<a href="./pricing">Subscribe</a>
 									</c:if>

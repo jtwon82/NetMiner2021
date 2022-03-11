@@ -73,21 +73,16 @@
 										  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
 										</c:if>
 										<c:if test="${memberVo.DIFF_DAY < -7}">
-											<c:if test="${language eq '_EN'}">
-											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >Buy Now</a></li>
+											<c:if  test="${memberVo.CHECK_TRIAL == 1}">
+												  <li class="join"><a href="./pricing">Buy Now</a></li>
 											</c:if>
-											<c:if test="${language eq ''}">
-											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" >Buy Now</a></li>
+											<c:if test="${memberVo.CHECK_TRIAL == 0}">										
+												  <li class="join"><a href="./pricing">Start for free</a></li>												
 											</c:if>
 										</c:if>
 									</c:if>
-									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 
-											<c:if test="${language eq '_EN'}">
-											  <li class="join"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" >Start for free</a></li>
-											</c:if>
-											<c:if test="${language eq ''}">
-											 <li class="join"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.'); " >Start for free</a></li>
-											</c:if>
+									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 									
+											  <li class="join"><a href="./pricing">Start for free</a></li>								
 									 </c:if>									 
 								</ul>
 							</div>
