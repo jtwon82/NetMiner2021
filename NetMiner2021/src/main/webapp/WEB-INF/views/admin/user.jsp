@@ -38,10 +38,14 @@
 									</select>
 									<select id="SC_PLAN_CODE" name="SC_PLAN_CODE" disabled="disabled" class='filter filter1'>
 										<option value="">주문상품</option>
-										<option value="01">FREE</option>
 										<option value="02">SMALL</option>
 										<option value="03">MEDIUM</option>
 										<option value="04">LARGE</option>
+									</select>
+									<select id="FREE_YN" name="FREE_YN" disabled="disabled" class='filter filter1'>
+										<option value="">TRIAL</option>
+										<option value="Y">Y</option>
+										<option value="N">N</option>
 									</select>
 									<select id="LANGUAGE" name="LANGUAGE" disabled="disabled" class='filter filter1'>
 										<option value="" >언어</option>
@@ -79,6 +83,7 @@
 <script type="text/javascript">USE_CODE.value='${json.USE_CODE}';</script>
 <script type="text/javascript">LANGUAGE.value='${json.LANGUAGE}';</script>
 <script type="text/javascript">SC_PLAN_CODE.value='${json.SC_PLAN_CODE}';</script>
+<script type="text/javascript">FREE_YN.value='${json.FREE_YN}';</script>
 <script type="text/javascript">MARKET_YN.value='${json.MARKET_YN}';</script>
 
 						</div>

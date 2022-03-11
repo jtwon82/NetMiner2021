@@ -18,7 +18,7 @@
 									<span>주문 검색 </span>
 									<select id="SEARCH_KEY" name="SEARCH_KEY">
 										<option value="" disabled="" selected="" hidden="">컬럼</option>
-										<option value="USER_ID">회원ID</option>
+										<option value="UUID">UUID</option>
 										<option value="NATION_NAME_KR">국가</option>
 										<option value="COMPANY">소속</option>
 									</select>

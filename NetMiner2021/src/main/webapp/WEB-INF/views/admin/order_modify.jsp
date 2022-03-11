@@ -53,10 +53,6 @@
 									<th>소속</td>
 									<td>${item.COMPANY}</td>
 								</tr>
-								<tr>
-									<th>금액(원)</td>
-									<td>${item.PAY_PRICE }</td>
-								</tr>
 							</c:when>
 							<c:otherwise>
 								<tr>
@@ -95,6 +91,10 @@
 									</select><script>DATE_TYPE.value='${item.DATE_TYPE }';</script>
 									<input type="date" name="EXITS_DATE" value="${fn:substring(item.EXITS_DATE_STR,0,10) }">
 								</td>
+							</tr>
+							<tr>
+								<th>금액(원)</td>
+								<td><input type="text" name="PAY_PRICE" value="${item.PAY_PRICE }"></td>
 							</tr>
 						</table>
 						
@@ -138,6 +138,22 @@ $(function(){
 				alert("맴버를 선택해주세요.");
 				return false;
 			}
+			if($(f).find('select[name="PLAN_CODE"]').val()==''){
+				alert("주문상품을 선택해주세요.");
+				return false;
+			}
+			if($(f).find('select[name="DATE_TYPE"]').val()==''){
+				alert("기간을 선택해주세요.");
+				return false;
+			}
+			if($(f).find('input[name="EXITS_DATE"]').val()==''){
+				alert("기간을 선택해주세요.");
+				return false;
+			}
+			if($(f).find('input[name="PAY_PRICE"]').val()==''){
+				alert("금액을 입력해주세요.");
+				return false;
+			}
 			return true;
 			break;
 		case "modify":
@@ -171,7 +187,7 @@ $(function(){
 				location.href='order';
     			
             }else{
-            	alert("존재하지 않는 계정이거나 비밀번호가 올바르지 않습니다. 관리자에게 문의하세요.");
+            	alert("관리자에게 문의하세요.");
             }
         },
         error: function(){

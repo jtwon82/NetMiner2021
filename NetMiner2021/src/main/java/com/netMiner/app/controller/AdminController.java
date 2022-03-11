@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import com.netMiner.app.listener.LoginManager;
 import com.netMiner.app.model.service.AdminService;
 import com.netMiner.app.model.service.MemberService;
 import com.netMiner.app.model.vo.AdminVo;
+import com.netMiner.app.util.Base64Util;
 import com.netMiner.app.util.MapUtils;
 import com.netMiner.app.util.Paging;
 import com.netMiner.app.util.StringUtils2;
@@ -520,6 +522,14 @@ public class AdminController {
 				logger.info("delete succ json {}", json);
 
 			} else if(json.get("MODE").equals("insert")) {
+				String timestamp= new SimpleDateFormat("HHmmss").format(new Date());
+				int randomNo= ThreadLocalRandom.current().nextInt(1000000, 10000000);
+				String planCode= json.get("PLAN_CODE").toString();
+				String dateType= json.get("DATE_TYPE").toString();
+				String ORDER_ID= "ORD_"+ new Base64Util().enCodingBase64(String.format("%s%s%s%s", planCode, dateType, timestamp, randomNo));
+				logger.info("ORDER_ID {}", ORDER_ID);
+				json.put("ORDER_ID", ORDER_ID);
+				
 				adminService.insertOrderInfo(json);
 				logger.info("insert succ json {}", json);
 
