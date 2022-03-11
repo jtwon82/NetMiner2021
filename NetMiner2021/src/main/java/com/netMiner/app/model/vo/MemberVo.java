@@ -34,6 +34,7 @@ public class MemberVo implements Serializable{
 	private int CHECK_TRIAL = 0;
 	private String UUID;
 	private int DIFF_DAY;
+	private String CHECK_PLAN_CODE;
 	
 	public MemberVo() {
 		
@@ -59,7 +60,7 @@ public class MemberVo implements Serializable{
 		if(json.containsKey("CHECK_TRIAL"))this.CHECK_TRIAL= Integer.parseInt(json.get("CHECK_TRIAL").toString());
 		if(json.containsKey("UUID"))this.UUID = json.get("UUID").toString();
 		if(json.containsKey("DIFF_DAY"))this.DIFF_DAY = Integer.parseInt(json.get("DIFF_DAY").toString());
-		
+		if(json.containsKey("SUBSCRIPT_YN"))this.SUBSCRIPT_YN= json.get("CHECK_PLAN_CODE").toString();
 	}
 	
 	public Map<String,Object> getMemberInfoMap(){
@@ -82,6 +83,7 @@ public class MemberVo implements Serializable{
 		result.put("CHECK_TRIAL" , this.CHECK_TRIAL);
 		result.put("UUID", this.UUID);
 		result.put("DIIFF_DAY", this.DIFF_DAY);
+		result.put("CHECK_PAY_CODE", this.CHECK_PLAN_CODE);
 		return result;
 	}
 }

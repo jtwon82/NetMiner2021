@@ -21,6 +21,7 @@
  		<result property="SUBSCRIPT_YN" column = "SUBSCRIPT_YN"/>
  		<result property="CHECK_TRIAL" column = "CHECK_TRIAL"/>
  		<result property="DIFF_DAY" column = "DIFF_DAY"/>
+ 		<result property="CHECK_PLAN_CODE" column="CHECK_PLAN_CODE"/>
  	</resultMap> 
  	<select id="selectDate" resultType="String">
  	select now();
@@ -43,7 +44,12 @@
 	SELECT TIMESTAMPDIFF(DAY, NOW(),EXITS_DATE) AS DIFF_DAY 
 	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
 	order by s2.no desc limit 1
-	) AS DIFF_DAY
+	) AS DIFF_DAY,
+	(
+	SELECT PLAN_CODE 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
+	order by s2.no desc limit 1
+	) AS CHECK_PLAN_CODE
 	FROM NetMiner.MEMBER_INFO a
 	WHERE USER_ID = #{userId}
 	UNION ALL
@@ -65,7 +71,12 @@
 	SELECT TIMESTAMPDIFF(DAY, NOW(),EXITS_DATE) AS DIFF_DAY 
 	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
 	order by s2.no desc limit 1
-	) AS DIFF_DAY
+	) AS DIFF_DAY,
+	(
+	SELECT PLAN_CODE 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
+	order by s2.no desc limit 1
+	) AS CHECK_PLAN_CODE
 	FROM NetMiner.MEMBER_INFO_DROP a
 	WHERE USER_ID = #{userId};
  	</select>
