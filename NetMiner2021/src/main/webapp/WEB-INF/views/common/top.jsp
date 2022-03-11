@@ -106,7 +106,12 @@
 										</c:if>
 									</c:if>
 									<c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 
-									<li class="workSpace active"><a href="./pricing" class="trs">Go to my workspace</a></li> 
+											<c:if test="${language eq '_EN'}">
+												<li class="workSpace active"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" class="trs">Go to my workspace</a></li> 
+											</c:if>
+											<c:if test="${language eq ''}">
+												<li class="workSpace active"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" class="trs">Go to my workspace</a></li> 
+											</c:if>
 									</c:if>
 									<li class="account"><a href="./account" class="trs">Account</a></li>
 									<li class="billing"><a href="./billing" class="trs">Billing</a></li>
@@ -150,7 +155,12 @@
 												</c:if>
 											</c:if>
 											<c:if test="${memberVo.SUBSCRIPT_YN eq 'N' }"> 
-											<li class="workSpace active"><a href="./pricing" class="trs">Go to my workspace</a></li>
+												<c:if test="${language eq '_EN'}">
+													<li class="workSpace active"><a href="./pricing" onclick="alert('You are not currently using NetMiner365');" class="trs">Go to my workspace</a></li> 
+												</c:if>
+												<c:if test="${language eq ''}">
+													<li class="workSpace active"><a href="./pricing" onclick="alert('현재 이용중인 상품이 없습니다.');" class="trs">Go to my workspace</a></li> 
+												</c:if>
 											</c:if>
 											<li class="account"><a href="./account" class="trs">Account</a></li>
 											<li class="billing"><a href="./billing" class="trs">Billing</a></li>
