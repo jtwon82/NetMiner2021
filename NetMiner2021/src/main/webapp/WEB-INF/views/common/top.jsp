@@ -80,12 +80,13 @@
 												</c:if>
 												<c:if test="${memberVo.CHECK_PLAN_CODE ne '01'}">
 													<c:if test="${memberVo.DIFF_DAY >= -5}">
-												  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+													  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+													</c:if>
+													<c:if test="${memberVo.DIFF_DAY < -5}">
+													  <li class="join"><a href="./pricing">Buy Now</a></li>
+													</c:if>
 												</c:if>
-												<c:if test="${memberVo.DIFF_DAY < -5}">
-												  <li class="join"><a href="./pricing">Buy Now</a></li>
-												</c:if>
-												</c:if>
+											</c:if>
 											<c:if test="${memberVo.CHECK_TRIAL == 0}">
 												<c:if test="${memberVo.DIFF_DAY >= -5}">
 												  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
@@ -94,7 +95,6 @@
 												  <li class="join"><a href="./pricing">Start for free</a></li>
 												</c:if>										
 											</c:if>
-										</c:if>
 									</c:if>
 									 <c:if test="${memberVo.SUBSCRIPT_YN eq 'N'}"> 									
 											  <li class="join"><a href="./pricing">Start for free</a></li>								
