@@ -166,8 +166,6 @@ public class BillingController extends HttpServlet {
 		List<Map<String,Object>> billingList = billingService.selectSubscriptAll(param);
 		Map<String, Object> nowPlan = billingService.selectSubscript(param);
 		
-		logger.info("billingList - {}", billingList.toString());
-		logger.info("nowPlan - {}", nowPlan.toString());
 		BillingVo billingVo = new BillingVo().fromMap((HashMap<String, Object>)nowPlan);
 		
 		int diffDays = 0;
