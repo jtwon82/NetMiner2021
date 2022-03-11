@@ -22,7 +22,7 @@
 										<option value="UUID">UUID</option>
 										<option value="USER_ID">이메일</option>
 										<option value="COMPANY">소속</option>
-										<option value="NATION">국가</option>
+										<option value="NATION_NAME_KR">국가</option>
 									</select>
 									<div class="search">
 										<input type="text" name="SEARCH_VALUE" value="${json.SEARCH_VALUE }">
@@ -106,7 +106,7 @@
 									<th>타입구분</th>
 									<th>용도구분</th>
 									<th>이용현황</th>
-									<th>이용현황</th>
+									<th>만료일자</th>
 									<th>트라이얼</th>
 									<th>이메일</th>
 									<th>언어</th>
@@ -138,7 +138,7 @@
 								</c:when>
 								<c:otherwise>
 								<tr>
-									<td colspan='8' align='center'>검색결과가 없습니다.</td>
+									<td colspan='13' align='center'>검색결과가 없습니다.</td>
 								</tr>
 								</c:otherwise>
 								</c:choose>
