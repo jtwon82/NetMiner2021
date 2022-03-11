@@ -19,8 +19,8 @@
 									<select id="SEARCH_KEY" name="SEARCH_KEY">
 										<option value="" disabled="" selected="" hidden="">컬럼</option>
 										<option value="USER_ID">회원ID</option>
-										<option value="MB_NATION">국가</option>
-										<option value="MB_COMPANY">소속</option>
+										<option value="NATION_NAME_KR">국가</option>
+										<option value="COMPANY">소속</option>
 									</select>
 									<div class="search">
 										<input type="text" name="SEARCH_VALUE" value="${json.SEARCH_VALUE }">
@@ -28,7 +28,7 @@
 								</li>
 								<li>
 									<span><input type="checkbox" id='FILTER1' name='FILTER1' class='filter_chkbox' value='1'>필터링</span>
-									<select id="MB_USE_CODE" name="MB_USE_CODE" disabled="disabled" class='filter filter1'>
+									<select id="USE_CODE" name="USE_CODE" disabled="disabled" class='filter filter1'>
 										<option value="" >용도</option>
 										<option value="01">Academic</option>
 										<option value="02">Commercial</option>
@@ -37,7 +37,7 @@
 <!-- 										<option value="" >타입구분</option> -->
 <!-- 										<option value="99">Super</option> -->
 <!-- 									</select> -->
-									<select id="MB_LANGUAGE" name="MB_LANGUAGE" disabled="disabled" class='filter filter1'>
+									<select id="LANGUAGE" name="LANGUAGE" disabled="disabled" class='filter filter1'>
 										<option value="" >언어</option>
 										<option value="ko">Korean</option>
 										<option value="en">English</option>
@@ -76,9 +76,9 @@
 	if('${json.FILTER2}'=='2')	$("#FILTER2").click();
 </script>
 <script type="text/javascript">SEARCH_KEY.value='${json.SEARCH_KEY}';</script>
-<script type="text/javascript">MB_USE_CODE.value='${json.MB_USE_CODE}';</script>
-<script type="text/javascript">MB_TYPE_CODE.value='${json.MB_TYPE_CODE}';</script>
-<script type="text/javascript">MB_LANGUAGE.value='${json.MB_LANGUAGE}';</script>
+<script type="text/javascript">USE_CODE.value='${json.USE_CODE}';</script>
+<script type="text/javascript">TYPE_CODE.value='${json.TYPE_CODE}';</script>
+<script type="text/javascript">LANGUAGE.value='${json.LANGUAGE}';</script>
 <script type="text/javascript">PLAN_CODE.value='${json.PLAN_CODE}';</script>
 <script type="text/javascript">DATE_TYPE.value='${json.DATE_TYPE}';</script>
 						</div>

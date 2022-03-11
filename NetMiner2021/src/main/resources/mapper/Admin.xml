@@ -508,7 +508,7 @@
 	<select id="getOrderCount" parameterType="map" resultType="int">
 		SELECT * FROM (
 			SELECT COUNT(1)totcnt, 1 rownum
-			FROM NetMiner.SUBSCRIPT A
+			FROM NetMiner.SUBSCRIPT A JOIN NATION_CODE B ON A.NATION = B.NATION_CODE
 			<include refid="listPagedWhere"/>
 		) NO
 	</select>
