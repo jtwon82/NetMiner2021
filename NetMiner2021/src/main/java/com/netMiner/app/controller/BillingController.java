@@ -293,13 +293,13 @@ public class BillingController extends HttpServlet {
 				billingOldVo = null;
 								
 			}
+			//이전 결재 내역의 만료일 지난경우 해당 billingOldVo 를 null 로 처리 
+			
+			if (billingOldVo.getDiffDay() < -7) {
+				billingOldVo = null;
+			}
 		}
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
-		//이전 결재 내역의 만료일 지난경우 해당 billingOldVo 를 null 로 처리 
-		
-		if (billingOldVo.getDiffDay() < -7) {
-			billingOldVo = null;
-		}
 		
 		if (language.equals("_EN")) {
 			billingVo.setPAY_PLATFORM("paypal");
