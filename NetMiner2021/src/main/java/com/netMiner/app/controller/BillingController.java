@@ -297,183 +297,183 @@ public class BillingController extends HttpServlet {
 		}
 		
 		logger.info("billingVoSelectPlanCode - {} ", billingVo.toString());
-		
-		if (language.equals("_EN")) {
-			billingVo.setPAY_PLATFORM("paypal");
-			if (billingOldVo != null) {
-				if (billingOldVo.getDiffDay() >= -7 && billingOldVo.getDiffDay() <= 7) {
-					//플랜 연장 인경우 
+		if (! planCode.equals("01")) {
+			if (language.equals("_EN")) {
+				billingVo.setPAY_PLATFORM("paypal");
+				if (billingOldVo != null) {
+					if (billingOldVo.getDiffDay() >= -7 && billingOldVo.getDiffDay() <= 7) {
+						//플랜 연장 인경우 
+						if (dateType.equals("year")) {
+							int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
+							billingVo.setPAY_PRICE(total);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
+							billingVo.setDATE_TYPE("year"); 
+							billingVo.setType("extensionPlan");
+						} else {
+							billingVo.setPAY_PRICE( billingVo.getPLAN_PER_EN());
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
+							billingVo.setDATE_TYPE("month");
+							billingVo.setType("extensionPlan");
+						}
+						
+					} else {
+						String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
+						String payLanguage = payPlatform.equals("toss")?"ko":"en";
+						String pageLanguage = language.equals("_EN")?"en":"ko";
+						if (!payLanguage.equals(pageLanguage)) {
+							 response.setContentType("text/html; charset=UTF-8");
+							 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
+							 if (pageLanguage.equals("en")) {
+								 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
+							 }
+							 PrintWriter out;
+							try {
+								out = response.getWriter();
+								out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
+								out.flush();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+						if (billingOldVo.getDATE_TYPE().equals("year")) {
+							// 1년에서 1년 업그레이드시
+							int oldPrice = billingOldVo.getPLAN_PER_EN();
+							int nowPrice = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
+							int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
+							
+							billingVo.setPAY_PRICE(result);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
+							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+							billingVo.setDATE_TYPE("year");
+							billingVo.setType("upgradePlan");
+							logger.info("billingVo year- {}", billingVo.toString());
+						} else {
+							// 한달에서 한달 업그레이드시 
+							int oldPrice = billingOldVo.getPLAN_PER_EN();
+							int nowPrice = billingVo.getPLAN_PER_EN();
+							int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
+							
+							billingVo.setPAY_PRICE(result);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
+							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+							billingVo.setDATE_TYPE("month");
+							billingVo.setType("upgradePlan");
+							logger.info("billingVo month - {}", billingVo.toString());
+						}					
+					}
+				} else {
 					if (dateType.equals("year")) {
 						int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
 						billingVo.setPAY_PRICE(total);
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
-						billingVo.setDATE_TYPE("year"); 
-						billingVo.setType("extensionPlan");
+						billingVo.setType("none");
 					} else {
 						billingVo.setPAY_PRICE( billingVo.getPLAN_PER_EN());
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
-						billingVo.setDATE_TYPE("month");
-						billingVo.setType("extensionPlan");
+						billingVo.setType("none");
 					}
-					
-				} else {
-					String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
-					String payLanguage = payPlatform.equals("toss")?"ko":"en";
-					String pageLanguage = language.equals("_EN")?"en":"ko";
-					if (!payLanguage.equals(pageLanguage)) {
-						 response.setContentType("text/html; charset=UTF-8");
-						 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
-						 if (pageLanguage.equals("en")) {
-							 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
-						 }
-						 PrintWriter out;
-						try {
-							out = response.getWriter();
-							out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
-							out.flush();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					
-					if (billingOldVo.getDATE_TYPE().equals("year")) {
-						// 1년에서 1년 업그레이드시
-						int oldPrice = billingOldVo.getPLAN_PER_EN();
-						int nowPrice = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
-						int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
-						
-						billingVo.setPAY_PRICE(result);
-						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(billingOldVo.getDiffDay());
-						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
-						billingVo.setDATE_TYPE("year");
-						billingVo.setType("upgradePlan");
-						logger.info("billingVo year- {}", billingVo.toString());
-					} else {
-						// 한달에서 한달 업그레이드시 
-						int oldPrice = billingOldVo.getPLAN_PER_EN();
-						int nowPrice = billingVo.getPLAN_PER_EN();
-						int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
-						
-						billingVo.setPAY_PRICE(result);
-						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(billingOldVo.getDiffDay());
-						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
-						billingVo.setDATE_TYPE("month");
-						billingVo.setType("upgradePlan");
-						logger.info("billingVo month - {}", billingVo.toString());
-					}					
 				}
 			} else {
-				if (dateType.equals("year")) {
-					int total = (int) ((billingVo.getPLAN_PER_EN()* 12) - (billingVo.getPLAN_PER_EN()* 12 )* 0.2);
-					billingVo.setPAY_PRICE(total);
-					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setType("none");
+				billingVo.setPAY_PLATFORM("toss");
+				if (billingOldVo != null) {
+					if (billingOldVo.getDiffDay()  >= -7 && billingOldVo.getDiffDay() <= 7) {
+						//플랜 연장 인경우 
+						if (dateType.equals("year")) {
+							int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
+							billingVo.setPAY_PRICE(total);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
+							billingVo.setDATE_TYPE("year"); 
+							billingVo.setType("extensionPlan");
+						} else {
+							billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
+							billingVo.setDATE_TYPE("month");
+							billingVo.setType("extensionPlan");
+						}
+						
+					} else {
+						String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
+						String payLanguage = payPlatform.equals("toss")?"ko":"en";
+						String pageLanguage = language.equals("_EN")?"en":"ko";
+						if (!payLanguage.equals(pageLanguage)) {
+							 response.setContentType("text/html; charset=UTF-8");
+							 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
+							 if (pageLanguage.equals("en")) {
+								 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
+							 }
+							 PrintWriter out;
+							try {
+								out = response.getWriter();
+								out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
+								out.flush();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						if (billingOldVo.getDATE_TYPE().equals("year")) {
+							// 1년에서 1년 업그레이드시
+							int oldPrice = billingOldVo.getPLAN_PER_KO();
+							int nowPrice = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
+							int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
+							
+							billingVo.setPAY_PRICE(result);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
+							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+							billingVo.setDATE_TYPE("year");
+							billingVo.setType("upgradePlan");
+							logger.info("billingVo year- {}", billingVo.toString());
+						} else {
+							// 한달에서 한달 업그레이드시 
+							int oldPrice = billingOldVo.getPLAN_PER_KO();
+							int nowPrice = billingVo.getPLAN_PER_KO();
+							int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
+							
+							billingVo.setPAY_PRICE(result);
+							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
+							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
+							billingVo.setDATE_TYPE("month");
+							billingVo.setType("upgradePlan");
+							logger.info("billingVo month - {}", billingVo.toString());
+						}					
+					}
 				} else {
-					billingVo.setPAY_PRICE( billingVo.getPLAN_PER_EN());
-					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setType("none");
-				}
-			}
-		} else {
-			billingVo.setPAY_PLATFORM("toss");
-			if (billingOldVo != null) {
-				if (billingOldVo.getDiffDay()  >= -7 && billingOldVo.getDiffDay() <= 7) {
-					//플랜 연장 인경우 
 					if (dateType.equals("year")) {
 						int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
 						billingVo.setPAY_PRICE(total);
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(365 + billingOldVo.getDiffDay());
-						billingVo.setDATE_TYPE("year"); 
-						billingVo.setType("extensionPlan");
+						billingVo.setType("none");
 					} else {
 						billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
 						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(30 + billingOldVo.getDiffDay());
-						billingVo.setDATE_TYPE("month");
-						billingVo.setType("extensionPlan");
+						billingVo.setType("none");
 					}
-					
-				} else {
-					String payPlatform = (String) billingOldVo.getPAY_PLATFORM(); 
-					String payLanguage = payPlatform.equals("toss")?"ko":"en";
-					String pageLanguage = language.equals("_EN")?"en":"ko";
-					if (!payLanguage.equals(pageLanguage)) {
-						 response.setContentType("text/html; charset=UTF-8");
-						 String comment= "이전 결재 내역과 다른방식으로 결재를 진행할수 없습니다.";
-						 if (pageLanguage.equals("en")) {
-							 comment = "You cannot proceed with the payment in a different way than the previous payment history.";
-						 }
-						 PrintWriter out;
-						try {
-							out = response.getWriter();
-							out.println("<script>alert('"+comment+"'); location.href='./billing';</script>");
-							out.flush();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					if (billingOldVo.getDATE_TYPE().equals("year")) {
-						// 1년에서 1년 업그레이드시
-						int oldPrice = billingOldVo.getPLAN_PER_KO();
-						int nowPrice = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
-						int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
-						
-						billingVo.setPAY_PRICE(result);
-						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(billingOldVo.getDiffDay());
-						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
-						billingVo.setDATE_TYPE("year");
-						billingVo.setType("upgradePlan");
-						logger.info("billingVo year- {}", billingVo.toString());
-					} else {
-						// 한달에서 한달 업그레이드시 
-						int oldPrice = billingOldVo.getPLAN_PER_KO();
-						int nowPrice = billingVo.getPLAN_PER_KO();
-						int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
-						
-						billingVo.setPAY_PRICE(result);
-						billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-						billingVo.setDiffDay(billingOldVo.getDiffDay());
-						billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
-						billingVo.setDATE_TYPE("month");
-						billingVo.setType("upgradePlan");
-						logger.info("billingVo month - {}", billingVo.toString());
-					}					
 				}
-			} else {
-				if (dateType.equals("year")) {
-					int total = (int) ((billingVo.getPLAN_PER_KO()* 12) - (billingVo.getPLAN_PER_KO()* 12 )* 0.2);
-					billingVo.setPAY_PRICE(total);
-					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setType("none");
-				} else {
-					billingVo.setPAY_PRICE( billingVo.getPLAN_PER_KO());
-					billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-					billingVo.setType("none");
-				}
+				
 			}
-			
 		}
-		
 		
 		
 		if (planCode.equals("01")) {
