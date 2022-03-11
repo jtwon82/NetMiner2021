@@ -80,6 +80,7 @@
 	<select id="selectFaqList" parameterType="Map" resultType = "Map">
 	select * from NetMiner.FAQ
 	where language = #{language}
+	AND CATE_CODE = '01'
 	;
 	</select>
 	
