@@ -64,6 +64,11 @@
 			AND USER_CODE = '03'
 			AND USER_STATS_YN = 'N'
 		</if>
+		
+		
+		<if test="CATE_CODE!=null and !CATE_CODE.equals('')">
+			AND CATE_CODE= #{CATE_CODE}
+		</if>
 	</sql>
 	<sql id="listPagedWhere2">
 		WHERE 1=1
