@@ -557,13 +557,13 @@
 			, ORDER_ID, ORDER_PNM, paymentKey, amount, EXITS_DATE, UPDATE_DATE
 			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE)
 		SELECT NOW()
-			, #{USER_ID}, #{PLAN_CODE}, '', #{DATE_TYPE}
+			, USER_ID, #{PLAN_CODE}, '', #{DATE_TYPE}
 			, '', 0, '', ${PAY_PRICE}, 0
 			, '', '', '', NOW()
 			, #{ORDER_ID}, 'ORDER_PNM', 'paymentKey', 0, #{EXITS_DATE}, NOW()
 			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE
 			FROM NetMiner.MEMBER_INFO
-			WHERE USER_ID=#{USER_ID}
+			WHERE UUID=#{UUID}
 			;
 	</update>
 	<update id="modifyOrderInfo"  parameterType="map">

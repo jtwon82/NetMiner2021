@@ -2,10 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file = "top.jsp" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.9/js/select2.min.js"></script>
 	<body OnUnload="location.href='logout'">
 		<div id="wrap" class="order_modify">
 <%@ include file = "top_gnb.jsp" %>
-
 
 			<div id="section">
 				<div class="wrap">
@@ -56,14 +56,14 @@
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<th>회원 ID</td>
+									<th>회원 UUID</td>
 									<td>
-										<select id="USER_ID" name="USER_ID" >
-											<option value="">맴버</option>
+										<select id="UUID" name="UUID" style="width:430px;">
+											<option value="">맴버(UUID)</option>
 											<c:forEach items="${members}" var="item" varStatus="status">
-											<option value="${item.USER_ID }">${item.USER_ID }</option>
+											<option value="${item.UUID }">${item.UUID }</option>
 											</c:forEach>
-										</select>
+										</select><script>$('select[name="UUID"]').select2();</script>
 									</td>
 								</tr>
 							</c:otherwise>

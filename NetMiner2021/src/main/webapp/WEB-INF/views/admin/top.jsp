@@ -24,4 +24,18 @@
 		<script src="/resources/admin/js/jquery.form.js?st=2" type="text/javascript"></script>
 <!-- 		<script src="/resources/admin/js/main.js?st=2" type="text/javascript"></script> -->
 	</head>
-	
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<style>
+.select2-container{margin-top:3px; }
+.select2-container .select2-selection--single{height: 47px;}
+.select2-container--default .select2-selection--single .select2-selection__rendered{line-height: 45px; font-size: 19px;font-weight: bold;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{top:15px;}
+.select2-dropdown{top: -16px;}
+@media (min-width: 0px) and (max-width: 1000px){
+   .select2-container .select2-selection--single{height:35px;}
+   .select2-container--default .select2-selection--single .select2-selection__rendered{line-height:35px;}
+   .select2-container--default .select2-selection--single .select2-selection__arrow{top:5px;}
+   .select2-results{font-size:12px;}
+}
+</style>
