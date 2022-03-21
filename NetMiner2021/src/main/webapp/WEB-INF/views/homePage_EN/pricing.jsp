@@ -111,14 +111,22 @@ Compare our subscription plans and find yours.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<li><em></em>3 workspace</li>
-										<li><em></em>5 Tabular & Nodeset</li>
-										<li><em></em>10 Networks</li>
+										<li><em></em>3 workspaces</li>
+										<li><em></em>5 data items </br>&nbsp;&nbsp;&nbsp;&nbsp; / workspace</li>
+										<li><em></em>Tabular, Nodeset</br>&nbsp;&nbsp;&nbsp;&nbsp;: 10K rows * 100 cols</li>
+										<li><em></em>Network</br>&nbsp;&nbsp;&nbsp;&nbsp;: 100K rows * 100 cols</li>
+										<li><em></em>3 models</li>
+										<li><em></em>10 coordinates</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>Machine Learning</li>
+										<li><em></em>Neural Network</br>(3 layers, 50 nodes)</li>
+										<li><em></em>Node Embedding</br>(10 dimensions)</li>
+										<li><em></em>Graph Centrality</li>
+										<li><em></em>Community Detection</li>
+										<li><em></em>Basic Statistics</li>
+										<li><em></em>Chart</li>
+										<li><em></em>Graph Visualization</li>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
@@ -185,14 +193,22 @@ Compare our subscription plans and find yours.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>5 workspaces</li>
+										<li><em></em>5 data items </br>&nbsp;&nbsp;&nbsp;&nbsp;/ workspace</li>
+										<li><em></em>Tabular, Nodeset</br>&nbsp;&nbsp;&nbsp;&nbsp;: 10K rows * 100 cols</li>
+										<li><em></em>Network</br>&nbsp;&nbsp;&nbsp;&nbsp;: 100K rows * 100 cols</li>
+										<li><em></em>5 models</li>
+										<li><em></em>25 coordinates</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>Machine Learning</li>
+										<li><em></em>Neural Network</br>(5 layers, 25 nodes)</li>
+										<li><em></em>Node Embedding</br>(25 dimensions)</li>
+										<li><em></em>Centrality</li>
+										<li><em></em>Community Detection</li>
+										<li><em></em>Basic Statistics</li>
+										<li><em></em>Chart</li>
+										<li><em></em>Graph Visualization</li>
 									</ul>
 									<c:if test="${!empty memberVo}">
 											<c:if test="${memberVo.planType == 2}"> 
@@ -253,14 +269,22 @@ Compare our subscription plans and find yours.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>10 workspaces</li>
+										<li><em></em>10 data items</br>&nbsp;&nbsp;&nbsp;&nbsp; / workspace</li>
+										<li><em></em>Tabular, Nodeset</br>&nbsp;&nbsp;&nbsp;&nbsp;: 100K rows * 1K cols</li>
+										<li><em></em>Network</br>&nbsp;&nbsp;&nbsp;&nbsp;: 1M rows * 1K cols</li>
+										<li><em></em>10 models</li>
+										<li><em></em>50 coordinates</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>Machine Learning</li>
+										<li><em></em>Neural Network</br>(10 layers, 50 nodes)</li>
+										<li><em></em>Node Embedding</br>(50 dimensions)</li>
+										<li><em></em>Centrality</li>
+										<li><em></em>Community Detection</li>
+										<li><em></em>Basic Statistics</li>
+										<li><em></em>Chart</li>
+										<li><em></em>Graph Visualization</li>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 3}"> 
@@ -320,14 +344,22 @@ Compare our subscription plans and find yours.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>20 workspaces</li>
+										<li><em></em>20 data items </br>&nbsp;&nbsp;&nbsp;&nbsp;/ workspace</li>
+										<li><em></em>Tabular, Nodeset</br>&nbsp;&nbsp;&nbsp;&nbsp;: 1M rows * 10K cols</li>
+										<li><em></em>Network</br>&nbsp;&nbsp;&nbsp;&nbsp;: 10M rows * 10K cols</li>
+										<li><em></em>20 models</li>
+										<li><em></em>100 coordinates</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+									<li><em></em>Machine Learning</li>
+									<li><em></em>Neural Network</br>(20 layers, 100 nodes)</li>
+									<li><em></em>Node Embedding</br>(100 dimensions)</li>
+									<li><em></em>Centrality</li>
+									<li><em></em>Community Detection</li>
+									<li><em></em>Basic Statistics</li>
+									<li><em></em>Chart</li>
+									<li><em></em>Graph Visualization</li>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 4}"> 

@@ -114,14 +114,28 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<li><em></em>3 workspace</li>
-										<li><em></em>5 Tabular & Nodeset</li>
-										<li><em></em>10 Networks</li>
+										<li><em></em>3개 워크스페이스</li>
+										<li><em></em>5개 데이터 아이템</li>
+										<li><em></em>Tabular, Nodeset </br>&nbsp;&nbsp;&nbsp;&nbsp;: 10K 행 * 100 열</li>
+										<li><em></em>Network </br>&nbsp;&nbsp;&nbsp;&nbsp; : 100K 행 * 100 열</li>
+										<li><em></em>3개 모델</li>
+										<li><em></em>10개 좌표셋</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>머신러닝</li>
+										<li><em></em>딥러닝 </br> &nbsp;&nbsp;&nbsp;&nbsp;(3개 레이어, 50개 노드)</li>
+										<li><em></em>노드 임베딩</br> &nbsp;&nbsp;&nbsp;&nbsp;(10개 차원)</li> 
+ 										<li><em></em>중심성 분석</li> 
+										<li><em></em>커뮤니티 탐지</li> 
+										<li><em></em>기초 통계</li>
+										<li><em></em>그래프 시각화</li>
+										<li><em></em>차트 시각화</li>
+										<!--  
+										<li><em></em>그래프 특성</li>
+										<li><em></em>일변수</li>  
+										<li><em></em>다변수</li>  
+										<li><em></em>차트 시각화</li>    
+										<li><em></em>그래프 시각화</li> -->    
 									</ul>
 										<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 1}"> 
@@ -188,14 +202,22 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>5개 워크스페이스</li>
+										<li><em></em>5개 데이터 아이템</li>
+										<li><em></em>Tabular, Nodeset </br>&nbsp;&nbsp;&nbsp;&nbsp;: 10K 행 * 100 열</li>
+										<li><em></em>Network </br>&nbsp;&nbsp;&nbsp;&nbsp; : 100K 행 * 100 열</li>
+										<li><em></em>5개 모델</li>
+										<li><em></em>25개 좌표셋</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>머신러닝</li>
+										<li><em></em>딥러닝 </br>(5개 레이어, 50개 노드)</li>
+										<li><em></em>노드 임베딩</br>(25개 차원)</li>
+										<li><em></em>중심성 분석</li>
+										<li><em></em>커뮤니티 탐지</li>
+										<li><em></em>기초 통계</li>
+										<li><em></em>그래프 시각화</li>
+										<li><em></em>차트 시각화</li>
 									</ul>
 									<c:if test="${!empty memberVo}">
 											<c:if test="${memberVo.planType == 2}"> 
@@ -256,14 +278,22 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>10개 워크스페이스</li>
+										<li><em></em>10개 데이터 아이템</li>
+										<li><em></em>Tabular, Nodeset </br>&nbsp;&nbsp;&nbsp;&nbsp;: 100K 행 * 1K 열</li>
+										<li><em></em>Network </br>&nbsp;&nbsp;&nbsp;&nbsp; : 1M 행 * 1K 열</li>
+										<li><em></em>10개 모델</li>
+										<li><em></em>50개 좌표셋</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>머신러닝</li>
+										<li><em></em>딥러닝</br>(10개 레이어, 50개 노드)</li>
+										<li><em></em>노드 임베딩</br>(50개 차원)</li>
+										<li><em></em>중심성 분석</li>
+										<li><em></em>커뮤니티 탐지</li>
+										<li><em></em>기초 통계</li>
+										<li><em></em>그래프 시각화</li>
+										<li><em></em>차트 시각화</li>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 3}"> 
@@ -323,14 +353,22 @@ NetMiner 365 를 이용하세요.</p>
 								</div>
 								<div class="bottom">
 									<ul class="data">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>20개 워크스페이스</li>
+										<li><em></em>20개 데이터 아이템</li>
+										<li><em></em>Tabular, Nodeset </br>&nbsp;&nbsp;&nbsp;&nbsp;: 1M 행 * 10K 열</li>
+										<li><em></em>Network </br>&nbsp;&nbsp;&nbsp;&nbsp; : 10M 행 * 10K 열</li>
+										<li><em></em>20개 모델</li>
+										<li><em></em>100개 좌표셋</li>
 									</ul>
 									<ul class="feature">
-										<!-- <li><em></em></li>
-										<li><em></em></li>
-										<li><em></em></li> -->
+										<li><em></em>머신러닝</li>
+										<li><em></em>딥러닝</br>(20개 레이어, 100개 노드)</li>
+										<li><em></em>노드 임베딩</br>(100개 차원)</li>
+										<li><em></em>중심성 분석</li>
+										<li><em></em>커뮤니티 탐지</li>
+										<li><em></em>기초 통계</li>
+										<li><em></em>그래프 시각화</li>
+										<li><em></em>차트 시각화</li>
 									</ul>
 									<c:if test="${!empty memberVo}">										
 										<c:if test="${memberVo.planType == 4}"> 
