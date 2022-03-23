@@ -54,14 +54,15 @@ public class CryptUtil {
 
 	public String encryptLoginfo(MemberVo memberVo) throws Exception {
 		String userid= memberVo.getUserId();
-		String usercode= memberVo.getUserCode();
-		Integer userNo= memberVo.getNo();
+		//String usercode= memberVo.getUserCode();
+		//Integer userNo= memberVo.getNo();
+		String uuid = memberVo.getUUID();
 		String lastLoginDate= memberVo.getLastLoginDate();
+
 		
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
-		String idAndCode = String.format("netminer|%s|%s|%s|%s|%s|365", userid, userNo.toString(), memberVo.getTypeCode(), instant.toEpochMilli(), lastLoginDate );
-		logger.info("idAndCode {}", idAndCode);
+		String idAndCode = String.format("netminer|%s|%s|%s|%s|%s|365", userid, uuid, memberVo.getTypeCode(), instant.toEpochMilli(), lastLoginDate );
 		
 		return encryptText(idAndCode, key);
 	}
