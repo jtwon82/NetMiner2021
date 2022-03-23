@@ -73,7 +73,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top h1 .logo2{display: none;}
 #wrap #top.sticky h1 .logo1{display: none;}
 #wrap #top.sticky h1 .logo2{display: block;}
-#wrap #top .price{color:#fff;font-size:22px;left: 555px;}
+#wrap #top .price{color:#fff;font-size:22px;font-weight:500;left: 555px;}
 
 #wrap.sub #top h1 .logo1{display: none;}
 #wrap.sub #top h1 .logo2{display: block;}
@@ -839,7 +839,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
     #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4){font-size: 13px; word-break: keep-all;}
     #wrap.pricing #section1 .content .paymentList li .top p:nth-child(4) br{display:none;}
     #wrap.pricing #section1 .content .paymentList li .top p.payment{font-size: 19px;}
-    #wrap.pricing #section1 .content .paymentList li .top p.payment em{width: 17px; height: 11px;}
+    #wrap.pricing #section1 .content .paymentList li .top p.payment em{width: 7px;height: 15px;background-size: contain;}
     #wrap.pricing #section1 .content .paymentList li .bottom{margin-top: 20px;padding: 20px 10px;}
     #wrap.pricing #section1 .content .paymentList li .bottom .button{width: 73%;line-height: 35px;font-size: 15px;left: 12%;bottom: 20px;}
     #wrap.pricing #section1 .content .paymentList li .bottom .data{height:auto;}
