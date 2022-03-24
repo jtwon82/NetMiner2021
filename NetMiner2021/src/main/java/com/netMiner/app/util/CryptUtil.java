@@ -58,11 +58,12 @@ public class CryptUtil {
 		//Integer userNo= memberVo.getNo();
 		String uuid = memberVo.getUUID();
 		String lastLoginDate= memberVo.getLastLoginDate();
-
+		String typeCode= memberVo.getTypeCode();
 		
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
-		String idAndCode = String.format("netminer|%s|%s|%s|%s|%s|365", userid, uuid, memberVo.getTypeCode(), instant.toEpochMilli(), lastLoginDate );
+		String idAndCode= String.format("netminer|%s|%s|%s|%s|%s|%s|365", userid, uuid, typeCode, instant.toEpochMilli(), lastLoginDate, memberVo.getExitsDate() );
+		logger.info("idAndCode-{}",idAndCode);
 		
 		return encryptText(idAndCode, key);
 	}

@@ -28,6 +28,7 @@ public class MemberVo implements Serializable{
 	private String googleYn="N";
 	private String userStatsYn="N";
 	private String lastLoginDate;
+	private String exitsDate;
 	private String chk;
 	private int planType;
 	private String SUBSCRIPT_YN = "N";
@@ -55,6 +56,7 @@ public class MemberVo implements Serializable{
 		if(json.containsKey("googleYn"))this.googleYn= json.get("googleYn").toString();
 		if(json.containsKey("userStatsYn"))this.userStatsYn= json.get("userStatsYn").toString();
 		if(json.containsKey("lastLoginDate"))this.lastLoginDate= json.get("lastLoginDate").toString();
+		if(json.containsKey("exitsDate"))this.exitsDate= json.get("exitsDate").toString();
 		if(json.containsKey("chk"))this.chk= json.get("chk").toString();
 		if(json.containsKey("SUBSCRIPT_YN"))this.SUBSCRIPT_YN= json.get("SUBSCRIPT_YN").toString();
 		if(json.containsKey("CHECK_TRIAL"))this.CHECK_TRIAL= Integer.parseInt(json.get("CHECK_TRIAL").toString());
@@ -79,6 +81,7 @@ public class MemberVo implements Serializable{
 		result.put("googleYn", this.googleYn);
 		result.put("userStatsYn", this.userStatsYn);
 		result.put("lastLoginDate", this.lastLoginDate);
+		result.put("exitsDate", this.exitsDate);
 		result.put("SUBSCRIPT_YN", this.SUBSCRIPT_YN);
 		result.put("CHECK_TRIAL" , this.CHECK_TRIAL);
 		result.put("UUID", this.UUID);
