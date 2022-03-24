@@ -36,10 +36,10 @@
 								<span>제목</span>
 								<input type="text" name="TITLE" value="${item.TITLE }">
 							</li>
-							<li>
-								<span>설명</span>
-								<input type="text" name="DESCRIPTION" value="${item.DESCRIPTION }">
-							</li>
+<!-- 							<li> -->
+<!-- 								<span>설명</span> -->
+<%-- 								<input type="text" name="DESCRIPTION" value="${item.DESCRIPTION }"> --%>
+<!-- 							</li> -->
 						</ul>
 						<textarea id="textarea" name="CONTENT">${item.CONTENT }</textarea>
 						<c:if test="${item.NO!='' }">
@@ -91,7 +91,7 @@ $(function(){
             switch(f.MODE.value){
             case "insert": case "modify": case"recover":
 				if( form.find('input[name="TITLE"]').val()=='' ){	alert('제목을 입력해주세요.'); return false; }
-				if( form.find('input[name="DESCRIPTION"]').val()=='' ){	alert('설명을 입력해주세요.'); return false; }
+// 				if( form.find('input[name="DESCRIPTION"]').val()=='' ){	alert('설명을 입력해주세요.'); return false; }
 				if( form.find('input[name="CONTENT"]').val()=='' ){	alert('설명을 입력해주세요.'); return false; }
         		break;
             }
