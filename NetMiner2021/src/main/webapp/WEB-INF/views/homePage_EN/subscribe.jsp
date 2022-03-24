@@ -65,7 +65,8 @@
 			}
 			function pay_cancel(){
 				pop.close();
-				location.href= "/";
+				alert("There was a problem with you billing information. Please check it again.");
+				location.href= "/pricing";
 			}
 		</script>
 		<div id="wrap" class="sub subscribe">

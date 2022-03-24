@@ -118,7 +118,7 @@ NetMiner 365 를 이용하세요.</p>
 										<li><em></em>5개 데이터 아이템</li>
 										<li><em></em>Tabular, Nodeset </br>&nbsp;&nbsp;&nbsp;&nbsp;: 10K 행 * 100 열</li>
 										<li><em></em>Network </br>&nbsp;&nbsp;&nbsp;&nbsp; : 100K 행 * 100 열</li>
-										<li><em></em>3개 모델</li>
+										<li><em></em>3개 모델</li> 
 										<li><em></em>10개 좌표셋</li>
 									</ul>
 									<ul class="feature">

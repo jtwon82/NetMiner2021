@@ -55,7 +55,7 @@ public class Constant {
 	public static String TOSS_CLIENT_KEY = "live_ck_dP9BRQmyarYao7yYOaWrJ07KzLNk";	
 	public static String PAY_PAL_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="netminer@cyram.com";
-	 */
+	*/
 	
 	public static Constant getInstance(HttpServletRequest request) {
 		if(ins==null) {

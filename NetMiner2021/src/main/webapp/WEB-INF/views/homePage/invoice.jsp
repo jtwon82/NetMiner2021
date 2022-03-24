@@ -320,7 +320,12 @@
 						</div>
 						<div class="inner3 inner">
 							<p class="title">Payment method</p>
-							<span>${result.PAY_TYPE }</span>
+							<c:if test="${result.PAY_TYPE eq 'card'}">
+								<span>Credit Card</span>
+							</c:if>
+							<c:if test="${result.PAY_TYPE ne 'card'}">
+								<span>Bank Transfer</span>
+							</c:if>
 						</div>
 					</div>
 				</div>

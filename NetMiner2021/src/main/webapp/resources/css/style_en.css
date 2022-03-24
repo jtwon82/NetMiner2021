@@ -73,7 +73,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap #top h1 .logo2{display: none;}
 #wrap #top.sticky h1 .logo1{display: none;}
 #wrap #top.sticky h1 .logo2{display: block;}
-#wrap #top .price{color:#fff;font-size:22px;font-weight:500;left: 555px;}
+#wrap #top .price{color:#fff;font-size:22px;left: 555px;}
 
 #wrap.sub #top h1 .logo1{display: none;}
 #wrap.sub #top h1 .logo2{display: block;}
