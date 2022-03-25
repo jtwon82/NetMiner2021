@@ -30,9 +30,8 @@ public class Constant {
 	public static String TOSS_CLIENT_KEY = "test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d";	
 	public static String PAY_PAL_URL = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="sb-gbvkr13290921@business.example.com";
-	 */
+	*/
 	// dev
-	
 	
 	public static String ROOT_URL = "http://dev.netminer365.com";
 	public static String GOOGLE_CALL_BACK_LOGIN_URL = ROOT_URL +"/auth";	
@@ -43,8 +42,7 @@ public class Constant {
 	
 	public static String PAY_PAL_URL = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="sb-gbvkr13290921@business.example.com";
-		
-	
+	 
 	// real
 	/*
 	public static String ROOT_URL = "https://www.netminer365.com";
