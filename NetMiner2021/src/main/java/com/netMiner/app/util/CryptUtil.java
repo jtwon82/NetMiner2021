@@ -58,7 +58,7 @@ public class CryptUtil {
 		//Integer userNo= memberVo.getNo();
 		String uuid = memberVo.getUUID();
 		String lastLoginDate= memberVo.getLastLoginDate();
-		String typeCode= memberVo.getTypeCode();
+		String typeCode= memberVo.getCHECK_PLAN_CODE();
 		
 		Instant instant = Instant.now();
 		String key = "cyramnetminer365";
