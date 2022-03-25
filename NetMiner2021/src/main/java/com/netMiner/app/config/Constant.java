@@ -30,7 +30,7 @@ public class Constant {
 	public static String TOSS_CLIENT_KEY = "test_ck_O6BYq7GWPVvZLyaDy1nVNE5vbo1d";	
 	public static String PAY_PAL_URL = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="sb-gbvkr13290921@business.example.com";
-	*/
+	 */
 	// dev
 	
 	
@@ -43,7 +43,7 @@ public class Constant {
 	
 	public static String PAY_PAL_URL = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="sb-gbvkr13290921@business.example.com";
-	
+		
 	
 	// real
 	/*
