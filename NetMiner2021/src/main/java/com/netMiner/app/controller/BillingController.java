@@ -433,8 +433,8 @@ public class BillingController extends HttpServlet {
 							int nowPrice = (int) (billingVo.getPLAN_PER_KO()* 12);
 							//int result = (nowPrice/365*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((365 - billingOldVo.getDiffDay()) /365));
 							int result = (billingOldVo.getDiffDay()*(nowPrice/365))-(oldPrice-((365 - billingOldVo.getDiffDay()) * (oldPrice/365)));
-							
-							billingVo.setPAY_PRICE(Math.round(result / 100) * 100);
+						
+							billingVo.setPAY_PRICE((int)Math.floor(result / 10) * 10);
 							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setDiffDay(billingOldVo.getDiffDay());
@@ -450,7 +450,7 @@ public class BillingController extends HttpServlet {
 							//int result = (nowPrice/30*(billingOldVo.getDiffDay())) - oldPrice - (oldPrice * ((30 - billingOldVo.getDiffDay()) /30));
 							int result = (billingOldVo.getDiffDay()*(nowPrice/30))-(oldPrice-((30-billingOldVo.getDiffDay()) * (oldPrice/30)));
 							
-							billingVo.setPAY_PRICE(Math.round(result / 100) * 100);
+							billingVo.setPAY_PRICE((int)Math.floor(result / 10) * 10);
 							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setDiffDay(billingOldVo.getDiffDay());

@@ -214,10 +214,10 @@ public class SendEmail {
 	public void sendPayPlanUser(String userId, String language, String endDate) {
 		MailVo vo = new MailVo();
 		
-		if ("en".equals(language)) {
-			vo = selectDao.getRandomMail("12");
-		} else {
+		if ("ko".equals(language)) {
 			vo = selectDao.getRandomMail("11");
+		} else {
+			vo = selectDao.getRandomMail("12");
 		}
 		
 		String title = vo.getTitle();
