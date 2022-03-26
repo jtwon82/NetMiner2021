@@ -93,10 +93,6 @@
 									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span></p>
 									<a href="./pricing">Subscribe</a>
 									</c:if>
-									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays > 0}">
-									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span></p>
-									<a href="./pricing">Subscribe</a>
-									</c:if>
 									
 									<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 0 && diffDays < 7}">
 									<p><em>${nowPlan.PLAN_NAME}</em> <span> Your plan will expire on <fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="MM/dd/yyyy"/></span></p>

@@ -190,7 +190,11 @@ public class BillingController extends HttpServlet {
 				}
 		 }
 		 */
-		int diffDays = billingVo.getDiffDay();
+		int diffDays = 0;
+		if (billingVo != null) {
+			diffDays = billingVo.getDiffDay();
+			
+		}
 		 //플랜 만료 7일 timestamp		 
 		 
 		if (nowPlan == null && billingList.size() > 0) {
