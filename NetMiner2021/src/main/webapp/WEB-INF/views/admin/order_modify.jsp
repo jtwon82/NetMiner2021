@@ -93,8 +93,14 @@
 								</td>
 							</tr>
 							<tr>
-								<th>금액(원)</td>
-								<td><input type="text" name="PAY_PRICE" value="${item.PAY_PRICE }"></td>
+								<th>금액</td>
+								<td>
+									<select id="PAY_PLATFORM" name="PAY_PLATFORM" >
+										<option value="">화폐단위</option>
+										<option value="toss">원화</option>
+										<option value="paypal">달러</option>
+									</select><script>PAY_PLATFORM.value='${item.PAY_PLATFORM }';</script>
+									<input type="text" name="PAY_PRICE" value="${item.PAY_PRICE }"></td>
 							</tr>
 						</table>
 						
@@ -148,6 +154,10 @@ $(function(){
 			}
 			if($(f).find('input[name="EXITS_DATE"]').val()==''){
 				alert("기간을 선택해주세요.");
+				return false;
+			}
+			if($(f).find('input[name="PAY_PLATFORM"]').val()==''){
+				alert("결제플랫폼을 선택해주세요.");
 				return false;
 			}
 			if($(f).find('input[name="PAY_PRICE"]').val()==''){

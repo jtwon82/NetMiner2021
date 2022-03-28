@@ -558,7 +558,7 @@
 			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE)
 		SELECT NOW()
 			, USER_ID, #{PLAN_CODE}, '', #{DATE_TYPE}
-			, '', 0, '', ${PAY_PRICE}, 0
+			, #{PAY_PLATFORM}, 0, '', ${PAY_PRICE}, 0
 			, '', '', '', NOW()
 			, #{ORDER_ID}, 'ORDER_PNM', 'paymentKey', 0, #{EXITS_DATE}, NOW()
 			, UUID, LANGUAGE, NATION, COMPANY, USE_CODE
@@ -572,6 +572,7 @@
 			<if test="PLAN_CODE!=null and !PLAN_CODE.equals('')">, PLAN_CODE = #{PLAN_CODE}</if>
 			<if test="DATE_TYPE!=null and !DATE_TYPE.equals('')">, DATE_TYPE = #{DATE_TYPE}</if>
 			<if test="EXITS_DATE!=null and !EXITS_DATE.equals('')">, EXITS_DATE = '${EXITS_DATE} 23:59:59'</if>
+			<if test="PAY_PLATFORM!=null and !PAY_PLATFORM.equals('')">, PAY_PLATFORM = '${PAY_PLATFORM}'</if>
 			<if test="PAY_PRICE!=null and !PAY_PRICE.equals('')">, PAY_PRICE = '${PAY_PRICE}'</if>
 		WHERE `NO` = ${NO}
 	</update>

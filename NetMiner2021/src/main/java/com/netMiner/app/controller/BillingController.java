@@ -725,6 +725,8 @@ public class BillingController extends HttpServlet {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("billingNo", billingNo);
 		Map<String ,Object> result = billingService.selectSubscriptOne(param);
+		logger.info("result {}", result);
+		
 		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
 		String payPlatform = (String) result.get("PAY_PLATFORM");
 		if (payPlatform.indexOf("paypal") > 0) {
@@ -737,6 +739,8 @@ public class BillingController extends HttpServlet {
 		mv.addAttribute("language",language);
 		
 		String path = "homePage"+ language;
+		logger.info("path {}", path);
+		
 		return path + "/invoice";
 	}
 	
