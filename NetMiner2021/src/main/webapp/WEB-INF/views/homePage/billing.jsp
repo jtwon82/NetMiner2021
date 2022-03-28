@@ -111,7 +111,7 @@
 								<a href="./pricing">구독하기</a>
 								</c:if>
 								
-								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays > 7}">
+								<c:if test="${nowPlan.PLAN_CODE != '01' && diffDays >= 7}">
 								<p><em>${nowPlan.PLAN_NAME}</em> <span><fmt:formatDate value='${nowPlan.EXITS_DATE}' pattern="yyyy-MM-dd"/></span> 에 만료됩니다. </p>
 								<a href="./pricing?type='upgradePlan'">업그레이드</a>
 								</c:if>
