@@ -116,6 +116,7 @@ $(document).ready(function() {
 			/*계좌 이체시*/
 			Payment['successUrl'] = url.origin +'/payment';
 		}
+		
 		Payment['failUrl'] = url.origin;
 		console.log("url.origin"+ url.origin);
 		Payment['tossPayments'].requestPayment(accountRoute, {

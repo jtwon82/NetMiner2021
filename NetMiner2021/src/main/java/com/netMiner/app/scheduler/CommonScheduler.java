@@ -100,7 +100,7 @@ public class CommonScheduler {
 		}
 	}
 	//플랜 결제 아이디 중에 3일 전 알림
-	@Scheduled(cron="0 10 09 * * *")
+	@Scheduled(cron="0 30 14 * * *")
 	//@Scheduled(cron="*/30 * * * * *")
 	public void payPlanUser() {
 		try {

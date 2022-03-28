@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.netMiner.app.config.Constant;
 import com.netMiner.app.config.SendEmail;
 import com.netMiner.app.model.service.BillingService;
@@ -543,13 +544,14 @@ public class BillingController extends HttpServlet {
 			StringUtils2.script(response, language, "잘못된 접근입니다.", "The wrong approach", "./");
 			return "redirect:/";
 		}
+		
 		else {			
 			if(form.getOrderId().equals(billingVo.getORDER_ID()) && payNo == null) {
 				billingVo.setUSER_ID(memberVo.getUserId());
 				billingVo.setOrderId(form.getOrderId());
 				billingVo.setPaymentKey(form.getPaymentKey());
 				billingVo.setAmount(form.getAmount());
-				
+				try {
 				HttpHeaders headers = new HttpHeaders();
 				headers.set("Authorization", "Basic " + Base64.getEncoder().encodeToString((Constant.TOSS_SECRET_KEY + ":").getBytes()));
 			    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -561,6 +563,18 @@ public class BillingController extends HttpServlet {
 				ResponseEntity<JsonNode> responseEntity = restTemplate.postForEntity(
 		        "https://api.tosspayments.com/v1/payments/" + form.getPaymentKey(), request1, JsonNode.class);
 				 if (responseEntity.getStatusCode() == HttpStatus.OK) {
+					 JsonNode obj = responseEntity.getBody();
+					 JsonNode payTypeJson = obj.get("method");
+					 String payType = payTypeJson.toString();
+					 
+					 if (payType.indexOf("계좌이체") > 0) {
+						 payType="bank";
+					 } else {
+						 payType="card";
+					 }
+					 
+					 billingVo.setPAY_TYPE(payType);
+					 
 					 billingService.insertSubscript(billingVo);
 					 logger.info("insert succ billingVo {}", billingVo);
 					 session.setAttribute("billingVo", billingVo);
@@ -568,6 +582,9 @@ public class BillingController extends HttpServlet {
 				 } else {
 					 return "redirect:/pricing";
 				 }
+				} catch (Exception e) {
+					return "redirect:/fail";
+				}
 			} else {
 				
 				return "redirect:/";
