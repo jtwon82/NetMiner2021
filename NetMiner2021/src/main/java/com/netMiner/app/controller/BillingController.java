@@ -726,8 +726,8 @@ public class BillingController extends HttpServlet {
 		param.put("billingNo", billingNo);
 		Map<String ,Object> result = billingService.selectSubscriptOne(param);
 		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
-		
-		if ((int) result.get("PAY_PRICE") < 50000) {
+		String payPlatform = (String) result.get("PAY_PLATFORM");
+		if (payPlatform.indexOf("paypal") > 0) {
 			language = "_EN";
 		} else {
 			language = "";
@@ -735,18 +735,9 @@ public class BillingController extends HttpServlet {
 
 		mv.addAttribute("result",result);
 		mv.addAttribute("language",language);
+		
 		String path = "homePage"+ language;
 		return path + "/invoice";
 	}
-	
-	/*
-	@RequestMapping("goBank")
-	public String goBank(Model mv,HttpSession session,HttpServletRequest request, HttpServletResponse response) {
-		String language = (String) session.getAttribute("language");
-		String path = "homePage"+ language;
-		return path + "/subscribe_complete";
-	}
-	*/
-	
 	
 }
