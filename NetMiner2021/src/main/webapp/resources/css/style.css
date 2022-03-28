@@ -354,7 +354,7 @@ select::-ms-expand{display:none;/*for IE10,11*/}
 #wrap.pricing #section2 .content ul li .question{ position: relative; cursor:pointer;}
 #wrap.pricing #section2 .content ul li .answer.active{display:block;}
 #wrap.pricing #section2 .content ul li .question p{font-size:22px;font-weight:500;}
-#wrap.pricing #section2 .content ul li .question em{width:15px;height:9px;background-image:url(/resources/images/arrow.png);background-size:cover;background-repeat:no-repeat;display:inline-block;position: absolute;top: 11px;right: 0px;}
+#wrap.pricing #section2 .content ul li .question em{width:15px;height:9px;background-image:url(/resources/images/arrow.png);background-size:cover;background-repeat:no-repeat;display:inline-block;position: absolute;top: 11px;right: -20px;}
 #wrap.pricing #section2 .content ul li .question em.fold{transform:rotate(180deg);}
 
 /*구독-----------------------------------------------------------*/
