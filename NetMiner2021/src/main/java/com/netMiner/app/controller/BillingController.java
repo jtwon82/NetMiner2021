@@ -127,10 +127,10 @@ public class BillingController extends HttpServlet {
 			} else {
 				//현재 사용중인 플랜이 Trial 이 아닌경우 
 				if (type != null) {
-					if (type.indexOf("changePlan") > 0) {
+					if (type.indexOf("changePlan") > -1) {
 						//해당 플랜 변경인지 
 						member.setPlanType(1);
-					} else if (type.indexOf("upgradePlan") > 0) {
+					} else if (type.indexOf("upgradePlan") > -1) {
 						//해당 플랜의 업그레이드인지 						
 						member.setPlanType(Integer.parseInt((String) result.get("PLAN_CODE")));							
 					} else {
@@ -567,7 +567,7 @@ public class BillingController extends HttpServlet {
 					 JsonNode payTypeJson = obj.get("method");
 					 String payType = payTypeJson.toString();
 					 
-					 if (payType.indexOf("계좌이체") > 0) {
+					 if (payType.indexOf("계좌이체") > -1) {
 						 payType="bank";
 					 } else {
 						 payType="card";
@@ -729,7 +729,7 @@ public class BillingController extends HttpServlet {
 		
 		result.put("PAY_TAX",(int) result.get("PAY_PRICE") - (int) result.get("PAY_PRICE") * 100/110);
 		String payPlatform = (String) result.get("PAY_PLATFORM");
-		if (payPlatform.indexOf("paypal") > 0) {
+		if (payPlatform.indexOf("paypal") > -1) {
 			language = "_EN";
 		} else {
 			language = "";
