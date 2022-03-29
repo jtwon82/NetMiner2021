@@ -19,6 +19,7 @@
  		<result property="userStatsYn" column = "USER_STATS_YN"/>
  		<result property="lastLoginDate" column = "LAST_LOGIN_DATE"/>
  		<result property="exitsDate" column = "EXITS_DATE"/>
+ 		<result property="UUID" column = "UUID"/>
  		<result property="SUBSCRIPT_YN" column = "SUBSCRIPT_YN"/>
  		<result property="CHECK_TRIAL" column = "CHECK_TRIAL"/>
  		<result property="DIFF_DAY" column = "DIFF_DAY"/>
@@ -113,7 +114,12 @@
 	SELECT PLAN_CODE 
 	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
 	order by s2.no desc limit 1
-	) AS CHECK_PLAN_CODE
+	) AS CHECK_PLAN_CODE,
+	(
+	SELECT ifnull(max(DATE_FORMAT(EXITS_DATE,'%Y-%m-%d %H:%i:%s')),'')EXITS_DATE 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
+	order by s2.no desc limit 1
+	) AS EXITS_DATE
 	FROM NetMiner.MEMBER_INFO a
 	WHERE USER_ID = #{userId}
 	UNION ALL
@@ -140,7 +146,12 @@
 	SELECT PLAN_CODE 
 	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
 	order by s2.no desc limit 1
-	) AS CHECK_PLAN_CODE
+	) AS CHECK_PLAN_CODE,
+	(
+	SELECT ifnull(max(DATE_FORMAT(EXITS_DATE,'%Y-%m-%d %H:%i:%s')),'')EXITS_DATE 
+	FROM NetMiner.SUBSCRIPT s2  WHERE USER_ID = #{userId}
+	order by s2.no desc limit 1
+	) AS EXITS_DATE
 	FROM NetMiner.MEMBER_INFO_DROP a
 	WHERE USER_ID = #{userId};
  	</select>
