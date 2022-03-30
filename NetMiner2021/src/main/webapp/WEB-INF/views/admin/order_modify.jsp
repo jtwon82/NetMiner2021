@@ -33,10 +33,10 @@
 									<th>주문일시</td>
 									<td>${item.REG_DATE_STR}</td>
 								</tr>
-								<tr>
-									<th>회원 ID</td>
-									<td>${item.USER_ID}</td>
-								</tr>
+<!-- 								<tr> -->
+<!-- 									<th>회원 ID</td> -->
+<%-- 									<td>${item.USER_ID}</td> --%>
+<!-- 								</tr> -->
 								<tr>
 									<th>용도</td>
 									<td>${item.USE_CODE_STR }</td>

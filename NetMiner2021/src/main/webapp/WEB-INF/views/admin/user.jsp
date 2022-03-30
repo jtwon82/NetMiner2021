@@ -20,7 +20,7 @@
 									<select id="SEARCH_KEY" name="SEARCH_KEY">
 										<option value="" >컬럼</option>
 										<option value="UUID">UUID</option>
-										<option value="USER_ID">이메일</option>
+										<!--	<option value="USER_ID">이메일</option> -->
 										<option value="COMPANY">소속</option>
 										<option value="NATION_NAME_KR">국가</option>
 									</select>

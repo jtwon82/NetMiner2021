@@ -59,6 +59,8 @@ public class BillingVo implements Serializable {
 	private String PayerID="";
 	
 	@JsonAlias("DIFF_DAY") private int diffDay= 0;
+	@JsonAlias("STARTFOR_DIFF_DAY") private int startForDiffDay= 0;
+	
 	private String type = "none";
 	//payPal 결재 시 필요 
 	private String Encrypted_ret_url;

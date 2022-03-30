@@ -9,7 +9,9 @@
 	</select>
 	
 	<select id="selectSubscript" parameterType="Map" resultType="Map">
-		select A.*, B.* ,TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(),'%Y-%m-%d'),DATE_FORMAT(EXITS_DATE,'%Y-%m-%d')) AS DIFF_DAY 
+		select A.*, B.*
+			, TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(),'%Y-%m-%d'),DATE_FORMAT(EXITS_DATE,'%Y-%m-%d')) AS DIFF_DAY
+			, DATEDIFF(left(now(),10),left(A.REG_DATE,10)) AS STARTFOR_DIFF_DAY
 		from NetMiner.SUBSCRIPT AS A 
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE 
 		where USER_ID =#{userId}
@@ -47,8 +49,8 @@
 		, #{ACCOUNT_NAME}, #{ACCOUNT_NO}, #{ACCOUNT_HOLDER}, now()
 		, #{ORDER_ID}, #{ORDER_PNM}, #{paymentKey}, #{amount},
 			CASE WHEN #{DATE_TYPE} = 'month' 
-			THEN DATE_FORMAT(DATE_ADD(now(), INTERVAL 29 DAY) , '%Y-%m-%d %H:%i:%S') 
-			ELSE DATE_FORMAT(DATE_ADD(now(), INTERVAL 364 DAY) , '%Y-%m-%d %H:%i:%S')
+			THEN DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 MONTH) , '%Y-%m-%d %H:%i:%S') 
+			ELSE DATE_FORMAT(DATE_ADD(now(), INTERVAL 1 YEAR) , '%Y-%m-%d %H:%i:%S')
 			END AS EXITS_DATE
 		,UUID, COMPANY, NATION, USE_CODE, LANGUAGE
 		</otherwise> 
