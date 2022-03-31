@@ -365,7 +365,7 @@ public class BillingController extends HttpServlet {
 							billingVo.setPAY_PRICE(result);
 							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-							billingVo.setDiffDay(365);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
 							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
 							billingVo.setDATE_TYPE("year");
 							billingVo.setType("upgradePlan");
@@ -385,7 +385,7 @@ public class BillingController extends HttpServlet {
 							billingVo.setPAY_PRICE(result);
 							billingVo.setPAY_PRICE_VAT(billingVo.getPAY_PRICE()* 100/110);
 							billingVo.setVAT(billingVo.getPAY_PRICE()-billingVo.getPAY_PRICE()* 100/110);
-							billingVo.setDiffDay(30);
+							billingVo.setDiffDay(billingOldVo.getDiffDay());
 							billingVo.setEXITS_DATE(billingOldVo.getEXITS_DATE());
 							billingVo.setDATE_TYPE("month");
 							billingVo.setType("upgradePlan");
