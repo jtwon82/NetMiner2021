@@ -11,7 +11,7 @@
 	<select id="selectSubscript" parameterType="Map" resultType="Map">
 		select A.*, B.*
 			, TIMESTAMPDIFF(DAY, DATE_FORMAT(NOW(),'%Y-%m-%d'),DATE_FORMAT(EXITS_DATE,'%Y-%m-%d')) AS DIFF_DAY
-			, DATEDIFF(left(now(),10),left(A.REG_DATE,10)) AS STARTFOR_DIFF_DAY
+			, DATEDIFF(left(now(),10),left(A.REG_DATE,10))+1 AS STARTFOR_DIFF_DAY
 		from NetMiner.SUBSCRIPT AS A 
 		INNER JOIN NetMiner.PLAN_CODE  AS B ON A.PLAN_CODE = B.PLAN_CODE 
 		where USER_ID =#{userId}
