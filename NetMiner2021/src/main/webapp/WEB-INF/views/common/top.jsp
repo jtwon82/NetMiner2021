@@ -72,7 +72,7 @@
 											<c:if  test="${memberVo.CHECK_TRIAL == 1}">
 												<c:if test="${memberVo.CHECK_PLAN_CODE eq '01'}">
 													<c:if test="${memberVo.DIFF_DAY > 0}">
-													  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+													  <li class="join"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" >My Workspace</a></li>
 													</c:if>
 													<c:if test="${memberVo.DIFF_DAY <= 0}">
 														  <li class="join"><a href="./pricing">Buy Now</a></li>
@@ -80,7 +80,7 @@
 												</c:if>
 												<c:if test="${memberVo.CHECK_PLAN_CODE ne '01'}">
 													<c:if test="${memberVo.DIFF_DAY >= -5}">
-													  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+													  <li class="join"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" >My Workspace</a></li>
 													</c:if>
 													<c:if test="${memberVo.DIFF_DAY < -5}">
 													  <li class="join"><a href="./pricing">Buy Now</a></li>
@@ -89,7 +89,7 @@
 											</c:if>
 											<c:if test="${memberVo.CHECK_TRIAL == 0}">
 												<c:if test="${memberVo.DIFF_DAY >= -5}">
-												  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >My Workspace</a></li>
+												  <li class="join"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" >My Workspace</a></li>
 												</c:if>
 												<c:if test="${memberVo.DIFF_DAY < -5}">
 												  <li class="join"><a href="./pricing">Start for free</a></li>
@@ -110,7 +110,7 @@
 										<c:if  test="${memberVo.CHECK_TRIAL == 1}">
 											<c:if test="${memberVo.CHECK_PLAN_CODE eq '01'}">
 												<c:if test="${memberVo.DIFF_DAY > 0}">
-													<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+													<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 												</c:if>
 												<c:if test="${memberVo.DIFF_DAY <= 0}">
 													<c:if test="${language eq '_EN'}">
@@ -123,7 +123,7 @@
 											</c:if>
 											<c:if test="${memberVo.CHECK_PLAN_CODE ne '01'}">
 												<c:if test="${memberVo.DIFF_DAY >= -5}">
-											 		<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+											 		<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 											 	</c:if>
 											 	<c:if test="${memberVo.DIFF_DAY < -5}">
 												 	<c:if test="${language eq '_EN'}">
@@ -137,7 +137,7 @@
 										</c:if>
 										<c:if test="${memberVo.CHECK_TRIAL == 0}">
 											<c:if test="${memberVo.DIFF_DAY >= -5}">
-										 		<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+										 		<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 										 	</c:if>
 										 	<c:if test="${memberVo.DIFF_DAY < -5}">
 											 	<c:if test="${language eq '_EN'}">
@@ -189,7 +189,7 @@
 											<c:if  test="${memberVo.CHECK_TRIAL == 1}">
 												<c:if test="${memberVo.CHECK_PLAN_CODE eq '01'}">
 													<c:if test="${memberVo.DIFF_DAY > 0}">
-														<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+														<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 													</c:if>
 													<c:if test="${memberVo.DIFF_DAY <= 0}">
 														<c:if test="${language eq '_EN'}">
@@ -202,7 +202,7 @@
 												</c:if>
 												<c:if test="${memberVo.CHECK_PLAN_CODE ne '01'}">
 													<c:if test="${memberVo.DIFF_DAY >= -5}">
-												 		<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+												 		<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 												 	</c:if>
 												 	<c:if test="${memberVo.DIFF_DAY < -5}">
 													 	<c:if test="${language eq '_EN'}">
@@ -216,7 +216,7 @@
 											</c:if>
 											<c:if test="${memberVo.CHECK_TRIAL == 0}">
 												<c:if test="${memberVo.DIFF_DAY >= -5}">
-											 		<li class="workSpace active"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
+											 		<li class="workSpace active"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" class="trs">Go to my workspace</a></li> 
 											 	</c:if>
 											 	<c:if test="${memberVo.DIFF_DAY < -5}">
 												 	<c:if test="${language eq '_EN'}">

@@ -62,7 +62,7 @@ NetMiner 365를 통해 무한한 가능성을 탐색해보세요.</p>
 해결할 수 있습니다.
 <br><br>
 NetMiner 365를 시작해보세요.</p>
-								<!--  <a href="http://online.netminer365.com/Loginfo?passport=${memberId}">시작하기</a>-->
+								<!--  <a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}">시작하기</a>-->
 								<a href="./pricing">시작하기</a>
 							</li>
 						</ul>

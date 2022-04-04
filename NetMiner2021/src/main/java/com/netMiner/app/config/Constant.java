@@ -21,6 +21,8 @@ public class Constant {
 	
 	public static String ADMIN_SESSION= "ADMIN_SESSION";
 
+	public static String ONLINEDOMAIN= "src.netminer.com:9009";
+	
 	// local
 	/*
 	public static String ROOT_URL = "http://localhost:8001";
@@ -42,7 +44,7 @@ public class Constant {
 	
 	public static String PAY_PAL_URL = "https://sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&";
 	public static String PAY_PAL_BUSINESS="sb-gbvkr13290921@business.example.com";
-	 
+	
 	// real
 	/*
 	public static String ROOT_URL = "https://www.netminer365.com";

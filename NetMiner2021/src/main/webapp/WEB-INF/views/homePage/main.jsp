@@ -48,7 +48,7 @@
 							<c:if test="${!empty memberVo}">
 							<div class="mypage obj type1" style="">
 								<ul>
-									<!--  <li class="join"><a href="http://online.netminer365.com/Loginfo?passport=${memberId}" >Start for free</a></li>-->
+									<!--  <li class="join"><a href="http://${ONLINEDOMAIN}/Loginfo?passport=${memberId}" >Start for free</a></li>-->
 									<li class="join"><a href="./pricing" >Start for free</a></li>
 								</ul>
 							</div>
